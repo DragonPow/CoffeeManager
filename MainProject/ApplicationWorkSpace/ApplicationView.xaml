@@ -1,0 +1,62 @@
+﻿<Window x:Class="MainProject.ApplicationWorkSpace.ApplicationView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        xmlns:MainWorkSpace="clr-namespace:MainProject.MainWorkSpace"
+        xmlns:AccountWorkSpace="clr-namespace:MainProject.AccountWorkSpace"
+        xmlns:HistoryWorkSpace="clr-namespace:MainProject.HistoryWorkSpace"
+        xmlns:VoucherWorkSpace="clr-namespace:MainProject.VoucherWorkSpace"
+        xmlns:StatisticWorkSpace="clr-namespace:MainProject.StatisticWorkSpace"
+        Title="Coffee Manager">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type MainWorkSpace:MainViewModel}">
+            <MainWorkSpace:MainView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type AccountWorkSpace:AccountViewModel}">
+            <AccountWorkSpace:AccountView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type HistoryWorkSpace:HistoryViewModel}">
+            <HistoryWorkSpace:HistoryView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type VoucherWorkSpace:VoucherViewModel}">
+            <VoucherWorkSpace:VoucherView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type StatisticWorkSpace:StatisticViewModel}">
+            <StatisticWorkSpace:StatisticView />
+        </DataTemplate>
+    </Window.Resources>
+    
+    <DockPanel>
+        <TabControl ItemsSource="{Binding WorkSpaces}"
+                    Style="{StaticResource MaterialDesignNavigatilRailTabControl}"
+                    materialDesign:ColorZoneAssist.Mode="PrimaryMid">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal"
+                                Width="Auto">
+                        <ContentPresenter Content="{Binding IconDisplay}"
+                                          Margin="10,0" />
+                        <TextBlock Text="{Binding NameWorkSpace}"
+                                   VerticalAlignment="Center"
+                                   Margin="10,0" />
+                    </StackPanel>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+
+            <TabControl.ItemContainerStyle>
+                <Style TargetType="TabItem"
+                       BasedOn="{StaticResource MaterialDesignNavigationRailTabItem}">
+                    <Setter Property="Width"
+                            Value="Auto" />
+                    <Setter Property="HorizontalAlignment"
+                            Value="Left" />
+                    <Setter Property="Height"
+                            Value="Auto" />
+                </Style>
+            </TabControl.ItemContainerStyle>
+        </TabControl>
+    </DockPanel>
+</Window>

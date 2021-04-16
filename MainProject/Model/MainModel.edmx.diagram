@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f195b6e19bf4446cb6a0f4288a4bccb5" Name="Diagram1">
+        <EntityTypeShape EntityType="mainModel.BILL" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="mainModel.CUSTOMER" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="mainModel.DETAILBILL" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="mainModel.EMPLOYEE" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="mainModel.GOOD" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="mainModel.PRODUCT" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="mainModel.TABLE" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="mainModel.VOUCHER" Width="1.5" PointX="0.75" PointY="10.875" IsExpanded="true" />
+        <AssociationConnector Association="mainModel.FK_BILL_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="mainModel.FK_BILL_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="mainModel.FK_BILL_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="mainModel.FK_BILL_3_0" ManuallyRouted="false" />
+        <AssociationConnector Association="mainModel.FK_DETAILBILL_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="mainModel.FK_DETAILBILL_1_0" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

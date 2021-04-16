@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MainProject.ApplicationWorkSpace;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,13 @@ namespace MainProject
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            ApplicationView view = new ApplicationView();
+            ApplicationViewModel VM = new ApplicationViewModel();
+            view.DataContext = VM;
+            view.Show();
+        }
     }
 }
