@@ -88,10 +88,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
+	  <Compile Include="Properties\Resources.Designer.cs">
+		  <AutoGen>True</AutoGen>
+		  <DesignTime>True</DesignTime>
+		  <DependentUpon>Resources.resx</DependentUpon>
+	  </Compile>
     <Compile Include="AccountWorkSpace\AccountView.xaml.cs">
       <DependentUpon>AccountView.xaml</DependentUpon>
     </Compile>
@@ -150,7 +151,6 @@
     <Compile Include="Model\PRODUCT.cs">
       <DependentUpon>MainModel.tt</DependentUpon>
       </Compile>
-    </Compile>
     <Compile Include="Model\TABLE.cs">
       <DependentUpon>MainModel.tt</DependentUpon>
     </Compile>
