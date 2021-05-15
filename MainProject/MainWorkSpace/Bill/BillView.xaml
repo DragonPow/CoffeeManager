@@ -1,19 +1,27 @@
-﻿<UserControl x:Class="MainProject.MainWorkSpace.Bill.BillView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MainProject.MainWorkSpace.Bill"
-             mc:Ignorable="d" 
-             d:DesignWidth="600">
+﻿<Window x:Class="MainProject.MainWorkSpace.Bill.BillView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:local="clr-namespace:MainProject.MainWorkSpace.Bill"
+        mc:Ignorable="d"
+        MinWidth="600"
+        MaxWidth="800"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight"
+        x:Name="MainWindow">
     <StackPanel Orientation="Vertical">
-        <TextBlock Text="Tên cửa hàng"
+        <!--Bill title-->
+        <TextBlock Text="{Binding StoreName, FallbackValue=Tên cửa hàng}"
                    FontSize="50"
                    FontWeight="Bold"
                    HorizontalAlignment="Center"
                    Margin="0 30"/>
+        
+        <!--Information of store-->
         <Border BorderBrush="Black" BorderThickness="2"
-                Background="BurlyWood"
+                Background="Gray"
                 Margin="30 10">
             <Grid Margin="20 10">
                 <Grid.Resources>
@@ -37,33 +45,94 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Thời gian"
-                       Grid.Row="0" Grid.Column="0"/>
-                <TextBlock Text="Bàn"
-                       Grid.Row="1" Grid.Column="0"/>
-                <TextBlock Text="Mã hóa đơn"
-                       Grid.Row="0" Grid.Column="1"/>
-                <TextBlock Text="Số điện thoại"
-                       Grid.Row="1" Grid.Column="1"/>
-                <TextBlock Text="Địa chỉ"
-                       Grid.Row="2" Grid.ColumnSpan="2"/>
+                <TextBlock Grid.Row="0" Grid.Column="0">
+                    <Run>Thời gian</Run>
+                    <Run Text="{Binding TimeCheckout, StringFormat=': {0:hh:mm, dd/MM/yyyy}',
+                                Mode=OneWay}"/>
+                </TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="0">
+                    <Run>Bàn</Run>
+                    <Run Text="{Binding CurrentBill.Table.ID, StringFormat=': {0}'}"/>
+                </TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="1">
+                    <Run>Mã số hóa đơn</Run>
+                    <Run Text="{Binding ID, StringFormat=': {0}', Mode=OneWay}"/>
+                </TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="1">
+                    <Run>Số điện thoại</Run>
+                    <Run Text="{Binding Phone, StringFormat=': {0}'}"/>
+                </TextBlock>
+                <TextBlock Grid.Row="2" Grid.ColumnSpan="2">
+                    <Run>Địa chỉ</Run>
+                    <Run Text="{Binding Address, StringFormat=': {0}'}"/>
+                </TextBlock>
             </Grid>
         </Border>
         
-        <ContentControl Content="This is table lines user control"
-                        HorizontalAlignment="Center"
-                        Margin="0 20"
-                        FontSize="30"/>
+        <!--Information of table checkout-->
+        <Grid Margin="40 20">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <local:Bill_ProductTable DataContext="{Binding CurrentBill.DETAILBILLs}"
+                                     Grid.ColumnSpan="2"
+                                     x:Name="TableLines"/>
+            <TextBlock Text="Ưu đãi" Grid.Row="1" 
+                       VerticalAlignment="Center"
+                       FontSize="18"
+                       HorizontalAlignment="Right"
+                       Margin="0 20 0 0"/>
+            <TextBlock Text="{Binding Discount, FallbackValue='0,000 đ', 
+                                StringFormat='{}{0:N0} đ'}"
+                       Grid.Row="1"
+                       Grid.Column="10"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       Margin="0 20 20 0"
+                       FontSize="18"/>
+            <TextBlock Text="Tổng tiền" Grid.Row="2" 
+                       VerticalAlignment="Center"
+                       FontWeight="Bold"
+                       FontSize="20"
+                       HorizontalAlignment="Right"/>
+            <!--Thiếu converer-->
+            <TextBlock Text="{Binding TableCheckout.TotalPrice, FallbackValue='0,000 đ', 
+                                StringFormat='{}{0:N0} đ', NotifyOnTargetUpdated=True}"
+                       FontWeight="Bold"
+                       Grid.Row="2"
+                       Grid.Column="10"
+                       x:Name="testing"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       Margin="0 0 20 0"
+                       FontSize="20"/>
+        </Grid>
 
         <TextBlock Text="Cảm ơn quý khách"
                    FontStyle="Italic"
                    HorizontalAlignment="Center"
-                   FontSize="20"
+                   FontSize="18"
                    Margin="0 10 0 0"/>
         <TextBlock Text="Chúc quý khách ngon miệng"
                    FontStyle="Italic"
                    HorizontalAlignment="Center"
-                   FontSize="20"
+                   FontSize="18"
                    Margin="0 0 0 20"/>
+        
+        <!--Button Payment-->
+        <Button Content="THANH TOÁN"
+                MinWidth="200"
+                FontSize="20"
+                HorizontalAlignment="Center"
+                Background="Green"
+                Command="{Binding PaymentCommand}"
+                CommandParameter="{Binding ElementName=MainWindow}"
+                Margin="0 0 0 20"/>
     </StackPanel>
-</UserControl>
+</Window>

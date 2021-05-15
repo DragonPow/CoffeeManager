@@ -6,21 +6,24 @@
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Table"
              mc:Ignorable="d" 
              d:DesignHeight="480" d:DesignWidth="700" >
-    <ItemsControl ItemsSource="{Binding MyListTest}">
-        <ItemsControl.ItemTemplate>
-            <DataTemplate>
-                <local:FreeTable_UC DataContext="{Binding }"/>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
-        <ItemsControl.ItemsPanel>
-            <ItemsPanelTemplate>
-                <StackPanel Orientation="Horizontal"/>
-            </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
-        <!--<ItemsControl.ItemContainerStyle>
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto">
+        <ItemsControl ItemsSource="{Binding MyListTest}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:FreeTable_UC DataContext="{Binding }"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <!--<ItemsControl.ItemContainerStyle>
             <Style TargetType="ItemsPresenter">
                 <Setter Property="Margin" Value="10"/>
             </Style>
         </ItemsControl.ItemContainerStyle>-->
-    </ItemsControl>
+        </ItemsControl>
+    </ScrollViewer>
 </UserControl>

@@ -75,7 +75,7 @@
             Width="{Binding ActualWidth, ElementName=InfoCanvas}"
             Height="{Binding ActualHeight, ElementName=InfoCanvas}">
                     <local:TableView BorderBrush="#9393A1"
-                                 BorderThickness="2"
+                                     BorderThickness="2"
                                      DataContext="{Binding}"/>
                     </DockPanel>
                     <Button Background="{DynamicResource MainColor}"

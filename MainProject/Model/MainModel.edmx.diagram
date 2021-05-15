@@ -8,12 +8,12 @@
         <EntityTypeShape EntityType="mainModel.BILL" Width="1.5" PointX="3" PointY="1" />
         <EntityTypeShape EntityType="mainModel.CUSTOMER" Width="1.5" PointX="5.75" PointY="4.75" />
         <EntityTypeShape EntityType="mainModel.DETAILBILL" Width="1.5" PointX="5.25" PointY="1.25" />
-        <EntityTypeShape EntityType="mainModel.EMPLOYEE" Width="1.5" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="mainModel.EMPLOYEE" Width="1.5" PointX="0.75" PointY="5.5" />
         <EntityTypeShape EntityType="mainModel.GOOD" Width="1.5" PointX="7.75" PointY="0.75" />
         <EntityTypeShape EntityType="mainModel.PRODUCT" Width="1.5" PointX="3" PointY="5" />
         <EntityTypeShape EntityType="mainModel.REGULATION" Width="1.5" PointX="7.75" PointY="3.75" />
-        <EntityTypeShape EntityType="mainModel.TABLE" Width="1.5" PointX="0.75" PointY="5.125" />
-        <EntityTypeShape EntityType="mainModel.VOUCHER" Width="1.5" PointX="0.75" PointY="8.125" />
+        <EntityTypeShape EntityType="mainModel.TABLE" Width="1.5" PointX="0.75" PointY="8.875" />
+        <EntityTypeShape EntityType="mainModel.VOUCHER" Width="1.5" PointX="0.75" PointY="1" />
         <AssociationConnector Association="mainModel.FK_BILL_0_0" />
         <AssociationConnector Association="mainModel.FK_BILL_1_0" />
         <AssociationConnector Association="mainModel.FK_BILL_2_0" />

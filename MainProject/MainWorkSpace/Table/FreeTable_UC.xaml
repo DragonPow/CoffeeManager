@@ -15,7 +15,8 @@
                    Foreground="{DynamicResource MainColor}" 
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
-        <Image Source="/Resources/freetable.png" Height="80" Width="80" 
+        <Image Source="/Resources/freetable.png" 
+               Height="80" Width="80" 
                HorizontalAlignment="Center"
                VerticalAlignment="Center"></Image>
     </Grid>

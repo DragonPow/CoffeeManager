@@ -10,13 +10,19 @@
 namespace MainProject.Model
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
-    public partial class DETAILBILL
+    public partial class DETAILBILL : BaseViewModel
     {
-        public long ID_PRODUCT { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public DETAILBILL()
+        {
+            this.AMOUNT = 0;
+        }
+    
+        private long ID_PRODUCT { get; set; }
         public long ID_BILL { get; set; }
-        public Nullable<int> AMOUNT { get; set; }
+        public int AMOUNT { get; set; }
     
         public virtual BILL BILL { get; set; }
         public virtual PRODUCT PRODUCT { get; set; }

@@ -26,9 +26,9 @@ namespace MainProject.ApplicationWorkSpace
         #region Constructors
         public ApplicationViewModel()
         {
-            /*//Show LoginView before
-            LoginWinDow LoginView = new LoginWinDow();
-            LoginView.ShowDialog();*/
+            LoginView LoginView = new LoginView();
+            LoginView.DataContext = new LoginViewModel();
+            LoginView.ShowDialog();
 
             //Add list MainWorkSpace here
             WorkSpaces.Add(new MainViewModel());

@@ -10,9 +10,9 @@
 namespace MainProject.Model
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
-    public partial class CUSTOMER
+    public partial class CUSTOMER : BaseViewModel
     {
         public long ID { get; set; }
         public string NAME { get; set; }

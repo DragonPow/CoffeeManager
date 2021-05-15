@@ -10,14 +10,14 @@
 namespace MainProject.Model
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
-    public partial class BILL
+    public partial class BILL : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public BILL()
         {
-            this.DETAILBILLs = new HashSet<DETAILBILL>();
+            this.DETAILBILLs = new  ObservableCollection<DETAILBILL>();
         }
     
         public long ID { get; set; }
@@ -29,6 +29,6 @@ namespace MainProject.Model
         public virtual TABLE TABLE { get; set; }
         public virtual VOUCHER VOUCHER { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DETAILBILL> DETAILBILLs { get; set; }
+        public virtual ObservableCollection<DETAILBILL> DETAILBILLs { get; set; }
     }
 }

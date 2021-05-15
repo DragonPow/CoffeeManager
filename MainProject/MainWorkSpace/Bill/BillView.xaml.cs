@@ -18,7 +18,7 @@ namespace MainProject.MainWorkSpace.Bill
     /// <summary>
     /// Interaction logic for BillView.xaml
     /// </summary>
-    public partial class BillView : UserControl
+    public partial class BillView : Window
     {
         public BillView()
         {

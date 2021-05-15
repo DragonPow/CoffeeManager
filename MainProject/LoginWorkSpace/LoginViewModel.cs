@@ -1,4 +1,5 @@
-﻿using MainProject.Model;
+﻿using MainProject.ApplicationWorkSpace;
+using MainProject.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -14,6 +15,7 @@ namespace MainProject.LoginWorkSpace
     {
         #region Fields
         private EMPLOYEE _currentAccount;
+        private bool _loginSuccess;
         private ICommand _loginCommand;
         #endregion //Fiedls
 
@@ -25,19 +27,30 @@ namespace MainProject.LoginWorkSpace
             {
                 if (_loginCommand == null)
                 {
-                    _loginCommand = new RelayingCommand<Object>(a => Login()); ;
+                    _loginCommand = new RelayingCommand<LoginView>(view => Login(view)); ;
                 }
                 return _loginCommand;
+            }
+        }
+        public bool isLoginSuccess
+        {
+            get => _loginSuccess;
+            set
+            {
+                if (_loginSuccess!=value)
+                {
+                    _loginSuccess = value;
+                    OnPropertyChanged();
+                }
             }
         }
         public EMPLOYEE CurrentAccount
         {
             get
             {
-                if(_currentAccount==null)
+                if(_currentAccount == null)
                 {
                     _currentAccount = new EMPLOYEE();
-                    Console.WriteLine("Loaded");
                 }
                 return _currentAccount;
             }
@@ -57,11 +70,13 @@ namespace MainProject.LoginWorkSpace
         /// <summary>
         /// Check CurrentAccount is existing, if true close Login View
         /// </summary>
-        private void Login()
+        private void Login(LoginView view)
         {
-            using (var context = new mainEntities())
+            //something missing here
+            //if (!AccountModel.isContain(CurrentAccount))
             {
-                Console.WriteLine(CurrentAccount.Name + " " + CurrentAccount.Password);
+                isLoginSuccess = true;
+                view.Close();
             }
         }
         #endregion //Helper methods

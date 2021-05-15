@@ -10,9 +10,9 @@
 namespace MainProject.Model
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
-    public partial class REGULATION
+    public partial class REGULATION : BaseViewModel
     {
         public long ID { get; set; }
         public string NAME { get; set; }

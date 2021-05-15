@@ -6,7 +6,7 @@ namespace MainProject.Model.Product
 {
     class ProductViewModel : BaseViewModel
     {
-        #region Fiedl
+        #region Flieds
         PRODUCT _prodduct;
 
         ICommand _OpenViewUpdateProduct;

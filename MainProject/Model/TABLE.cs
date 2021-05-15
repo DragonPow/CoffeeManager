@@ -10,14 +10,14 @@
 namespace MainProject.Model
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
-    public partial class TABLE
+    public partial class TABLE : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TABLE()
         {
-            this.BILLs = new HashSet<BILL>();
+            this.BILLs = new  ObservableCollection<BILL>();
         }
     
         public long ID { get; set; }
@@ -27,6 +27,6 @@ namespace MainProject.Model
         public Nullable<int> DELETED { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BILL> BILLs { get; set; }
+        public virtual ObservableCollection<BILL> BILLs { get; set; }
     }
 }
