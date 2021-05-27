@@ -136,9 +136,6 @@
     <Compile Include="DatabaseController\DataControllerBase.cs" />
     <Compile Include="DetailPro.cs" />
     <Compile Include="HistoryWorkSpace\HistoryViewModel.cs" />
-    <Compile Include="MainWorkSpace\Bill\BillDetail.xaml.cs">
-      <DependentUpon>BillDetail.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MainWorkSpace\Bill\BillView.xaml.cs">
       <DependentUpon>BillView.xaml</DependentUpon>
     </Compile>
@@ -166,6 +163,9 @@
     </Compile>
     <Compile Include="MainWorkSpace\Product\AddProd_UC.xaml.cs">
       <DependentUpon>AddProd_UC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWorkSpace\Product\CreateProd.xaml.cs">
+      <DependentUpon>CreateProd.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWorkSpace\Product\Item_UC.xaml.cs">
       <DependentUpon>Item_UC.xaml</DependentUpon>
@@ -292,10 +292,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MainWorkSpace\Bill\BillDetail.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="MainWorkSpace\Bill\BillView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -333,6 +329,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MainWorkSpace\Product\AddProd_UC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWorkSpace\Product\CreateProd.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
