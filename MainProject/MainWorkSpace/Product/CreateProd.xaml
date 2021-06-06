@@ -65,7 +65,8 @@
                 <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                           materialDesign:HintAssist.Hint="Danh mục"
                           ItemsSource="{Binding Source={x:Static model:TYPE_PRODUCT.Instance}, Path=ListType}"
-                          SelectedItem="{Binding Type_in_Combobox_AddPro}"
+                          SelectedValue="{Binding Type_in_Combobox_AddPro}"
+                          SelectedValuePath="{Binding Type}"
                           FontSize="16"
                           MaxWidth="500"
                           Margin="100,5" />

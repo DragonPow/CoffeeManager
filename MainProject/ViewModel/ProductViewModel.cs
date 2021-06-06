@@ -434,7 +434,8 @@ namespace MainProject.ViewModel
 
         public void ExitDetail(object a)
         {
-            //open view Add_pro(a)
+            var window = WindowService.Instance.FindWindowbyTag("Edit category").First();
+            window.Close();
         }
 
         public ICommand AddUpdateImageProductCommand
@@ -529,7 +530,7 @@ namespace MainProject.ViewModel
 
             TypeInEditCATEGORYCombobox = Type;
             
-           WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditType());
+            WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditType());
 
             LoadProductByType(Type.Type);
 
@@ -637,7 +638,10 @@ namespace MainProject.ViewModel
                 db.TYPE_PRODUCT.Add(new TYPE_PRODUCT() { Type = "Danh mục mới" + (i == 0 ? "" : i.ToString()) });
                 db.SaveChanges();
 
-                WindowService.Instance.OpenMessageBox("Thêm mới thành công. Tiến hành chỉnh sửa ở Sửa danh mục", "Thông báo", System.Windows.MessageBoxImage.Information);
+                if(WindowService.Instance.OpenMessageBox("Thêm mới thành công. Tiến hành chỉnh sửa ở Sửa danh mục", "Thông báo", System.Windows.MessageBoxImage.Information)==MessageBoxResult.Yes)
+                {
+                    WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditType());
+                }
             }
 
         }
