@@ -140,7 +140,7 @@ namespace MainProject.MainWorkSpace.Bill
                 {
                     _GiveMoney = value;
                     OnPropertyChanged();
-                    Refund = Total - GiveMoney;
+                    Refund = value - Total;
                 }
             }
         }

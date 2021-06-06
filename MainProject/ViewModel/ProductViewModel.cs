@@ -67,14 +67,14 @@ namespace MainProject.ViewModel
         private ICommand _CloseEditCategory;
 
 
-        private ICommand _AddEditCategory;
-       
+    
         #endregion
 
 
         #region Properties
 
         public ObservableCollection<PRODUCT> ListPoduct { get => _ListProduct; set { if (value != _ListProduct) { _ListProduct = value; OnPropertyChanged(); } } }
+        public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); SearchName(); } } }
 
         public int IndexCurrentProduct { get => _IndexCurrentproduct; set { if (_IndexCurrentproduct != value) { _IndexCurrentproduct = value; OnPropertyChanged(); } } }
         public int IndexCurrentproductInMainView 
@@ -104,7 +104,7 @@ namespace MainProject.ViewModel
             } 
         }
 
-        public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); SearchName(); } } }
+       /* public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); SearchName(); } } }*/
         public string EditTypeInEditCatefory { get => _EditTypeInEditCatefory; set { if (_EditTypeInEditCatefory != value) { _EditTypeInEditCatefory = value; OnPropertyChanged(); } } }
         public string Type_in_Combobox_AddPro { get => _Type_in_Combobox_AddPro; set { if (_Type_in_Combobox_AddPro != value) { _Type_in_Combobox_AddPro= value; OnPropertyChanged(); } } }
 
@@ -166,7 +166,11 @@ namespace MainProject.ViewModel
 
         public void Add(bool isValid)
         {
-            if (!isValid) return;
+            if ( Newproduct.Name == null)
+            {
+                WindowService.Instance.OpenMessageBox("Chưa nhập tên sản phẩm", "Lỗi", System.Windows.MessageBoxImage.Error);
+                return;
+            }
             using (var db = new mainEntities())
             {
                 {
@@ -291,25 +295,33 @@ namespace MainProject.ViewModel
         }
 
         public void SearchName()
-        {           
+        {      
+     
             using (var db = new mainEntities())
-            {
-                Type = db.TYPE_PRODUCT.Where(t => t.ID == 0).FirstOrDefault();
+            {            
 
                 if ( SearchProduct =="")
                 {
                     ListPoduct = new ObservableCollection<PRODUCT>(db.PRODUCTs.ToList());
                     return;
-                }                    
+                }
 
-                var listpro = db.PRODUCTs.Where(p => (ConvertToUnSign(p.Name).ToLower().Contains(ConvertToUnSign(SearchProduct).ToLower())));
+                string s = ConvertToUnSign(SearchProduct).ToLower();
+                var listpro = db.PRODUCTs.ToList();
+
                 if (listpro == null)
                 {
                     ListPoduct = new ObservableCollection<PRODUCT>();
                     return;
-                }    
+                }
 
-                ListPoduct = new ObservableCollection<PRODUCT>(listpro.ToList());
+                ListPoduct = new ObservableCollection<PRODUCT>();
+
+                foreach ( var p in listpro)
+                {
+                    if (ConvertToUnSign(p.Name).ToLower().Contains(s)) ListPoduct.Add(p);
+                }                
+            
             }
 
         }
@@ -522,14 +534,14 @@ namespace MainProject.ViewModel
             {
                 if (_OpenViewEditCategory == null)
                 {
-                    _OpenViewEditCategory = new RelayingCommand<Object>(a => OpenViewEditCategory(a));
+                    _OpenViewEditCategory = new RelayingCommand<Object>(a => OpenViewEditCategory());
                 }
                 return _OpenViewEditCategory;
             }
         }
 
 
-        public void OpenViewEditCategory(object a)
+        public void OpenViewEditCategory()
         {
 
             TypeInEditCATEGORYCombobox = Type;
@@ -622,35 +634,6 @@ namespace MainProject.ViewModel
             window.Close();
         }
 
-        public ICommand AddEditCategory_Command
-        {
-            get
-            {
-                if (_AddEditCategory == null)
-                {
-                    _AddEditCategory = new RelayingCommand<Object>(a => AddEditCategory());
-                }
-                return _AddEditCategory;
-            }
-        }
-
-
-        public void AddEditCategory()
-        {
-            using (var db = new mainEntities())
-            {
-                var i = db.TYPE_PRODUCT.Where(t => t.Type.Contains("Danh mục mới")).Count();
-
-                db.TYPE_PRODUCT.Add(new TYPE_PRODUCT() { Type = "Danh mục mới " + (i == 0 ? "" : i.ToString()) });
-                db.SaveChanges();
-
-                if(WindowService.Instance.OpenMessageBox("Thêm mới thành công. Tiến hành chỉnh sửa ở Sửa danh mục", "Thông báo", System.Windows.MessageBoxImage.Information)==MessageBoxResult.Yes)
-                {
-                    WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditType());
-                }
-            }
-
-        }
 
 
         private void LoadProductByType(string Type)
@@ -701,6 +684,7 @@ namespace MainProject.ViewModel
 
         public void DeleteTypeEditCategory()
         {
+            if (TypeInEditCATEGORYCombobox == null) return;
 
             using (var db = new mainEntities())
             {
