@@ -3,8 +3,8 @@
     using System;
     using System.Collections.ObjectModel;
 
-    public partial class TYPE_PRODUCT : BaseViewModel
-    {
-        public int Index { get; set; }
+    public partial class PRODUCT : BaseViewModel
+    {   
+        public bool IsChecked { get; set; }
     }
 }

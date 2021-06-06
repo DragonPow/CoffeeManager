@@ -36,7 +36,7 @@
                       HorizontalScrollBarVisibility="Auto">
             <!--The Panel contains list product-->
             <ListView ItemsSource="{Binding Currentlistdetailpro, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                      SelectedItem="{Binding CurrentDetailPro,Mode=TwoWay}">
+                      >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Item:Item_UC DataContext="{Binding}"

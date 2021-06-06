@@ -259,13 +259,14 @@ namespace MainProject.ViewModel
             get
             {
                 if (_plusQuantityDetailProCommand == null)
-                    _plusQuantityDetailProCommand = new RelayingCommand<object>(a => Plus());
+                    _plusQuantityDetailProCommand = new RelayingCommand<DetailPro>(a => Plus(a));
                 return _plusQuantityDetailProCommand;
             }
         }
 
-        public void Plus()
+        public void Plus(DetailPro pro)
         {
+            CurrentDetailPro = pro;
             CurrentDetailPro.Quantity++;
             TotalCurrentTable += (long) CurrentDetailPro.Pro.Price;
 
@@ -275,16 +276,17 @@ namespace MainProject.ViewModel
             get
             {
                 if (_minusQuantityDetailProCommand == null)
-                    _minusQuantityDetailProCommand = new RelayingCommand<object>(a => Minus());
+                    _minusQuantityDetailProCommand = new RelayingCommand<DetailPro>(a => Minus(a));
 
                 return _minusQuantityDetailProCommand;
             }
 
         }
 
-        public void Minus()
+        public void Minus(DetailPro pro)
         {
-            
+            CurrentDetailPro = pro;
+
             if (CurrentDetailPro == null || CurrentDetailPro.Quantity < 1) return;
 
             CurrentDetailPro.Quantity--;
