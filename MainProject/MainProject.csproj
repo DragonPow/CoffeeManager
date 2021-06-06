@@ -193,8 +193,14 @@
     </Compile>
     <Compile Include="Model\CustomModel\STATUS_TABLE.cs" />
     <Compile Include="Model\CustomModel\TYPE_PRODUCT.cs" />
+    <Compile Include="SettingWorkSpace\InfoAccountView.xaml.cs">
+      <DependentUpon>InfoAccountView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SettingWorkSpace\Overview.xaml.cs">
       <DependentUpon>Overview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SettingWorkSpace\RuleView.xaml.cs">
+      <DependentUpon>RuleView.xaml</DependentUpon>
     </Compile>
     <Compile Include="SettingWorkSpace\SettingView.xaml.cs">
       <DependentUpon>SettingView.xaml</DependentUpon>
@@ -402,7 +408,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SettingWorkSpace\InfoAccountView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SettingWorkSpace\Overview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingWorkSpace\RuleView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
