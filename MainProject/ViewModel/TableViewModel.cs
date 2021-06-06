@@ -186,7 +186,6 @@ namespace MainProject.ViewModel
                     {
                         TableName = "Bàn: " + value.table.Name.ToString();
                         Isbringtohome = false;
-                        CloseChooseTable();
                     }
                     else
                          if (!Isbringtohome) TableName = "Chọn bàn >";
