@@ -591,11 +591,12 @@ namespace MainProject.ViewModel
 
             using (var db = new mainEntities())
             {
-                var type = db.TYPE_PRODUCT.Where(t => t == TypeInEditCATEGORYCombobox).FirstOrDefault();
+                var type = db.TYPE_PRODUCT.Where(t => t.ID == TypeInEditCATEGORYCombobox.ID).FirstOrDefault();
 
-                if (EditTypeInEditCatefory != "")  type.Type = EditTypeInEditCatefory;
+                if (EditTypeInEditCatefory != "") 
+                    type.Type = EditTypeInEditCatefory;
 
-                var list = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT == type || p.TYPE_PRODUCT == null)).ToList();
+                var list = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT.ID == type.ID || p.ID_Type == null)).ToList();
                 if (list == null) return;
           
                 int i = 0; 
@@ -656,13 +657,18 @@ namespace MainProject.ViewModel
             using (var db = new mainEntities())
             {
                 if (TypeInEditCATEGORYCombobox == null) return;
+                if(TypeInEditCATEGORYCombobox.Type == "Tất cả")
+                {
+                    var list = db.PRODUCTs.ToList();
+                    ListPoduct = new ObservableCollection<PRODUCT>(list);
+                    return;
+                }    
 
-                var l = db.PRODUCTs.Where(p => ((p.TYPE_PRODUCT.Type == TypeInEditCATEGORYCombobox.Type || p.TYPE_PRODUCT.Type == ""))).ToList();
+                var l = db.PRODUCTs.Where(p =>  p.ID_Type == null || p.ID == TypeInEditCATEGORYCombobox.ID  ).ToList();
            
-
                 if (l == null) return;
-
-            /*    l.ForEach(p => p.IsChecked = p.TYPE_PRODUCT == null ? false : true);*/
+               
+            /*  l.ForEach(p => p.IsChecked = p.TYPE_PRODUCT == null ? false : true);*/
                 ListPoduct = new ObservableCollection<PRODUCT>(l);
             }
         }
@@ -686,7 +692,7 @@ namespace MainProject.ViewModel
 
             using (var db = new mainEntities())
             {
-                var list = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT == TypeInEditCATEGORYCombobox )).ToList();
+                var list = db.PRODUCTs.Where(p => (p.ID_Type== TypeInEditCATEGORYCombobox.ID )).ToList();
                 if (list == null) return;
 
                 foreach( var p in list)
@@ -694,10 +700,13 @@ namespace MainProject.ViewModel
                     p.TYPE_PRODUCT = null;
                 }
 
+                db.TYPE_PRODUCT.Attach(TypeInEditCATEGORYCombobox);
                 db.TYPE_PRODUCT.Remove(TypeInEditCATEGORYCombobox);
 
                 db.SaveChanges();
             }
+
+            TypeInEditCATEGORYCombobox = null;
 
 
           }
