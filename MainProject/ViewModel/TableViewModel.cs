@@ -438,6 +438,11 @@ namespace MainProject.ViewModel
 
         private void Delete(int number)
         {
+            if (number == null)
+            {
+                WindowService.Instance.OpenMessageBox("Chưa chọn bàn", "Lỗi", System.Windows.MessageBoxImage.Error);
+                return;
+            }
             ListTable.RemoveAt(number - 1);
 
             for (int i = number; i < ListTable.Count; ++i)

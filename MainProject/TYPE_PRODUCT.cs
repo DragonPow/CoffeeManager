@@ -5,6 +5,11 @@
 
     public partial class PRODUCT : BaseViewModel
     {   
-        public bool IsChecked { get; set; }
+        public bool IsChecked 
+        { get
+                { 
+                    return TYPE_PRODUCT == null ? false : true; 
+                } 
+        }
     }
 }
