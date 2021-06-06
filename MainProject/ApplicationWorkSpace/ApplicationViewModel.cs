@@ -37,7 +37,7 @@ namespace MainProject.ApplicationWorkSpace
             //WorkSpaces.Add(new VoucherViewModel());
 
             //Define current workspace
-            //CurrentWorkSpace = WorkSpaces[0];
+            CurrentWorkSpace = WorkSpaces[0];
         }
         #endregion //Constructors
 

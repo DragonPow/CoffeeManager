@@ -152,14 +152,14 @@ namespace MainProject.ViewModel
             {
                 if (_AddProduct == null)
                 {
-                    _AddProduct = new RelayingCommand<Object>(a => Add(a));
+                    _AddProduct = new RelayingCommand<Object>(a => Add());
                 }
                 return _AddProduct;
             }
         }
 
 
-        public void Add(object a)
+        public void Add()
         {
             using (var db = new mainEntities())
             {

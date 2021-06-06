@@ -78,7 +78,7 @@
                          Margin="100,5" />
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Mô tả"
-                         Text="{Binding Newproduct.Detail}"
+                         Text="{Binding Newproduct.Decription}"
                          materialDesign:TextFieldAssist.SuffixText="0/30"
                          TextWrapping="Wrap"
                          MaxWidth="500"
@@ -106,12 +106,9 @@
                             Background="{StaticResource MainColor}"
                             BorderBrush="#31CA62"
                             Foreground="White"
-                            Margin="10">
-                        <TextBlock HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Text="Thêm vào"
-                                   FontSize="20"
-                                   Margin="5" />
+                            Margin="10"
+                            Content="Thêm"
+                            FontSize="20">
                     </Button>
 
                 </Grid>
