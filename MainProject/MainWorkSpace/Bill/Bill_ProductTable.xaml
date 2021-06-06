@@ -30,31 +30,35 @@
                     <ColumnDefinition Width="150" />
                 </Grid.ColumnDefinitions>
 
-                <Border BorderBrush="Black"
+                <Border BorderBrush="Gray"
                         BorderThickness="1"
                         Grid.Column="0" />
-                <Border BorderBrush="Black"
+                <Border BorderBrush="Gray"
                         BorderThickness="1"
                         Grid.Column="1" />
-                <Border BorderBrush="Black"
+                <Border BorderBrush="Gray"
                         BorderThickness="1"
                         Grid.Column="2" />
-                <Border BorderBrush="Black"
+                <Border BorderBrush="Gray"
                         BorderThickness="1"
                         Grid.Column="3" />
 
                 <TextBlock Text="Tên"
                            Grid.Column="0"
-                           HorizontalAlignment="Left" />
+                           HorizontalAlignment="Left"
+                           Foreground="#363434"/>
                 <TextBlock Text="Số lượng"
                            Grid.Column="1"
-                           HorizontalAlignment="Center" />
+                           HorizontalAlignment="Center"
+                           Foreground="#363434"/>
                 <TextBlock Text="Đơn giá"
                            Grid.Column="2"
-                           HorizontalAlignment="Center" />
+                           HorizontalAlignment="Center"
+                           Foreground="#363434"/>
                 <TextBlock Text="Thành tiền"
                            Grid.Column="3"
-                           HorizontalAlignment="Center" />
+                           HorizontalAlignment="Center"
+                           Foreground="#363434"/>
             </Grid>
 
             <ItemsControl ItemsSource="{Binding ListPro}"
@@ -80,16 +84,20 @@
                                        Grid.Column="0"
                                        HorizontalAlignment="Left"
                                        TextWrapping="Wrap"
-                                       Margin="5 0" />
+                                       Margin="5 0"
+                                       Foreground="#363434"/>
                             <TextBlock Text="{Binding Quantity}"
                                        Grid.Column="1"
-                                       HorizontalAlignment="Center" />
+                                       HorizontalAlignment="Center"
+                                       Foreground="#363434"/>
                             <TextBlock Text="{Binding Pro.Price, StringFormat='{}{0:N0} đ'}"
                                        Grid.Column="2"
-                                       HorizontalAlignment="Center" />
+                                       HorizontalAlignment="Center"
+                                       Foreground="#363434"/>
                             <TextBlock Text="{Binding Total, StringFormat='{}{0:N0} đ'}"
                                        Grid.Column="3"
-                                       HorizontalAlignment="Center" />
+                                       HorizontalAlignment="Center"
+                                       Foreground="#363434"/>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

@@ -153,9 +153,6 @@
     <Compile Include="MainWorkSpace\Product\EditType.xaml.cs">
       <DependentUpon>EditType.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWorkSpace\Product\MenuProd.xaml.cs">
-      <DependentUpon>MenuProd.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MainWorkSpace\Product\SelectPro.xaml.cs">
       <DependentUpon>SelectPro.xaml</DependentUpon>
     </Compile>
@@ -360,10 +357,6 @@
     <Page Include="MainWorkSpace\Product\Item_UC.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MainWorkSpace\Product\MenuProd.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWorkSpace\Product\ProdDetail.xaml">
       <SubType>Designer</SubType>
