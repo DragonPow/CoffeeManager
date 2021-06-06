@@ -1,5 +1,6 @@
 ﻿using MainProject.MainWorkSpace.Bill;
 using MainProject.Model;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,8 +11,18 @@ using System.Windows.Input;
 
 namespace MainProject.ViewModel
 {
-    class HistoryViewModel: BaseViewModel
+    class HistoryViewModel: BaseViewModel, IMainWorkSpace
     {
+        public string NameWorkSpace => "Lịch sử";
+        private const PackIconKind _iconDisplay = PackIconKind.ClipboardTextSearchOutline;
+        public PackIcon IconDisplay
+        {
+            get
+            {
+                return new PackIcon() { Kind = _iconDisplay, Width = 30, Height = 30 };
+            }
+        }
+
         #region Fields
         private ObservableCollection<BILL> _ListBill;
         private BILL _CurrentBill;
@@ -113,7 +124,7 @@ namespace MainProject.ViewModel
         #region Init
         public HistoryViewModel()
         {
-            LoadBillByNumberPage();
+            //LoadBillByNumberPage();
 
             //testing
             //for (int i=1;i<=20;i++)

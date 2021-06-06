@@ -28,7 +28,6 @@
         <ListView.ItemsPanel>
             <ItemsPanelTemplate>
                 <WrapPanel Orientation="Horizontal"></WrapPanel>
-
             </ItemsPanelTemplate>
         </ListView.ItemsPanel>
     </ListView>

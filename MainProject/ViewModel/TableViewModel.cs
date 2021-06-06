@@ -2,6 +2,7 @@
 using MainProject.MainWorkSpace.Bill;
 using MainProject.MainWorkSpace.Table;
 using MainProject.Model;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,8 +13,18 @@ using System.Windows.Input;
 
 namespace MainProject.ViewModel
 {
-   public  class TableViewModel : BaseViewModel
+   public  class TableViewModel : BaseViewModel, IMainWorkSpace
     {
+        public string NameWorkSpace => "Quản lý bàn";
+        private const PackIconKind _iconDisplay = PackIconKind.TableChair;
+        public PackIcon IconDisplay
+        {
+            get
+            {
+                return new PackIcon() { Kind = _iconDisplay, Width = 30, Height = 30 };
+            }
+        }
+
         #region Field
         private ObservableCollection<TABLECUSTOM> _ListTable;
         private ObservableCollection<int> _ListFloor;
@@ -38,7 +49,7 @@ namespace MainProject.ViewModel
 
         private ICommand _DeleteTableCommand;
         private ICommand _InsertTableCommand;
-        private ICommand _UpdateStatusTableCommand;
+        private ICommand _UpdateStatusTableCommand;      
 
         private ICommand _AddFloor;
         private ICommand _DeleteFloor;
@@ -182,7 +193,7 @@ namespace MainProject.ViewModel
                 {
                     _CurrentTable = value;
                     OnPropertyChanged();
-                    if (value != null)
+                    if (value != null && value.table != null)
                     {
                         TableName = "Bàn: " + value.table.Name.ToString();
                         Isbringtohome = false;
@@ -380,7 +391,7 @@ namespace MainProject.ViewModel
             {
                 using (var db = new mainEntities())
                 {
-                    CurrentTable = new TABLECUSTOM() { table = db.TABLEs.Where(t => t.ID == 0).FirstOrDefault() };
+                    CurrentTable = new TABLECUSTOM() { };
                 }
             }
 
