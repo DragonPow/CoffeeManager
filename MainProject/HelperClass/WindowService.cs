@@ -65,6 +65,20 @@ namespace MainProject {
             window.ShowDialog();
         }
 
+        public void OpenWindowWithoutBorderControl(object ViewModel, UserControl View)
+        {
+            var window = new Window();
+
+            window.Content = View;
+            window.SizeToContent = SizeToContent.WidthAndHeight;
+            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            window.DataContext = ViewModel;
+            window.Tag = View.Tag;
+            window.WindowState = WindowState.Maximized;
+            window.WindowStyle = WindowStyle.None;
+            window.ShowDialog();
+        }
+
         public IEnumerable<Window> FindWindowbyTag (string nameWindow)
         {
             foreach(var window in Application.Current.Windows)
