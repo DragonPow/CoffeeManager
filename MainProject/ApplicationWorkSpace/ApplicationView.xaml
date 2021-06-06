@@ -5,9 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
+        xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
         xmlns:MainWorkSpace="clr-namespace:MainProject.MainWorkSpace"
         xmlns:HistoryWorkSpace="clr-namespace:MainProject.HistoryWorkSpace"
         xmlns:StatisticWorkSpace="clr-namespace:MainProject.StatisticWorkSpace"
+        xmlns:TableManagerWorkSpace="clr-namespace:MainProject.MainWorkSpace.Table"
+        xmlns:SettingWorkSpace="clr-namespace:MainProject.SettingWorkSpace"
         Title="Coffee Manager">
     <Window.Resources>
         <DataTemplate DataType="{x:Type MainWorkSpace:MainViewModel}">
@@ -16,7 +19,7 @@
         <!--<DataTemplate DataType="{x:Type AccountWorkSpace:AccountViewModel}">
             <AccountWorkSpace:AccountView />
         </DataTemplate>-->
-        <DataTemplate DataType="{x:Type HistoryWorkSpace:HistoryViewModel}">
+        <DataTemplate DataType="{x:Type ViewModel:HistoryViewModel}">
             <HistoryWorkSpace:HistoryView />
         </DataTemplate>
         <!--<DataTemplate DataType="{x:Type VoucherWorkSpace:VoucherViewModel}">
@@ -24,6 +27,12 @@
         </DataTemplate>-->
         <DataTemplate DataType="{x:Type StatisticWorkSpace:StatisticViewModel}">
             <StatisticWorkSpace:StatisticView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type ViewModel:TableViewModel}">
+            <TableManagerWorkSpace:TableManager />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type ViewModel:SettingViewModel}">
+            <SettingWorkSpace:SettingView />
         </DataTemplate>
     </Window.Resources>
     

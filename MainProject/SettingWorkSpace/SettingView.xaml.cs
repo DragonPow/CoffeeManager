@@ -18,7 +18,7 @@ namespace MainProject.SettingWorkSpace
     /// <summary>
     /// Interaction logic for SettingView.xaml
     /// </summary>
-    public partial class SettingView : Page
+    public partial class SettingView : UserControl
     {
         public SettingView()
         {

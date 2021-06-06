@@ -1,6 +1,6 @@
-﻿using MainProject.HistoryWorkSpace;
-using MainProject.MainWorkSpace;
+﻿using MainProject.MainWorkSpace;
 using MainProject.StatisticWorkSpace;
+using MainProject.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -30,8 +30,10 @@ namespace MainProject.ApplicationWorkSpace
             //Add list MainWorkSpace here
             WorkSpaces.Add(new MainViewModel());
             //WorkSpaces.Add(new AccountViewModel());
+            WorkSpaces.Add(new TableViewModel());
             WorkSpaces.Add(new HistoryViewModel());
             WorkSpaces.Add(new StatisticViewModel());
+            WorkSpaces.Add(new SettingViewModel());
             //WorkSpaces.Add(new VoucherViewModel());
 
             //Define current workspace

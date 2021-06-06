@@ -143,7 +143,6 @@
     <Compile Include="HistoryWorkSpace\HistoryListItemView.xaml.cs">
       <DependentUpon>HistoryListItemView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HistoryWorkSpace\HistoryViewModel.cs" />
     <Compile Include="HistoryWorkSpace\NumericUpDown.xaml.cs">
       <DependentUpon>NumericUpDown.xaml</DependentUpon>
     </Compile>
@@ -284,6 +283,7 @@
     </Compile>
     <Compile Include="ViewModel\HistoryViewModel.cs" />
     <Compile Include="ViewModel\ProductViewModel.cs" />
+    <Compile Include="ViewModel\SettingViewModel.cs" />
     <Compile Include="ViewModel\TableViewModel.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

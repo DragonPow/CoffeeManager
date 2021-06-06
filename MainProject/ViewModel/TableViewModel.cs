@@ -2,6 +2,7 @@
 using MainProject.MainWorkSpace.Bill;
 using MainProject.MainWorkSpace.Table;
 using MainProject.Model;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,8 +13,18 @@ using System.Windows.Input;
 
 namespace MainProject.ViewModel
 {
-   public  class TableViewModel : BaseViewModel
+   public  class TableViewModel : BaseViewModel, IMainWorkSpace
     {
+        public string NameWorkSpace => "Quản lý bàn";
+        private const PackIconKind _iconDisplay = PackIconKind.TableChair;
+        public PackIcon IconDisplay
+        {
+            get
+            {
+                return new PackIcon() { Kind = _iconDisplay, Width = 30, Height = 30 };
+            }
+        }
+
         #region Field
         private ObservableCollection<TABLECUSTOM> _ListTable;
         private ObservableCollection<int> _ListFloor;
