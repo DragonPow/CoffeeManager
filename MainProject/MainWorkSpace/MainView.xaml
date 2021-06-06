@@ -107,7 +107,7 @@
                             Padding="0"
                             Height="40"
                             Margin="5"
-                            Command="{Binding LoadViewUpdateProduct_Command}">
+                            Command="{Binding OpenViewEditCategory_Command}">
                                 <DockPanel>
                                     <TextBlock DockPanel.Dock="Left" Text="Sửa danh mục   " FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{StaticResource MainColor}" Margin="10,0,0,0"></TextBlock>
                                     <materialDesign:PackIcon Kind="PlusCircle" DockPanel.Dock="Right" Height="Auto" Width="auto" HorizontalAlignment="Right" Margin="7" Foreground="{StaticResource MainColor}"/>
@@ -121,7 +121,7 @@
             </materialDesign:ColorZone>
             <TabControl TabStripPlacement="Bottom"
                         DockPanel.Dock="Bottom"
-                        ItemsSource="{Binding ListType}"
+                        ItemsSource="{Binding ListType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                         SelectedItem="{Binding CurrentType}"
                         Style="{StaticResource MaterialDesignNavigatilRailTabControl}"
                          materialDesign:ColorZoneAssist.Mode="PrimaryMid">

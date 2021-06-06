@@ -9,7 +9,7 @@
               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=ViewModel:ProductViewModel}"
-             d:DesignHeight="650" d:DesignWidth="600">
+             Height="650" Width="600">
     <UserControl.DataContext>
         <ViewModel:ProductViewModel/>
     </UserControl.DataContext>
