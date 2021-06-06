@@ -662,7 +662,7 @@ namespace MainProject.ViewModel
 
                 if (l == null) return;
 
-                l.ForEach(p => p.IsChecked = p.TYPE_PRODUCT == null ? false : true);
+            /*    l.ForEach(p => p.IsChecked = p.TYPE_PRODUCT == null ? false : true);*/
                 ListPoduct = new ObservableCollection<PRODUCT>(l);
             }
         }
