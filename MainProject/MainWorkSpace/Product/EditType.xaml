@@ -24,28 +24,25 @@
                        FontSize="26"
                        Foreground="White"
                        HorizontalAlignment="Center"
-                       VerticalAlignment="Center" />
-            <Button Background="Transparent"
-                    BorderBrush="Transparent"
-                    Margin="10"
-                    HorizontalAlignment="Right"
-                    Command="{Binding ExitDetailProduct}">
-                <materialDesign:PackIcon Kind="Close"
-                                         Width="25"
-                                         Height="25" />
+                       VerticalAlignment="Center"/>
+            <Button Background="Transparent" BorderBrush="Transparent" Margin="10" HorizontalAlignment="Right"
+                    Command="{Binding}">
+                <materialDesign:PackIcon Kind="Close" Width="25" Height="25" />
+
             </Button>
         </Grid>
         <StackPanel DockPanel.Dock="Bottom"
                     Background="White">
             <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
-                      materialDesign:HintAssist.Hint="Danh mục"
-                      ItemsSource="{Binding Source={x:Static model:TYPE_PRODUCT.Instance}, Path=ListType}"
-                      SelectedValue="{Binding TypeInEditCATEGORYCombobox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}"
-                      IsSynchronizedWithCurrentItem="True"
-                      FontSize="14"
-                      MaxWidth="500"
-                      Height="50"
-                      Margin="100,30,100,0" />
+                          materialDesign:HintAssist.Hint="Danh mục"
+                          ItemsSource="{Binding Source={x:Static model:TYPE_PRODUCT.Instance}, Path=ListType}"
+                          SelectedItem="{Binding TypeInEditCATEGORYCombobox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}"
+                          SelectedValuePath="Type"
+                          IsSynchronizedWithCurrentItem="True"
+                          FontSize="14"
+                          MaxWidth="500"
+                          Height="50"
+                          Margin="100,30,100,0" />
             <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                      materialDesign:HintAssist.Hint="Tên danh mục"
                      Text="{Binding EditTypeInEditCatefory,UpdateSourceTrigger=PropertyChanged}"
