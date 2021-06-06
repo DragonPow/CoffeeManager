@@ -1,13 +1,22 @@
 ﻿<UserControl x:Class="MainProject.MainWorkSpace.Table.AlreadyTable_UC"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Table"
-             mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="100">
+             mc:Ignorable="d"
+             d:DesignHeight="100"
+             d:DesignWidth="100">
     <Canvas>
-        <Image Source="/Resources/alreadyTable.png" Height="80" Width="80" Margin="10,10"></Image>
-        <TextBlock Text="001" FontSize="18" Foreground="#D31D1D" Canvas.Left="36" Canvas.Top="37" TextAlignment="Center"  />
+        <Image Source="/Resources/alreadyTable.png"
+               Height="80"
+               Width="80"
+               Margin="10,10"></Image>
+        <TextBlock Text="001"
+                   FontSize="18"
+                   Foreground="#D31D1D"
+                   Canvas.Left="36"
+                   Canvas.Top="37"
+                   TextAlignment="Center" />
     </Canvas>
 </UserControl>
