@@ -197,7 +197,7 @@ namespace MainProject.ViewModel
                     {
                         TableName = "Bàn: " + value.table.Name.ToString();
                         Isbringtohome = false;
-                        CloseChooseTable();
+                     
                     }
                     else
                          if (!Isbringtohome) TableName = "Chọn bàn >";
@@ -392,7 +392,7 @@ namespace MainProject.ViewModel
             {
                 using (var db = new mainEntities())
                 {
-                    CurrentTable = new TABLECUSTOM() { };
+                    CurrentTable = new TABLECUSTOM() { table = new TABLE()};
                 }
             }
 

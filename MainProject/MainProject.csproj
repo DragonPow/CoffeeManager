@@ -212,6 +212,7 @@
     <Compile Include="StatisticWorkSpace\DatePickerAssist.cs" />
     <Compile Include="StatisticWorkSpace\StatisticEnum.cs" />
     <Compile Include="StatisticWorkSpace\StatisticModel.cs" />
+    <Compile Include="TYPE_PRODUCT.cs" />
     <Compile Include="ViewModel\BillViewModel.cs" />
     <Compile Include="MainWorkSpace\Bill\Bill_ProductTable.xaml.cs">
       <DependentUpon>Bill_ProductTable.xaml</DependentUpon>

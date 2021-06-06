@@ -71,7 +71,7 @@ namespace MainProject.MainWorkSpace
 
             using (var db = new mainEntities())
             {
-                var l = new List<TYPE_PRODUCT>() { new TYPE_PRODUCT() { Type = "Tất cả" } };
+                var l = new List<TYPE_PRODUCT>() { new TYPE_PRODUCT() { Type = "Tất cả", ID = new long() } };
              
                 l.AddRange(db.TYPE_PRODUCT.Distinct().ToList());
 
@@ -107,9 +107,15 @@ namespace MainProject.MainWorkSpace
 
                 db.SaveChanges();
 
-                ListType.Add(new TYPE_PRODUCT() { Type = "Danh mục mới " + (i == 0 ? "" : i.ToString()) });
+                TYPE_PRODUCT Type = db.TYPE_PRODUCT.OrderByDescending(p => p.ID).FirstOrDefault();
+
+                ListType.Add(Type);
 
                 WindowService.Instance.OpenMessageBox("Thêm mới thành công. Tiến hành chỉnh sửa ở Sửa danh mục", "Thông báo", System.Windows.MessageBoxImage.Information);
+
+                Productviewmodel.Type = Type;
+                Productviewmodel.OpenViewEditCategory();
+
             }
 
         }
