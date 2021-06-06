@@ -441,7 +441,8 @@ namespace MainProject.ViewModel
 
         public void ExitDetail(object a)
         {
-            //open view Add_pro(a)
+            var window = WindowService.Instance.FindWindowbyTag("Edit category").First();
+            window.Close();
         }
 
         public ICommand AddUpdateImageProductCommand
@@ -536,7 +537,7 @@ namespace MainProject.ViewModel
 
             TypeInEditCATEGORYCombobox = Type;
             
-           WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditType());
+            WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditType());
 
             LoadProductByType(Type.Type);
 
@@ -623,7 +624,7 @@ namespace MainProject.ViewModel
             Window window = WindowService.Instance.FindWindowbyTag("Edit category").First();
             window.Close();
         }
-      
+
 
 
         private void LoadProductByType(string Type)
