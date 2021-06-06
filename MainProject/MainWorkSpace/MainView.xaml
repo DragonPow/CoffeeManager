@@ -14,9 +14,6 @@
              d:DataContext="{d:DesignInstance Type=local:MainViewModel}"
              d:DesignHeight="630"
              d:DesignWidth="1150">
-    <UserControl.DataContext>
-        <local:MainViewModel/>
-    </UserControl.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="7*"/>
@@ -143,10 +140,12 @@
                 <TabControl.ItemContainerStyle>
                     <Style TargetType="TabItem"
                        BasedOn="{StaticResource MaterialDesignNavigationRailTabItem}">
-                        <Setter Property="Width"
+                        <Setter Property="MinWidth"
                             Value="120" />
                         <Setter Property="Height"
                             Value="Auto" />
+                        <Setter Property="Width"
+                                Value="Auto" />
                     </Style>
                 </TabControl.ItemContainerStyle>
                 <TabControl.ContentTemplate>

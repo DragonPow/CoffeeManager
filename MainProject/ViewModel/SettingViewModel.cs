@@ -9,8 +9,8 @@ namespace MainProject.ViewModel
 {
     class SettingViewModel : BaseViewModel, IMainWorkSpace
     {
-        public string NameWorkSpace => "Lịch sử";
-        private const PackIconKind _iconDisplay = PackIconKind.ClipboardTextSearchOutline;
+        public string NameWorkSpace => "Thông tin";
+        private const PackIconKind _iconDisplay = PackIconKind.AccountOutline;
         public PackIcon IconDisplay
         {
             get
