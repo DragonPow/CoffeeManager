@@ -51,21 +51,24 @@ namespace MainProject.ViewModel
         private ICommand _CancelAddProduct;
         private ICommand _ExitAddProview;
 
-        
+
+        private ICommand _RightClickDetailPro;
         private ICommand _ExitDetailProduct;
         private ICommand _OpenViewDetailProduct;
         private ICommand _AddDetailProToTableCommand;
 
         private ICommand _AddImageProduct;
 
-        private ICommand _OpenViewEditCategory;
-        private ICommand _ClickCheckboxSelectedPro;
+        private ICommand _OpenViewEditCategory;       
         private ICommand _SaveEditCategory;
+        private ICommand _ClickCheckboxSelectedPro;
+        private ICommand _DeleteTypeEditCategory;
+
         private ICommand _CloseEditCategory;
 
 
         private ICommand _AddEditCategory;
-        private ICommand _DeleteTypeEditCategory;
+       
         #endregion
 
 
@@ -107,7 +110,7 @@ namespace MainProject.ViewModel
 
         public TYPE_PRODUCT Type_in_Combobox_AddProduct { get => _Type_in_Combobox_AddProduct; set { if (_Type_in_Combobox_AddProduct != value) { _Type_in_Combobox_AddProduct = value; OnPropertyChanged(); } } }
         public TYPE_PRODUCT Type { get => _Type; set { if (_Type != value) { _Type = value; OnPropertyChanged(); LoadProductByType(value.Type); } } }
-        public TYPE_PRODUCT TypeInEditCATEGORYCombobox { get => _TypeInEditCATEGORYCombobox; set { if (_TypeInEditCATEGORYCombobox != value) { _TypeInEditCATEGORYCombobox = value; OnPropertyChanged(); LoadProductBYType_EditType(); } } }
+        public TYPE_PRODUCT TypeInEditCATEGORYCombobox { get => _TypeInEditCATEGORYCombobox; set { if (_TypeInEditCATEGORYCombobox != value) { _TypeInEditCATEGORYCombobox = value; OnPropertyChanged(); LoadProductBYType_EditType(); EditTypeInEditCatefory = value.Type; } } }
 
         public TableViewModel Tableviewmodel { get => _Tableviewmodel; set { if (_Tableviewmodel != value) { _Tableviewmodel = value; OnPropertyChanged(); } } }
         #endregion
@@ -550,13 +553,13 @@ namespace MainProject.ViewModel
 
         public void ClickCheckboxSelectedPro(object a)
         {
-            if (ListPoduct.ElementAt(IndexCurrentProduct).TYPE_PRODUCT.Type == "")
+            if (ListPoduct.ElementAt(IndexCurrentProduct).TYPE_PRODUCT== null)
             {
                 ListPoduct.ElementAt(IndexCurrentProduct).TYPE_PRODUCT = Type;
             }                 
             else
             {
-                ListPoduct.ElementAt(IndexCurrentProduct).TYPE_PRODUCT =  new TYPE_PRODUCT() { Type = "", ID = 0 } ;
+                ListPoduct.ElementAt(IndexCurrentProduct).TYPE_PRODUCT = null ;
             }
         }
           public ICommand SaveEditCategory_Command
@@ -575,14 +578,16 @@ namespace MainProject.ViewModel
 
         public void SaveEditCategory(object a)
          {
+
             using (var db = new mainEntities())
             {
                 var type = db.TYPE_PRODUCT.Where(t => t == TypeInEditCATEGORYCombobox).FirstOrDefault();
-                type.Type = EditTypeInEditCatefory;
 
-                var list = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT == type || p.TYPE_PRODUCT.ID == 0)).ToList();
+                if (EditTypeInEditCatefory != "")  type.Type = EditTypeInEditCatefory;
+
+                var list = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT == type || p.TYPE_PRODUCT == null)).ToList();
                 if (list == null) return;
-
+          
                 int i = 0; 
                 foreach ( var p in list)
                 {
@@ -634,7 +639,7 @@ namespace MainProject.ViewModel
             {
                 var i = db.TYPE_PRODUCT.Where(t => t.Type.Contains("Danh mục mới")).Count();
 
-                db.TYPE_PRODUCT.Add(new TYPE_PRODUCT() { Type = "Danh mục mới" + (i == 0 ? "" : i.ToString()) });
+                db.TYPE_PRODUCT.Add(new TYPE_PRODUCT() { Type = "Danh mục mới " + (i == 0 ? "" : i.ToString()) });
                 db.SaveChanges();
 
                 WindowService.Instance.OpenMessageBox("Thêm mới thành công. Tiến hành chỉnh sửa ở Sửa danh mục", "Thông báo", System.Windows.MessageBoxImage.Information);
@@ -699,7 +704,7 @@ namespace MainProject.ViewModel
 
                 foreach( var p in list)
                 {
-                    p.TYPE_PRODUCT.ID = 0;
+                    p.TYPE_PRODUCT = null;
                 }
 
                 db.TYPE_PRODUCT.Remove(TypeInEditCATEGORYCombobox);
