@@ -151,11 +151,15 @@
     </Compile>
     <Compile Include="DetailPro.cs" />
     <Compile Include="HelperClass\WindowService.cs" />
+    <Compile Include="HistoryWorkSpace\Converter\ChangePageConverter.cs" />
     <Compile Include="HistoryWorkSpace\Converter\IdexConverter.cs" />
     <Compile Include="HistoryWorkSpace\HistoryListItemView.xaml.cs">
       <DependentUpon>HistoryListItemView.xaml</DependentUpon>
     </Compile>
     <Compile Include="HistoryWorkSpace\HistoryViewModel.cs" />
+    <Compile Include="HistoryWorkSpace\NumericUpDown.xaml.cs">
+      <DependentUpon>NumericUpDown.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWorkSpace\Bill\BillView.xaml.cs">
       <DependentUpon>BillView.xaml</DependentUpon>
     </Compile>
@@ -349,6 +353,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="HistoryWorkSpace\HistoryListItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HistoryWorkSpace\NumericUpDown.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

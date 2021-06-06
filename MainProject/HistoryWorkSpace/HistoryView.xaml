@@ -28,6 +28,7 @@
                    Grid.ColumnSpan="3"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
+                   FontWeight="Bold"
                    Margin="0 15"
                    FontSize="30" />
         <StackPanel Orientation="Horizontal"
@@ -58,7 +59,7 @@
                         SelectedDate="{Binding EndTime}"
                         materialDesign:HintAssist.Hint="Chọn ngày" />
         </StackPanel>
-        <Button Content="Tìm kiếm"
+        <Button Content="TÌM KIẾM"
                 x:Name="btnFind"
                 Style="{StaticResource MaterialDesignOutlinedButton}"
                 Command="{Binding }"
@@ -66,6 +67,7 @@
                 Grid.Column="2"
                 Background="Green"
                 Foreground="White"
+                FontSize="15"
                 Width="120"
                 Margin="0 30 0 20">
             <behaviors:Interaction.Triggers>
@@ -81,5 +83,9 @@
                                    Grid.Row="2"
                                    Grid.ColumnSpan="3"
                                    HorizontalAlignment="Center" />
+        <local:NumericUpDown Grid.Row="3" 
+                             Grid.ColumnSpan="3"
+                             Margin="0 20"
+                             DataContext="{Binding}"/>
     </Grid>
 </UserControl>

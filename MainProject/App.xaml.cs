@@ -27,8 +27,8 @@ namespace MainProject
 
             ////Testing Startup
             //WindowService.Instance.OpenWindow(new HistoryViewModel(), new HistoryWorkSpace.HistoryView());
-            TestView view = new TestView();
-            MainViewModel viewModel = new MainViewModel();
+            TestingView view = new TestingView();
+            MainProject.ViewModel.HistoryViewModel viewModel = new MainProject.ViewModel.HistoryViewModel();
             ////End testing Startup
             ///
 
