@@ -74,6 +74,7 @@ namespace MainProject.ViewModel
         #region Properties
 
         public ObservableCollection<PRODUCT> ListPoduct { get => _ListProduct; set { if (value != _ListProduct) { _ListProduct = value; OnPropertyChanged(); } } }
+        public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); SearchName(); } } }
 
         public int IndexCurrentProduct { get => _IndexCurrentproduct; set { if (_IndexCurrentproduct != value) { _IndexCurrentproduct = value; OnPropertyChanged(); } } }
         public int IndexCurrentproductInMainView 
@@ -103,7 +104,7 @@ namespace MainProject.ViewModel
             } 
         }
 
-        public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); SearchName(); } } }
+       /* public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); SearchName(); } } }*/
         public string EditTypeInEditCatefory { get => _EditTypeInEditCatefory; set { if (_EditTypeInEditCatefory != value) { _EditTypeInEditCatefory = value; OnPropertyChanged(); } } }
         public string Type_in_Combobox_AddPro { get => _Type_in_Combobox_AddPro; set { if (_Type_in_Combobox_AddPro != value) { _Type_in_Combobox_AddPro= value; OnPropertyChanged(); } } }
 
@@ -294,25 +295,33 @@ namespace MainProject.ViewModel
         }
 
         public void SearchName()
-        {           
+        {      
+     
             using (var db = new mainEntities())
-            {
-                Type = db.TYPE_PRODUCT.Where(t => t.ID == 0).FirstOrDefault();
+            {            
 
                 if ( SearchProduct =="")
                 {
                     ListPoduct = new ObservableCollection<PRODUCT>(db.PRODUCTs.ToList());
                     return;
-                }                    
+                }
 
-                var listpro = db.PRODUCTs.Where(p => (ConvertToUnSign(p.Name).ToLower().Contains(ConvertToUnSign(SearchProduct).ToLower())));
+                string s = ConvertToUnSign(SearchProduct).ToLower();
+                var listpro = db.PRODUCTs.ToList();
+
                 if (listpro == null)
                 {
                     ListPoduct = new ObservableCollection<PRODUCT>();
                     return;
-                }    
+                }
 
-                ListPoduct = new ObservableCollection<PRODUCT>(listpro.ToList());
+                ListPoduct = new ObservableCollection<PRODUCT>();
+
+                foreach ( var p in listpro)
+                {
+                    if (ConvertToUnSign(p.Name).ToLower().Contains(s)) ListPoduct.Add(p);
+                }                
+            
             }
 
         }
