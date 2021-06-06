@@ -47,7 +47,7 @@ namespace MainProject
         {
             TYPE_PRODUCT.loadListType();
             STATUS_TABLE.loadListStatus();
-            POSITION_EMPLOYEE.loadListStatus();
+           /* POSITION_EMPLOYEE.loadListStatus();*/
         }
     }
 }

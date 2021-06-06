@@ -240,12 +240,33 @@ namespace MainProject.ViewModel
 
             using (var db = new mainEntities())
             {
-                PRODUCT product = db.PRODUCTs.Where(p => (p.ID == ListPoduct.ElementAt(IndexCurrentProduct).ID) && (p.DELETED == 0)).FirstOrDefault();
-                if (product != null)
+                using (var transaction = db.Database.BeginTransaction())
                 {
-                    product.DELETED = 1;
-                }
-                db.SaveChanges();
+                    PRODUCT product = db.PRODUCTs.Where(p => (p.ID == ListPoduct.ElementAt(IndexCurrentProduct).ID)).FirstOrDefault();
+
+
+                    if (product == null) return;
+
+                    try
+                    {
+                        var list = db.DETAILREPORTSALES.Where(r => r.ID_Product == product.ID);
+                        if (list != null)
+                        {
+                            db.DETAILREPORTSALES.RemoveRange(list);
+                        }
+
+                        db.PRODUCTs.Remove(product);
+
+                        db.SaveChanges();
+                        transaction.Commit();
+                    }
+                    catch(Exception exp)
+                    {
+                        transaction.Rollback();
+                        Console.WriteLine("Error occurred.");
+                    }
+                    
+                }               
             }
             ListPoduct.Remove(ListPoduct.ElementAt(IndexCurrentProduct));
         }
@@ -347,10 +368,10 @@ namespace MainProject.ViewModel
         {
             using (var db = new mainEntities())
             {
-                PRODUCT pro = db.PRODUCTs.Where(p => (p.ID == ListPoduct.ElementAt(IndexCurrentProduct).ID) && (p.DELETED == 0)).FirstOrDefault();             
+                PRODUCT pro = db.PRODUCTs.Where(p => (p.ID == ListPoduct.ElementAt(IndexCurrentProduct).ID) ).FirstOrDefault();
 
-                pro.DELETED = 1;
-                db.PRODUCTs.Add(Newproduct);
+                Newproduct.ID = pro.ID;
+                pro = Newproduct;           
                 db.SaveChanges();
 
                 var item = ListPoduct.ElementAt(IndexCurrentProduct);
@@ -652,7 +673,7 @@ namespace MainProject.ViewModel
 
             using (var db = new mainEntities())
             {
-                var list = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT == TypeInEditCATEGORYCombobox && p.DELETED == 0)).ToList();
+                var list = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT == TypeInEditCATEGORYCombobox )).ToList();
                 if (list == null) return;
 
                 foreach( var p in list)
