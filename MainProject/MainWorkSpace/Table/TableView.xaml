@@ -17,7 +17,8 @@
                   SelectedItem="{Binding CurrentTable, Mode=TwoWay}" >
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <local:FreeTable_UC DataContext="{Binding}">
+                    <local:FreeTable_UC DataContext="{Binding}"
+                                        Margin="10">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseDoubleClick">
                                 <i:InvokeCommandAction Command="{Binding DataContext.CloseViewChooseTableCommand, ElementName=Table_View}"/>

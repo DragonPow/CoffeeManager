@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MainProject.HistoryWorkSpace
+namespace MainProject.ViewModel
 {
-    class HistoryViewModel : BaseViewModel, IMainWorkSpace
+    class SettingViewModel : BaseViewModel, IMainWorkSpace
     {
         public string NameWorkSpace => "Lịch sử";
         private const PackIconKind _iconDisplay = PackIconKind.ClipboardTextSearchOutline;
