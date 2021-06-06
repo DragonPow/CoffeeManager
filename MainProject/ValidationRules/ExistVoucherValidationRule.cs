@@ -17,7 +17,7 @@ namespace MainProject.ValidationRules
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             String code = value.ToString();
-            if (!VoucherWorkSpace.VoucherViewModel.HasExisted(code))
+            if (true)
             {
                 return new ValidationResult(true, null);
             }

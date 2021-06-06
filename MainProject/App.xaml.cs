@@ -27,14 +27,14 @@ namespace MainProject
 
             ////Testing Startup
             //WindowService.Instance.OpenWindow(new HistoryViewModel(), new HistoryWorkSpace.HistoryView());
-            TestingView view = new TestingView();
-            MainProject.ViewModel.HistoryViewModel viewModel = new MainProject.ViewModel.HistoryViewModel();
+            //TestingView view = new TestingView();
+            //MainProject.ViewModel.HistoryViewModel viewModel = new MainProject.ViewModel.HistoryViewModel();
             ////End testing Startup
             ///
 
             //Main Startup
-            //ApplicationView view = new ApplicationView();
-            //ApplicationViewModel viewModel = new ApplicationViewModel();
+            ApplicationView view = new ApplicationView();
+            ApplicationViewModel viewModel = new ApplicationViewModel();
             //End main Startup
 
             LoadInitApp();

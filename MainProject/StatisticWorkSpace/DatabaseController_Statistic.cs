@@ -11,7 +11,8 @@ namespace MainProject.StatisticWorkSpace
     {
         public List<StatisticModel> statisticByDay(DateTime minDate, DateTime maxDate, string productName)
         {
-            using (mainEntities db = new mainEntities())
+            return new List<StatisticModel>();
+            /*using (mainEntities db = new mainEntities())
             {
                 var data = db.BILLs.Where(b => b.CheckoutDay >= minDate && b.CheckoutDay <= maxDate)
                     .Join(db.DETAILBILLs, b => b.ID, dt => dt.ID_Bill,
@@ -19,27 +20,23 @@ namespace MainProject.StatisticWorkSpace
                     {
                         PD_ID = dt.ID_Product,
                         Date = b.CheckoutDay,
-                        b.VOUCHER,
-                        dt.Amount
+                        Amount = dt.Quantity
                     }).Join(productName == null
                             ?db.PRODUCTs
-                            :db.PRODUCTs.Where(pd => (pd.DELETED == 0) && pd.Name == productName)
+                            :db.PRODUCTs.Where(pd => pd.Name == productName)
                             , r => r.PD_ID, pd => pd.ID,
                     (r, pd) => new
                     {
                         pd.Name,
                         Revenue = pd.Price * r.Amount,
                         r.Amount,
-                        r.VOUCHER,
                         r.Date
                     });
                 Dictionary<DateTime, StatisticModel> dictionary = new Dictionary<DateTime, StatisticModel>();
 
                 foreach (var group in data)
                 {
-                    float voucher = 1f;
-                    if (group.VOUCHER != null) { voucher = group.VOUCHER.Percent / 100f; }
-                    DateTime date = new DateTime(group.Date.Value.Year, group.Date.Value.Month, group.Date.Value.Day, 0, 0, 0);
+                    DateTime date = new DateTime(group.Date.Year, group.Date.Month, group.Date.Day, 0, 0, 0);
                     StatisticModel model;
                     if (!dictionary.ContainsKey(date))
                     {
@@ -59,12 +56,13 @@ namespace MainProject.StatisticWorkSpace
                 }
 
                 return dictionary.Values.ToList();
-            }
+            }*/
         }
 
         public List<StatisticModel> statisticByWeek(DateTime minDate, DateTime maxDate, string productName)
         {
-            using (mainEntities db = new mainEntities())
+            return new List<StatisticModel>();
+            /*using (mainEntities db = new mainEntities())
             {
                 var data = db.BILLs.Where(b => b.CheckoutDay >= minDate && b.CheckoutDay <= maxDate)
                     .Join(db.DETAILBILLs, b => b.ID, dt => dt.ID_Bill,
@@ -113,12 +111,13 @@ namespace MainProject.StatisticWorkSpace
 
                 }
                 return dictionary.Values.ToList();
-            }
+            }*/
         }
 
         public List<StatisticModel> statisticByMonth(DateTime minDate, DateTime maxDate, string productName)
         {
-            using (mainEntities db = new mainEntities())
+            return new List<StatisticModel>();
+           /* using (mainEntities db = new mainEntities())
             {
                 var data = db.BILLs.Where(b => b.CheckoutDay >= minDate && b.CheckoutDay <= maxDate)
                     .Join(db.DETAILBILLs, b => b.ID, dt => dt.ID_Bill,
@@ -163,7 +162,7 @@ namespace MainProject.StatisticWorkSpace
                     model.Amount += group.Amount;
                 }
                 return dictionary.Values.ToList();
-            }
+            }*/
         }
 
         public List<string> getProductNames()
@@ -171,8 +170,7 @@ namespace MainProject.StatisticWorkSpace
             using (mainEntities db = new mainEntities())
             {
                 List<string> rs = new List<string>();
-                var data = db.PRODUCTs.Where(pd => pd.DELETED == 0);
-                foreach (var pd in data)
+                foreach (var pd in db.PRODUCTs)
                 {
                     rs.Add(pd.Name);
                 }
@@ -184,7 +182,7 @@ namespace MainProject.StatisticWorkSpace
         {
             using (mainEntities db = new mainEntities())
             {
-                var data = db.PRODUCTs.Where(pd => (pd.DELETED == 0) && pd.Name == name).FirstOrDefault();
+                var data = db.PRODUCTs.Where(pd => pd.Name == name).FirstOrDefault();
                 return data;
             }
         }
@@ -218,7 +216,7 @@ namespace MainProject.StatisticWorkSpace
                         var dt = new DETAILBILL
                         {
                             ID_Product = listPDs[temp],
-                            Amount = random.Next(4) + 1
+                            Quantity = random.Next(4) + 1
                         };
                         bill.DETAILBILLs.Add(dt);
                         listPDs.RemoveAt(temp);
