@@ -49,7 +49,7 @@ namespace MainProject.ViewModel
 
         private ICommand _DeleteTableCommand;
         private ICommand _InsertTableCommand;
-        private ICommand _UpdateStatusTableCommand;
+        private ICommand _UpdateStatusTableCommand;      
 
         private ICommand _AddFloor;
         private ICommand _DeleteFloor;
@@ -197,7 +197,6 @@ namespace MainProject.ViewModel
                     {
                         TableName = "Bàn: " + value.table.Name.ToString();
                         Isbringtohome = false;
-                        CloseChooseTable();
                     }
                     else
                          if (!Isbringtohome) TableName = "Chọn bàn >";
