@@ -178,14 +178,14 @@ namespace MainProject.ViewModel
 
                     db.PRODUCTs.Add(Newproduct);
 
+                    ListPoduct.Add(Newproduct);
+
                     db.SaveChanges();
                     Exitaddproview();
 
                 }
             }
-
-
-           ListPoduct.Add(Newproduct);
+       
         }
 
         public ICommand CancelAddProduct_Command
@@ -455,7 +455,7 @@ namespace MainProject.ViewModel
 
         public void Add_Update_ImageProduct()
         {
-            Newproduct = new PRODUCT() { Image = imageToByteArray(Properties.Resources.Empty_Image), TYPE_PRODUCT = new TYPE_PRODUCT() };
+       /*     Newproduct = new PRODUCT() { Image = imageToByteArray(Properties.Resources.Empty_Image), TYPE_PRODUCT = new TYPE_PRODUCT() };*/
 
             string path = "";
 
