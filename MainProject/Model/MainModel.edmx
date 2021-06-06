@@ -91,7 +91,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Name" Type="integer" Nullable="false" />
           <Property Name="Floor" Type="int" Nullable="false" />
           <Property Name="ID_Status" Type="integer" Nullable="false" />
         </EntityType>
@@ -257,12 +257,7 @@
           <EntitySet Name="REPORTREVENUEs" EntityType="mainModel.REPORTREVENUE" />
           <EntitySet Name="REPORTSALES" EntityType="mainModel.REPORTSALE" />
           <EntitySet Name="STATUS_TABLE" EntityType="mainModel.STATUS_TABLE" />
-          <EntitySet Name="TABLEs" EntityType="mainModel.TABLE" />
           <EntitySet Name="TYPE_PRODUCT" EntityType="mainModel.TYPE_PRODUCT" />
-          <AssociationSet Name="FK_BILL_0_0" Association="mainModel.FK_BILL_0_0">
-            <End Role="TABLE" EntitySet="TABLEs" />
-            <End Role="BILL" EntitySet="BILLs" />
-          </AssociationSet>
           <AssociationSet Name="FK_DETAILBILL_1_0" Association="mainModel.FK_DETAILBILL_1_0">
             <End Role="BILL" EntitySet="BILLs" />
             <End Role="DETAILBILL" EntitySet="DETAILBILLs" />
@@ -287,9 +282,14 @@
             <End Role="TYPE_PRODUCT" EntitySet="TYPE_PRODUCT" />
             <End Role="PRODUCT" EntitySet="PRODUCTs" />
           </AssociationSet>
+          <EntitySet Name="TABLEs1" EntityType="mainModel.TABLE" />
+          <AssociationSet Name="FK_BILL_0_0" Association="mainModel.FK_BILL_0_0">
+            <End Role="TABLE" EntitySet="TABLEs1" />
+            <End Role="BILL" EntitySet="BILLs" />
+          </AssociationSet>
           <AssociationSet Name="FK_TABLE_0_0" Association="mainModel.FK_TABLE_0_0">
             <End Role="STATUS_TABLE" EntitySet="STATUS_TABLE" />
-            <End Role="TABLE" EntitySet="TABLEs" />
+            <End Role="TABLE" EntitySet="TABLEs1" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="BILL">
@@ -300,8 +300,8 @@
           <Property Name="TotalPrice" Type="Int64" Nullable="false" />
           <Property Name="CheckoutDay" Type="DateTime" Nullable="false" />
           <Property Name="ID_Table" Type="Int64" />
-          <NavigationProperty Name="TABLE" Relationship="mainModel.FK_BILL_0_0" FromRole="BILL" ToRole="TABLE" />
           <NavigationProperty Name="DETAILBILLs" Relationship="mainModel.FK_DETAILBILL_1_0" FromRole="BILL" ToRole="DETAILBILL" />
+          <NavigationProperty Name="TABLE" Relationship="mainModel.FK_BILL_0_0" FromRole="BILL" ToRole="TABLE" />
         </EntityType>
         <EntityType Name="DETAILBILL">
           <Key>
@@ -386,17 +386,6 @@
           <Property Name="Status" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TABLEs" Relationship="mainModel.FK_TABLE_0_0" FromRole="STATUS_TABLE" ToRole="TABLE" />
         </EntityType>
-        <EntityType Name="TABLE">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="Floor" Type="Int32" Nullable="false" />
-          <Property Name="ID_Status" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="BILLs" Relationship="mainModel.FK_BILL_0_0" FromRole="TABLE" ToRole="BILL" />
-          <NavigationProperty Name="STATUS_TABLE" Relationship="mainModel.FK_TABLE_0_0" FromRole="TABLE" ToRole="STATUS_TABLE" />
-        </EntityType>
         <EntityType Name="TYPE_PRODUCT">
           <Key>
             <PropertyRef Name="ID" />
@@ -405,18 +394,6 @@
           <Property Name="Type" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PRODUCTs" Relationship="mainModel.FK_PRODUCT_0_0" FromRole="TYPE_PRODUCT" ToRole="PRODUCT" />
         </EntityType>
-        <Association Name="FK_BILL_0_0">
-          <End Type="mainModel.TABLE" Role="TABLE" Multiplicity="0..1" />
-          <End Type="mainModel.BILL" Role="BILL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TABLE">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="BILL">
-              <PropertyRef Name="ID_Table" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DETAILBILL_1_0">
           <End Type="mainModel.BILL" Role="BILL" Multiplicity="1" />
           <End Type="mainModel.DETAILBILL" Role="DETAILBILL" Multiplicity="*" />
@@ -486,6 +463,29 @@
             </Principal>
             <Dependent Role="PRODUCT">
               <PropertyRef Name="ID_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TABLE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="Int32" Nullable="false" />
+          <Property Name="Floor" Type="Int32" Nullable="false" />
+          <Property Name="ID_Status" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="BILLs" Relationship="mainModel.FK_BILL_0_0" FromRole="TABLE" ToRole="BILL" />
+          <NavigationProperty Name="STATUS_TABLE" Relationship="mainModel.FK_TABLE_0_0" FromRole="TABLE" ToRole="STATUS_TABLE" />
+        </EntityType>
+        <Association Name="FK_BILL_0_0">
+          <End Type="mainModel.TABLE" Role="TABLE" Multiplicity="0..1" />
+          <End Type="mainModel.BILL" Role="BILL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TABLE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BILL">
+              <PropertyRef Name="ID_Table" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -594,20 +594,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TABLEs">
+          <EntitySetMapping Name="TYPE_PRODUCT">
+            <EntityTypeMapping TypeName="mainModel.TYPE_PRODUCT">
+              <MappingFragment StoreEntitySet="TYPE_PRODUCT">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TABLEs1">
             <EntityTypeMapping TypeName="mainModel.TABLE">
               <MappingFragment StoreEntitySet="TABLE">
                 <ScalarProperty Name="ID_Status" ColumnName="ID_Status" />
                 <ScalarProperty Name="Floor" ColumnName="Floor" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TYPE_PRODUCT">
-            <EntityTypeMapping TypeName="mainModel.TYPE_PRODUCT">
-              <MappingFragment StoreEntitySet="TYPE_PRODUCT">
-                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

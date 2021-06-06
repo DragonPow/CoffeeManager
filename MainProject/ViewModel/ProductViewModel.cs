@@ -141,7 +141,7 @@ namespace MainProject.ViewModel
         public void Loadaddproview()
         {
 
-            Newproduct =new PRODUCT() { DELETED = 0, Image = imageToByteArray( Properties.Resources.Empty_Image), TYPE_PRODUCT = new TYPE_PRODUCT() } ;
+            Newproduct =new PRODUCT() { Image = imageToByteArray( Properties.Resources.Empty_Image), TYPE_PRODUCT = new TYPE_PRODUCT() } ;
 
             WindowService.Instance.OpenWindow(this, new CreateProd());
         }
@@ -270,11 +270,11 @@ namespace MainProject.ViewModel
 
                 if ( SearchProduct =="")
                 {
-                    ListPoduct = new ObservableCollection<PRODUCT>(db.PRODUCTs.Where(t => t.DELETED == 0).ToList());
+                    ListPoduct = new ObservableCollection<PRODUCT>(db.PRODUCTs.ToList());
                     return;
                 }                    
 
-                var listpro = db.PRODUCTs.Where(p => (ConvertToUnSign(p.Name).ToLower().Contains(ConvertToUnSign(SearchProduct).ToLower()) && p.DELETED == 0));
+                var listpro = db.PRODUCTs.Where(p => (ConvertToUnSign(p.Name).ToLower().Contains(ConvertToUnSign(SearchProduct).ToLower())));
                 if (listpro == null)
                 {
                     ListPoduct = new ObservableCollection<PRODUCT>();
@@ -302,7 +302,7 @@ namespace MainProject.ViewModel
             ObservableCollection<PRODUCT> listproduct;
             using (var db = new mainEntities())
             {
-                var listpro = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT.Type == Type.Type && p.DELETED == 0));
+                var listpro = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT.Type == Type.Type));
                 if (listpro == null) return;
                 listproduct = new ObservableCollection<PRODUCT>(listpro.ToList());
             }
@@ -609,11 +609,11 @@ namespace MainProject.ViewModel
 
                 if (Type.Contains("Tất cả"))
                 {
-                    ListPoduct = new ObservableCollection<PRODUCT>(db.PRODUCTs.Where(p => (p.DELETED == 0)).ToList());
+                    ListPoduct = new ObservableCollection<PRODUCT>(db.PRODUCTs.ToList());
                 }
                 else
                 {
-                    var p = db.PRODUCTs.Where(pro => ((pro.TYPE_PRODUCT.Type == Type) && (pro.DELETED == 0)));
+                    var p = db.PRODUCTs.Where(pro => (pro.TYPE_PRODUCT.Type == Type));
                     if (p == null) return;
                     ListPoduct = new ObservableCollection<PRODUCT>(p.ToList());
                 }
@@ -626,7 +626,7 @@ namespace MainProject.ViewModel
             {
                 if (TypeInEditCATEGORYCombobox == null) return;
 
-                var l = db.PRODUCTs.Where(p => ((p.TYPE_PRODUCT.Type == TypeInEditCATEGORYCombobox.Type || p.TYPE_PRODUCT.Type == "") && p.DELETED == 0)).ToList();
+                var l = db.PRODUCTs.Where(p => ((p.TYPE_PRODUCT.Type == TypeInEditCATEGORYCombobox.Type || p.TYPE_PRODUCT.Type == ""))).ToList();
 
                 if (l == null) return;
 

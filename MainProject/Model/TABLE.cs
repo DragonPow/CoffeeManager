@@ -21,7 +21,7 @@ namespace MainProject.Model
         }
     
         public long ID { get; set; }
-        public string Name { get; set; }
+        public int Name { get; set; }
         public int Floor { get; set; }
         public long ID_Status { get; set; }
     

@@ -184,7 +184,7 @@ namespace MainProject.ViewModel
                     OnPropertyChanged();
                     if (value != null)
                     {
-                        TableName = "Bàn: " + value.table.Number.ToString();
+                        TableName = "Bàn: " + value.table.Name.ToString();
                         Isbringtohome = false;
                         CloseChooseTable();
                     }
@@ -428,19 +428,19 @@ namespace MainProject.ViewModel
             ListTable.RemoveAt(number - 1);
 
             for (int i = number; i < ListTable.Count; ++i)
-                --ListTable[i].table.Number;
+                --ListTable[i].table.Name;
 
             using (var db = new mainEntities())
             {
-                TABLE table = db.TABLEs.Where(d => (d.Number == number && d.Floor == CurrentFloors)).FirstOrDefault();
+                TABLE table = db.TABLEs.Where(d => (d.Name == number && d.Floor == CurrentFloors)).FirstOrDefault();
 
                 if (table != null)
                 {
-                    var TABLEs = db.TABLEs.Where(t => t.Number > number && t.Floor == CurrentFloors);
+                    var TABLEs = db.TABLEs.Where(t => t.Name > number && t.Floor == CurrentFloors);
 
                     foreach (TABLE tab in TABLEs)
                     {
-                        --tab.Number;
+                        --tab.Name;
                     }
 
                 }
@@ -463,7 +463,7 @@ namespace MainProject.ViewModel
 
         public void Insert()
         {
-            TABLE tab = new TABLE() { Floor = CurrentFloors, STATUS_TABLE = new STATUS_TABLE() { Status = "Empty"}, Number = ListTable.Count + 1};
+            TABLE tab = new TABLE() { Floor = CurrentFloors, STATUS_TABLE = new STATUS_TABLE() { Status = "Empty"}, Name = ListTable.Count + 1};
 
             ListTable.Add(new TABLECUSTOM() { table = tab });
 

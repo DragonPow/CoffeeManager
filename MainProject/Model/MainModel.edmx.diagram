@@ -15,15 +15,15 @@
         <EntityTypeShape EntityType="mainModel.REPORTREVENUE" Width="1.5" PointX="7.625" PointY="0.5" />
         <EntityTypeShape EntityType="mainModel.REPORTSALE" Width="1.5" PointX="0.5" PointY="5" />
         <EntityTypeShape EntityType="mainModel.STATUS_TABLE" Width="1.5" PointX="0.5" PointY="3.125" />
-        <EntityTypeShape EntityType="mainModel.TABLE" Width="1.5" PointX="0.5" PointY="0.5" />
         <EntityTypeShape EntityType="mainModel.TYPE_PRODUCT" Width="1.5" PointX="3.125" PointY="3.125" />
-        <AssociationConnector Association="mainModel.FK_BILL_0_0" />
         <AssociationConnector Association="mainModel.FK_DETAILBILL_1_0" />
         <AssociationConnector Association="mainModel.FK_DETAILBILL_0_0" />
         <AssociationConnector Association="mainModel.FK_DETAILREPORTREVENUE_0_0" />
         <AssociationConnector Association="mainModel.FK_DETAILREPORTSALES_0_0" />
         <AssociationConnector Association="mainModel.FK_DETAILREPORTSALES_1_0" />
         <AssociationConnector Association="mainModel.FK_PRODUCT_0_0" />
+        <EntityTypeShape EntityType="mainModel.TABLE" Width="1.5" PointX="0.625" PointY="0.625" />
+        <AssociationConnector Association="mainModel.FK_BILL_0_0" />
         <AssociationConnector Association="mainModel.FK_TABLE_0_0" />
         </Diagram>
     </edmx:Diagrams>
