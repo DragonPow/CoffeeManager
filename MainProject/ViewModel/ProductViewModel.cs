@@ -143,7 +143,7 @@ namespace MainProject.ViewModel
 
             Newproduct =new PRODUCT() { Image = imageToByteArray( Properties.Resources.Empty_Image), TYPE_PRODUCT = new TYPE_PRODUCT() } ;
 
-            WindowService.Instance.OpenWindow(this, new CreateProd());
+            WindowService.Instance.OpenWindowWithoutBorderControl(this, new CreateProd());
         }
 
         public ICommand AddProduct_Command_Command
@@ -414,7 +414,7 @@ namespace MainProject.ViewModel
 
         public void OpenViewDetail()
         {
-            WindowService.Instance.OpenWindow(this, new ProdDetail());
+            WindowService.Instance.OpenWindowWithoutBorderControl(this, new ProdDetail());
         }
         public ICommand ExitDetailProduct
         {
@@ -525,7 +525,7 @@ namespace MainProject.ViewModel
 
             TypeInEditCATEGORYCombobox = Type;
             
-           WindowService.Instance.OpenWindow(this, new EditType());
+           WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditType());
 
             LoadProductByType(Type.Type);
 
