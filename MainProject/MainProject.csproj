@@ -151,6 +151,7 @@
     </Compile>
     <Compile Include="DetailPro.cs" />
     <Compile Include="HelperClass\WindowService.cs" />
+    <Compile Include="HistoryWorkSpace\Converter\ChangePageConverter.cs" />
     <Compile Include="HistoryWorkSpace\Converter\IdexConverter.cs" />
     <Compile Include="HistoryWorkSpace\HistoryListItemView.xaml.cs">
       <DependentUpon>HistoryListItemView.xaml</DependentUpon>

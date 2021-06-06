@@ -85,6 +85,7 @@
                                    HorizontalAlignment="Center" />
         <local:NumericUpDown Grid.Row="3" 
                              Grid.ColumnSpan="3"
-                             Margin="0 20"/>
+                             Margin="0 20"
+                             DataContext="{Binding}"/>
     </Grid>
 </UserControl>

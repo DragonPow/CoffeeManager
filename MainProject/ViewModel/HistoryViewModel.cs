@@ -59,21 +59,31 @@ namespace MainProject.ViewModel
             {
                 if (value != _NumberPage)
                 {
-                    _NumberPage = value;
+                    if (value > NumberAllPage)
+                    {
+                        _NumberPage = NumberAllPage;
+                    }
+                    else if (value < 1)
+                    {
+                        _NumberPage = 1;
+                    }
+                    else _NumberPage = value;
                     OnPropertyChanged();
-                    LoadBillByNumberPage();
+                    //LoadBillByNumberPage();
                 }
             }
         }
         public int NumberAllPage
         {
-            get 
-            {
-                using ( var db = new mainEntities ())
-                {
-                    return ((db.BILLs.Count()/ Number_Bill_in_Page) + (db.BILLs.Count() % Number_Bill_in_Page != 0? 1 : 0)) ;
-                }    
-            }            
+            //get 
+            //{
+            //    using ( var db = new mainEntities ())
+            //    {
+            //        return ((db.BILLs.Count()/ Number_Bill_in_Page) + (db.BILLs.Count() % Number_Bill_in_Page != 0? 1 : 0)) ;
+            //    }    
+            //}
+            get;
+            set;
         }
         public DateTime BeginTime
         {
@@ -100,23 +110,31 @@ namespace MainProject.ViewModel
                 }
             }
         }
+
+        public bool IsEndPage
+        {
+            get => NumberPage == NumberAllPage;
+        }
         #endregion
         #region Init
         public HistoryViewModel()
         {
             LoadBillByNumberPage();
-            for (int i=1;i<10;i++)
-            {
-                ListBill.Add(new BILL()
-                {
-                    ID = 10,
-                    CheckoutDay = new DateTime(2021, i, i),
-                    TotalPrice = i * 100,
-                    TABLE = new TABLE() { Number = i }
-                });
-            }
-            _NumberPage = 1;
 
+            //testing
+            //for (int i=1;i<=20;i++)
+            //{
+            //    ListBill.Add(new BILL()
+            //    {
+            //        ID = 10,
+            //        CheckoutDay = new DateTime(2021, i%12 + 1, i%29 + 1),
+            //        TotalPrice = i * 100,
+            //        TABLE = new TABLE() { Number = i }
+            //    });
+            //}
+            //_NumberPage = 1;
+            //NumberAllPage = 5;
+            //end testing
         }
         #endregion
 

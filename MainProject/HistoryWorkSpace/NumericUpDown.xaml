@@ -1,22 +1,30 @@
 ﻿<UserControl x:Class="MainProject.HistoryWorkSpace.NumericUpDown"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MainProject.ViewModel"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:MainProject.HistoryWorkSpace"
+             xmlns:converter="clr-namespace:MainProject.HistoryWorkSpace.Converter"
+             xmlns:viewmodel="clr-namespace:MainProject.ViewModel"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
-             mc:Ignorable="d" 
-             d:DataContext="{d:DesignInstance Type=local:HistoryViewModel}"
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:rules="clr-namespace:MainProject.ValidationRules"
+             mc:Ignorable="d"
+             Name="UserControl"
+             d:DataContext="{d:DesignInstance Type=viewmodel:HistoryViewModel}"
+             d:DesignHeight="450"
+             d:DesignWidth="800">
     <UserControl.Resources>
         <system:Double x:Key="IconSize">24</system:Double>
+        <converter:ChangePageConverter x:Key="ChangePageConverter" />
     </UserControl.Resources>
     <StackPanel Orientation="Horizontal"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center">
         <StackPanel.Resources>
-            <Style TargetType="Button" x:Key="textbox"
+            <Style TargetType="Button"
+                   x:Key="btn"
                    BasedOn="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
                 <Setter Property="Width"
                         Value="25" />
@@ -32,84 +40,171 @@
                         Value="White" />
             </Style>
         </StackPanel.Resources>
-        <Button >
+        <Button Name="btnAllLeft">
+            <Button.Style>
+                <Style BasedOn="{StaticResource btn}"
+                       TargetType="Button">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=UserControl, Path=DataContext.NumberPage}"
+                                     Value="1">
+                            <Setter Property="IsEnabled"
+                                    Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=UserControl, Path=DataContext.NumberPage}"
+                                     Value="0">
+                            <Setter Property="IsEnabled"
+                                    Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
             <materialDesign:PackIcon Kind="ChevronDoubleLeft"
                                      Height="{StaticResource IconSize}"
                                      Width="{StaticResource IconSize}" />
+            <!--Command button-->
+            <behaviors:Interaction.Triggers>
+                <behaviors:EventTrigger SourceObject="{Binding ElementName=btnAllLeft}"
+                                        EventName="Click">
+                    <behaviors:ChangePropertyAction PropertyName="NumberPage"
+                                                    TargetObject="{Binding ElementName=UserControl, Path=DataContext}"
+                                                    Value="1" />
+                </behaviors:EventTrigger>
+            </behaviors:Interaction.Triggers>
+        </Button>
+        <Button Margin="10 0"
+                Name="btnLeft">
             <Button.Style>
-                <Style TargetType="Button"
-                       BasedOn="{StaticResource textbox}">
+                <Style BasedOn="{StaticResource btn}"
+                       TargetType="Button">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding NumberPage}"
+                        <DataTrigger Binding="{Binding ElementName=UserControl, Path=DataContext.NumberPage}"
                                      Value="1">
+                            <Setter Property="IsEnabled"
+                                    Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=UserControl, Path=DataContext.NumberPage}"
+                                     Value="0">
                             <Setter Property="IsEnabled"
                                     Value="False" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Button.Style>
-        </Button>
-        <Button Margin="10 0">
-            <materialDesign:PackIcon Kind="ChevronLeft" 
+            <materialDesign:PackIcon Kind="ChevronLeft"
                                      Height="{StaticResource IconSize}"
-                                     Width="{StaticResource IconSize}"/>
-            <Button.Style>
-                <Style TargetType="Button"
-                       BasedOn="{StaticResource textbox}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding NumberPage}"
-                                     Value="1">
-                            <Setter Property="IsEnabled"
-                                    Value="False" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
+                                     Width="{StaticResource IconSize}" />
+            <!--Command button-->
+            <behaviors:Interaction.Triggers>
+                <behaviors:EventTrigger SourceObject="{Binding ElementName=btnLeft}"
+                                        EventName="Click">
+                    <behaviors:ChangePropertyAction PropertyName="NumberPage"
+                                                    TargetObject="{Binding ElementName=UserControl, Path=DataContext}">
+                        <behaviors:ChangePropertyAction.Value>
+                            <MultiBinding Converter="{StaticResource ChangePageConverter}">
+                                <Binding ElementName="UserControl"
+                                         Path="DataContext.NumberPage" />
+                                <Binding ElementName="UserControl"
+                                         Path="DataContext.NumberAllPage" />
+                                <Binding>
+                                    <Binding.Source>
+                                        <system:Int32>-1</system:Int32>
+                                    </Binding.Source>
+                                </Binding>
+                            </MultiBinding>
+                        </behaviors:ChangePropertyAction.Value>
+                    </behaviors:ChangePropertyAction>
+                </behaviors:EventTrigger>
+            </behaviors:Interaction.Triggers>
         </Button>
-        <TextBox Text="{Binding NumberPage, FallbackValue='0'}"
-                 BorderThickness="1 1 0 1"
+        <!--Textbox page-->
+        <TextBox BorderThickness="1 1 0 1"
+                 Name="txtNumberPage"
                  FontSize="20"
                  Padding="10 0 0 0"
-                 VerticalAlignment="Center"/>
-        <TextBox Text="/0"
+                 VerticalAlignment="Center">
+            <TextBox.Text>
+                <Binding Path="NumberPage"
+                         Mode="TwoWay"
+                         UpdateSourceTrigger="Explicit"
+                         NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <rules:CharacterValidationRule ValidCharacterSet="0123456789"
+                                                       ErrorMessage="Chỉ được nhập số tại vị trí này" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox Text="{Binding NumberAllPage, StringFormat='/{0}'}"
                  BorderThickness="0 1 1 1"
                  IsReadOnly="True"
                  FontSize="20"
                  Padding="0 0 10 0"
                  VerticalAlignment="Center" />
-        <Button Margin="10 0">
+        <Button Margin="10 0"
+                Name="btnRight">
+            <Button.Style>
+                <Style BasedOn="{StaticResource btn}"
+                       TargetType="Button">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=UserControl, Path=DataContext.IsEndPage}"
+                                     Value="True">
+                            <Setter Property="IsEnabled"
+                                    Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
             <materialDesign:PackIcon Kind="ChevronRight"
                                      Height="{StaticResource IconSize}"
                                      Width="{StaticResource IconSize}" />
+            <!--Command button-->
+            <behaviors:Interaction.Triggers>
+                <behaviors:EventTrigger SourceObject="{Binding ElementName=btnRight}"
+                                        EventName="Click">
+                    <behaviors:ChangePropertyAction PropertyName="NumberPage"
+                                                    TargetObject="{Binding ElementName=UserControl, Path=DataContext}">
+                        <behaviors:ChangePropertyAction.Value>
+                            <MultiBinding Converter="{StaticResource ChangePageConverter}">
+                                <Binding ElementName="UserControl"
+                                         Path="DataContext.NumberPage" />
+                                <Binding ElementName="UserControl"
+                                         Path="DataContext.NumberAllPage" />
+                                <Binding>
+                                    <Binding.Source>
+                                        <system:Int32>1</system:Int32>
+                                    </Binding.Source>
+                                </Binding>
+                            </MultiBinding>
+                        </behaviors:ChangePropertyAction.Value>
+                    </behaviors:ChangePropertyAction>
+                </behaviors:EventTrigger>
+            </behaviors:Interaction.Triggers>
+        </Button>
+        <Button Name="btnAllRight">
             <Button.Style>
-                <Style TargetType="Button"
-                       BasedOn="{StaticResource textbox}">
+                <Style BasedOn="{StaticResource btn}"
+                       TargetType="Button">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding NumberPage}"
-                                     Value="NumberAllpage">
+                        <DataTrigger Binding="{Binding ElementName=UserControl, Path=DataContext.IsEndPage}"
+                                     Value="True">
                             <Setter Property="IsEnabled"
                                     Value="False" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Button.Style>
-        </Button>
-        <Button >
             <materialDesign:PackIcon Kind="ChevronDoubleRight"
                                      Height="{StaticResource IconSize}"
                                      Width="{StaticResource IconSize}" />
-            <Button.Style>
-                <Style TargetType="Button"
-                       BasedOn="{StaticResource textbox}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding NumberPage}"
-                                     Value="1">
-                            <Setter Property="IsEnabled"
-                                    Value="False" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
+            <!--Command button-->
+            <behaviors:Interaction.Triggers>
+                <behaviors:EventTrigger SourceObject="{Binding ElementName=btnAllRight}"
+                                        EventName="Click">
+                    <behaviors:ChangePropertyAction PropertyName="NumberPage"
+                                                    TargetObject="{Binding ElementName=UserControl, Path=DataContext}"
+                                                    Value="{Binding NumberAllPage}" />
+                </behaviors:EventTrigger>
+            </behaviors:Interaction.Triggers>
         </Button>
     </StackPanel>
 </UserControl>

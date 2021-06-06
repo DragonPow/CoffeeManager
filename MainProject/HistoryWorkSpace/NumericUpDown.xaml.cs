@@ -23,6 +23,22 @@ namespace MainProject.HistoryWorkSpace
         public NumericUpDown()
         {
             InitializeComponent();
+            txtNumberPage.KeyDown += TxtNumberPage_KeyDown;
+            txtNumberPage.TextChanged += TxtNumberPage_TextChanged;
+        }
+
+        private void TxtNumberPage_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                BindingExpression binding = txtNumberPage.GetBindingExpression(TextBox.TextProperty);
+                binding.UpdateSource();
+            }
+            e.Handled = (e.Key < Key.D0 || e.Key > Key.D9) && (e.Key < Key.NumPad0 || e.Key > Key.NumPad9);
+        }
+
+        private void TxtNumberPage_TextChanged(object sender, TextChangedEventArgs e)
+        {
         }
     }
 }
