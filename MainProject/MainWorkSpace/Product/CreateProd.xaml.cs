@@ -41,7 +41,6 @@ namespace MainProject.MainWorkSpace.Product
             {
                 ErrorCount--;
             }
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsValid)));
         }
     }
 }

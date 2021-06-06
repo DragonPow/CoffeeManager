@@ -166,11 +166,7 @@ namespace MainProject.ViewModel
 
         public void Add(bool isValid)
         {
-            if ( Newproduct.Name == null)
-            {
-                WindowService.Instance.OpenMessageBox("Chưa nhập tên sản phẩm", "Lỗi", System.Windows.MessageBoxImage.Error);
-                return;
-            }
+            if (!isValid) return;
             using (var db = new mainEntities())
             {
                 {

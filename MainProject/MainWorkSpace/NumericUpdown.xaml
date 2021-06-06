@@ -20,7 +20,8 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Button Height="Auto" Width="Auto" Grid.Column="0" Padding="0" Background="Transparent" BorderBrush="Transparent"
-                Command="{Binding Tag.MinusDetailProQuantityCommand, ElementName=UserControl}">
+                Command="{Binding Tag.MinusDetailProQuantityCommand, ElementName=UserControl}"
+                CommandParameter="{Binding}">
             <materialDesign:PackIcon 
                                  Grid.Column="0" Background="#f1f8e9" 
                                  BorderBrush="#f1f8e9" 
@@ -34,7 +35,8 @@
                    FontSize="16"  Foreground="Gray" 
                    VerticalAlignment="Center" HorizontalAlignment="Center" Margin="7,-2,6,-2"/>
         <Button Height="Auto" Width="Auto" Grid.Column="2" Padding="0" Background="Transparent" BorderBrush="Transparent"
-                Command="{Binding Tag.PlusDetailProQuantityCommand, ElementName=UserControl}">
+                Command="{Binding Tag.PlusDetailProQuantityCommand, ElementName=UserControl}"
+                CommandParameter="{Binding}">
             <materialDesign:PackIcon 
                                  Background="#f1f8e9"
                                  BorderBrush="#f1f8e9"
