@@ -37,27 +37,29 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBox Grid.Column="0"
-                            Text="Tên quán"
-                            Foreground="Black" 
-                            VerticalAlignment="Center"
-                            Background="{x:Null}" 
-                            BorderBrush="{x:Null}"
-                            HorizontalAlignment="Left" 
-                            FontWeight="Bold" 
-                            FontSize="16" 
-                            />
+                                 Text="Tên quán"
+                                 Foreground="Black" 
+                                 VerticalAlignment="Center"
+                                 Background="{x:Null}" 
+                                 BorderBrush="{x:Null}"
+                                 HorizontalAlignment="Left"
+                                 FontWeight="Bold" 
+                                 FontSize="16"/>
                         <TextBox Grid.Column="1"
-                            Text="Coffee store" 
-                            VerticalAlignment="Center"
-                            Background="{x:Null}"
-                            BorderBrush="{x:Null}"
-                            FontSize="16"/>
+                                 Name="txb_Name"
+                                 Text="Coffee store"
+                                 VerticalAlignment="Center"
+                                 Background="{x:Null}"
+                                 BorderBrush="{x:Null}"
+                                 FontSize="16" IsEnabled="False"/>
                         <Button Grid.Column="2"
-                        Background="Transparent"
-                        Content="Sửa"
-                        Foreground="Red" 
-                        VerticalAlignment="Center" 
-                        BorderBrush="{x:Null}"/>
+                                Name="btn_SaveName"
+                                Click="btn_SaveName_Click"
+                                Background="Transparent"
+                                Content="Sửa"
+                                Foreground="Red" 
+                                VerticalAlignment="Top" 
+                                BorderBrush="{x:Null}"/>
                     </Grid>
                     <Grid Margin="0 2">
                         <Grid.ColumnDefinitions>
@@ -66,27 +68,29 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBox Grid.Column="0"
-                            Text="Số điện thoại liên hệ"
-                            Foreground="Black" 
-                            VerticalAlignment="Center"
-                            Background="{x:Null}" 
-                            BorderBrush="{x:Null}"
-                            HorizontalAlignment="Left" 
-                            FontWeight="Bold" 
-                            FontSize="16" 
-                            />
+                                 Text="Số tầng"
+                                 Foreground="Black" 
+                                 VerticalAlignment="Center"
+                                 Background="{x:Null}" 
+                                 BorderBrush="{x:Null}"
+                                 HorizontalAlignment="Left"
+                                 FontWeight="Bold" 
+                                 FontSize="16"/>
                         <TextBox Grid.Column="1"
-                            Text="0123456789" 
-                            VerticalAlignment="Center"
-                            Background="{x:Null}"
-                            BorderBrush="{x:Null}"
-                            FontSize="16"/>
+                                 Name="txb_NumberFloor"
+                                 Text="2"
+                                 VerticalAlignment="Center"
+                                 Background="{x:Null}"
+                                 BorderBrush="{x:Null}"
+                                 FontSize="16" IsEnabled="False"/>
                         <Button Grid.Column="2"
-                        Background="Transparent"
-                        Content="Sửa"
-                        Foreground="Red" 
-                        VerticalAlignment="Center" 
-                        BorderBrush="{x:Null}"/>
+                                Name="btn_NumberFloor"
+                                Click="btn_NumberFloor_Click"
+                                Background="Transparent"
+                                Content="Sửa"
+                                Foreground="Red" 
+                                VerticalAlignment="Top" 
+                                BorderBrush="{x:Null}"/>
                     </Grid>
                     <Grid Margin="0 2">
                         <Grid.ColumnDefinitions>
@@ -95,27 +99,62 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBox Grid.Column="0"
-                            Text="Địa chỉ"
-                            Foreground="Black" 
-                            VerticalAlignment="Center"
-                            Background="{x:Null}" 
-                            BorderBrush="{x:Null}"
-                            HorizontalAlignment="Left" 
-                            FontWeight="Bold" 
-                            FontSize="16" 
-                            />
+                                Text="Số điện thoại liên hệ"
+                                Foreground="Black" 
+                                VerticalAlignment="Center"
+                                Background="{x:Null}" 
+                                BorderBrush="{x:Null}"
+                                HorizontalAlignment="Left" 
+                                FontWeight="Bold" 
+                                FontSize="16" 
+                                />
                         <TextBox Grid.Column="1"
-                            Text="Thủ Đức, HCM" 
-                            VerticalAlignment="Center"
-                            Background="{x:Null}"
-                            BorderBrush="{x:Null}"
-                            FontSize="16"/>
+                                Text="0123456789" 
+                                Name="txb_numberPhone"
+                                VerticalAlignment="Center"
+                                Background="{x:Null}"
+                                BorderBrush="{x:Null}"
+                                FontSize="16" IsEnabled="False"/>
                         <Button Grid.Column="2"
-                        Background="Transparent"
-                        Content="Sửa"
-                        Foreground="Red" 
-                        VerticalAlignment="Center" 
-                        BorderBrush="{x:Null}"/>
+                                Click="btn_SavePhone_Click"
+                                Name="btn_SavePhone"
+                                Background="Transparent"
+                                Content="Sửa"
+                                Foreground="Red" 
+                                VerticalAlignment="Center" 
+                                BorderBrush="{x:Null}"/>
+                    </Grid>
+                    <Grid Margin="0 2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="6*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0"
+                                Text="Địa chỉ"
+                                Foreground="Black" 
+                                VerticalAlignment="Center"
+                                Background="{x:Null}" 
+                                BorderBrush="{x:Null}"
+                                HorizontalAlignment="Left" 
+                                FontWeight="Bold" 
+                                FontSize="16" 
+                                />
+                        <TextBox Grid.Column="1"
+                                 Name="txb_address"
+                                 Text="Thủ Đức, HCM" 
+                                 VerticalAlignment="Center"
+                                 Background="{x:Null}"
+                                 BorderBrush="{x:Null}"
+                                 FontSize="16" IsEnabled="False"/>
+                        <Button Grid.Column="2"
+                                Click="btn_SaveAddress_Click"
+                                Name="btn_SaveAddress"
+                                Background="Transparent"
+                                Content="Sửa"
+                                Foreground="Red" 
+                                VerticalAlignment="Center" 
+                                BorderBrush="{x:Null}"/>
                     </Grid>
                     <Grid Margin="0 15">
                         <materialDesign:PackIcon Kind="AlertCircle"
@@ -123,9 +162,9 @@
                                              Height="25"
                                              Foreground="Gray" />
                         <TextBlock Text="Chỉ chủ quán mới được thay đổi những thông tin này."
-                               FontStyle="Italic"
-                               Margin="30,0"
-                               TextWrapping="WrapWithOverflow" />
+                                   FontStyle="Italic"
+                                   Margin="30,0"
+                                   TextWrapping="WrapWithOverflow" />
                     </Grid>
                 </StackPanel>
             </Grid>
