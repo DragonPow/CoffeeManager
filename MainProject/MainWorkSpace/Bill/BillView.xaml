@@ -67,9 +67,7 @@
                 <TextBlock Grid.Row="0"
                            Grid.Column="1">
                     <Run>Mã số hóa đơn</Run>
-                    <Run Text="{Binding BillCode10 / 5000
-Kết quả dịch
-refund , StringFormat=': {0}'}" />
+                    <Run Text="{Binding BillCode, StringFormat=': {0}'}" />
                 </TextBlock>
                 <TextBlock Grid.Row="1"
                            Grid.Column="1">

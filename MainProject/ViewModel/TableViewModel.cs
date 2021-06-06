@@ -193,7 +193,7 @@ namespace MainProject.ViewModel
                 {
                     _CurrentTable = value;
                     OnPropertyChanged();
-                    if (value != null)
+                    if (value != null && value.table != null)
                     {
                         TableName = "Bàn: " + value.table.Name.ToString();
                         Isbringtohome = false;
@@ -392,7 +392,7 @@ namespace MainProject.ViewModel
             {
                 using (var db = new mainEntities())
                 {
-                    CurrentTable = new TABLECUSTOM() { table = db.TABLEs.Where(t => t.ID == 0).FirstOrDefault() };
+                    CurrentTable = new TABLECUSTOM() { };
                 }
             }
 

@@ -61,6 +61,8 @@ namespace MainProject.ViewModel
         private ICommand _OpenViewEditCategory;
         private ICommand _ClickCheckboxSelectedPro;
         private ICommand _SaveEditCategory;
+        private ICommand _CloseEditCategory;
+
 
         private ICommand _AddEditCategory;
         private ICommand _DeleteTypeEditCategory;
@@ -81,7 +83,7 @@ namespace MainProject.ViewModel
                 {
                     _IndexCurrentproductInMainView = value;
                     OnPropertyChanged();
-                    // AddDetailProToTable();
+                  
                 } 
             } 
         }
@@ -143,7 +145,7 @@ namespace MainProject.ViewModel
 
             Newproduct =new PRODUCT() { Image = imageToByteArray( Properties.Resources.Empty_Image), TYPE_PRODUCT = new TYPE_PRODUCT() } ;
 
-            WindowService.Instance.OpenWindow(this, new CreateProd());
+            WindowService.Instance.OpenWindowWithoutBorderControl(this, new CreateProd());
         }
 
         public ICommand AddProduct_Command_Command
@@ -165,8 +167,9 @@ namespace MainProject.ViewModel
             {
                 {
                     TYPE_PRODUCT type= db.TYPE_PRODUCT.Where(t => (t.Type == Type_in_Combobox_AddPro)).FirstOrDefault();
-                
-                    if (type == null) return;
+
+                    if (type == null) Newproduct.TYPE_PRODUCT = null;
+                    else 
                     Newproduct.TYPE_PRODUCT = type ;                
 
 
@@ -414,7 +417,7 @@ namespace MainProject.ViewModel
 
         public void OpenViewDetail()
         {
-            WindowService.Instance.OpenWindow(this, new ProdDetail());
+            WindowService.Instance.OpenWindowWithoutBorderControl(this, new ProdDetail());
         }
         public ICommand ExitDetailProduct
         {
@@ -449,7 +452,8 @@ namespace MainProject.ViewModel
 
         public void Add_Update_ImageProduct()
         {
-          
+            Newproduct = new PRODUCT() { Image = imageToByteArray(Properties.Resources.Empty_Image), TYPE_PRODUCT = new TYPE_PRODUCT() };
+
             string path = "";
 
             OpenFileDialog openFile = new OpenFileDialog();
@@ -525,7 +529,7 @@ namespace MainProject.ViewModel
 
             TypeInEditCATEGORYCombobox = Type;
             
-           WindowService.Instance.OpenWindow(this, new EditType());
+           WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditType());
 
             LoadProductByType(Type.Type);
 
@@ -589,8 +593,26 @@ namespace MainProject.ViewModel
                 db.SaveChanges();
             }
 
-           /* Window window = WindowService.Instance.FindWindowbyTag("Edit category").First();
-            window.Close();*/
+          
+        }
+
+        public ICommand CloseEditCategory_Command
+        {
+            get
+            {
+                if (_CloseEditCategory == null)
+                {
+                    _CloseEditCategory = new RelayingCommand<Object>(a => CloseEditCategory());
+                }
+                return _CloseEditCategory;
+            }
+        }
+
+
+        public void CloseEditCategory()
+        {
+            Window window = WindowService.Instance.FindWindowbyTag("Edit category").First();
+            window.Close();
         }
 
         public ICommand AddEditCategory_Command
@@ -619,7 +641,6 @@ namespace MainProject.ViewModel
             }
 
         }
-
 
 
         private void LoadProductByType(string Type)

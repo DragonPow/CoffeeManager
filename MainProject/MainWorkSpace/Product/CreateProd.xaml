@@ -10,8 +10,8 @@
              mc:Ignorable="d"
              Tag="Create product"
              d:DataContext="{d:DesignInstance Type=viewmodel:ProductViewModel}"
-             d:DesignHeight="650"
-             d:DesignWidth="600">
+             Height="650"
+             Width="600">
     <UserControl.Resources>
         <model:TYPE_PRODUCT x:Key="Type_Product" />
     </UserControl.Resources>
@@ -52,7 +52,7 @@
                         Background="Transparent"
                         Command="{Binding AddUpdateImageProductCommand}">
                     <Grid Height="160" Width="200">
-                        <Image Stretch="Fill"
+                        <Image Stretch="UniformToFill"
                                    Source="{Binding Newproduct.Image}" />
                     </Grid>
                 </Button>
