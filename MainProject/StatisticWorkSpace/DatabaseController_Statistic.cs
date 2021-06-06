@@ -11,32 +11,45 @@ namespace MainProject.StatisticWorkSpace
     {
         public List<StatisticModel> statisticByDay(DateTime minDate, DateTime maxDate, string productName)
         {
-            return new List<StatisticModel>();
-            /*using (mainEntities db = new mainEntities())
+            using (mainEntities db = new mainEntities())
+            {
+                if (minDate.Year == maxDate.Year && minDate.Month == maxDate.Month)
+                {
+                    var data = db.REPORTREVENUEs.Where(rp => rp.Year == minDate.Year && rp.Month == minDate.Month).FirstOrDefault();
+                    if (data != null)
+                    {
+                        var rs = new List<StatisticModel>();
+                        foreach (var detail in data.DETAILREPORTREVENUEs)
+                        {
+                            var model = new StatisticModel()
+                            {
+                                TimeMin = new DateTime(minDate.Year, minDate.Month, (int)detail.Day, 0, 0, 0),
+                                TimeMax = new DateTime(minDate.Year, minDate.Month, (int)detail.Day, 23, 59, 59),
+                                Revenue = detail.Revenue,
+                                Amount = 0
+                            };
+                            rs.Add(model);
+                        }
+                        return rs;
+                    }
+                }
+            }
+
+            // If this is first-time statistc. Starting calculate
+            using (mainEntities db = new mainEntities())
             {
                 var data = db.BILLs.Where(b => b.CheckoutDay >= minDate && b.CheckoutDay <= maxDate)
-                    .Join(db.DETAILBILLs, b => b.ID, dt => dt.ID_Bill,
-                    (b, dt) => new
+                    .Select(b => new
                     {
-                        PD_ID = dt.ID_Product,
-                        Date = b.CheckoutDay,
-                        Amount = dt.Quantity
-                    }).Join(productName == null
-                            ?db.PRODUCTs
-                            :db.PRODUCTs.Where(pd => pd.Name == productName)
-                            , r => r.PD_ID, pd => pd.ID,
-                    (r, pd) => new
-                    {
-                        pd.Name,
-                        Revenue = pd.Price * r.Amount,
-                        r.Amount,
-                        r.Date
+                        b.CheckoutDay,
+                        b.DETAILBILLs
                     });
+
                 Dictionary<DateTime, StatisticModel> dictionary = new Dictionary<DateTime, StatisticModel>();
 
                 foreach (var group in data)
                 {
-                    DateTime date = new DateTime(group.Date.Year, group.Date.Month, group.Date.Day, 0, 0, 0);
+                    DateTime date = new DateTime(group.CheckoutDay.Year, group.CheckoutDay.Month, group.CheckoutDay.Day, 0, 0, 0);
                     StatisticModel model;
                     if (!dictionary.ContainsKey(date))
                     {
@@ -51,12 +64,59 @@ namespace MainProject.StatisticWorkSpace
                     }
 
                     model = dictionary[date];
-                    model.Revenue += (int)(group.Revenue * voucher);
-                    model.Amount += group.Amount;
+                    model.Amount += 1;
+
+                    foreach (var detail in group.DETAILBILLs)
+                    {
+                        model.Revenue += detail.Quantity * detail.UnitPrice;
+                    }
                 }
 
+                System.Windows.Threading.Dispatcher.CurrentDispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Background
+                , new Action<Dictionary<DateTime, StatisticModel>, int, int>(addReportRevenue)
+                , dictionary, minDate.Year, minDate.Month);
+
+
                 return dictionary.Values.ToList();
-            }*/
+            } 
+        }
+
+        void addReportRevenue(Dictionary<DateTime, StatisticModel> dictionary, int year, int month)
+        {
+            using (mainEntities db = new mainEntities())
+            {
+                var tran = db.Database.BeginTransaction();
+                try
+                {
+                    var report = new REPORTREVENUE()
+                    {
+                        Year = year,
+                        Month = month
+                    };
+
+                    db.REPORTREVENUEs.Add(report);
+
+                    foreach (var model in dictionary.Values)
+                    {
+                        var detail = new DETAILREPORTREVENUE()
+                        {
+                            Day = model.TimeMin.Day,
+                            Revenue = model.Revenue
+                        };
+                        report.DETAILREPORTREVENUEs.Add(detail);
+                    }
+                    db.SaveChanges();
+                    tran.Commit();
+                    Console.WriteLine("SUCCESS: Saved report to database");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("FAILED: Cannot saved report to database");
+                    Console.WriteLine(e.Message);
+                    tran.Rollback();
+                }
+                dictionary.Clear();
+            }
         }
 
         public List<StatisticModel> statisticByWeek(DateTime minDate, DateTime maxDate, string productName)
@@ -190,11 +250,12 @@ namespace MainProject.StatisticWorkSpace
         public void createTemplateData()
         {
             DateTime start = DateTime.Now;
-            DateTime minDate = new DateTime(2021, 1, 1, 0, 0, 0);
+            DateTime minDate = new DateTime(2021, 4, 1, 6, 0, 0);
             DateTime maxDate = new DateTime(2021, 6, 3, 23, 59, 59);
-            TimeSpan step = new TimeSpan(6, 0, 0, 0, 0);
+            TimeSpan step = new TimeSpan(1, 0, 0, 0, 0);
 
-            var productIDs = new long[] { 1, 2, 3, 4, 5 };
+            var productIDs = new long[] { 1, 2, 3, 4, 5};
+            var prices = new long[] { 10000, 20000, 15000, 32000, 14000 };
 
             Random random = new Random();
             using (mainEntities db = new mainEntities())
@@ -216,7 +277,8 @@ namespace MainProject.StatisticWorkSpace
                         var dt = new DETAILBILL
                         {
                             ID_Product = listPDs[temp],
-                            Quantity = random.Next(4) + 1
+                            Quantity = random.Next(4) + 1,
+                            UnitPrice = prices[temp]
                         };
                         bill.DETAILBILLs.Add(dt);
                         listPDs.RemoveAt(temp);
