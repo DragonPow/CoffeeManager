@@ -173,6 +173,8 @@ namespace MainProject.ViewModel
                     db.PRODUCTs.Add(Newproduct);
 
                     db.SaveChanges();
+                    Exitaddproview();
+
                 }
             }
 
@@ -205,17 +207,18 @@ namespace MainProject.ViewModel
             {
                 if (_ExitAddProview == null)
                 {
-                    _ExitAddProview = new RelayingCommand<Object>(a => Exitaddproview(a));
+                    _ExitAddProview = new RelayingCommand<Object>(a => Exitaddproview());
                 }
                 return _ExitAddProview;
             }
         }
 
 
-        public void Exitaddproview(Object a)
+        public void Exitaddproview()
         {
             Newproduct = null;
-            //Exit view Add_pro(a)
+            Window window = WindowService.Instance.FindWindowbyTag("Create product").First();
+            window.Close();
         }
 
 
