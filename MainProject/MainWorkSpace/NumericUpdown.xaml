@@ -8,6 +8,7 @@
              xmlns:main="clr-namespace:MainProject"
              xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
              mc:Ignorable="d" 
+             Name="UserControl"
              d:DataContext="{d:DesignInstance Type=main:DetailPro}"
              d:DesignHeight="20" d:DesignWidth="60" 
              Width="Auto"
@@ -19,7 +20,7 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Button Height="Auto" Width="Auto" Grid.Column="0" Padding="0" Background="Transparent" BorderBrush="Transparent"
-                Command="{Binding}">
+                Command="{Binding Tag.MinusDetailProQuantityCommand, ElementName=UserControl}">
             <materialDesign:PackIcon 
                                  Grid.Column="0" Background="#f1f8e9" 
                                  BorderBrush="#f1f8e9" 
@@ -33,10 +34,10 @@
                    FontSize="16"  Foreground="Gray" 
                    VerticalAlignment="Center" HorizontalAlignment="Center" Margin="7,-2,6,-2"/>
         <Button Height="Auto" Width="Auto" Grid.Column="2" Padding="0" Background="Transparent" BorderBrush="Transparent"
-               Command="{Binding}">
+                Command="{Binding Tag.PlusDetailProQuantityCommand, ElementName=UserControl}">
             <materialDesign:PackIcon 
-                                 Background="#f1f8e9" 
-                                 BorderBrush="#f1f8e9" 
+                                 Background="#f1f8e9"
+                                 BorderBrush="#f1f8e9"
                                  Height="Auto" Width="Auto" 
                                  Kind="Plus" Foreground="{StaticResource MainColor}" 
                                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />

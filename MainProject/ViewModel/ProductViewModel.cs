@@ -157,15 +157,16 @@ namespace MainProject.ViewModel
             {
                 if (_AddProduct == null)
                 {
-                    _AddProduct = new RelayingCommand<Object>(a => Add());
+                    _AddProduct = new RelayingCommand<bool>(isValid => Add(isValid));
                 }
                 return _AddProduct;
             }
         }
 
 
-        public void Add()
+        public void Add(bool isValid)
         {
+            if (!isValid) return;
             using (var db = new mainEntities())
             {
                 {
