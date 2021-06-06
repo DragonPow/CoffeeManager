@@ -81,7 +81,7 @@
                 </Grid.ColumnDefinitions>
                 <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
                         Height="50"
-                        Command="{Binding AddProduct_Command_Command}"
+                        Command="{Binding SaveEditCategory_Command}"
                         HorizontalAlignment="Stretch"
                         Background="{StaticResource MainColor}"
                         BorderBrush="#31CA62"
