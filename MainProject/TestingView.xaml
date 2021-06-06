@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainProject.MainWorkSpace.Bill"
-        xmlns:view="clr-namespace:MainProject.MainWorkSpace.Product"
+        xmlns:view="clr-namespace:MainProject.AccountWorkSpace"
         mc:Ignorable="d"
         Title="TestingView" 
-        Width="600" Height="700">
-    <view:CreateProd/>
+        Width="1000" Height="700">
+    <view:AccountView/>
 </Window>

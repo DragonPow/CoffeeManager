@@ -24,7 +24,7 @@ namespace MainProject.Model
         public Nullable<long> TotalPrice { get; set; }
         public Nullable<System.DateTime> CheckoutDay { get; set; }
         public string ID_Voucher { get; set; }
-        public Nullable<long> ID_Tables { get; set; }
+        public long ID_Tables { get; set; }
         public Nullable<long> ID_Employee { get; set; }
     
         public virtual TABLE TABLE { get; set; }

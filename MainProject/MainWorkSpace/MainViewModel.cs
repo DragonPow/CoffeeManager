@@ -24,7 +24,7 @@ namespace MainProject.MainWorkSpace
 
         private const PackIconKind _iconDisplay = PackIconKind.Home;
 
-        ICommand AddProductToTable;
+      
 
         #endregion
 

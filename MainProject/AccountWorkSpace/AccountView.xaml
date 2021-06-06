@@ -12,9 +12,6 @@
              xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
              d:DataContext="{d:DesignInstance Type=viewmodel:EmployeeViewModel}"
              d:DesignWidth="900">
-    <UserControl.DataContext>
-        <local:AccountViewModel />
-    </UserControl.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" />
@@ -40,13 +37,13 @@
                            VerticalAlignment="Center"
                            FontSize="18"
                            Margin="10,0,0,0"
-                           Foreground="White">
-                </TextBlock>
+                           Foreground="White" />
             </Grid>
             <ScrollViewer Grid.Row="1"
                           VerticalScrollBarVisibility="Auto">
                 <ListBox ItemsSource="{Binding ListEmployee}"
-                         SelectedItem="{Binding CurrentEmployee}"
+                         SelectedItem="{Binding New_Infor_Employee, Mode=OneWay}"
+                         SelectedValue="{Binding New_Infor_Employee}"
                          HorizontalContentAlignment="Stretch"
                          VerticalContentAlignment="Stretch">
                     <ListBox.ItemTemplate>
@@ -73,7 +70,8 @@
                     VerticalAlignment="Stretch"
                     Background="Transparent">
                 <StackPanel Orientation="Horizontal"
-                            VerticalAlignment="Center">
+                            VerticalAlignment="Center"
+                            x:Name="Add_Employee">
                     <materialDesign:PackIcon Kind="PlusCircleOutline"
                                              Foreground="{StaticResource MainColor}"
                                              VerticalAlignment="Center"
@@ -87,8 +85,9 @@
                                VerticalAlignment="Center">
                     </TextBlock>
                     <behaviors:Interaction.Triggers>
-                        <behaviors:EventTrigger EventName="Click">
-                            <behaviors:InvokeCommandAction Command="{Binding Add_EMployee_Command}" />
+                        <behaviors:EventTrigger EventName="MouseDown"
+                                                SourceObject="{Binding ElementName=Add_Employee}">
+                            <behaviors:InvokeCommandAction Command="{Binding Click_Add_New_Employee_Command}" />
                         </behaviors:EventTrigger>
                     </behaviors:Interaction.Triggers>
                 </StackPanel>
@@ -116,17 +115,28 @@
                         HorizontalAlignment="Right"
                         Margin="0 0 20 0"
                         Background="Transparent"
-                        BorderBrush="Transparent"
-                        Command="{Binding Delete_EMployee_Command}">
+                        BorderBrush="Transparent">
                     <Button.Style>
-                        <Style TargetType="Button">
+                        <Style TargetType="Button"
+                               BasedOn="{StaticResource MaterialDesignOutlinedButton}">
                             <Setter Property="Content"
                                     Value="Xóa" />
+                            <Setter Property="Command"
+                                    Value="{Binding Delete_EMployee_Command}" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding }"
-                                             Value="">
+                                <DataTrigger Binding="{Binding ModeView}"
+                                             Value="{x:Static viewmodel:ModeAccountView.add}">
                                     <Setter Property="Content"
                                             Value="Hủy" />
+                                    <Setter Property="Command"
+                                            Value="{Binding Cancel_Command}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ModeView}"
+                                             Value="{x:Static viewmodel:ModeAccountView.edit}">
+                                <Setter Property="Content"
+                                        Value="Hủy" />
+                                <Setter Property="Command"
+                                        Value="{Binding Cancel_Command}" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -135,37 +145,135 @@
 
             </Grid>
             <StackPanel DockPanel.Dock="Bottom">
-                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                         materialDesign:HintAssist.Hint="Tên"
-                         Text="{Binding CurrentEmployee.Name}"
+                <StackPanel.Resources>
+                    <Style TargetType="DatePickerTextBox" x:Name="datetbx">
+                        <Setter Property="IsReadOnly"
+                                Value="True" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ModeView}"
+                                         Value="{x:Static viewmodel:ModeAccountView.add}">
+                                <Setter Property="IsReadOnly"
+                                        Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Resources>
+                <TextBox materialDesign:HintAssist.Hint="Tên"
+                         Text="{Binding New_Infor_Employee.Name}"
                          FontSize="16"
                          Width="420"
-                         Margin="0 5" />
-                <DatePicker Style="{StaticResource MaterialDesignOutlinedDatePicker}"
-                            materialDesign:HintAssist.Hint="Ngày sinh"
-                            Text="{Binding CurrentEmployee.Birthday}"
+                         Margin="0 5">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox"
+                               BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+                            <Setter Property="IsEnabled"
+                                    Value="False" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ModeView}"
+                                             Value="{x:Static viewmodel:ModeAccountView.add}">
+                                    <Setter Property="IsEnabled"
+                                            Value="True" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ModeView}"
+                                             Value="{x:Static viewmodel:ModeAccountView.edit}">
+                                    <Setter Property="IsEnabled"
+                                            Value="True" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+                <DatePicker materialDesign:HintAssist.Hint="Ngày sinh"
+                            SelectedDate="{Binding New_Infor_Employee.Birthday}"
                             FontSize="16"
                             Width="420"
-                            Margin="0 5" />
-                <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
-                          materialDesign:HintAssist.Hint="Quyền"
-                          ItemsSource="{Binding Source={x:Static model:POSITION_EMPLOYEE.Instance}, Path=ListPosition}"
-                          SelectedItem="{Binding CurrentEmployee.POSITION_EMPLOYEE.Position}"
+                            Margin="0 5">
+                    <DatePicker.Style>
+                        <Style TargetType="DatePicker"
+                               BasedOn="{StaticResource MaterialDesignOutlinedDatePicker}">
+                            <Setter Property="IsEnabled"
+                                    Value="False" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ModeView}"
+                                             Value="{x:Static viewmodel:ModeAccountView.add}">
+                                    <Setter Property="IsEnabled"
+                                            Value="True" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ModeView}"
+                                             Value="{x:Static viewmodel:ModeAccountView.edit}">
+                                    <Setter Property="IsEnabled"
+                                            Value="True" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DatePicker.Style>
+                </DatePicker>
+                <ComboBox materialDesign:HintAssist.Hint="Quyền"
+                          ItemsSource="{Binding Source={x:Static model:POSITION_EMPLOYEE.Instance}, Path=ListPosition, Mode=OneWay}"
+                          SelectedValue="{Binding New_Infor_Employee.POSITION_EMPLOYEE.Position}"
                           FontSize="16"
                           Width="420"
-                          Margin="0 5" />
-                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                         materialDesign:HintAssist.Hint="Số điện thoại"
-                         Text="{Binding CurrentEmployee.Phone}"
+                          Margin="0 5">
+                    <ComboBox.Style>
+                        <Style TargetType="ComboBox"
+                               BasedOn="{StaticResource MaterialDesignOutlinedComboBox}">
+                            <Setter Property="IsEnabled"
+                                    Value="False" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ModeView}"
+                                             Value="{x:Static viewmodel:ModeAccountView.add}">
+                                    <Setter Property="IsEnabled"
+                                            Value="True" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ModeView}"
+                                             Value="{x:Static viewmodel:ModeAccountView.edit}">
+                                    <Setter Property="IsEnabled"
+                                            Value="True" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ComboBox.Style>
+                </ComboBox>
+                <TextBox materialDesign:HintAssist.Hint="Số điện thoại"
+                         Text="{Binding New_Infor_Employee.Phone}"
                          FontSize="16"
                          Width="420"
-                         Margin="0 30 0 5" />
+                         Margin="0 30 0 5">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox"
+                               BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+                            <Setter Property="IsEnabled"
+                                    Value="False" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ModeView}"
+                                             Value="{x:Static viewmodel:ModeAccountView.add}">
+                                    <Setter Property="IsEnabled"
+                                            Value="True" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
                 <PasswordBox x:Name="txt_pass"
-                             Style="{StaticResource MaterialDesignOutlinedPasswordBox}"
                              materialDesign:HintAssist.Hint="Mật khẩu"
                              FontSize="16"
                              Width="420"
-                             Margin="0 5" />
+                             Margin="0 5">
+                    <PasswordBox.Style>
+                        <Style TargetType="{x:Type PasswordBox}"
+                               BasedOn="{StaticResource MaterialDesignOutlinedPasswordBox}">
+                            <Setter Property="IsEnabled"
+                                    Value="False" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ModeView}"
+                                             Value="{x:Static viewmodel:ModeAccountView.add}">
+                                    <Setter Property="IsEnabled"
+                                            Value="True" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </PasswordBox.Style>
+                </PasswordBox>
                 <Grid Margin="75,10">
                     <materialDesign:PackIcon Kind="AlertCircle"
                                              Width="25"
@@ -187,18 +295,28 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Button Height="50"
-                            Name="test"
-                            Style="{StaticResource MaterialDesignOutlinedButton}"
                             ToolTip="MaterialDesignOutlinedButton"
                             Content="Đổi mật khẩu"
                             Command="{Binding Load_ViewChange_Pass_Command}"
                             Foreground="{StaticResource MainColor}"
                             BorderBrush="#31CA62"
                             FontSize="20"
-                            Margin="10" />
+                            Margin="10">
+                        <Button.Style>
+                            <Style TargetType="Button"
+                                   BasedOn="{StaticResource MaterialDesignOutlinedButton}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ModeView}"
+                                                 Value="{x:Static viewmodel:ModeAccountView.add}">
+                                        <Setter Property="IsEnabled"
+                                                Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                     <Button Grid.Column="1"
                             Height="50"
-                            Command="{Binding Delete_EMployee_Command}"
                             ToolTip="MaterialDesignOutlinedButton"
                             Foreground="Blue"
                             BorderBrush="Blue"
@@ -206,14 +324,25 @@
                             Margin="10">
                         <Button.Style>
                             <Style TargetType="Button"
-                                BasedOn="{StaticResource MaterialDesignOutlinedButton}">
+                                   BasedOn="{StaticResource MaterialDesignOutlinedButton}">
                                 <Setter Property="Content"
                                         Value="Sửa thông tin" />
+                                <Setter Property="Command"
+                                        Value="{Binding RequestEditEmployeeCommand}" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding }"
-                                                 Value="">
+                                    <DataTrigger Binding="{Binding ModeView}"
+                                                 Value="{x:Static viewmodel:ModeAccountView.add}">
+                                        <Setter Property="Content"
+                                                Value="Thêm nhân viên" />
+                                        <Setter Property="Command"
+                                                Value="{Binding UpDate_Add_EMployee_Command}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ModeView}"
+                                                 Value="{x:Static viewmodel:ModeAccountView.edit}">
                                         <Setter Property="Content"
                                                 Value="Lưu" />
+                                        <Setter Property="Command"
+                                                Value="{Binding UpDate_Add_EMployee_Command}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>

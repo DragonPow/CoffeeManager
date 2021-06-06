@@ -23,8 +23,8 @@ namespace MainProject.Model
         public string ID { get; set; }
         public Nullable<System.DateTime> BeginTime { get; set; }
         public Nullable<System.DateTime> EndTime { get; set; }
-        public Nullable<int> Percent { get; set; }
-        public Nullable<int> DELETED { get; set; }
+        public int Percent { get; set; }
+        public int DELETED { get; set; }
         public string Description { get; set; }
         public string CODE { get; set; }
     

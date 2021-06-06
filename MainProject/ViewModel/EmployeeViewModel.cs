@@ -3,37 +3,46 @@ using MainProject.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace MainProject.ViewModel
 {
-    class EmployeeViewModel : BaseViewModel
+    public enum ModeAccountView
+    {
+        normal = 1,
+        edit = 2,
+        add = 3,
+    }
+    public partial class EmployeeViewModel : BaseViewModel
     {
         #region Field
-        ObservableCollection<EMPLOYEE> _ListEmployee; /*list employee hiện tại*/
-        long _ID_CurrentEmployee; /* cái này ko binding, chỉ dùng để lưu lại giá trị của  employee đang đc chỉnh sửa, khi hủy thì load lại dữ liệu từ database */
-        EMPLOYEE _New_Infor_Employee;  /*là cái hiển thị khi xem detail, edit, add employee*/
-        bool _IsPassword;/* xác định xem password nhập vào đúng ko*/
-        bool _IsConfirmPassword; /*xác định confirmpass đúng hay ko */
-        bool _Is_Add_New_Employee; /*xác định hiện tại đang thực hiện add new EMPLOYEE */
+        ObservableCollection<EMPLOYEE> _ListEmployee;
+        long _ID_CurrentEmployee;
+        EMPLOYEE _New_Infor_Employee;
+        bool _IsPassword;
+        bool _IsConfirmPassword;
 
-        string _PassWord;  /*nhập new Password*/
-        string _Confirm_Password;  /*confirm lại pasword*/
+        ModeAccountView _modeView;
+        string _PassWord;
+        string _Confirm_Password;
 
+        ICommand _RequestEditEmployeeCommand;
         ICommand _Click_Add_New_Employee;
 
         ICommand _Cancel;
 
         ICommand _UpDate_Add_EMployee;
-    
+
         ICommand _Delete_EMployee;
 
         ICommand _Load_View_Change_Pass_Employee;
         ICommand _Change_Pass_Employee;
-       
+
 
         #endregion
 
@@ -43,25 +52,82 @@ namespace MainProject.ViewModel
         {
             using (var db = new mainEntities())
             {
-
-                ListEmployee = new ObservableCollection<EMPLOYEE>(db.EMPLOYEEs.Where(e => ((e.DELETED == 0))).ToList());
-              /*  New_Infor_Employee = new EMPLOYEE() { DELETED = 0, Name = "", Password = "", Birthday = null, Phone = "", POSITION_EMPLOYEE = null };*/
-                IsPassword = IsConfirmPassword = true;
-                Is_Add_New_Employee = false;
+                ListEmployee = new ObservableCollection<EMPLOYEE>(db.EMPLOYEEs.Include("POSITION_EMPLOYEE").Where(e => ((e.DELETED == 0))).ToList());
+                ClearCurrentEmployee();
+                ModeView = ListEmployee.Count == 0 ? ModeAccountView.add : ModeAccountView.normal;
             }
         }
         #endregion
 
-        #region Propertity
+        #region Property
 
         public ObservableCollection<EMPLOYEE> ListEmployee { get => _ListEmployee; set { if (value != _ListEmployee) { _ListEmployee = value; OnPropertyChanged(); } } }
-        public long ID_CurrentEmployee { get => _ID_CurrentEmployee; set { if (_ID_CurrentEmployee != value) { _ID_CurrentEmployee = value; OnPropertyChanged(); } } }
-        public EMPLOYEE New_Infor_Employee { get => _New_Infor_Employee; set { if (_New_Infor_Employee != value) { _New_Infor_Employee = value; OnPropertyChanged();  } } }
+        public long ID_CurrentEmployee
+        {
+            get => _ID_CurrentEmployee;
+            set
+            {
+                if (_ID_CurrentEmployee != value)
+                {
+                    _ID_CurrentEmployee = value;
+                    Console.WriteLine(_ID_CurrentEmployee);
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public EMPLOYEE New_Infor_Employee
+        {
+            get => _New_Infor_Employee;
+            set
+            {
+                if (_New_Infor_Employee != value)
+                {
+                    if (ModeView == ModeAccountView.edit)
+                    {
+                        Cancel();
+                    }
+                    _New_Infor_Employee = value;
+                    ModeView = ModeAccountView.normal;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public string PassWord { get => _PassWord; set { if (_PassWord != value) { _PassWord = value; OnPropertyChanged(); } } }
-        public string Confirm_Password { get => _Confirm_Password; set { if (_Confirm_Password != value) { _Confirm_Password = value; OnPropertyChanged(); } } }
-        public bool IsPassword { get => _IsPassword; set { if (_IsPassword != value) { _IsPassword = value; OnPropertyChanged(); } } }
-        public bool IsConfirmPassword { get => _IsConfirmPassword; set { if (_IsConfirmPassword != value) { _IsConfirmPassword = value; OnPropertyChanged(); } } }
-        public bool Is_Add_New_Employee { get => _Is_Add_New_Employee; set { if (_Is_Add_New_Employee != value) { _Is_Add_New_Employee = value; OnPropertyChanged(); } } }
+        public string Confirm_Password
+        {
+            get => _Confirm_Password;
+            set
+            {
+                if (_Confirm_Password != value)
+                {
+                    _Confirm_Password = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public bool IsPassword
+        {
+            get => OldPassWord == New_Infor_Employee.Password;
+        }
+        public bool IsConfirmPassword
+        {
+            get => PassWord == Confirm_Password;
+        }
+
+        public ModeAccountView ModeView
+        {
+            get => _modeView;
+            set
+            {
+                if (value != _modeView)
+                {
+                    _modeView = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string OldPassWord { get; set; }
 
         #endregion
 
@@ -113,14 +179,17 @@ namespace MainProject.ViewModel
         }
 
 
-        public void Click_Add_New_Employee()
+        private void Click_Add_New_Employee()
         {
-            ID_CurrentEmployee = New_Infor_Employee.ID;
+            if (ModeView != ModeAccountView.add) New_Infor_Employee = new EMPLOYEE() { POSITION_EMPLOYEE = new POSITION_EMPLOYEE() };
 
-            ListEmployee.Add(new EMPLOYEE() { DELETED = 0});
-            New_Infor_Employee = ListEmployee.Last();
+            //ID_CurrentEmployee = New_Infor_Employee.ID;
 
-            Is_Add_New_Employee = true;
+            //ListEmployee.Add(new EMPLOYEE() { DELETED = 0 });
+            //New_Infor_Employee = ListEmployee.Last();
+
+            ModeView = ModeAccountView.add;
+            Console.WriteLine("Click btn add employee");
         }
 
         public ICommand UpDate_Add_EMployee_Command
@@ -136,32 +205,35 @@ namespace MainProject.ViewModel
         }
 
 
-        public void UpDate_Add_EMployee()
+        private void UpDate_Add_EMployee()
         {
-            
             using (var db = new mainEntities())
             {
-                    if (Is_Add_New_Employee)
-                    {
-                        db.EMPLOYEEs.Add(New_Infor_Employee);
-                        db.SaveChanges();                    
+                if (ModeView == ModeAccountView.add)
+                {
+                    New_Infor_Employee.POSITION_EMPLOYEE = db.POSITION_EMPLOYEE.First(i => i.Position == New_Infor_Employee.POSITION_EMPLOYEE.Position);
+                    ListEmployee.Add(New_Infor_Employee);
                 }
-                    else
-                    {
-                        ID_CurrentEmployee = New_Infor_Employee.ID;
+                else if (ModeView == ModeAccountView.edit)
+                {
+                    //ID_CurrentEmployee = New_Infor_Employee.ID;
 
-                        EMPLOYEE employee = db.EMPLOYEEs.Where(e => (e.DELETED == 0 && e.ID == New_Infor_Employee.ID)).FirstOrDefault();
-                        employee.DELETED = 1;
-                        db.EMPLOYEEs.Add(New_Infor_Employee);
-                        db.SaveChanges();
-
-                        ListEmployee[ListEmployee.IndexOf(New_Infor_Employee)] = employee;
+                    EMPLOYEE employee = db.EMPLOYEEs.Where(e => (e.ID == New_Infor_Employee.ID)).FirstOrDefault();
+                    employee.DELETED = 1;
+                    New_Infor_Employee.POSITION_EMPLOYEE = db.POSITION_EMPLOYEE.First(i => i.Position == New_Infor_Employee.POSITION_EMPLOYEE.Position);
+                    //Sai nguyên tắc
+                    //ListEmployee[ListEmployee.IndexOf(New_Infor_Employee)] = employee;
                 }
+                else
+                {
+                    throw new SettingsPropertyWrongTypeException("Modeview is must have add or edit here");
+                }
+                db.EMPLOYEEs.Add(New_Infor_Employee);
+                db.SaveChanges();
             }
 
-            Is_Add_New_Employee = false;
-            ID_CurrentEmployee = new long();
-
+            ModeView = ModeAccountView.normal;
+            //ID_CurrentEmployee = new long();
         }
 
         public ICommand Delete_EMployee_Command
@@ -177,20 +249,18 @@ namespace MainProject.ViewModel
         }
 
 
-        public void Delete_EMployee()
+        private void Delete_EMployee()
         {
             using (var db = new mainEntities())
             {
-                EMPLOYEE employee = db.EMPLOYEEs.Where(e => (e.DELETED == 0 && e.ID == New_Infor_Employee.ID)).FirstOrDefault();
+                EMPLOYEE employee = db.EMPLOYEEs.Include("POSITION_EMPLOYEE").Where(e => (e.ID == New_Infor_Employee.ID)).FirstOrDefault();
                 employee.DELETED = 1;
                 db.SaveChanges();
             }
-
             ListEmployee.Remove(New_Infor_Employee);
+            ModeView = ModeAccountView.normal;
+            ClearCurrentEmployee();
         }
-
-
-        
 
         public ICommand Cancel_Command
         {
@@ -209,11 +279,9 @@ namespace MainProject.ViewModel
         {
             using (var db = new mainEntities())
             {
-                
-                EMPLOYEE employee = db.EMPLOYEEs.Where(e => (e.DELETED == 0 && e.ID == ID_CurrentEmployee)).FirstOrDefault();
-                ListEmployee[ListEmployee.IndexOf(New_Infor_Employee)] = employee;
-
-                if (Is_Add_New_Employee) ListEmployee.RemoveAt(ListEmployee.Count);
+                EMPLOYEE employee = db.EMPLOYEEs.Where(e => (e.ID == New_Infor_Employee.ID)).FirstOrDefault();
+                New_Infor_Employee.Clone(employee);
+                //if (ModeView == ModeAccountView.edit) ListEmployee.RemoveAt(ListEmployee.Count - 1);
             }
         }
 
@@ -232,7 +300,7 @@ namespace MainProject.ViewModel
 
         public void Load_View_Change_Pass_Employee()
         {
-            //Show view ChangePass
+            WindowService.Instance.OpenWindow(this, new ChangedPassword());
         }
 
         public ICommand Change_Pass_Employee_Command
@@ -247,40 +315,61 @@ namespace MainProject.ViewModel
             }
         }
 
-        public void Change_Pass_Employee()
+        private void Change_Pass_Employee()
         {
             using (var db = new mainEntities())
             {
-                var e = db.EMPLOYEEs.Where(employee => (employee.Password == PassWord && New_Infor_Employee.ID == employee.ID && New_Infor_Employee.DELETED == 0)).FirstOrDefault();
-
-                if (e == null)
+                if (!IsPassword)
                 {
-                    IsPassword = false;
+                    WindowService.Instance.OpenMessageBox("Nhập sai mật khẩu", "Lỗi tài khoản", System.Windows.MessageBoxImage.Error);
                     return;
                 }
-
-                IsPassword = true;
-
-                if (Confirm_Password != PassWord)
+                else if(!IsConfirmPassword)
                 {
-                    IsConfirmPassword = false;
+                    WindowService.Instance.OpenMessageBox("Mật khẩu xác nhận phải giống với mật khẩu mới", "Lỗi mật khẩu", System.Windows.MessageBoxImage.Error);
                     return;
                 }
+                else
+                {
+                    var e = db.EMPLOYEEs.Where(employee => (New_Infor_Employee.ID == employee.ID && New_Infor_Employee.DELETED == 0)).FirstOrDefault();
+                    e.Password = PassWord;
+                    db.SaveChanges();
+                    New_Infor_Employee.Password = PassWord;
 
-                IsConfirmPassword = true;
+                    OldPassWord = PassWord = Confirm_Password = null;
 
-                e.Password = PassWord;
-                db.SaveChanges();
-
-                New_Infor_Employee.Password = PassWord;
-
-                //close view changePass
+                    //Request close window
+                    Window window = WindowService.Instance.FindWindowbyTag("ChangePassword").First();
+                    window.Close();
+                }
             }
         }
 
+        public ICommand RequestEditEmployeeCommand
+        {
+            get
+            {
+                if (_RequestEditEmployeeCommand == null)
+                {
+                    _RequestEditEmployeeCommand = new RelayingCommand<Object>(a => RequestEditEmployee());
+                }
+                return _RequestEditEmployeeCommand;
+            }
+        }
 
+        private void RequestEditEmployee()
+        {
+            ModeView = ModeAccountView.edit;
+        }
         #endregion
 
-
+        private void ClearCurrentEmployee()
+        {
+            New_Infor_Employee = ListEmployee.Count == 0 ? CreateNewEmployee() : ListEmployee[0];
+        }
+        private EMPLOYEE CreateNewEmployee()
+        {
+            return new EMPLOYEE() { POSITION_EMPLOYEE = new POSITION_EMPLOYEE() };
+        }
     }
 }

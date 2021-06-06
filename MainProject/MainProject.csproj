@@ -55,6 +55,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNetProjects.DataVisualization.Toolkit, Version=6.0.90.0, Culture=neutral, PublicKeyToken=79778c5f2eed289b, processorArchitecture=MSIL">
+      <HintPath>packages\DotNetProjects.WpfToolkit.DataVisualization.6.0.90\lib\net40\DotNetProjects.DataVisualization.Toolkit.dll</HintPath>
+    </Reference>
     <Reference Include="Dragablz, Version=0.0.3.223, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Dragablz.0.0.3.223\lib\net45\Dragablz.dll</HintPath>
     </Reference>
@@ -66,6 +69,12 @@
     </Reference>
     <Reference Include="EntityFramework.SqlServerCompact, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.SqlServerCompact.6.4.0\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="MaterialDesignColors, Version=2.0.0.2422, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
       <HintPath>packages\MaterialDesignColors.2.0.0\lib\net452\MaterialDesignColors.dll</HintPath>
@@ -79,6 +88,7 @@
     <Reference Include="PropertyChanged, Version=3.3.3.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>packages\PropertyChanged.Fody.3.3.3\lib\net40\PropertyChanged.dll</HintPath>
     </Reference>
+    <Reference Include="ReachFramework" />
     <Reference Include="System">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
     </Reference>
@@ -98,6 +108,7 @@
       <HintPath>packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Printing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
@@ -132,16 +143,28 @@
     <Compile Include="AccountWorkSpace\ChangedPassword.xaml.cs">
       <DependentUpon>ChangedPassword.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CUSTOMPRODUCT.cs" />
     <Compile Include="DetailPro.cs" />
+    <Compile Include="HelperClass\WindowService.cs" />
     <Compile Include="HistoryWorkSpace\HistoryViewModel.cs" />
     <Compile Include="MainWorkSpace\Bill\BillView.xaml.cs">
       <DependentUpon>BillView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainWorkSpace\Product\EditType.xaml.cs">
+      <DependentUpon>EditType.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWorkSpace\Product\MenuProd.xaml.cs">
+      <DependentUpon>MenuProd.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWorkSpace\Product\SelectPro.xaml.cs">
+      <DependentUpon>SelectPro.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\BILL.cs">
       <DependentUpon>MainModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\CustomModel\PRODUCT.cs" />
+    <Compile Include="Model\CustomModel\EMPLOYEE.cs" />
+    <Compile Include="Model\CustomModel\POSITION_EMPLOYEE.cs" />
+    <Compile Include="Model\CustomModel\STATUS_TABLE.cs" />
+    <Compile Include="Model\CustomModel\TYPE_PRODUCT.cs" />
     <Compile Include="Model\DETAILBILL.cs">
       <DependentUpon>MainModel.tt</DependentUpon>
     </Compile>
@@ -184,6 +207,14 @@
     <Compile Include="SettingWorkSpace\SettingView.xaml.cs">
       <DependentUpon>SettingView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="StatisticWorkSpace\Converter\ChartLabelConverter.cs" />
+    <Compile Include="StatisticWorkSpace\Converter\ChartValueConverter.cs" />
+    <Compile Include="StatisticWorkSpace\Converter\MoneyConverter.cs" />
+    <Compile Include="StatisticWorkSpace\Converter\TimeConverter.cs" />
+    <Compile Include="StatisticWorkSpace\DatabaseController_Statistic.cs" />
+    <Compile Include="StatisticWorkSpace\DatePickerAssist.cs" />
+    <Compile Include="StatisticWorkSpace\StatisticEnum.cs" />
+    <Compile Include="StatisticWorkSpace\StatisticModel.cs" />
     <Compile Include="ViewModel\BillViewModel.cs" />
     <Compile Include="MainWorkSpace\Bill\Bill_ProductTable.xaml.cs">
       <DependentUpon>Bill_ProductTable.xaml</DependentUpon>
@@ -205,9 +236,6 @@
     <Compile Include="MainWorkSpace\MainViewModel.cs" />
     <Compile Include="MainWorkSpace\NumericUpdown.xaml.cs">
       <DependentUpon>NumericUpdown.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWorkSpace\Product\AddProd_UC.xaml.cs">
-      <DependentUpon>AddProd_UC.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWorkSpace\Product\CreateProd.xaml.cs">
       <DependentUpon>CreateProd.xaml</DependentUpon>
@@ -356,17 +384,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MainWorkSpace\Product\AddProd_UC.xaml">
+    <Page Include="MainWorkSpace\Product\CreateProd.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWorkSpace\Product\CreateProd.xaml">
+    <Page Include="MainWorkSpace\Product\EditType.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWorkSpace\Product\Item_UC.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWorkSpace\Product\MenuProd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWorkSpace\Product\ProdDetail.xaml">
       <SubType>Designer</SubType>
@@ -377,6 +409,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWorkSpace\Product\Pro_UC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWorkSpace\Product\SelectPro.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -501,6 +537,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\add-image-icon-png-14.jpg" />
     <Resource Include="Resources\iconfinder_17_330399.png" />
     <Resource Include="Resources\Mask Group.png" />
     <Resource Include="Resources\freetable.png" />

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MainProject
+namespace MainProject.Model
 {
     public class TABLECUSTOM : BaseViewModel
     {

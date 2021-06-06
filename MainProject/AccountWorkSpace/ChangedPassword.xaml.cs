@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MainProject.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,34 @@ namespace MainProject.AccountWorkSpace
         public ChangedPassword()
         {
             InitializeComponent();
+            txtPass.PasswordChanged += TxtPass_PasswordChanged;
+            txtNewPass.PasswordChanged += TxtNewPass_PasswordChanged;
+            txtRepass.PasswordChanged += TxtRepass_PasswordChanged;
+        }
+
+        private void TxtRepass_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (DataContext!=null)
+            {
+                ((EmployeeViewModel)this.DataContext).Confirm_Password = txtRepass.Password;
+            }
+        }
+
+        private void TxtNewPass_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (DataContext != null)
+            {
+                ((EmployeeViewModel)this.DataContext).PassWord = txtNewPass.Password;
+            }
+        }
+
+        private void TxtPass_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (DataContext != null)
+            {
+                ((EmployeeViewModel)this.DataContext).OldPassWord = txtPass.Password;
+                Console.WriteLine(((EmployeeViewModel)this.DataContext).IsPassword);
+            }
         }
     }
 }

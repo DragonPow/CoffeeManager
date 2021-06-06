@@ -1,33 +1,67 @@
 ﻿<UserControl x:Class="MainProject.MainWorkSpace.Product.Item_UC"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Product"
-             xmlns:Main="clr-namespace:MainProject.MainWorkSpace"
-             mc:Ignorable="d" 
-             d:DesignHeight="45" d:DesignWidth="350" Background="Transparent">
+             xmlns:MainWS="clr-namespace:MainProject.MainWorkSpace"
+             xmlns:Main="clr-namespace:MainProject"
+             d:DataContext="{d:DesignInstance Type=Main:DetailPro}"
+             x:Name="Item"
+             mc:Ignorable="d"
+             d:DesignHeight="45"
+             d:DesignWidth="350"
+             Background="Transparent">
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="9*"/>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="9*" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="5*" />
         </Grid.ColumnDefinitions>
-        <Border BorderThickness="0,0,0,1" BorderBrush="Gray" Grid.ColumnSpan="3"></Border>
-        <TextBlock Grid.Column="0" Text="1" Foreground="Gray" HorizontalAlignment="Left" Visibility="Hidden" ></TextBlock>
-        <StackPanel Grid.Column="0" VerticalAlignment="Center">
-            <TextBlock Text="{Binding pro.Name, FallbackValue='Trà sữa trân châu'}" Grid.Column="0" 
-                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10 0" 
-                       Foreground="#BD8722" FontSize="16"/>
-            <TextBlock Grid.Column="0" Text="{Binding pro.Detail, FallbackValue='Trân châu đường đen'}"
-                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10 0" 
-                       Foreground="#958360" FontSize="12" FontWeight="Light" FontStyle="Italic"></TextBlock>
+        <Border BorderThickness="0,0,0,1"
+                BorderBrush="Gray"
+                Grid.ColumnSpan="3"></Border>
+        <TextBlock Grid.Column="0"
+                   Text="1"
+                   Foreground="Gray"
+                   HorizontalAlignment="Left"
+                   Visibility="Hidden"></TextBlock>
+        <StackPanel Grid.Column="0"
+                    VerticalAlignment="Center">
+            <TextBlock Text="{Binding Pro.Name, FallbackValue='Trà sữa trân châu'}"
+                       Grid.Column="0"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       Margin="10 0"
+                       Foreground="#BD8722"
+                       FontSize="16" />
+            <TextBlock Grid.Column="0"
+                       Text="{Binding Pro.Detail, FallbackValue='Trân châu đường đen'}"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       Margin="10 0"
+                       Foreground="#958360"
+                       FontSize="12"
+                       FontWeight="Light"
+                       FontStyle="Italic"></TextBlock>
         </StackPanel>
-        <Main:NumericUpdown DataContext="{Binding}" Grid.Column="1" Height="20" Width="auto" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="0,5"></Main:NumericUpdown>
-        <TextBlock Grid.Column="2" Text="{Binding pro.Price, FallbackValue='25,000đ', StringFormat='{}{0:N0} đ'}" 
-                   HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Right" 
-                   Foreground="Gray" FontWeight="Light" FontStyle="Italic" 
+        <MainWS:NumericUpdown DataContext="{Binding}"
+                              Grid.Column="1"
+                              Height="20"
+                              Width="auto"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Center"
+                              Margin="0,5" ></MainWS:NumericUpdown>
+        <TextBlock Grid.Column="2"
+                   Text="{Binding Pro.Price, FallbackValue='25,000đ', StringFormat='{}{0:N0} đ'}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   TextAlignment="Right"
+                   Foreground="Gray"
+                   FontWeight="Light"
+                   FontStyle="Italic"
                    FontSize="16"></TextBlock>
 
     </Grid>

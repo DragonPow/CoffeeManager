@@ -1,12 +1,21 @@
 ﻿using MainProject.Model;
-
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 namespace MainProject
 {
     public class DetailPro: BaseViewModel
     {
-        private int _quantity;
-        private PRODUCT pro;
 
+        private int _quantity = 1;
+        private PRODUCT pro;
+        public DetailPro()
+        {
+        }
         public int Quantity 
         {
             get => _quantity;
@@ -33,8 +42,9 @@ namespace MainProject
             }
         }
 
-          
-        public DetailPro(PRODUCT pro, int quan = 0)
+        public long Total { get => Pro.Price * Quantity; }
+        
+        public DetailPro(PRODUCT pro, int quan = 1)
         {
             this.Pro = pro;
             this.Quantity = quan;

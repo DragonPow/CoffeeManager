@@ -1,0 +1,92 @@
+﻿<UserControl x:Class="MainProject.MainWorkSpace.Product.EditType"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:MainProject.MainWorkSpace.Product"
+             xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=ViewModel:ProductViewModel}"
+             d:DesignHeight="650" d:DesignWidth="700">
+    <DockPanel>
+        <Grid DockPanel.Dock="Top" Background="{StaticResource MainColor}">
+            <Border BorderBrush="Gray" BorderThickness="1"/>
+            <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                       Text="Chỉnh sửa danh mục" 
+                       FontSize="26" 
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+            <Button Background="Transparent" BorderBrush="Transparent" Margin="10" HorizontalAlignment="Right"
+                    Command="{Binding ExitDetailProduct}">
+                <materialDesign:PackIcon Kind="Close" Width="25" Height="25" />
+            </Button>
+        </Grid>
+        <StackPanel DockPanel.Dock="Bottom" Background="White">
+            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         materialDesign:HintAssist.Hint="Tên danh mục"
+                         Text="{Binding Newproduct.Name}"
+                         FontSize="16"
+                         Margin="100,30"
+                         MaxWidth="500" />
+            <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                       Text="Sản phẩm" 
+                       FontSize="26" 
+                       Foreground="#363434"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+            <ScrollViewer Grid.Row="1" 
+                      materialDesign:ScrollBarAssist.ThumbHeight="50" 
+                      materialDesign:ScrollBarAssist.ThumbWidth="5" 
+                      materialDesign:ScrollBarAssist.ThumbCornerRadius="10"
+                      HorizontalScrollBarVisibility="Auto">
+                <!--The Panel contains list product-->
+                <ItemsControl>
+                    <ItemsControl.Resources>
+                    </ItemsControl.Resources>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:SelectPro/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical" Margin="100,20" MaxWidth="500"></StackPanel>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
+            <ScrollViewer Grid.Row="1" 
+                      materialDesign:ScrollBarAssist.ThumbHeight="50" 
+                      materialDesign:ScrollBarAssist.ThumbWidth="5" 
+                      materialDesign:ScrollBarAssist.ThumbCornerRadius="10"
+                      HorizontalScrollBarVisibility="Auto">
+                <StackPanel Orientation="Vertical" Margin="100,0" MaxWidth="500">
+                    <local:SelectPro></local:SelectPro>
+                    <local:SelectPro></local:SelectPro>
+                    <local:SelectPro></local:SelectPro>
+                    <local:SelectPro></local:SelectPro>
+                </StackPanel>
+            </ScrollViewer>
+            <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                            Grid.Column="1"
+                            Height="50"
+                            Command="{Binding AddProduct_Command_Command}"
+                            HorizontalAlignment="Stretch"
+                            Background="{StaticResource MainColor}"
+                            BorderBrush="#31CA62"
+                            Foreground="White"
+                            MaxWidth="400"
+                            Margin="150,50,150,0">
+                <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Text="Lưu chỉnh sửa"
+                                   FontSize="20"
+                                   Margin="5" />
+            </Button>
+
+        </StackPanel>
+
+    </DockPanel>
+</UserControl>

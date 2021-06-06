@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MainProject.ViewModel;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +26,44 @@ namespace MainProject.AccountWorkSpace
         {
             InitializeComponent();
             Console.WriteLine("AccountView is created");
+            DataContextChanged += AccountView_DataContextChanged;
+            txt_pass.DataContextChanged += Txt_pass_DataContextChanged;
+        }
+
+
+        private void Txt_pass_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (DataContext != null)
+            {
+                if (DataContext is EmployeeViewModel)
+                {
+                    PasswordChange();
+                }
+            }
+        }
+        private void AccountView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (DataContext != null)
+            {
+                if (DataContext is EmployeeViewModel)
+                {
+                    var data = (EmployeeViewModel)DataContext;
+                    data.New_Infor_Employee.PropertyChanged += New_Infor_Employee_PropertyChanged;
+                }
+            }
+        }
+
+
+        private void New_Infor_Employee_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Password")
+            {
+                PasswordChange();
+            }
+        }
+        public void PasswordChange()
+        {
+            txt_pass.Password = ((EmployeeViewModel)DataContext).New_Infor_Employee.Password;
         }
     }
 }

@@ -4,9 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Product"
+             xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
+             xmlns:model="clr-namespace:MainProject.Model"
               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=ViewModel:ProductViewModel}"
              d:DesignHeight="650" d:DesignWidth="600">
+    <UserControl.DataContext>
+        <ViewModel:ProductViewModel/>
+    </UserControl.DataContext>
     <DockPanel>
         <Grid DockPanel.Dock="Top" Background="{StaticResource MainColor}">
             <Border BorderBrush="Gray" BorderThickness="1"/>
@@ -16,7 +22,8 @@
                        Foreground="White"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"/>
-            <Button Background="Transparent" BorderBrush="Transparent" Margin="10" HorizontalAlignment="Right">
+            <Button Background="Transparent" BorderBrush="Transparent" Margin="10" HorizontalAlignment="Right"
+                    Command="{Binding ExitDetailProduct}">
                 <materialDesign:PackIcon Kind="Close" Width="25" Height="25" />
             </Button>
             <Button BorderBrush="Transparent"
@@ -36,38 +43,61 @@
                     Foreground="#E6FFED"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
-                    Visibility="Visible"/>
+                    Visibility="Hidden"
+                    Command="{Binding UpdateProduct_Command}"/>
         </Grid>
         <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <StackPanel DockPanel.Dock="Bottom" Background="White">
-
-                <Border Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1" BorderBrush="Gray" BorderThickness="2" Margin="0,40,0,20" Width="200" Height="160">
-                    <Image Stretch="Uniform"></Image>
-                </Border>
+                <Button Height="Auto" Width="Auto"  Padding="0" Background="Transparent" BorderBrush="Transparent"  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,20"
+                        Command="{Binding AddUpdateImageProductCommand}">
+                    <Border  HorizontalAlignment="Center" VerticalAlignment="Top"  BorderBrush="Gray" BorderThickness="2"  Width="200" Height="160">
+                        <Image Stretch="UniformToFill"
+                               Source="{Binding ListPoduct[IndexCurrentProduct].Image_product}"></Image>
+                    </Border>
+                </Button>
+                
+                
                 <TextBox 
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     materialDesign:HintAssist.Hint="Tên mặt hàng"
+                    Text="{Binding ListPoduct[IndexCurrentProduct].product.Name}"
                     FontSize="16"
-                    Margin="100,5"/>
+                    Margin="100,5"
+                    MaxWidth="500"/>
                 <ComboBox
                     Style="{StaticResource MaterialDesignOutlinedComboBox}"
-                    materialDesign:HintAssist.Hint="Danh mục"
-                     ItemsSource="{Binding ShortStringList}"
+                     materialDesign:HintAssist.Hint="Danh mục"
+                     ItemsSource="{Binding Source={x:Static model:TYPE_PRODUCT.Instance}, Path=ListType}"
+                     SelectedItem="{Binding ListPoduct[IndexCurrentProduct].product.MainType}"
                      FontSize="16"
-                     Margin="100,5"/>
+                     Margin="100,5"
+                    MaxWidth="500"/>
                 <TextBox 
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     materialDesign:HintAssist.Hint="Giá"
+                    Text="{Binding ListPoduct[IndexCurrentProduct].product.Price}"
                     FontSize="16"
-                    Margin="100,5"/>
+                    Margin="100,5"
+                    MaxWidth="500"/>
                 <TextBox 
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     materialDesign:HintAssist.Hint="Mô tả"
                     TextWrapping="WrapWithOverflow"
+                    Text="{Binding ListPoduct[IndexCurrentProduct].product.Detail}"
                     FontSize="16"
-                    Margin="100,5"/>
-
-
+                    Margin="100,5"
+                    MaxWidth="500"/>
+                <Button Command="{Binding DeleteProduct_Command}"
+                             Grid.Column="1"
+                              Height="50"
+                              Style="{StaticResource MaterialDesignOutlinedButton}"
+                              ToolTip="MaterialDesignOutlinedButton"
+                              Content="Xóa sản phẩm"
+                              Foreground="Red"
+                              BorderBrush="Red"
+                              FontSize="20"
+                              Margin="150,40,150,20"
+                              MaxWidth="400"/>
 
 
             </StackPanel>

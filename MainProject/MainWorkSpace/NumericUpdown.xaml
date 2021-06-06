@@ -5,30 +5,45 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MainProject.MainWorkSpace" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:main="clr-namespace:MainProject"
+             xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
              mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=main:DetailPro}"
              d:DesignHeight="20" d:DesignWidth="60" 
              Width="Auto"
              BorderBrush="#f1f8e9" BorderThickness="1">
-    <Grid >
+    <UserControl.Resources>
+        <main:DetailPro x:Key="DetailPro"></main:DetailPro>
+        <ViewModel:TableViewModel x:Key="TableViewModel"/>
+    </UserControl.Resources>
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <materialDesign:PackIcon Grid.Column="0" Background="#f1f8e9" 
+        <Button Height="Auto" Width="Auto" Grid.Column="0" Padding="0" Background="Transparent" BorderBrush="Transparent"
+                Command="{Binding Source={StaticResource TableViewModel}, Path=MinusDetailProQuantityCommand}">
+            <materialDesign:PackIcon 
+                                 Grid.Column="0" Background="#f1f8e9" 
                                  BorderBrush="#f1f8e9" 
                                  Height="Auto" Width="Auto"
                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                  Foreground="{StaticResource MainColor}" Kind="Minus"  />
+        </Button>
+
         <TextBlock Grid.Column="1" 
-                   Text="{Binding Quantity, FallbackValue='1'}"
+                   Text="{Binding Source={StaticResource DetailPro},Path=Quantity, UpdateSourceTrigger=PropertyChanged, FallbackValue='1'}"
                    FontSize="16"  Foreground="Gray" 
-                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <materialDesign:PackIcon Grid.Column="2" 
+                   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="7,-2,6,-2"/>
+        <Button Height="Auto" Width="Auto" Grid.Column="2" Padding="0" Background="Transparent" BorderBrush="Transparent"
+               Command="{Binding Source={StaticResource TableViewModel}, Path=PlusDetailProQuantityCommand}">
+            <materialDesign:PackIcon 
                                  Background="#f1f8e9" 
                                  BorderBrush="#f1f8e9" 
                                  Height="Auto" Width="Auto" 
                                  Kind="Plus" Foreground="{StaticResource MainColor}" 
                                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+        </Button>
     </Grid>
 </UserControl>

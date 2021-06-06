@@ -8,8 +8,8 @@
              xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DataContext="{d:DesignInstance ViewModel:TableViewModel}"
              BorderBrush="Gray" BorderThickness="2"
+             d:DataContext="{d:DesignInstance Type=ViewModel:TableViewModel}"
              d:DesignHeight="550" d:DesignWidth="300" Background="#FEFDEB">
     <Grid>
         <Grid.RowDefinitions>
@@ -20,7 +20,7 @@
         </Grid.RowDefinitions>
         <!--Button "Chon ban"-->
         <Button Command="{Binding OpenViewChooseTableCommand}" FontSize="18" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" >
                 <Label Padding="0" Foreground="#BD8722" Content="Chọn bàn" VerticalAlignment="Center"/>
                 <materialDesign:PackIcon VerticalAlignment="Center" Kind="ChevronRight"
                                          Height="Auto" Width="Auto" Foreground="#BD8722" RenderTransformOrigin="0.323,0.538"/>
@@ -34,20 +34,23 @@
                       materialDesign:ScrollBarAssist.ThumbCornerRadius="10"
                       HorizontalScrollBarVisibility="Auto">
             <!--The Panel contains list product-->
-            <ItemsControl ItemsSource="{Binding Currentlistdetailpro, UpdateSourceTrigger=PropertyChanged}">
-                <ItemsControl.Resources>
-                </ItemsControl.Resources>
-                <ItemsControl.ItemTemplate>
+            <ListView ItemsSource="{Binding Currentlistdetailpro, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <ListView.ItemTemplate>
                     <DataTemplate>
                         <Item:Item_UC DataContext="{Binding}"/>
                     </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemsPanel>
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical"></StackPanel>
                     </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
+                </ListView.ItemsPanel>
+            </ListView>
         </ScrollViewer>
         <Grid  Grid.Row="2">
             <Grid.ColumnDefinitions>

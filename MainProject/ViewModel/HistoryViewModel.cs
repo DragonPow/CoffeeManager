@@ -12,7 +12,7 @@ namespace MainProject.ViewModel
 {
     class HistoryViewModel: BaseViewModel
     {
-        #region Feld
+        #region Fields
         private ObservableCollection<BILL> _ListBill;
         private BILL _CurrentBill;
         private int _NumberPage;

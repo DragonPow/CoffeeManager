@@ -47,22 +47,12 @@
                         Margin="0,40,0,20"
                         Width="200"
                         Height="160"
+                        Padding="0"
                         Background="Transparent"
                         Command="{Binding AddUpdateImageProductCommand}">
-                    <Grid>
-                        <Image Stretch="Uniform"
-                               Source="{Binding Newproduct.product.Image}" />
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Plus"
-                                                     Foreground="Gray"
-                                                     Width="35"
-                                                     Height="35"
-                                                     VerticalAlignment="Center" />
-                            <TextBlock Text="Thêm ảnh"
-                                       Foreground="Gray"
-                                       FontSize="24"
-                                       VerticalAlignment="Center" />
-                        </StackPanel>
+                    <Grid Height="160" Width="200">
+                        <Image Stretch="UniformToFill"
+                                   Source="{Binding Newproduct.product.Image}" />
                     </Grid>
                 </Button>
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
@@ -74,7 +64,7 @@
                 <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                           materialDesign:HintAssist.Hint="Danh mục"
                           ItemsSource="{Binding Source={x:Static model:TYPE_PRODUCT.Instance}, Path=ListType}"
-                          SelectedItem="{Binding Newproduct.product.MainType}"
+                          SelectedItem="{Binding Type_in_Combobox_AddPro}"
                           FontSize="16"
                           MaxWidth="500"
                           Margin="100,5" />
@@ -82,11 +72,13 @@
                          materialDesign:HintAssist.Hint="Giá"
                          Text="{Binding Newproduct.product.Price}"
                          FontSize="16"
+                         materialDesign:TextFieldAssist.SuffixText="đ"
                          MaxWidth="500"
                          Margin="100,5" />
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Mô tả"
                          Text="{Binding Newproduct.product.Detail}"
+                         materialDesign:TextFieldAssist.SuffixText="0/30"
                          TextWrapping="Wrap"
                          MaxWidth="500"
                          Margin="100,5" />

@@ -15,12 +15,12 @@ namespace MainProject.MainWorkSpace.Bill
 
         private BILL _CurrentBill;
         private string _CodeDiscount;
-        private DateTime _Time;
-        private int _BillCode;
         private int _Discount;
+        private long _Total;
         private TABLECUSTOM _Current_table;
+        bool IsDiscount = false;
 
-        private ObservableCollection<DETAILBILL> _ListDetailBill;      
+        private ObservableCollection<DETAILBILL> _ListDetailBill;
         //StoreInfor : namestore, phone, address
 
         private ICommand _PaymentCommand;
@@ -46,42 +46,31 @@ namespace MainProject.MainWorkSpace.Bill
             }
         }
 
-        public DateTime Time
-        {
-            get { return _Time; }
-            set
-            {
-                if (value != _Time)
-                {
-                    _Time = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
         public int Discount
         {
             get { return _Discount; }
-            set
-            {
-                if (value != _Discount)
-                {
-                    _Discount = value;
-                    OnPropertyChanged();
-                }
-            }
+            set { _Discount = value; }
         }
         public int BillCode
         {
-            get { return _BillCode; }
-            set
+            get
             {
-                if (value != _BillCode)
+                using (var db = new mainEntities())
                 {
-                    _BillCode = value;
-                    OnPropertyChanged();
+                    return db.BILLs.Count() + 1;
                 }
             }
+        }
+        public long Total
+        {
+            get { return _Total; }
+            set { 
+                if ( _Total != value)
+                {
+                    _Total = value;
+                    OnPropertyChanged();
+                }    
+                }
         }
 
         public string CodeDiscount
@@ -97,13 +86,7 @@ namespace MainProject.MainWorkSpace.Bill
             }
         }
 
-        public long TotalPrice
-        {
-            get
-            {
-                return 1;//CurrentBill.DETAILBILLs.Sum(bill => bill.AMOUNT * bill.PRODUCT.PRICE);
-            }
-        }
+
         public TABLECUSTOM CurrentTable
         {
             get => _Current_table;
@@ -127,11 +110,10 @@ namespace MainProject.MainWorkSpace.Bill
                 {
                     _ListDetailBill = value;
                     OnPropertyChanged();
-                   
+
                 }
             }
         }
-       
 
         #endregion
 
@@ -172,24 +154,37 @@ namespace MainProject.MainWorkSpace.Bill
         #region Constructors
         public BillViewModel()
         {
+            //testing
+            CurrentTable = new TABLECUSTOM();
+            for (int i = 0; i < 5; i++)
+            {
+                CurrentTable.ListPro.Add(new DetailPro()
+                {
+                    Pro = new PRODUCT() { Name = "Cafe den da khong duong", Price = 10000, DELETED = 0 },
+                    Quantity = 2,
+                });
+                CurrentTable.Total += CurrentTable.ListPro.ElementAt(i).Quantity * CurrentTable.ListPro.ElementAt(i).Pro.Price;
+            }
+            CurrentTable.table = new TABLE()
+            {
+                DELETED = 0,
+                Floor = 1,
+                Number = 1,
+                ID_Status = 1
+            };
+            //end testing
             CurrentBill = new BILL();
-            
-          /*  CurrentBill.DETAILBILLs.Add(new DETAILBILL() { Amount = 2, PRODUCT = new PRODUCT() { Name = "Thach", Price = 1000 } });      */      
 
-            foreach( var p in CurrentTable.ListPro)
+            foreach (var p in CurrentTable.ListPro)
             {
                 CurrentBill.DETAILBILLs.Add(new DETAILBILL() { PRODUCT = p.Pro, Amount = p.Quantity });
             }
 
             CurrentBill.TABLE = CurrentTable.table;
             Discount = 0;
-            Time = DateTime.Now;
-            using (var db = new mainEntities())
-            {
-                BillCode = db.BILLs.Count() + 1;
-            }
-
-         }
+            CurrentBill.CheckoutDay = DateTime.Now;
+            Total = CurrentTable.Total;
+        }
 
         public BillViewModel(BILL bill)
         {
@@ -199,43 +194,53 @@ namespace MainProject.MainWorkSpace.Bill
 
         private void Payment(BillView view)
         {
+           /* CurrentTable.ListPro.Add(new DetailPro());*/
+            
             using (var db = new mainEntities())
-            {
-               
-                var t = db.VOUCHERs.Where(v => (v.CODE == CodeDiscount && v.DELETED == 0 && v.BeginTime <= DateTime.Now && v.EndTime >= DateTime.Now)).FirstOrDefault();
-                if ( t!= null || CodeDiscount == "")
-                {
-                    if (CodeDiscount != "")
-                    {
-                        CurrentBill.ID_Voucher = t.ID;
-                        CurrentBill.VOUCHER = t;
-                        Discount = (int)(CurrentTable.Total * t.Percent) / 100;
+            { 
+                CurrentBill.ID_Tables = CurrentTable.table.ID;
 
-                    }    
-                    
-                    CurrentBill.ID_Tables = CurrentTable.table.ID;                 
-                    CurrentBill.TotalPrice = CurrentTable.Total - Discount;
-                    CurrentBill.CheckoutDay = Time;
-                   
-                    db.BILLs.Add(CurrentBill);
+                db.BILLs.Add(CurrentBill);
 
-                    CurrentTable.ListPro = null;
-                    CurrentTable.Total = 0;
-                    CodeDiscount = "";
-                    
-                    view.Close();
-                                    
-                    //Xuất đơn ra PDF
-                }
-                else
-                {
-                    //open messegnbox thông báo lỗi sai mã voucher
-                }                    
+                CurrentTable.ListPro = null;
+                CurrentTable.Total = 0;
+                db.SaveChanges();
+
+                view.Close();
+
+                //Xuất đơn ra PDF                                
             }
         }
         private void LoadDiscount()
         {
-            Console.WriteLine("Load discount");
+
+            if (IsDiscount) {
+                WindowService.Instance.OpenMessageBox("Đã sử dụng mã khác!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                return;
+            }
+            using (var db = new mainEntities())
+            {
+
+                var t = db.VOUCHERs.Where(v => (v.CODE == CodeDiscount && v.DELETED == 0 && v.BeginTime <= DateTime.Now && v.EndTime >= DateTime.Now)).FirstOrDefault();
+                if (t != null && !IsDiscount)
+                {
+                    CurrentBill.ID_Voucher = t.ID;
+                   // CurrentBill.VOUCHER = t;
+                    Discount = (int)(CurrentTable.Total * t.Percent) / 100;
+                    Total -= Discount;
+                    IsDiscount = true;
+                }
+                else
+                {
+                        Total = CurrentTable.Total;
+                        CurrentBill.ID_Voucher = null;
+                        CurrentBill.VOUCHER = null;
+                        CodeDiscount = "";
+                        Discount = 0;
+                       
+                    WindowService.Instance.OpenMessageBox("Nhập sai mã!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                }
+            }
         }
     }
 }
