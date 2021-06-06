@@ -25,7 +25,9 @@ namespace MainProject.MainWorkSpace
 
         private const PackIconKind _iconDisplay = PackIconKind.Home;
 
-       
+        private ICommand _AddEditCategory;
+
+
         #endregion
 
         #region  propertities
@@ -80,7 +82,39 @@ namespace MainProject.MainWorkSpace
 
         #region Command
 
-     
+       
+
+        public ICommand AddEditCategory_Command
+        {
+            get
+            {
+                if (_AddEditCategory == null)
+                {
+                    _AddEditCategory = new RelayingCommand<Object>(a => AddEditCategory());
+                }
+                return _AddEditCategory;
+            }
+        }
+
+
+        public void AddEditCategory()
+        {
+            using (var db = new mainEntities())
+            {
+                var i = db.TYPE_PRODUCT.Where(t => t.Type.Contains("Danh mục mới")).Count();
+
+                db.TYPE_PRODUCT.Add(new TYPE_PRODUCT() { Type = "Danh mục mới " + (i == 0 ? "" : i.ToString()) });
+
+                db.SaveChanges();
+
+                ListType.Add(new TYPE_PRODUCT() { Type = "Danh mục mới " + (i == 0 ? "" : i.ToString()) });
+
+                WindowService.Instance.OpenMessageBox("Thêm mới thành công. Tiến hành chỉnh sửa ở Sửa danh mục", "Thông báo", System.Windows.MessageBoxImage.Information);
+            }
+
+        }
+
+
         #endregion
     }
 }
