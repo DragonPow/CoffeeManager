@@ -64,7 +64,8 @@
                 Command="{Binding }"
                 Grid.Row="1"
                 Grid.Column="2"
-                Background="Green"
+                Background="{StaticResource MainColor}"
+                BorderBrush="{StaticResource MainColor}"
                 Foreground="White"
                 Width="120"
                 Margin="0 30 0 20">

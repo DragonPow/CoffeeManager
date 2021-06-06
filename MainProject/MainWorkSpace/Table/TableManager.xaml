@@ -100,17 +100,49 @@
                                  Width="{Binding ActualWidth, ElementName=InfoCanvas}"
                                  Height="{Binding ActualHeight, ElementName=InfoCanvas}"/>
                 <!--Button Add new Table-->
-                <Button Background="{DynamicResource MainColor}"
+               
+                <materialDesign:PopupBox
+                      Background="#0E0E2F"
+                      BorderBrush="#0E0E2F"
+                      Foreground="White"
+                      Style="{StaticResource MaterialDesignMultiFloatingActionAccentPopupBox}"
+                      PlacementMode="TopAndAlignCentres"
+                      ToggleCheckedContentCommand="{Binding FloatingActionDemoCommand}"
+                      ToggleCheckedContentCommandParameter="wowsers"
+                      ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionAccentPopupBox"
+                      Canvas.Bottom="20"
+                      Canvas.Right="20">
+                   
+       
+                    <StackPanel>
+                        <Button Background="{DynamicResource MainColor}"
                         BorderBrush="{DynamicResource MainColor}"
+                        Height="40"
+                        Width="40"
                         Style="{StaticResource MaterialDesignFloatingActionButton}"
                         ToolTip="MaterialDesignFloatingActionButton"
-                        Command="{Binding InsertTableCommand}"
-                        Canvas.Bottom="20"
-                        Canvas.Right="20">
-                    <materialDesign:PackIcon Kind="Plus"
-                                             Height="30"
-                                             Width="30" />
-                </Button>
+                        Command="{Binding InsertTableCommand}">
+                            <materialDesign:PackIcon Kind="Plus"
+                                             Height="auto"
+                                             Width="auto" 
+                                             Margin="5"/>
+                        </Button>
+                        <Button Background="#B5281C"
+                        BorderBrush="#B5281C"
+                        Height="40"
+                        Width="40"
+                        Style="{StaticResource MaterialDesignFloatingActionButton}"
+                        ToolTip="MaterialDesignFloatingActionButton"
+                        Command="{Binding DeleteTableCommand}"
+                        Margin="0,10">
+                            <materialDesign:PackIcon Kind="DeleteOutline"
+                                             Height="auto"
+                                             Width="auto" 
+                                             Margin="5" />
+                        </Button>
+                    </StackPanel>
+                </materialDesign:PopupBox>
+                
             </Canvas>
         </Grid>
     </DockPanel>

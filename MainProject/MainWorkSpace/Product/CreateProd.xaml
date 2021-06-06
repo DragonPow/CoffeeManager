@@ -51,7 +51,7 @@
                         Background="Transparent"
                         Command="{Binding AddUpdateImageProductCommand}">
                     <Grid Height="160" Width="200">
-                        <Image Stretch="UniformToFill"
+                        <Image Stretch="Fill"
                                    Source="{Binding Newproduct.Image}" />
                     </Grid>
                 </Button>
