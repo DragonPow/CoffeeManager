@@ -110,7 +110,7 @@ namespace MainProject.ViewModel
 
         public TYPE_PRODUCT Type_in_Combobox_AddProduct { get => _Type_in_Combobox_AddProduct; set { if (_Type_in_Combobox_AddProduct != value) { _Type_in_Combobox_AddProduct = value; OnPropertyChanged(); } } }
         public TYPE_PRODUCT Type { get => _Type; set { if (_Type != value) { _Type = value; OnPropertyChanged(); LoadProductByType(value.Type); } } }
-        public TYPE_PRODUCT TypeInEditCATEGORYCombobox { get => _TypeInEditCATEGORYCombobox; set { if (_TypeInEditCATEGORYCombobox != value) { _TypeInEditCATEGORYCombobox = value; OnPropertyChanged(); LoadProductBYType_EditType(); EditTypeInEditCatefory = value.Type; } } }
+        public TYPE_PRODUCT TypeInEditCATEGORYCombobox { get => _TypeInEditCATEGORYCombobox; set { if (_TypeInEditCATEGORYCombobox != value) { _TypeInEditCATEGORYCombobox = value; OnPropertyChanged(); EditTypeInEditCatefory = value.Type; LoadProductBYType_EditType();  } } }
 
         public TableViewModel Tableviewmodel { get => _Tableviewmodel; set { if (_Tableviewmodel != value) { _Tableviewmodel = value; OnPropertyChanged(); } } }
         #endregion
@@ -658,9 +658,11 @@ namespace MainProject.ViewModel
                 if (TypeInEditCATEGORYCombobox == null) return;
 
                 var l = db.PRODUCTs.Where(p => ((p.TYPE_PRODUCT.Type == TypeInEditCATEGORYCombobox.Type || p.TYPE_PRODUCT.Type == ""))).ToList();
+           
 
                 if (l == null) return;
 
+                l.ForEach(p => p.IsChecked = p.TYPE_PRODUCT == null ? false : true);
                 ListPoduct = new ObservableCollection<PRODUCT>(l);
             }
         }
