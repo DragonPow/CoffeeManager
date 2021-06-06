@@ -21,7 +21,7 @@
         <!--Button "Chon ban"-->
         <Button Command="{Binding OpenViewChooseTableCommand}" FontSize="18" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent">
             <StackPanel Orientation="Horizontal" >
-                <Label Padding="0" Foreground="#BD8722" Content="Chọn bàn" VerticalAlignment="Center"/>
+                <Label Padding="0" Foreground="#BD8722" Content="{Binding TableName,FallbackValue='Chọn bàn'}" VerticalAlignment="Center"/>
                 <materialDesign:PackIcon VerticalAlignment="Center" Kind="ChevronRight"
                                          Height="Auto" Width="Auto" Foreground="#BD8722" RenderTransformOrigin="0.323,0.538"/>
             </StackPanel>
@@ -60,9 +60,9 @@
             <Border BorderBrush="Gray" BorderThickness="0,1,0,1" Grid.ColumnSpan="2"/>
             <CheckBox
                 Height="25"
-                  Style="{StaticResource MaterialDesignFilterChipAccentCheckBox}"
-                  IsChecked="True"
-                  VerticalAlignment="Center" Margin="10,0"
+                Style="{StaticResource MaterialDesignFilterChipAccentCheckBox}"
+                IsChecked="{Binding Isbringtohome}"
+                VerticalAlignment="Center" Margin="10,0"
                 Background="{StaticResource MainColor}"
                 Foreground="Green">
                 Mang đi

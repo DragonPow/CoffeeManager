@@ -4,9 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Product"
+             xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
              mc:Ignorable="d" 
              Background="White"
+             d:DataContext="{d:DesignInstance Type=ViewModel:ProductViewModel}"
+             x:Name="Select_Item"
              d:DesignHeight="100" d:DesignWidth="500">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -22,17 +26,18 @@
             HorizontalAlignment="Center" 
             VerticalAlignment="Center"
             IsChecked="False" 
-            Margin="10"/>
-        <Image Source="/Resources/coffee.jpg" Grid.Column="1" Stretch="Fill" Height="40" Width="50"></Image>
+            Margin="10"
+            Command="{Binding DataContext.ClickCheckboxSelectedPro_Command, ElementName=Select_Item}"/>
+        <Image Source="{Binding Image}" Grid.Column="1" Stretch="Fill" Height="40" Width="50"></Image>
         <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="10,0">
-            <TextBlock Text="{Binding Pro.Name, FallbackValue='Trà sữa trân châu'}" Grid.Column="0" 
+            <TextBlock Text="{Binding Name, FallbackValue='Trà sữa trân châu'}" Grid.Column="0" 
                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10 0" 
                        Foreground="#BD8722" FontSize="16" FontWeight="DemiBold"/>
-            <TextBlock Grid.Column="0" Text="{Binding Pro.Detail, FallbackValue='Trân châu đường đen'}"
+            <TextBlock Grid.Column="0" Text="{Binding Detail, FallbackValue='Trân châu đường đen'}"
                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10 0" 
                        Foreground="#958360" FontSize="12" FontWeight="Light" FontStyle="Italic"></TextBlock>
         </StackPanel>
-        <TextBlock Grid.Column="3" Text="{Binding Pro.Price, FallbackValue='25,000đ', StringFormat='{}{0:N0} đ'}" 
+        <TextBlock Grid.Column="3" Text="{Binding Price, FallbackValue='25,000đ', StringFormat='{}{0:N0} đ'}" 
                    HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Right" 
                    Foreground="Gray" FontWeight="Light" FontStyle="Italic" 
                    FontSize="16" Margin="20"></TextBlock>

@@ -22,7 +22,8 @@
                        Text="{Binding Name}"
                        Cursor="None"
                        TextAlignment="Center"
-                       Padding="5"
+                       Padding="10,5"
+                       TextWrapping="Wrap"
                        Foreground="Black"
                        FontWeight="DemiBold">
                 <TextBlock.Background>

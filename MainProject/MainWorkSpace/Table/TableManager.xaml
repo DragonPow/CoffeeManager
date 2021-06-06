@@ -1,19 +1,19 @@
 ﻿<UserControl x:Class="MainProject.MainWorkSpace.Table.TableManager"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Table"
              xmlns:MainWorkSpace="clr-namespace:MainProject.MainWorkSpace"
              xmlns:Model="clr-namespace:MainProject.Model"
              xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=ViewModel:TableViewModel}" 
-             d:DesignHeight="630" d:DesignWidth="900" Background="White">
-    <UserControl.DataContext>
-        <ViewModel:TableViewModel/>
-    </UserControl.DataContext>
+             Tag="Table Manager "
+             d:DataContext="{d:DesignInstance Type=ViewModel:TableViewModel}"
+             d:DesignHeight="630"
+             d:DesignWidth="900"
+             Background="White">
     <DockPanel>
         <Grid Height="45"
               DockPanel.Dock="Top"
@@ -88,26 +88,61 @@
             </Border>
         </Grid>
         <Grid DockPanel.Dock="Bottom">
-            <Canvas x:Name="InfoCanvas">
+            <Canvas x:Name="InfoCanvas"
+                    Margin="20 10">
                 <!--Table view here-->
-                <local:TableView BorderBrush="#9393A1"
+               
+                <local:TableManagerView BorderBrush="#9393A1" 
                                  BorderThickness="2"
                                  DataContext="{Binding}"
                                  Canvas.Left="0" Canvas.Top="0"
                                  Width="{Binding ActualWidth, ElementName=InfoCanvas}"
                                  Height="{Binding ActualHeight, ElementName=InfoCanvas}"/>
                 <!--Button Add new Table-->
-                <Button Background="{DynamicResource MainColor}"
+               
+                <materialDesign:PopupBox
+                      Background="#0E0E2F"
+                      BorderBrush="#0E0E2F"
+                      Foreground="White"
+                      Style="{StaticResource MaterialDesignMultiFloatingActionAccentPopupBox}"
+                      PlacementMode="TopAndAlignCentres"
+                      ToggleCheckedContentCommand="{Binding FloatingActionDemoCommand}"
+                      ToggleCheckedContentCommandParameter="wowsers"
+                      ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionAccentPopupBox"
+                      Canvas.Bottom="20"
+                      Canvas.Right="20">
+                   
+       
+                    <StackPanel>
+                        <Button Background="{DynamicResource MainColor}"
                         BorderBrush="{DynamicResource MainColor}"
+                        Height="40"
+                        Width="40"
                         Style="{StaticResource MaterialDesignFloatingActionButton}"
                         ToolTip="MaterialDesignFloatingActionButton"
-                        Command="{Binding InsertTableCommand}"
-                        Canvas.Bottom="20"
-                        Canvas.Right="20">
-                    <materialDesign:PackIcon Kind="Plus"
-                                             Height="30"
-                                             Width="30" />
-                </Button>
+                        Command="{Binding InsertTableCommand}">
+                            <materialDesign:PackIcon Kind="Plus"
+                                             Height="auto"
+                                             Width="auto" 
+                                             Margin="5"/>
+                        </Button>
+                        <Button Background="#B5281C"
+                        BorderBrush="#B5281C"
+                        Height="40"
+                        Width="40"
+                        Style="{StaticResource MaterialDesignFloatingActionButton}"
+                        ToolTip="MaterialDesignFloatingActionButton"
+                        Command="{Binding DeleteTableCommand}"
+                        CommandParameter="{Binding SelectedIndex}"
+                        Margin="0,10">
+                            <materialDesign:PackIcon Kind="DeleteOutline"
+                                             Height="auto"
+                                             Width="auto" 
+                                             Margin="5" />
+                        </Button>
+                    </StackPanel>
+                </materialDesign:PopupBox>
+                
             </Canvas>
         </Grid>
     </DockPanel>

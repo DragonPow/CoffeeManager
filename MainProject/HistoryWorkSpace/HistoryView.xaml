@@ -5,12 +5,88 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:MainProject.HistoryWorkSpace"
              xmlns:viewmodel="clr-namespace:MainProject.ViewModel"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
              Background="White"
              d:DesignHeight="450"
              d:DesignWidth="800"
-             d:DataContext="{d:DesignInstance Type=local:HistoryViewModel}">
+             d:DataContext="{d:DesignInstance Type=viewmodel:HistoryViewModel}">
     <Grid>
-        <TextBlock Text="This is history workspace" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Danh sách hóa đơn"
+                   Grid.ColumnSpan="3"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontWeight="Bold"
+                   Margin="0 15"
+                   FontSize="30" />
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="0 30 0 20"
+                    HorizontalAlignment="Center">
+            <TextBlock Text="Từ ngày:"
+                       VerticalAlignment="Center"
+                       FontSize="20" />
+            <DatePicker FontSize="17"
+                        Width="120"
+                        Margin="15 0"
+                        SelectedDate="{Binding BeginTime}"
+                        materialDesign:HintAssist.Hint="Chọn ngày" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="0 30 0 20"
+                    HorizontalAlignment="Center">
+            <TextBlock Text="Đến ngày:"
+                       VerticalAlignment="Center"
+                       FontSize="20" />
+            <DatePicker FontSize="17"
+                        Width="120"
+                        Margin="15 0"
+                        SelectedDate="{Binding EndTime}"
+                        materialDesign:HintAssist.Hint="Chọn ngày" />
+        </StackPanel>
+        <Button Content="TÌM KIẾM"
+                x:Name="btnFind"
+                Style="{StaticResource MaterialDesignOutlinedButton}"
+                Command="{Binding }"
+                Grid.Row="1"
+                Grid.Column="2"
+                Background="{StaticResource MainColor}"
+                BorderBrush="{StaticResource MainColor}"
+                Foreground="White"
+                FontSize="15"
+                Width="120"
+                Margin="0 30 0 20">
+            <behaviors:Interaction.Triggers>
+                <behaviors:EventTrigger SourceObject="{Binding ElementName=btnFind}"
+                                        EventName="Click">
+                    <behaviors:ChangePropertyAction TargetObject="{Binding DataContext, ElementName=btnFind}"
+                                                    PropertyName="NumberPage"
+                                                    Value="1" />
+                </behaviors:EventTrigger>
+            </behaviors:Interaction.Triggers>
+        </Button>
+        <local:HistoryListItemView DataContext="{Binding}"
+                                   Grid.Row="2"
+                                   Grid.ColumnSpan="3"
+                                   HorizontalAlignment="Center" />
+        <local:NumericUpDown Grid.Row="3" 
+                             Grid.ColumnSpan="3"
+                             Margin="0 20"
+                             DataContext="{Binding}"/>
     </Grid>
 </UserControl>

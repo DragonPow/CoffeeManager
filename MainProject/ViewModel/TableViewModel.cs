@@ -2,16 +2,29 @@
 using MainProject.MainWorkSpace.Bill;
 using MainProject.MainWorkSpace.Table;
 using MainProject.Model;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace MainProject.ViewModel
 {
-   public  class TableViewModel : BaseViewModel
+   public  class TableViewModel : BaseViewModel, IMainWorkSpace
     {
+        public string NameWorkSpace => "Quản lý bàn";
+        private const PackIconKind _iconDisplay = PackIconKind.TableChair;
+        public PackIcon IconDisplay
+        {
+            get
+            {
+                return new PackIcon() { Kind = _iconDisplay, Width = 30, Height = 30 };
+            }
+        }
+
         #region Field
         private ObservableCollection<TABLECUSTOM> _ListTable;
         private ObservableCollection<int> _ListFloor;
@@ -20,6 +33,9 @@ namespace MainProject.ViewModel
         private DetailPro _CurrentDetailPro;
         private ObservableCollection<DetailPro> _Currentlistdetailpro;
         private long _TotalCurrentTable;
+        private bool _Isbringtohome;
+
+        private BillViewModel _Billviewmodel;
 
         private ICommand _plusQuantityDetailProCommand;
         private ICommand _minusQuantityDetailProCommand;
@@ -33,11 +49,12 @@ namespace MainProject.ViewModel
 
         private ICommand _DeleteTableCommand;
         private ICommand _InsertTableCommand;
-        private ICommand _UpdateStatusTableCommand;
+        private ICommand _UpdateStatusTableCommand;      
 
         private ICommand _AddFloor;
         private ICommand _DeleteFloor;
 
+        private string _TableName = "Chọn bàn";
 
         #endregion
 
@@ -52,7 +69,7 @@ namespace MainProject.ViewModel
 
             using (var db = new mainEntities())
             {
-                var listtab = db.TABLES.Where(t => (t.Floor == CurrentFloors && t.DELETED == 0)).ToList();
+                var listtab = db.TABLEs.Where(t => (t.Floor == CurrentFloors)).ToList();
 
                 if (listtab == null) return;
 
@@ -66,7 +83,7 @@ namespace MainProject.ViewModel
                 ListTable = new ObservableCollection<TABLECUSTOM>(Tablecustoms);
                 ListFloor = new ObservableCollection<int>();
 
-                var list = db.TABLES.Select(f => f.Floor).Distinct();
+                var list = db.TABLEs.Where( f => f.Floor != 0).Select(f => f.Floor ).Distinct();
 
                 foreach( int f in list)
                 {
@@ -80,6 +97,37 @@ namespace MainProject.ViewModel
 
         #region Properties
 
+        public bool Isbringtohome
+        {
+            get => _Isbringtohome;
+            set
+            {
+                if (_Isbringtohome != value)
+                {
+                    _Isbringtohome = value;
+                    OnPropertyChanged();
+                    if ( value == true)
+                    {
+                        TableName = "Mang về";
+                        CurrentTable = null;
+                    }
+                    else
+                         if (CurrentTable == null) TableName = "Chọn bàn >";
+                }
+            }
+        }
+        public BillViewModel Billviewmodel
+        {
+            get => _Billviewmodel;
+            set
+            {
+                if (_Billviewmodel != value)
+                {
+                    _Billviewmodel = value;
+                    OnPropertyChanged();              
+                }
+            }
+        }
         public long TotalCurrentTable { get => _TotalCurrentTable; set { if (_TotalCurrentTable != value) { _TotalCurrentTable = value; OnPropertyChanged(); } } }
         public ObservableCollection<DetailPro> Currentlistdetailpro 
         { 
@@ -118,7 +166,7 @@ namespace MainProject.ViewModel
 
                     using (var db = new mainEntities())
                     {
-                        var listtab = db.TABLES.Where(t => (t.Floor == CurrentFloors && t.DELETED == 0)).ToList();
+                        var listtab = db.TABLEs.Where(t => (t.Floor == CurrentFloors)).ToList();
 
                         if (listtab == null) return;
 
@@ -145,7 +193,13 @@ namespace MainProject.ViewModel
                 {
                     _CurrentTable = value;
                     OnPropertyChanged();
-                  
+                    if (value != null && value.table != null)
+                    {
+                        TableName = "Bàn: " + value.table.Name.ToString();
+                        Isbringtohome = false;
+                    }
+                    else
+                         if (!Isbringtohome) TableName = "Chọn bàn >";
                 }
             }
       
@@ -178,6 +232,20 @@ namespace MainProject.ViewModel
                 if (_ListTable != value)
                 {
                     _ListTable = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+       
+            public string TableName
+            {
+            get => _TableName;            
+            set
+            {
+                if (_TableName != value)
+                {
+                    _TableName = value;
                     OnPropertyChanged();
                 }
             }
@@ -259,7 +327,7 @@ namespace MainProject.ViewModel
         public void OpenChooseTable( )
         {
             SelectTableView v = new SelectTableView();
-            //Show Tab SelectedTableView
+            WindowService.Instance.OpenWindow(this, v);
         }
 
         public ICommand CloseViewChooseTableCommand
@@ -276,8 +344,8 @@ namespace MainProject.ViewModel
 
         public void CloseChooseTable()
         {
-          
-            //Show Tab SelectedTableView
+            Window window = WindowService.Instance.FindWindowbyTag("Selected Table").First();
+            window.Close();
         }
 
 
@@ -313,23 +381,43 @@ namespace MainProject.ViewModel
         }
         public void Pay()
         {
-            if (CurrentTable == null)
+            if (CurrentTable == null && !Isbringtohome)
             {
                 WindowService.Instance.OpenMessageBox("Chưa chọn bàn", "Lỗi", System.Windows.MessageBoxImage.Error);
                 return;
             }
 
+            if ( Isbringtohome)
+            {
+                using (var db = new mainEntities())
+                {
+                    CurrentTable = new TABLECUSTOM() { table = new TABLE()};
+                }
+            }
+
+            if (Currentlistdetailpro == null || Currentlistdetailpro.Count == 0 )
+            {
+                WindowService.Instance.OpenMessageBox("Chưa có món được chọn!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                return;
+            }                
 
             CurrentTable.ListPro = Currentlistdetailpro;
             CurrentTable.Total = TotalCurrentTable;
 
-            BillViewModel billviewmodel = new BillViewModel();
-            billviewmodel.CurrentTable = CurrentTable;
-
+            Billviewmodel = new BillViewModel(CurrentTable);
+            
             BillView billView = new BillView();
-            billView.DataContext = billviewmodel;
+            billView.DataContext = Billviewmodel;
 
-            billView.Show();
+            billView.ShowDialog();
+
+            if (Billviewmodel.IsClose)
+            {
+                CurrentTable = null;
+                Currentlistdetailpro = new ObservableCollection<DetailPro>();
+                TotalCurrentTable = 0;
+            }
+
         }
 
 
@@ -350,21 +438,19 @@ namespace MainProject.ViewModel
             ListTable.RemoveAt(number - 1);
 
             for (int i = number; i < ListTable.Count; ++i)
-                --ListTable[i].table.Number;
+                --ListTable[i].table.Name;
 
             using (var db = new mainEntities())
             {
-                TABLE table = db.TABLES.Where(d => (d.Number == number && d.Floor == CurrentFloors) && (d.DELETED == 0)).FirstOrDefault();
+                TABLE table = db.TABLEs.Where(d => (d.Name == number && d.Floor == CurrentFloors)).FirstOrDefault();
 
                 if (table != null)
                 {
-                    table.DELETED = 1;
+                    var TABLEs = db.TABLEs.Where(t => t.Name > number && t.Floor == CurrentFloors);
 
-                    var TABLES = db.TABLES.Where(t => t.Number > number && t.Floor == CurrentFloors && t.DELETED == 0);
-
-                    foreach (TABLE tab in TABLES)
+                    foreach (TABLE tab in TABLEs)
                     {
-                        --tab.Number;
+                        --tab.Name;
                     }
 
                 }
@@ -387,13 +473,13 @@ namespace MainProject.ViewModel
 
         public void Insert()
         {
-            TABLE tab = new TABLE() { Floor = CurrentFloors, STATUS_TABLE = new STATUS_TABLE() { Status = "Empty"}, Number = ListTable.Count + 1, DELETED = 0 };
+            TABLE tab = new TABLE() { Floor = CurrentFloors, STATUS_TABLE = new STATUS_TABLE() { Status = "Empty"}, Name = ListTable.Count + 1};
 
             ListTable.Add(new TABLECUSTOM() { table = tab });
 
             using (var db = new mainEntities())
             {
-                db.TABLES.Add(tab);
+                db.TABLEs.Add(tab);
                 db.SaveChanges();
             }
 

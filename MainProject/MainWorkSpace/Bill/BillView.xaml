@@ -26,7 +26,7 @@
         <!--Information of store-->
         <Border BorderBrush="Black"
                 BorderThickness="2"
-                Background="Gray"
+                Background="LightGray"
                 Margin="30 10">
             <Grid Margin="20 10">
                 <Grid.Resources>
@@ -34,7 +34,7 @@
                         <Setter Property="FontSize"
                                 Value="20" />
                         <Setter Property="Foreground"
-                                Value="White" />
+                                Value="Black" />
                         <Style.Triggers>
                             <Trigger Property="Grid.Column"
                                      Value="1">
@@ -57,23 +57,22 @@
                 <TextBlock Grid.Row="0"
                            Grid.Column="0">
                     <Run>Thời gian</Run>
-                    <Run Text="{Binding CurrentBill.CheckoutDay, StringFormat=': {0:hh:mm, dd/MM/yyyy}',
-                                Mode=OneWay}" />
+                    <Run Text="{Binding CurrentBill.CheckoutDay, StringFormat=': {0:hh:mm, dd/MM/yyyy}'}" />
                 </TextBlock>
                 <TextBlock Grid.Row="1"
                            Grid.Column="0">
-                    <Run>Bàn</Run>
-                    <Run Text="{Binding CurrentTable.table.Number, StringFormat=': {0}'}" />
+                    <Run>Số điện thoại</Run>
+                    <Run Text="{Binding Phone, StringFormat=': {0}'}" />
                 </TextBlock>
                 <TextBlock Grid.Row="0"
                            Grid.Column="1">
                     <Run>Mã số hóa đơn</Run>
-                    <Run Text="{Binding BillCode, StringFormat=': {0}', Mode=OneWay}" />
+                    <Run Text="{Binding BillCode, StringFormat=': {0}'}" />
                 </TextBlock>
                 <TextBlock Grid.Row="1"
                            Grid.Column="1">
-                    <Run>Số điện thoại</Run>
-                    <Run Text="{Binding Phone, StringFormat=': {0}'}" />
+                    <Run>Bàn</Run>
+                    <Run Text="{Binding CurrentTable.table.Number, StringFormat=': {0}'}" />
                 </TextBlock>
                 <TextBlock Grid.Row="2"
                            Grid.ColumnSpan="2">
@@ -102,67 +101,64 @@
                 <local:Bill_ProductTable DataContext="{Binding CurrentTable}"
                                          x:Name="TableLines" />
             </Border>
-            <TextBlock Text="Mã giảm giá"
-                       Grid.Row="1"
-                       FontSize="18"
-                       HorizontalAlignment="Right"
-                       Margin="0 20 0 0" />
-            <StackPanel Grid.Row="1"
-                        Grid.Column="1"
-                        Orientation="Horizontal"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Right"
-                        Margin="0 20 0 0">
-                <TextBox Text="{Binding CodeDiscount, FallbackValue='CODE'}"
-                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                         HorizontalContentAlignment="Center"
-                         VerticalContentAlignment="Center"
-                         Padding="0"
-                         Width="150"
-                         FontSize="15" />
-                <Button Margin="10 0 -30 0"
-                        Command="{Binding CheckDiscountCommand}"
-                        Padding="0"
-                        Background="Transparent"
-                        BorderBrush="Transparent">
-                    <materialDesign:PackIcon Kind="Reload"
-                                             VerticalAlignment="Center"
-                                             Width="20"
-                                             Foreground="Black"
-                                             Height="20" />
-                </Button>
-            </StackPanel>
-            <TextBlock Text="Ưu đãi"
-                       Grid.Row="2"
-                       VerticalAlignment="Center"
-                       FontSize="18"
-                       HorizontalAlignment="Right"
-                       Margin="0 20 0 0" />
-            <TextBlock Text="{Binding Discount, FallbackValue='0,000 đ', 
-                                StringFormat='{}{0:N0} đ'}"
-                       Grid.Row="2"
-                       Grid.Column="1"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Right"
-                       Margin="0 20 20 0"
-                       FontSize="18" />
             <TextBlock Text="Tổng tiền"
-                       Grid.Row="3"
+                       Grid.Row="1"
                        VerticalAlignment="Center"
                        FontWeight="Bold"
-                       FontSize="20"
+                       FontSize="25"
+                       Margin="0 25 0 0"
                        HorizontalAlignment="Right" />
             <!--Thiếu converer-->
             <TextBlock Text="{Binding Total, FallbackValue='0,000 đ', 
                                 StringFormat='{}{0:N0} đ', NotifyOnTargetUpdated=True}"
                        FontWeight="Bold"
-                       Grid.Row="3"
+                       Grid.Row="1"
                        Grid.Column="10"
                        x:Name="testing"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Right"
-                       Margin="0 0 20 0"
-                       FontSize="20" />
+                       Margin="0 25 0 0"
+                       FontSize="25" />
+            
+            <!--Tien khach dua-->
+            <TextBlock Text="Tiền khách đưa"
+                       Grid.Row="2"
+                       HorizontalAlignment="Right"
+                       FontSize="18"
+                       Margin="0 20 0 0" />
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Margin="0 20 0 0"
+                        HorizontalAlignment="Right">
+                <TextBox Text="{Binding GiveMoney, FallbackValue='0,000', StringFormat='{}{0:N0}'}"
+                         Style="{StaticResource MaterialDesignTextBox}"
+                         HorizontalContentAlignment="Right"
+                         VerticalContentAlignment="Center"
+                         
+                         Width="100"
+                         FontSize="18"
+                         />
+                <TextBlock Text=" đ" 
+                           FontSize="17"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <!--Tien thoi lai-->
+            <TextBlock Text="Tiền thối"
+                       Grid.Row="3"
+                       VerticalAlignment="Center"
+                       FontSize="17"
+                       HorizontalAlignment="Right"
+                       Margin="0 7 0 0" />
+            <TextBlock Text="{Binding Refund, FallbackValue='0,000 đ', 
+                                StringFormat='{}{0:N0} đ'}"
+                       Grid.Row="3"
+                       Grid.Column="1"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       Margin="0 7 0 0"
+                       FontSize="17" />
         </Grid>
 
         <TextBlock Text="Cảm ơn quý khách"
@@ -181,7 +177,7 @@
                 MinWidth="200"
                 FontSize="20"
                 HorizontalAlignment="Center"
-                Background="Green"
+                Background="Blue"
                 Command="{Binding PaymentCommand}"
                 CommandParameter="{Binding ElementName=MainWindow}"
                 Margin="0 0 0 20" />

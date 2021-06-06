@@ -27,13 +27,14 @@ namespace MainProject.Model
     
         public virtual DbSet<BILL> BILLs { get; set; }
         public virtual DbSet<DETAILBILL> DETAILBILLs { get; set; }
-        public virtual DbSet<EMPLOYEE> EMPLOYEEs { get; set; }
-        public virtual DbSet<POSITION_EMPLOYEE> POSITION_EMPLOYEE { get; set; }
-        public virtual DbSet<REGULATION> REGULATIONs { get; set; }
-        public virtual DbSet<STATUS_TABLE> STATUS_TABLE { get; set; }
-        public virtual DbSet<TABLE> TABLES { get; set; }
-        public virtual DbSet<VOUCHER> VOUCHERs { get; set; }
+        public virtual DbSet<DETAILREPORTREVENUE> DETAILREPORTREVENUEs { get; set; }
+        public virtual DbSet<DETAILREPORTSALE> DETAILREPORTSALES { get; set; }
+        public virtual DbSet<PARAMETER> PARAMETERs { get; set; }
         public virtual DbSet<PRODUCT> PRODUCTs { get; set; }
+        public virtual DbSet<REPORTREVENUE> REPORTREVENUEs { get; set; }
+        public virtual DbSet<REPORTSALE> REPORTSALES { get; set; }
+        public virtual DbSet<STATUS_TABLE> STATUS_TABLE { get; set; }
         public virtual DbSet<TYPE_PRODUCT> TYPE_PRODUCT { get; set; }
+        public virtual DbSet<TABLE> TABLEs { get; set; }
     }
 }

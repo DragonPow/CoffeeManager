@@ -10,6 +10,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              Background="White"
+             x:Name="Main_View"
              d:DataContext="{d:DesignInstance Type=local:MainViewModel}"
              d:DesignHeight="630"
              d:DesignWidth="1150">
@@ -21,17 +22,18 @@
             <ColumnDefinition Width="7*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <Table:TableDetailView DataContext="{Binding Tableviewmodel}" Grid.Column="1" Margin="5,0,0,0"/>
+        <Table:TableDetailView DataContext="{Binding Tableviewmodel}" Grid.Column="1" Margin="5,0,0,0" />
 
         <DockPanel>
             <materialDesign:ColorZone DockPanel.Dock="Top"
+                                      DataContext="{Binding Productviewmodel}"
               Mode="PrimaryMid"
               Padding="5">
                 <Grid materialDesign:RippleAssist.IsCentered="True">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
                     <materialDesign:ColorZone
@@ -40,14 +42,15 @@
                     Padding="8 4"
                     CornerRadius="2"
                     Panel.ZIndex="1"
-                    materialDesign:ShadowAssist.ShadowDepth="Depth1" Grid.Column="1">
+                    materialDesign:ShadowAssist.ShadowDepth="Depth1" Grid.Column="0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Button VerticalAlignment="Center"
-                                Style="{DynamicResource MaterialDesignToolButton}">
+                                Style="{DynamicResource MaterialDesignToolButton}"
+                                    Command="{Binding SearchProduct}">
                                 <materialDesign:PackIcon
                                   Kind="Search"
                                   Opacity=".56" />
@@ -62,19 +65,70 @@
                             VerticalAlignment="Center" />
                         </Grid>
                     </materialDesign:ColorZone>
+                    <materialDesign:PopupBox
+                          Grid.Column="2"
+                          PlacementMode="BottomAndAlignRightEdges">
+                        <StackPanel Background="White">
+                            <Button
+                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                            ToolTip="MaterialDesignOutlinedButton"   
+                            Foreground="{StaticResource MainColor}"
+                            BorderBrush="{StaticResource MainColor}"
+                            Padding="0"
+                            Height="40"
+                            Margin="5"
+                                Command="{Binding LoadAddProductView_Command}">
+                                <DockPanel>
+                                    <TextBlock DockPanel.Dock="Left" Text="Thêm sản phẩm" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{StaticResource MainColor}" Margin="10,0,0,0"></TextBlock>
+                                    <materialDesign:PackIcon Kind="PlusCircle" DockPanel.Dock="Right" Height="Auto" Width="auto" HorizontalAlignment="Right" Margin="7"/>
+                                </DockPanel>
 
+                            </Button>
+                            <Button
+                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                            ToolTip="MaterialDesignOutlinedButton"   
+                            Foreground="{StaticResource MainColor}"
+                            BorderBrush="{StaticResource MainColor}"
+                            Padding="0"
+                            Height="40"
+                            Margin="5"
+                                Command="{Binding DataContext.AddEditCategory_Command, ElementName=Main_View}">
+                                <DockPanel>
+                                    <TextBlock DockPanel.Dock="Left" Text="Thêm danh mục" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{StaticResource MainColor}" Margin="10,0,0,0"></TextBlock>
+                                    <materialDesign:PackIcon Kind="PlusCircle" DockPanel.Dock="Right" Height="Auto" Width="auto" HorizontalAlignment="Right" Margin="7" Foreground="{StaticResource MainColor}"/>
+                                </DockPanel>
+
+                            </Button>
+                            <Button
+                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                            ToolTip="MaterialDesignOutlinedButton"   
+                            Foreground="{StaticResource MainColor}"
+                            BorderBrush="{StaticResource MainColor}"
+                            Padding="0"
+                            Height="40"
+                            Margin="5"
+                            Command="{Binding OpenViewEditCategory_Command}">
+                                <DockPanel>
+                                    <TextBlock DockPanel.Dock="Left" Text="Sửa danh mục   " FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{StaticResource MainColor}" Margin="10,0,0,0"></TextBlock>
+                                    <materialDesign:PackIcon Kind="PlusCircle" DockPanel.Dock="Right" Height="Auto" Width="auto" HorizontalAlignment="Right" Margin="7" Foreground="{StaticResource MainColor}"/>
+                                </DockPanel>
+                                
+                            </Button>
+
+                        </StackPanel>
+                    </materialDesign:PopupBox>
                 </Grid>
             </materialDesign:ColorZone>
             <TabControl TabStripPlacement="Bottom"
                         DockPanel.Dock="Bottom"
-                        ItemsSource="{Binding ListType}"
+                        ItemsSource="{Binding ListType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                         SelectedItem="{Binding CurrentType}"
                         Style="{StaticResource MaterialDesignNavigatilRailTabControl}"
-                         materialDesign:ColorZoneAssist.Mode="PrimaryMid">
+                         materialDesign:ColorZoneAssist.Mode="PrimaryMid" >
                 <TabControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel >
-                            <TextBlock Text="{Binding Path=ID}" FontSize="18" 
+                            <TextBlock Text="" FontSize="18" 
                                    FontWeight="Bold" 
                                    Foreground="White" 
                                    HorizontalAlignment="Center"/>

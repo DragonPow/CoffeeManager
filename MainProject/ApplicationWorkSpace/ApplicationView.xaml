@@ -5,27 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
+        xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
         xmlns:MainWorkSpace="clr-namespace:MainProject.MainWorkSpace"
-        xmlns:AccountWorkSpace="clr-namespace:MainProject.AccountWorkSpace"
         xmlns:HistoryWorkSpace="clr-namespace:MainProject.HistoryWorkSpace"
-        xmlns:VoucherWorkSpace="clr-namespace:MainProject.VoucherWorkSpace"
         xmlns:StatisticWorkSpace="clr-namespace:MainProject.StatisticWorkSpace"
+        xmlns:TableManagerWorkSpace="clr-namespace:MainProject.MainWorkSpace.Table"
+        xmlns:SettingWorkSpace="clr-namespace:MainProject.SettingWorkSpace"
         Title="Coffee Manager">
     <Window.Resources>
         <DataTemplate DataType="{x:Type MainWorkSpace:MainViewModel}">
             <MainWorkSpace:MainView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type AccountWorkSpace:AccountViewModel}">
+        <!--<DataTemplate DataType="{x:Type AccountWorkSpace:AccountViewModel}">
             <AccountWorkSpace:AccountView />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type HistoryWorkSpace:HistoryViewModel}">
+        </DataTemplate>-->
+        <DataTemplate DataType="{x:Type ViewModel:HistoryViewModel}">
             <HistoryWorkSpace:HistoryView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type VoucherWorkSpace:VoucherViewModel}">
+        <!--<DataTemplate DataType="{x:Type VoucherWorkSpace:VoucherViewModel}">
             <VoucherWorkSpace:VoucherPreviewPanel />
-        </DataTemplate>
+        </DataTemplate>-->
         <DataTemplate DataType="{x:Type StatisticWorkSpace:StatisticViewModel}">
             <StatisticWorkSpace:StatisticView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type ViewModel:TableViewModel}">
+            <TableManagerWorkSpace:TableManager />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type ViewModel:SettingViewModel}">
+            <SettingWorkSpace:SettingView />
         </DataTemplate>
     </Window.Resources>
     

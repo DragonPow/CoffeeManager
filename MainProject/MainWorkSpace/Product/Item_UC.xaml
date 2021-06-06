@@ -16,9 +16,9 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="9*" />
+            <ColumnDefinition Width="10*" />
             <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="4*" />
         </Grid.ColumnDefinitions>
         <Border BorderThickness="0,0,0,1"
                 BorderBrush="Gray"
@@ -32,9 +32,10 @@
                     VerticalAlignment="Center">
             <TextBlock Text="{Binding Pro.Name, FallbackValue='Trà sữa trân châu'}"
                        Grid.Column="0"
+                       Grid.ColumnSpan="1"
                        HorizontalAlignment="Stretch"
                        VerticalAlignment="Stretch"
-                       Margin="10 0"
+                       Margin="10,0,0,0"
                        Foreground="#BD8722"
                        FontSize="16" />
             <TextBlock Grid.Column="0"
@@ -52,16 +53,16 @@
                               Height="20"
                               Width="auto"
                               HorizontalAlignment="Stretch"
-                              VerticalAlignment="Center"
-                              Margin="0,5" ></MainWS:NumericUpdown>
+                              VerticalAlignment="Center" ></MainWS:NumericUpdown>
         <TextBlock Grid.Column="2"
                    Text="{Binding Pro.Price, FallbackValue='25,000đ', StringFormat='{}{0:N0} đ'}"
-                   HorizontalAlignment="Center"
+                   HorizontalAlignment="Right"
                    VerticalAlignment="Center"
                    TextAlignment="Right"
                    Foreground="Gray"
                    FontWeight="Light"
                    FontStyle="Italic"
+                   Margin="10,0"
                    FontSize="16"></TextBlock>
 
     </Grid>

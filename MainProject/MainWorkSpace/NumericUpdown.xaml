@@ -12,10 +12,6 @@
              d:DesignHeight="20" d:DesignWidth="60" 
              Width="Auto"
              BorderBrush="#f1f8e9" BorderThickness="1">
-    <UserControl.Resources>
-        <main:DetailPro x:Key="DetailPro"></main:DetailPro>
-        <ViewModel:TableViewModel x:Key="TableViewModel"/>
-    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -23,7 +19,7 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Button Height="Auto" Width="Auto" Grid.Column="0" Padding="0" Background="Transparent" BorderBrush="Transparent"
-                Command="{Binding Source={StaticResource TableViewModel}, Path=MinusDetailProQuantityCommand}">
+                Command="{Binding}">
             <materialDesign:PackIcon 
                                  Grid.Column="0" Background="#f1f8e9" 
                                  BorderBrush="#f1f8e9" 
@@ -33,11 +29,11 @@
         </Button>
 
         <TextBlock Grid.Column="1" 
-                   Text="{Binding Source={StaticResource DetailPro},Path=Quantity, UpdateSourceTrigger=PropertyChanged, FallbackValue='1'}"
+                   Text="{Binding Quantity}"
                    FontSize="16"  Foreground="Gray" 
                    VerticalAlignment="Center" HorizontalAlignment="Center" Margin="7,-2,6,-2"/>
         <Button Height="Auto" Width="Auto" Grid.Column="2" Padding="0" Background="Transparent" BorderBrush="Transparent"
-               Command="{Binding Source={StaticResource TableViewModel}, Path=PlusDetailProQuantityCommand}">
+               Command="{Binding}">
             <materialDesign:PackIcon 
                                  Background="#f1f8e9" 
                                  BorderBrush="#f1f8e9" 

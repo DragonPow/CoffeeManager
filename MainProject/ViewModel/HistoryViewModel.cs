@@ -1,5 +1,6 @@
 ﻿using MainProject.MainWorkSpace.Bill;
 using MainProject.Model;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,19 +11,31 @@ using System.Windows.Input;
 
 namespace MainProject.ViewModel
 {
-    class HistoryViewModel: BaseViewModel
+    class HistoryViewModel: BaseViewModel, IMainWorkSpace
     {
+        public string NameWorkSpace => "Lịch sử";
+        private const PackIconKind _iconDisplay = PackIconKind.ClipboardTextSearchOutline;
+        public PackIcon IconDisplay
+        {
+            get
+            {
+                return new PackIcon() { Kind = _iconDisplay, Width = 30, Height = 30 };
+            }
+        }
+
         #region Fields
         private ObservableCollection<BILL> _ListBill;
         private BILL _CurrentBill;
         private int _NumberPage;
-        private int Number_Bill_in_Page = 20;
+        private int _NumberAllpage;
+        public static int Number_Bill_in_Page = 20;      
 
         private DateTime _BeginTime;
         private DateTime _EndTime;
 
         ICommand _Load_Detail_Bill;
         ICommand _Exit_Detail_Bill;
+        ICommand _Search_Bill;
         #endregion
 
         #region Properties
@@ -58,11 +71,24 @@ namespace MainProject.ViewModel
             {
                 if (value != _NumberPage)
                 {
-                    _NumberPage = value;
+                    if (value > NumberAllPage)
+                    {
+                        _NumberPage = NumberAllPage;
+                    }
+                    else if (value < 1)
+                    {
+                        _NumberPage = 1;
+                    }
+                    else _NumberPage = value;
                     OnPropertyChanged();
                     LoadBillByNumberPage();
                 }
             }
+        }
+        public int NumberAllPage
+        {
+            get;
+            set;
         }
         public DateTime BeginTime
         {
@@ -89,11 +115,31 @@ namespace MainProject.ViewModel
                 }
             }
         }
+
+        public bool IsEndPage
+        {
+            get => NumberPage == NumberAllPage;
+        }
         #endregion
         #region Init
         public HistoryViewModel()
         {
-            LoadBillByNumberPage();
+            //LoadBillByNumberPage();
+
+            //testing
+            //for (int i=1;i<=20;i++)
+            //{
+            //    ListBill.Add(new BILL()
+            //    {
+            //        ID = 10,
+            //        CheckoutDay = new DateTime(2021, i%12 + 1, i%29 + 1),
+            //        TotalPrice = i * 100,
+            //        TABLE = new TABLE() { Number = i }
+            //    });
+            //}
+            //_NumberPage = 1;
+            //NumberAllPage = 5;
+            //end testing
         }
         #endregion
 
@@ -111,13 +157,45 @@ namespace MainProject.ViewModel
 
         public void Load_Detail_Bill()
         {
+           
             BillView view = new BillView();
-            view.DataContext = CurrentBill;
-
+            view.DataContext = new BillViewModel() { Total = CurrentBill.TotalPrice, CurrentBill = CurrentBill };
             view.Show();
 
         }
 
+        public ICommand Search_BillCommand
+        {
+            get
+            {
+                if (_Search_Bill == null)
+                    _Search_Bill = new RelayingCommand<object>(a => Search_Bill());
+                return _Search_Bill;
+            }
+        }
+
+        public void Search_Bill()
+        {
+            if (EndTime < BeginTime)
+            {
+                WindowService.Instance.OpenMessageBox("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                return;
+            }
+
+            NumberPage = 1;
+            using ( var db = new mainEntities())
+            {
+                NumberAllPage = ((db.BILLs.Where((b => (b.CheckoutDay >= BeginTime && b.CheckoutDay <= EndTime))).Count() / Number_Bill_in_Page) + (db.BILLs.Count() % Number_Bill_in_Page != 0 ? 1 : 0));
+
+                var list = db.BILLs.Where(b => (b.CheckoutDay >= BeginTime && b.CheckoutDay <= EndTime)).OrderBy(b => b.ID).Take(Number_Bill_in_Page).ToList();
+
+                if (list == null) return;
+
+                ListBill = new ObservableCollection<BILL>(list);
+            }
+           
+
+        }
         public ICommand Exit_Detail_BillCommand
         {
             get
@@ -131,11 +209,16 @@ namespace MainProject.ViewModel
 
         void LoadBillByNumberPage()
         {
+            
             using (var db = new mainEntities())
             {
+              
 
-                ListBill = new ObservableCollection<BILL>(db.BILLs.Where(b => (b.ID < NumberPage * Number_Bill_in_Page && b.ID >= (NumberPage - 1) * (Number_Bill_in_Page) && b.CheckoutDay >= BeginTime && b.CheckoutDay <=EndTime)).ToList());
+                var list = db.BILLs.Where(b => (b.CheckoutDay >= BeginTime && b.CheckoutDay <= EndTime)).OrderBy(b => b.ID).Skip(NumberPage - 1).Take(Number_Bill_in_Page).ToList();
 
+                if (list == null) return;
+
+                ListBill = new ObservableCollection<BILL>(list);
             }
         }
     }

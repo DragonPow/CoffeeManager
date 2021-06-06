@@ -8,9 +8,10 @@
              xmlns:model="clr-namespace:MainProject.Model"
              xmlns:viewmodel="clr-namespace:MainProject.ViewModel"
              mc:Ignorable="d"
+             Tag="Create product"
              d:DataContext="{d:DesignInstance Type=viewmodel:ProductViewModel}"
-             d:DesignHeight="650"
-             d:DesignWidth="600">
+             Height="650"
+             Width="600">
     <UserControl.Resources>
         <model:TYPE_PRODUCT x:Key="Type_Product" />
     </UserControl.Resources>
@@ -52,32 +53,33 @@
                         Command="{Binding AddUpdateImageProductCommand}">
                     <Grid Height="160" Width="200">
                         <Image Stretch="UniformToFill"
-                                   Source="{Binding Newproduct.product.Image}" />
+                                   Source="{Binding Newproduct.Image}" />
                     </Grid>
                 </Button>
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Tên mặt hàng"
-                         Text="{Binding Newproduct.product.Name}"
+                         Text="{Binding Newproduct.Name}"
                          FontSize="16"
                          Margin="100,5"
                          MaxWidth="500" />
                 <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                           materialDesign:HintAssist.Hint="Danh mục"
                           ItemsSource="{Binding Source={x:Static model:TYPE_PRODUCT.Instance}, Path=ListType}"
-                          SelectedItem="{Binding Type_in_Combobox_AddPro}"
+                          SelectedValue="{Binding Type_in_Combobox_AddPro}"
+                          SelectedValuePath="{Binding Type}"
                           FontSize="16"
                           MaxWidth="500"
                           Margin="100,5" />
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Giá"
-                         Text="{Binding Newproduct.product.Price}"
+                         Text="{Binding Newproduct.Price}"
                          FontSize="16"
                          materialDesign:TextFieldAssist.SuffixText="đ"
                          MaxWidth="500"
                          Margin="100,5" />
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Mô tả"
-                         Text="{Binding Newproduct.product.Detail}"
+                         Text="{Binding Newproduct.Decription}"
                          materialDesign:TextFieldAssist.SuffixText="0/30"
                          TextWrapping="Wrap"
                          MaxWidth="500"
@@ -105,12 +107,9 @@
                             Background="{StaticResource MainColor}"
                             BorderBrush="#31CA62"
                             Foreground="White"
-                            Margin="10">
-                        <TextBlock HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Text="Thêm vào"
-                                   FontSize="20"
-                                   Margin="5" />
+                            Margin="10"
+                            Content="Thêm"
+                            FontSize="20">
                     </Button>
 
                 </Grid>

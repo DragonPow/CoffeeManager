@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 
@@ -22,14 +23,18 @@ namespace MainProject.ViewModel
 
         private ObservableCollection<PRODUCT> _ListProduct;
         private int _IndexCurrentproduct;
-        private TYPE_PRODUCT _Type;
-        private TYPE_PRODUCT _Type_In_Edit_CATEGORY;
-        string _SearchProduct;
-        string _Type_in_Combobox_AddPro;
-        TYPE_PRODUCT _Type_in_Combobox_AddProduct;
-        PRODUCT _Newproduct;
+        private int _IndexCurrentproductInMainView;
 
-        TableViewModel _Tableviewmodel;
+        private TYPE_PRODUCT _Type;
+        private TYPE_PRODUCT _TypeInEditCATEGORYCombobox;
+        private TYPE_PRODUCT _Type_in_Combobox_AddProduct;
+
+        private string _EditTypeInEditCatefory;
+        private string _SearchProduct;
+        private string _Type_in_Combobox_AddPro;
+        private PRODUCT _Newproduct;
+
+        private TableViewModel _Tableviewmodel;
         
         private ICommand _DeletePro;
 
@@ -46,16 +51,23 @@ namespace MainProject.ViewModel
         private ICommand _CancelAddProduct;
         private ICommand _ExitAddProview;
 
-        
+
+        private ICommand _RightClickDetailPro;
         private ICommand _ExitDetailProduct;
         private ICommand _OpenViewDetailProduct;
         private ICommand _AddDetailProToTableCommand;
 
         private ICommand _AddImageProduct;
 
-        private ICommand _OpenViewEditCategory;
-        private ICommand _ClickCheckboxSelectedPro;
+        private ICommand _OpenViewEditCategory;       
         private ICommand _SaveEditCategory;
+        private ICommand _ClickCheckboxSelectedPro;
+        private ICommand _DeleteTypeEditCategory;
+
+        private ICommand _CloseEditCategory;
+
+
+    
         #endregion
 
 
@@ -64,7 +76,20 @@ namespace MainProject.ViewModel
         public ObservableCollection<PRODUCT> ListPoduct { get => _ListProduct; set { if (value != _ListProduct) { _ListProduct = value; OnPropertyChanged(); } } }
 
         public int IndexCurrentProduct { get => _IndexCurrentproduct; set { if (_IndexCurrentproduct != value) { _IndexCurrentproduct = value; OnPropertyChanged(); } } }
-     
+        public int IndexCurrentproductInMainView 
+        {
+            get => _IndexCurrentproductInMainView;
+            set 
+            {
+                if (_IndexCurrentproductInMainView != value)
+                {
+                    _IndexCurrentproductInMainView = value;
+                    OnPropertyChanged();
+                  
+                } 
+            } 
+        }
+
         public PRODUCT Newproduct 
         { 
             get => _Newproduct; 
@@ -78,12 +103,13 @@ namespace MainProject.ViewModel
             } 
         }
 
-        public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); } } }
+        public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); SearchName(); } } }
+        public string EditTypeInEditCatefory { get => _EditTypeInEditCatefory; set { if (_EditTypeInEditCatefory != value) { _EditTypeInEditCatefory = value; OnPropertyChanged(); } } }
         public string Type_in_Combobox_AddPro { get => _Type_in_Combobox_AddPro; set { if (_Type_in_Combobox_AddPro != value) { _Type_in_Combobox_AddPro= value; OnPropertyChanged(); } } }
 
         public TYPE_PRODUCT Type_in_Combobox_AddProduct { get => _Type_in_Combobox_AddProduct; set { if (_Type_in_Combobox_AddProduct != value) { _Type_in_Combobox_AddProduct = value; OnPropertyChanged(); } } }
         public TYPE_PRODUCT Type { get => _Type; set { if (_Type != value) { _Type = value; OnPropertyChanged(); LoadProductByType(value.Type); } } }
-        public TYPE_PRODUCT Type_In_Edit_CATEGORY { get => _Type_In_Edit_CATEGORY; set { if (_Type_In_Edit_CATEGORY != value) { _Type_In_Edit_CATEGORY = value; OnPropertyChanged(); } } }
+        public TYPE_PRODUCT TypeInEditCATEGORYCombobox { get => _TypeInEditCATEGORYCombobox; set { if (_TypeInEditCATEGORYCombobox != value) { _TypeInEditCATEGORYCombobox = value; OnPropertyChanged(); LoadProductBYType_EditType(); EditTypeInEditCatefory = value.Type; } } }
 
         public TableViewModel Tableviewmodel { get => _Tableviewmodel; set { if (_Tableviewmodel != value) { _Tableviewmodel = value; OnPropertyChanged(); } } }
         #endregion
@@ -94,7 +120,7 @@ namespace MainProject.ViewModel
         {
            /* Newproduct = new CUSTOMPRODUCT() { product = new PRODUCT() { DELETED = 0, Image = null, TYPE_PRODUCT = new ObservableCollection<TYPE_PRODUCT>() } };*/
                     /* lát phải xóa dòng trên đầu nhó*/
-            Type = new TYPE_PRODUCT() { Type ="Tất cả"} ;
+           /* Type = new TYPE_PRODUCT() { Type ="Tất cả"} ;*/
 
         }
 
@@ -119,9 +145,9 @@ namespace MainProject.ViewModel
         public void Loadaddproview()
         {
 
-            Newproduct =new PRODUCT() { DELETED = 0, Image = null, TYPE_PRODUCT = new TYPE_PRODUCT() } ;
+            Newproduct =new PRODUCT() { Image = imageToByteArray( Properties.Resources.Empty_Image), TYPE_PRODUCT = new TYPE_PRODUCT() } ;
 
-            WindowService.Instance.OpenWindow(this, new CreateProd());
+            WindowService.Instance.OpenWindowWithoutBorderControl(this, new CreateProd());
         }
 
         public ICommand AddProduct_Command_Command
@@ -130,31 +156,40 @@ namespace MainProject.ViewModel
             {
                 if (_AddProduct == null)
                 {
-                    _AddProduct = new RelayingCommand<Object>(a => Add(a));
+                    _AddProduct = new RelayingCommand<Object>(a => Add());
                 }
                 return _AddProduct;
             }
         }
 
 
-        public void Add(object a)
+        public void Add()
         {
+            if ( Newproduct.Name == null)
+            {
+                WindowService.Instance.OpenMessageBox("Chưa nhập tên sản phẩm", "Lỗi", System.Windows.MessageBoxImage.Error);
+                return;
+            }
             using (var db = new mainEntities())
             {
                 {
                     TYPE_PRODUCT type= db.TYPE_PRODUCT.Where(t => (t.Type == Type_in_Combobox_AddPro)).FirstOrDefault();
-                
-                    if (type == null) return;
+
+                    if (type == null) Newproduct.TYPE_PRODUCT = null;
+                    else 
                     Newproduct.TYPE_PRODUCT = type ;                
 
 
                     db.PRODUCTs.Add(Newproduct);
 
+                    ListPoduct.Add(Newproduct);
+
                     db.SaveChanges();
+                    Exitaddproview();
+
                 }
             }
-
-            ListPoduct.Add(Newproduct);
+       
         }
 
         public ICommand CancelAddProduct_Command
@@ -182,17 +217,18 @@ namespace MainProject.ViewModel
             {
                 if (_ExitAddProview == null)
                 {
-                    _ExitAddProview = new RelayingCommand<Object>(a => Exitaddproview(a));
+                    _ExitAddProview = new RelayingCommand<Object>(a => Exitaddproview());
                 }
                 return _ExitAddProview;
             }
         }
 
 
-        public void Exitaddproview(Object a)
+        public void Exitaddproview()
         {
             Newproduct = null;
-            //Exit view Add_pro(a)
+            Window window = WindowService.Instance.FindWindowbyTag("Create product").First();
+            window.Close();
         }
 
 
@@ -214,12 +250,33 @@ namespace MainProject.ViewModel
 
             using (var db = new mainEntities())
             {
-                PRODUCT product = db.PRODUCTs.Where(p => (p.ID == ListPoduct.ElementAt(IndexCurrentProduct).ID) && (p.DELETED == 0)).FirstOrDefault();
-                if (product != null)
+                using (var transaction = db.Database.BeginTransaction())
                 {
-                    product.DELETED = 1;
-                }
-                db.SaveChanges();
+                    PRODUCT product = db.PRODUCTs.Where(p => (p.ID == ListPoduct.ElementAt(IndexCurrentProduct).ID)).FirstOrDefault();
+
+
+                    if (product == null) return;
+
+                    try
+                    {
+                        var list = db.DETAILREPORTSALES.Where(r => r.ID_Product == product.ID);
+                        if (list != null)
+                        {
+                            db.DETAILREPORTSALES.RemoveRange(list);
+                        }
+
+                        db.PRODUCTs.Remove(product);
+
+                        db.SaveChanges();
+                        transaction.Commit();
+                    }
+                    catch(Exception exp)
+                    {
+                        transaction.Rollback();
+                        Console.WriteLine("Error occurred.");
+                    }
+                    
+                }               
             }
             ListPoduct.Remove(ListPoduct.ElementAt(IndexCurrentProduct));
         }
@@ -237,30 +294,26 @@ namespace MainProject.ViewModel
         }
 
         public void SearchName()
-        {
-            ObservableCollection<PRODUCT> listproduct;
-            if (SearchProduct == "")
+        {           
+            using (var db = new mainEntities())
             {
-                using (var db = new mainEntities())
-                {
-                    listproduct = new ObservableCollection<PRODUCT>(db.PRODUCTs.ToList());
-                }
-            }
-            else
-            {
-                using (var db = new mainEntities())
-                {
-                    var listpro = db.PRODUCTs.Where(p => (ConvertToUnSign(p.Name).ToLower().Contains(ConvertToUnSign(SearchProduct).ToLower()) && p.DELETED == 0));
-                    if (listpro == null) return;
-                    listproduct = new ObservableCollection<PRODUCT>(listpro.ToList());
-                }
-            }
+                Type = db.TYPE_PRODUCT.Where(t => t.ID == 0).FirstOrDefault();
 
-            foreach (PRODUCT p in listproduct)
-            {
-                ListPoduct.Add(p);
-            }
+                if ( SearchProduct =="")
+                {
+                    ListPoduct = new ObservableCollection<PRODUCT>(db.PRODUCTs.ToList());
+                    return;
+                }                    
 
+                var listpro = db.PRODUCTs.Where(p => (ConvertToUnSign(p.Name).ToLower().Contains(ConvertToUnSign(SearchProduct).ToLower())));
+                if (listpro == null)
+                {
+                    ListPoduct = new ObservableCollection<PRODUCT>();
+                    return;
+                }    
+
+                ListPoduct = new ObservableCollection<PRODUCT>(listpro.ToList());
+            }
 
         }
 
@@ -280,7 +333,7 @@ namespace MainProject.ViewModel
             ObservableCollection<PRODUCT> listproduct;
             using (var db = new mainEntities())
             {
-                var listpro = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT.Type == Type.Type && p.DELETED == 0));
+                var listpro = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT.Type == Type.Type));
                 if (listpro == null) return;
                 listproduct = new ObservableCollection<PRODUCT>(listpro.ToList());
             }
@@ -325,10 +378,10 @@ namespace MainProject.ViewModel
         {
             using (var db = new mainEntities())
             {
-                PRODUCT pro = db.PRODUCTs.Where(p => (p.ID == ListPoduct.ElementAt(IndexCurrentProduct).ID) && (p.DELETED == 0)).FirstOrDefault();             
+                PRODUCT pro = db.PRODUCTs.Where(p => (p.ID == ListPoduct.ElementAt(IndexCurrentProduct).ID) ).FirstOrDefault();
 
-                pro.DELETED = 1;
-                db.PRODUCTs.Add(Newproduct);
+                Newproduct.ID = pro.ID;
+                pro = Newproduct;           
                 db.SaveChanges();
 
                 var item = ListPoduct.ElementAt(IndexCurrentProduct);
@@ -371,7 +424,7 @@ namespace MainProject.ViewModel
 
         public void OpenViewDetail()
         {
-            WindowService.Instance.OpenWindow(this, new ProdDetail());
+            WindowService.Instance.OpenWindowWithoutBorderControl(this, new ProdDetail());
         }
         public ICommand ExitDetailProduct
         {
@@ -388,7 +441,8 @@ namespace MainProject.ViewModel
 
         public void ExitDetail(object a)
         {
-            //open view Add_pro(a)
+            var window = WindowService.Instance.FindWindowbyTag("Edit category").First();
+            window.Close();
         }
 
         public ICommand AddUpdateImageProductCommand
@@ -406,6 +460,8 @@ namespace MainProject.ViewModel
 
         public void Add_Update_ImageProduct()
         {
+       /*     Newproduct = new PRODUCT() { Image = imageToByteArray(Properties.Resources.Empty_Image), TYPE_PRODUCT = new TYPE_PRODUCT() };*/
+
             string path = "";
 
             OpenFileDialog openFile = new OpenFileDialog();
@@ -442,13 +498,15 @@ namespace MainProject.ViewModel
 
          public void AddDetailProToTable()
          {
-            Tableviewmodel.TotalCurrentTable += (long) ListPoduct.ElementAt(IndexCurrentProduct).Price;
+            if (IndexCurrentproductInMainView >= ListPoduct.Count || IndexCurrentproductInMainView < 0) return;
+
+            Tableviewmodel.TotalCurrentTable += (long) ListPoduct.ElementAt(IndexCurrentproductInMainView).Price;
 
             if (Tableviewmodel.Currentlistdetailpro != null)
             {
                 foreach (var p in Tableviewmodel.Currentlistdetailpro)
                 {
-                    if (p.Pro.ID == ListPoduct.ElementAt(IndexCurrentProduct).ID)
+                    if (p.Pro.ID == ListPoduct.ElementAt(IndexCurrentproductInMainView).ID)
                     {
                         ++p.Quantity;
                         return;
@@ -458,7 +516,7 @@ namespace MainProject.ViewModel
             else Tableviewmodel.Currentlistdetailpro = new ObservableCollection<DetailPro>();
 
 
-            Tableviewmodel.Currentlistdetailpro.Add(new DetailPro(ListPoduct.ElementAt(IndexCurrentProduct)));
+            Tableviewmodel.Currentlistdetailpro.Add(new DetailPro(ListPoduct.ElementAt(IndexCurrentproductInMainView)));
          }
         #endregion
         public ICommand OpenViewEditCategory_Command
@@ -467,68 +525,106 @@ namespace MainProject.ViewModel
             {
                 if (_OpenViewEditCategory == null)
                 {
-                    _OpenViewEditCategory = new RelayingCommand<Object>(a => OpenViewEditCategory(a));
+                    _OpenViewEditCategory = new RelayingCommand<Object>(a => OpenViewEditCategory());
                 }
                 return _OpenViewEditCategory;
             }
         }
 
 
-        public void OpenViewEditCategory(object a)
+        public void OpenViewEditCategory()
         {
+
+            TypeInEditCATEGORYCombobox = Type;
+            
+            WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditType());
+
+            LoadProductByType(Type.Type);
+
+        }
+
+        public ICommand ClickCheckboxSelectedPro_Command
+        {
+            get
+            {
+                if (_ClickCheckboxSelectedPro == null)
+                {
+                    _ClickCheckboxSelectedPro = new RelayingCommand<Object>(a => ClickCheckboxSelectedPro(a));
+                }
+                return _ClickCheckboxSelectedPro;
+            }
+        }
+
+
+        public void ClickCheckboxSelectedPro(object a)
+        {
+            if (ListPoduct.ElementAt(IndexCurrentProduct).TYPE_PRODUCT== null)
+            {
+                ListPoduct.ElementAt(IndexCurrentProduct).TYPE_PRODUCT = Type;
+            }                 
+            else
+            {
+                ListPoduct.ElementAt(IndexCurrentProduct).TYPE_PRODUCT = null ;
+            }
+        }
+          public ICommand SaveEditCategory_Command
+         {
+             get
+             {
+                if (_SaveEditCategory == null)
+                {
+                    _SaveEditCategory = new RelayingCommand<Object>(a => SaveEditCategory(a));
+                }
+                return _SaveEditCategory;
+               
+             }
+         }
+
+
+        public void SaveEditCategory(object a)
+         {
 
             using (var db = new mainEntities())
             {
-                if ( Type_In_Edit_CATEGORY == null) return;
+                var type = db.TYPE_PRODUCT.Where(t => t == TypeInEditCATEGORYCombobox).FirstOrDefault();
 
-                var l = db.PRODUCTs.Where(p => ((p.TYPE_PRODUCT.Type == Type_In_Edit_CATEGORY.Type || p.TYPE_PRODUCT.Type == "") && p.DELETED == 0)).ToList();
+                if (EditTypeInEditCatefory != "")  type.Type = EditTypeInEditCatefory;
 
-                if (l == null) return;
-
-                ListPoduct = new ObservableCollection<PRODUCT>(l);
-            }
-
-            WindowService.Instance.OpenWindow(this, new EditType());
-
-        }
-        /*public ICommand CancelAddProduct_Command
-        {
-            get
-            {
-                if (_CancelAddProduct == null)
+                var list = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT == type || p.TYPE_PRODUCT == null)).ToList();
+                if (list == null) return;
+          
+                int i = 0; 
+                foreach ( var p in list)
                 {
-                    _CancelAddProduct = new RelayingCommand<Object>(a => CancelAddProduct(a));
+                    p.TYPE_PRODUCT = ListPoduct.ElementAt(i).TYPE_PRODUCT;
+                    ++i;
                 }
-                return _CancelAddProduct;
+
+                db.SaveChanges();
             }
+
+          
         }
 
-
-        public void CancelAddProduct(object a)
-        {
-
-            Newproduct = null;
-            *//* close Addproductview*//*
-        }
-        public ICommand CancelAddProduct_Command
+        public ICommand CloseEditCategory_Command
         {
             get
             {
-                if (_CancelAddProduct == null)
+                if (_CloseEditCategory == null)
                 {
-                    _CancelAddProduct = new RelayingCommand<Object>(a => CancelAddProduct(a));
-
-                return _CancelAddProduct;
+                    _CloseEditCategory = new RelayingCommand<Object>(a => CloseEditCategory());
+                }
+                return _CloseEditCategory;
             }
         }
 
 
-        public void CancelAddProduct(object a)
+        public void CloseEditCategory()
         {
-            //lưu lại trên list type, nếu typ = type thì dùng type
-            Newproduct = null;
-            *//* close Addproductview*//*
-        }*/
+            Window window = WindowService.Instance.FindWindowbyTag("Edit category").First();
+            window.Close();
+        }
+
 
 
         private void LoadProductByType(string Type)
@@ -539,17 +635,65 @@ namespace MainProject.ViewModel
 
                 if (Type.Contains("Tất cả"))
                 {
-                    ListPoduct = new ObservableCollection<PRODUCT>(db.PRODUCTs.Where(p => (p.DELETED == 0)).ToList());
+                    ListPoduct = new ObservableCollection<PRODUCT>(db.PRODUCTs.ToList());
                 }
                 else
                 {
-                    var p = db.PRODUCTs.Where(pro => ((pro.TYPE_PRODUCT.Type == Type) && (pro.DELETED == 0)));
+                    var p = db.PRODUCTs.Where(pro => (pro.TYPE_PRODUCT.Type == Type));
                     if (p == null) return;
                     ListPoduct = new ObservableCollection<PRODUCT>(p.ToList());
                 }
             }
         }
 
+        private void LoadProductBYType_EditType()
+        {
+            using (var db = new mainEntities())
+            {
+                if (TypeInEditCATEGORYCombobox == null) return;
+
+                var l = db.PRODUCTs.Where(p => ((p.TYPE_PRODUCT.Type == TypeInEditCATEGORYCombobox.Type || p.TYPE_PRODUCT.Type == ""))).ToList();
+
+                if (l == null) return;
+
+                ListPoduct = new ObservableCollection<PRODUCT>(l);
+            }
+        }
+
+        public ICommand DeleteTypeEditCategory_Command
+        {
+            get
+            {
+                if (_DeleteTypeEditCategory == null)
+                {
+                    _DeleteTypeEditCategory = new RelayingCommand<Object>(a => DeleteTypeEditCategory());
+                }
+                return _DeleteTypeEditCategory;
+            }
+        }
+
+
+        public void DeleteTypeEditCategory()
+        {
+            if (TypeInEditCATEGORYCombobox == null) return;
+
+            using (var db = new mainEntities())
+            {
+                var list = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT == TypeInEditCATEGORYCombobox )).ToList();
+                if (list == null) return;
+
+                foreach( var p in list)
+                {
+                    p.TYPE_PRODUCT = null;
+                }
+
+                db.TYPE_PRODUCT.Remove(TypeInEditCATEGORYCombobox);
+
+                db.SaveChanges();
+            }
+
+
+          }
         private string ConvertToUnSign(string input)
         {
             input = input.Trim();
@@ -584,6 +728,13 @@ namespace MainProject.ViewModel
             {
                 return System.Drawing.Image.FromStream(ms);
             }
+        }
+
+        public byte[] imageToByteArray(Image imageIn)
+        {
+            MemoryStream ms = new MemoryStream();
+            imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
+            return ms.ToArray();
         }
     }
 }

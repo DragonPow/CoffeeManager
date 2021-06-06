@@ -6,13 +6,14 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Product"
              xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d"
              x:Name="ProductView"
              d:DataContext="{d:DesignInstance Type=ViewModel:ProductViewModel}"
              d:DesignHeight="480"
              d:DesignWidth="600">
     <ListView ItemsSource="{Binding ListPoduct}"
-                  SelectedItem="{Binding IndexCurrentProduct,Mode=TwoWay}"
+                  SelectedIndex="{Binding IndexCurrentproductInMainView,Mode=TwoWay}"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled">
         <ListView.ItemsPanel>
             <ItemsPanelTemplate>
@@ -21,15 +22,13 @@
         </ListView.ItemsPanel>
         <ListView.ItemTemplate>
             <DataTemplate>
-                <Button Command="{Binding DataContext.AddDetailProToTableCommand, ElementName=ProductView}"
-                            Width="Auto"
-                            Height="Auto"
-                            Background="Transparent"
-                            BorderBrush="Transparent"
-                            Padding="0"
-                            Margin="2">
-                    <local:Pro_UC DataContext="{Binding}" />
-                </Button>
+                <local:Pro_UC DataContext="{Binding}" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                            <i:InvokeCommandAction Command="{Binding DataContext.AddDetailProToTableCommand, ElementName=ProductView}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </local:Pro_UC>
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>

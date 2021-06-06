@@ -4,43 +4,31 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Table"
+             xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d" 
-             x:Name="Table_Manager"
+             x:Name="Table_View"
+             d:DataContext="{d:DesignInstance Type=ViewModel:TableViewModel}"
              xmlns:test="clr-namespace:MainProject"
              d:DesignHeight="480" d:DesignWidth="700">
-    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
-                  VerticalScrollBarVisibility="Auto">
-        <ItemsControl ItemsSource="{Binding ListTable}">
-            <ItemsControl.Resources>
-                <!--<DataTemplate DataType="{x:Type local:FreeTable_UC}">
-                    <local:FreeTable_UC DataContext="{Binding }"/>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type local:AlreadyTable_UC}">
-                    <local:AlreadyTable_UC DataContext="{Binding }"/>
-                </DataTemplate>-->
-            </ItemsControl.Resources>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Button DataContext="{Binding table}" 
-                            Command="{Binding DataContext.ClickTableCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                            Width="Auto" Height="Auto"
-                            Background="Transparent"
-                            BorderBrush="Transparent">
-                        <local:FreeTable_UC DataContext="{Binding}"/>
-                    </Button>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal"></WrapPanel>
-                    <!--<StackPanel Orientation="Horizontal"/>-->
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <!--<ItemsControl.ItemContainerStyle>
-            <Style TargetType="ItemsPresenter">
-                <Setter Property="Margin" Value="10"/>
-            </Style>
-        </ItemsControl.ItemContainerStyle>-->
-        </ItemsControl>
-    </ScrollViewer>
+    <ListView ItemsSource="{Binding ListTable}"
+                  SelectedItem="{Binding CurrentTable, Mode=TwoWay}"
+              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <local:FreeTable_UC DataContext="{Binding table}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <i:InvokeCommandAction Command="{Binding DataContext.CloseViewChooseTableCommand, ElementName=Table_View}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </local:FreeTable_UC>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+        <ListView.ItemsPanel>
+            <ItemsPanelTemplate>
+                <WrapPanel Orientation="Horizontal"></WrapPanel>
+            </ItemsPanelTemplate>
+        </ListView.ItemsPanel>
+    </ListView>
 </UserControl>

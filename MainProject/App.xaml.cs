@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using MainProject.MainWorkSpace;
 using MainProject.ViewModel;
+using MainProject.MainWorkSpace.Product;
 
 namespace MainProject
 {
@@ -25,17 +26,18 @@ namespace MainProject
             base.OnStartup(e);
 
             ////Testing Startup
-            BillView view = new BillView();
-            BillViewModel viewModel = new BillViewModel();
+            //WindowService.Instance.OpenWindow(new HistoryViewModel(), new HistoryWorkSpace.HistoryView());
+            //TestingView view = new TestingView();
+            //MainProject.ViewModel.HistoryViewModel viewModel = new MainProject.ViewModel.HistoryViewModel();
             ////End testing Startup
             ///
 
             //Main Startup
-            //ApplicationView view = new ApplicationView();
-            //ApplicationViewModel viewModel = new ApplicationViewModel();
+            ApplicationView view = new ApplicationView();
+            ApplicationViewModel viewModel = new ApplicationViewModel();
             //End main Startup
 
-            //LoadInitApp();
+            LoadInitApp();
             view.DataContext = viewModel;
             view.Show();
             //view.ShowDialog();
@@ -45,7 +47,7 @@ namespace MainProject
         {
             TYPE_PRODUCT.loadListType();
             STATUS_TABLE.loadListStatus();
-            POSITION_EMPLOYEE.loadListStatus();
+           /* POSITION_EMPLOYEE.loadListStatus();*/
         }
     }
 }
