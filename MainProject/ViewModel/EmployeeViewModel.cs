@@ -300,7 +300,7 @@ namespace MainProject.ViewModel
 
         public void Load_View_Change_Pass_Employee()
         {
-            WindowService.Instance.OpenWindow(this, new ChangedPassword());
+            WindowService.Instance.OpenWindowWithoutBorderControl(this, new ChangedPassword());
         }
 
         public ICommand Change_Pass_Employee_Command

@@ -24,14 +24,17 @@ namespace MainProject.ViewModel
         private ObservableCollection<PRODUCT> _ListProduct;
         private int _IndexCurrentproduct;
         private int _IndexCurrentproductInMainView;
-        private TYPE_PRODUCT _Type;
-        private TYPE_PRODUCT _Type_In_Edit_CATEGORY;
-        string _SearchProduct;
-        string _Type_in_Combobox_AddPro;
-        TYPE_PRODUCT _Type_in_Combobox_AddProduct;
-        PRODUCT _Newproduct;
 
-        TableViewModel _Tableviewmodel;
+        private TYPE_PRODUCT _Type;
+        private TYPE_PRODUCT _TypeInEditCATEGORYCombobox;
+        private TYPE_PRODUCT _Type_in_Combobox_AddProduct;
+
+        private string _EditTypeInEditCatefory;
+        private string _SearchProduct;
+        private string _Type_in_Combobox_AddPro;
+        private PRODUCT _Newproduct;
+
+        private TableViewModel _Tableviewmodel;
         
         private ICommand _DeletePro;
 
@@ -58,6 +61,7 @@ namespace MainProject.ViewModel
         private ICommand _OpenViewEditCategory;
         private ICommand _ClickCheckboxSelectedPro;
         private ICommand _SaveEditCategory;
+
         private ICommand _AddEditCategory;
         private ICommand _DeleteTypeEditCategory;
         #endregion
@@ -95,12 +99,13 @@ namespace MainProject.ViewModel
             } 
         }
 
-        public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); } } }
+        public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); SearchName(); } } }
+        public string EditTypeInEditCatefory { get => _EditTypeInEditCatefory; set { if (_EditTypeInEditCatefory != value) { _EditTypeInEditCatefory = value; OnPropertyChanged(); } } }
         public string Type_in_Combobox_AddPro { get => _Type_in_Combobox_AddPro; set { if (_Type_in_Combobox_AddPro != value) { _Type_in_Combobox_AddPro= value; OnPropertyChanged(); } } }
 
         public TYPE_PRODUCT Type_in_Combobox_AddProduct { get => _Type_in_Combobox_AddProduct; set { if (_Type_in_Combobox_AddProduct != value) { _Type_in_Combobox_AddProduct = value; OnPropertyChanged(); } } }
         public TYPE_PRODUCT Type { get => _Type; set { if (_Type != value) { _Type = value; OnPropertyChanged(); LoadProductByType(value.Type); } } }
-        public TYPE_PRODUCT Type_In_Edit_CATEGORY { get => _Type_In_Edit_CATEGORY; set { if (_Type_In_Edit_CATEGORY != value) { _Type_In_Edit_CATEGORY = value; OnPropertyChanged(); LoadProductBYType_EditType(); } } }
+        public TYPE_PRODUCT TypeInEditCATEGORYCombobox { get => _TypeInEditCATEGORYCombobox; set { if (_TypeInEditCATEGORYCombobox != value) { _TypeInEditCATEGORYCombobox = value; OnPropertyChanged(); LoadProductBYType_EditType(); } } }
 
         public TableViewModel Tableviewmodel { get => _Tableviewmodel; set { if (_Tableviewmodel != value) { _Tableviewmodel = value; OnPropertyChanged(); } } }
         #endregion
@@ -168,6 +173,8 @@ namespace MainProject.ViewModel
                     db.PRODUCTs.Add(Newproduct);
 
                     db.SaveChanges();
+                    Exitaddproview();
+
                 }
             }
 
@@ -200,17 +207,18 @@ namespace MainProject.ViewModel
             {
                 if (_ExitAddProview == null)
                 {
-                    _ExitAddProview = new RelayingCommand<Object>(a => Exitaddproview(a));
+                    _ExitAddProview = new RelayingCommand<Object>(a => Exitaddproview());
                 }
                 return _ExitAddProview;
             }
         }
 
 
-        public void Exitaddproview(Object a)
+        public void Exitaddproview()
         {
             Newproduct = null;
-            //Exit view Add_pro(a)
+            Window window = WindowService.Instance.FindWindowbyTag("Create product").First();
+            window.Close();
         }
 
 
@@ -255,10 +263,16 @@ namespace MainProject.ViewModel
         }
 
         public void SearchName()
-        {
+        {           
             using (var db = new mainEntities())
             {
                 Type = db.TYPE_PRODUCT.Where(t => t.ID == 0).FirstOrDefault();
+
+                if ( SearchProduct =="")
+                {
+                    ListPoduct = new ObservableCollection<PRODUCT>(db.PRODUCTs.Where(t => t.DELETED == 0).ToList());
+                    return;
+                }                    
 
                 var listpro = db.PRODUCTs.Where(p => (ConvertToUnSign(p.Name).ToLower().Contains(ConvertToUnSign(SearchProduct).ToLower()) && p.DELETED == 0));
                 if (listpro == null)
@@ -266,6 +280,7 @@ namespace MainProject.ViewModel
                     ListPoduct = new ObservableCollection<PRODUCT>();
                     return;
                 }    
+
                 ListPoduct = new ObservableCollection<PRODUCT>(listpro.ToList());
             }
 
@@ -487,10 +502,11 @@ namespace MainProject.ViewModel
         public void OpenViewEditCategory(object a)
         {
 
-            Type_In_Edit_CATEGORY = Type;
+            TypeInEditCATEGORYCombobox = Type;
             
            WindowService.Instance.OpenWindow(this, new EditType());
 
+            LoadProductByType(Type.Type);
 
         }
 
@@ -536,7 +552,10 @@ namespace MainProject.ViewModel
          {
             using (var db = new mainEntities())
             {
-                var list = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT == Type || p.TYPE_PRODUCT.ID == 0)).ToList();
+                var type = db.TYPE_PRODUCT.Where(t => t == TypeInEditCATEGORYCombobox).FirstOrDefault();
+                type.Type = EditTypeInEditCatefory;
+
+                var list = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT == type || p.TYPE_PRODUCT.ID == 0)).ToList();
                 if (list == null) return;
 
                 int i = 0; 
@@ -549,8 +568,8 @@ namespace MainProject.ViewModel
                 db.SaveChanges();
             }
 
-            Window window = WindowService.Instance.FindWindowbyTag("Edit category").First();
-            window.Close();
+           /* Window window = WindowService.Instance.FindWindowbyTag("Edit category").First();
+            window.Close();*/
         }
 
         public ICommand AddEditCategory_Command
@@ -605,9 +624,9 @@ namespace MainProject.ViewModel
         {
             using (var db = new mainEntities())
             {
-                if (Type_In_Edit_CATEGORY == null) return;
+                if (TypeInEditCATEGORYCombobox == null) return;
 
-                var l = db.PRODUCTs.Where(p => ((p.TYPE_PRODUCT.Type == Type_In_Edit_CATEGORY.Type || p.TYPE_PRODUCT.Type == "") && p.DELETED == 0)).ToList();
+                var l = db.PRODUCTs.Where(p => ((p.TYPE_PRODUCT.Type == TypeInEditCATEGORYCombobox.Type || p.TYPE_PRODUCT.Type == "") && p.DELETED == 0)).ToList();
 
                 if (l == null) return;
 
@@ -633,7 +652,7 @@ namespace MainProject.ViewModel
 
             using (var db = new mainEntities())
             {
-                var list = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT == Type && p.DELETED == 0)).ToList();
+                var list = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT == TypeInEditCATEGORYCombobox && p.DELETED == 0)).ToList();
                 if (list == null) return;
 
                 foreach( var p in list)
@@ -641,7 +660,7 @@ namespace MainProject.ViewModel
                     p.TYPE_PRODUCT.ID = 0;
                 }
 
-                db.TYPE_PRODUCT.Remove(Type);
+                db.TYPE_PRODUCT.Remove(TypeInEditCATEGORYCombobox);
 
                 db.SaveChanges();
             }

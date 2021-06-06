@@ -128,8 +128,8 @@ refund , StringFormat=': {0}'}" />
                        HorizontalAlignment="Right"
                        FontSize="18"
                        Margin="0 20 0 0" />
-            <TextBox Text="{Binding CodeDiscount, FallbackValue='0,000đ', StringFormat='{}{0:N0} đ'}"
-                     Style="{StaticResource MaterialDesignTextBox}"
+            <TextBox Text="{Binding GiveMoney, FallbackValue='0,000đ', StringFormat='{}{0:N0} đ'}"
+                     Style="{StaticResource MaterialDesignTextBox}"           
                      Grid.Row="2"
                      Grid.Column="1"
                      HorizontalContentAlignment="Center"
@@ -146,7 +146,7 @@ refund , StringFormat=': {0}'}" />
                        FontSize="17"
                        HorizontalAlignment="Right"
                        Margin="0 7 0 0" />
-            <TextBlock Text="{Binding CodeDiscount, FallbackValue='0,000 đ', 
+            <TextBlock Text="{Binding Refund, FallbackValue='0,000 đ', 
                                 StringFormat='{}{0:N0} đ'}"
                        Grid.Row="3"
                        Grid.Column="1"

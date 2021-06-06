@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace MainProject.ViewModel
@@ -185,6 +186,7 @@ namespace MainProject.ViewModel
                     {
                         TableName = "Bàn: " + value.table.Number.ToString();
                         Isbringtohome = false;
+                        CloseChooseTable();
                     }
                     else
                          if (!Isbringtohome) TableName = "Chọn bàn >";

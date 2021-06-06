@@ -8,6 +8,7 @@
              xmlns:model="clr-namespace:MainProject.Model"
              xmlns:viewmodel="clr-namespace:MainProject.ViewModel"
              mc:Ignorable="d"
+             Tag="Create product"
              d:DataContext="{d:DesignInstance Type=viewmodel:ProductViewModel}"
              d:DesignHeight="650"
              d:DesignWidth="600">

@@ -18,19 +18,20 @@ namespace MainProject.MainWorkSpace.Bill
         private int _Discount;
         private long _Total;
         private TABLECUSTOM _Current_table;
-        bool IsDiscount = false;
+        private bool IsDiscount = false;
+        private int _BillCode;
 
-        long _GiveMoney;
-        long _Refund;
+        private long _GiveMoney;
+        private long _Refund;
 
-        public bool IsClose = false ;
+        public bool IsClose = false;
 
         private ObservableCollection<DETAILBILL> _ListDetailBill;
         //StoreInfor : namestore, phone, address
 
         private ICommand _PaymentCommand;
         private ICommand _CheckDiscountCommand;
-        private int _BillCode;
+
 
         #endregion
 
@@ -42,7 +43,7 @@ namespace MainProject.MainWorkSpace.Bill
             {
                 return _CurrentBill;
             }
-             set
+            set
             {
                 if (value != _CurrentBill)
                 {
@@ -66,10 +67,10 @@ namespace MainProject.MainWorkSpace.Bill
                 {
                     return db.BILLs.Count() + 1;
                 }
-            } 
+            }
             set
             {
-                if ( _BillCode != value)
+                if (_BillCode != value)
                 {
                     _BillCode = value;
                 }
@@ -78,7 +79,8 @@ namespace MainProject.MainWorkSpace.Bill
         public long Total
         {
             get { return _Total; }
-            set {
+            set
+            {
                 if (_Total != value)
                 {
                     _Total = value;
@@ -129,6 +131,33 @@ namespace MainProject.MainWorkSpace.Bill
             }
         }
 
+        public long GiveMoney
+        {
+            get { return _GiveMoney; }
+            set
+            {
+                if (_GiveMoney != value)
+                {
+                    _GiveMoney = value;
+                    OnPropertyChanged();
+                    Refund = Total - GiveMoney;
+                }
+            }
+        }
+
+        public long Refund
+        {
+            get { return _Refund; }
+            set
+            {
+                if (_Refund != value)
+                {
+                    _Refund = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         #endregion
 
 
@@ -148,20 +177,22 @@ namespace MainProject.MainWorkSpace.Bill
             }
         }
 
+
+
         /// <summary>
         /// Auto load discount percent when eligible
         /// </summary>
-        public ICommand CheckDiscountCommand
-        {
-            get
-            {
-                if (_CheckDiscountCommand == null)
-                {
-                    _CheckDiscountCommand = new RelayingCommand<Object>(para => LoadDiscount());
-                }
-                return _CheckDiscountCommand;
-            }
-        }
+        /*  public ICommand CheckDiscountCommand
+          {
+              get
+              {
+                  if (_CheckDiscountCommand == null)
+                  {
+                      _CheckDiscountCommand = new RelayingCommand<Object>(para => LoadDiscount());
+                  }
+                  return _CheckDiscountCommand;
+              }
+          }*/
         #endregion
 
 
@@ -169,17 +200,17 @@ namespace MainProject.MainWorkSpace.Bill
         public BillViewModel()
         {
             CurrentBill = new BILL();
-        } 
-         public BillViewModel( TABLECUSTOM Table)
+        }
+        public BillViewModel(TABLECUSTOM Table)
         {
             CurrentBill = new BILL();
             CurrentTable = Table;
-               
+
             foreach (var p in CurrentTable.ListPro)
             {
-                CurrentBill.DETAILBILLs.Add(new DETAILBILL() { Amount = p.Quantity, ID_Product = p.Pro.ID});             
+                CurrentBill.DETAILBILLs.Add(new DETAILBILL() { Amount = p.Quantity, ID_Product = p.Pro.ID });
             }
-            
+
             Discount = 0;
             CurrentBill.CheckoutDay = DateTime.Now;
             Total = CurrentTable.Total;
@@ -189,14 +220,19 @@ namespace MainProject.MainWorkSpace.Bill
 
         private void Payment(BillView view)
         {
- 
+            if (GiveMoney == null || GiveMoney < Total)
+            {
+                WindowService.Instance.OpenMessageBox("Tiền khách đưa không đủ!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                return;
+            }
+
             CurrentBill.ID_Tables = CurrentTable.table.ID;
             CurrentBill.TotalPrice = Total;
 
             using (var db = new mainEntities())
-            { 
-                db.BILLs.Add(CurrentBill);                
-                db.SaveChanges();                                            
+            {
+                db.BILLs.Add(CurrentBill);
+                db.SaveChanges();
             }
 
             CurrentTable.ListPro = null;
@@ -207,10 +243,12 @@ namespace MainProject.MainWorkSpace.Bill
 
             //Xuất đơn ra PDF  
         }
-        private void LoadDiscount()
+    }
+      /*  private void LoadDiscount()
         {
 
-            if (IsDiscount) {
+            if (IsDiscount)
+            {
                 WindowService.Instance.OpenMessageBox("Đã sử dụng mã khác!", "Lỗi", System.Windows.MessageBoxImage.Error);
                 return;
             }
@@ -236,5 +274,5 @@ namespace MainProject.MainWorkSpace.Bill
                 }
             }
         }
-    }
+*/
 }
