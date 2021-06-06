@@ -64,12 +64,12 @@ namespace MainProject.ViewModel
 
         public TableViewModel()
         {
-            CurrentFloors = 1;
+         /*   CurrentFloors = 1;*/
             TotalCurrentTable = 0;
 
             using (var db = new mainEntities())
             {
-                var listtab = db.TABLEs.Where(t => (t.Floor == CurrentFloors)).ToList();
+                var listtab = db.TABLEs.ToList();
 
                 if (listtab == null) return;
 
@@ -81,14 +81,7 @@ namespace MainProject.ViewModel
                 }
 
                 ListTable = new ObservableCollection<TABLECUSTOM>(Tablecustoms);
-                ListFloor = new ObservableCollection<int>();
-
-                var list = db.TABLEs.Where( f => f.Floor != 0).Select(f => f.Floor ).Distinct();
-
-                foreach( int f in list)
-                {
-                    ListFloor.Add(f);
-                }    
+                ListFloor = new ObservableCollection<int>(); 
             }
         }
         #endregion
@@ -154,7 +147,7 @@ namespace MainProject.ViewModel
             }
         }
 
-        public int CurrentFloors
+      /*  public int CurrentFloors
         {
             get => _Currentfloors;
             set
@@ -183,7 +176,7 @@ namespace MainProject.ViewModel
 
                 }
             }
-        }
+        }*/
         public TABLECUSTOM CurrentTable
         {
             get => _CurrentTable;
@@ -438,6 +431,11 @@ namespace MainProject.ViewModel
 
         private void Delete(int number)
         {
+            if (number == null)
+            {
+                WindowService.Instance.OpenMessageBox("Chưa chọn bàn", "Lỗi", System.Windows.MessageBoxImage.Error);
+                return;
+            }
             ListTable.RemoveAt(number - 1);
 
             for (int i = number; i < ListTable.Count; ++i)
@@ -445,11 +443,11 @@ namespace MainProject.ViewModel
 
             using (var db = new mainEntities())
             {
-                TABLE table = db.TABLEs.Where(d => (d.Name == number && d.Floor == CurrentFloors)).FirstOrDefault();
+                TABLE table = db.TABLEs.Where(d => (d.Name == number /*&& d.Floor == CurrentFloors*/)).FirstOrDefault();
 
                 if (table != null)
                 {
-                    var TABLEs = db.TABLEs.Where(t => t.Name > number && t.Floor == CurrentFloors);
+                    var TABLEs = db.TABLEs.Where(t => t.Name > number /*&& t.Floor == CurrentFloors*/);
 
                     foreach (TABLE tab in TABLEs)
                     {
@@ -476,7 +474,7 @@ namespace MainProject.ViewModel
 
         public void Insert()
         {
-            TABLE tab = new TABLE() { Floor = CurrentFloors, STATUS_TABLE = new STATUS_TABLE() { Status = "Empty"}, Name = ListTable.Count + 1};
+            TABLE tab = new TABLE() { /*Floor = CurrentFloors,*/ STATUS_TABLE = new STATUS_TABLE() { Status = "Empty"}, Name = ListTable.Count + 1};
 
             ListTable.Add(new TABLECUSTOM() { table = tab });
 
