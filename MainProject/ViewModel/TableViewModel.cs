@@ -81,7 +81,7 @@ namespace MainProject.ViewModel
                 }
 
                 ListTable = new ObservableCollection<TABLECUSTOM>(Tablecustoms);
-                ListFloor = new ObservableCollection<int>(); 
+               /* ListFloor = new ObservableCollection<int>(); */
             }
         }
         #endregion
@@ -423,20 +423,24 @@ namespace MainProject.ViewModel
             {
                 if (_DeleteTableCommand == null)
                 {
-                    _DeleteTableCommand = new RelayingCommand<int>(a => Delete(a));
+                    _DeleteTableCommand = new RelayingCommand<Object>(a => Delete());
                 }
                 return _DeleteTableCommand;
             }
         }
 
-        private void Delete(int number)
+        private void Delete()
         {
-            if (number == null)
+        
+            int number = ListTable.Count - 1;
+
+            if ( ListTable.ElementAt(number).Total != 0)
             {
-                WindowService.Instance.OpenMessageBox("Chưa chọn bàn", "Lỗi", System.Windows.MessageBoxImage.Error);
+                WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn " + number +" trước khi xóa!", "Lỗi", System.Windows.MessageBoxImage.Error);
                 return;
-            }
-            ListTable.RemoveAt(number - 1);
+            }   
+
+                ListTable.RemoveAt(number);
 
             for (int i = number; i < ListTable.Count; ++i)
                 --ListTable[i].table.Name;
@@ -474,15 +478,15 @@ namespace MainProject.ViewModel
 
         public void Insert()
         {
-            TABLE tab = new TABLE() { /*Floor = CurrentFloors,*/ STATUS_TABLE = new STATUS_TABLE() { Status = "Empty"}, Name = ListTable.Count + 1};
-
+            TABLE tab = new TABLE() { ID_Status = 1, Name = ListTable.Count + 1 };
             ListTable.Add(new TABLECUSTOM() { table = tab });
 
             using (var db = new mainEntities())
-            {
+            {             
                 db.TABLEs.Add(tab);
                 db.SaveChanges();
             }
+            
 
         }
 
