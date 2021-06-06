@@ -49,7 +49,7 @@ namespace MainProject.ViewModel
 
         private ICommand _DeleteTableCommand;
         private ICommand _InsertTableCommand;
-        private ICommand _UpdateStatusTableCommand;
+        private ICommand _UpdateStatusTableCommand;      
 
         private ICommand _AddFloor;
         private ICommand _DeleteFloor;
