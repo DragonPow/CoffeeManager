@@ -7,8 +7,10 @@
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Product"
              xmlns:model="clr-namespace:MainProject.Model"
              xmlns:viewmodel="clr-namespace:MainProject.ViewModel"
+             xmlns:rules="clr-namespace:MainProject.ValidationRules"
              mc:Ignorable="d"
              Tag="Create product"
+             Name="UserControl"
              d:DataContext="{d:DesignInstance Type=viewmodel:ProductViewModel}"
              Height="650"
              Width="600">
@@ -58,10 +60,21 @@
                 </Button>
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Tên mặt hàng"
-                         Text="{Binding Newproduct.Name}"
                          FontSize="16"
                          Margin="100,5"
-                         MaxWidth="500" />
+                         MaxWidth="500"
+                         Validation.Error="Validation_Error">
+                    <TextBox.Text>
+                        <Binding Path="Newproduct.Name"
+                                 ValidatesOnDataErrors="True"
+                                 UpdateSourceTrigger="PropertyChanged"
+                                 NotifyOnValidationError="True">
+                            <Binding.ValidationRules>
+                                <rules:NotNullableValidationRule ErrorMessage="Không được để trống hoặc để trắng"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
                 <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                           materialDesign:HintAssist.Hint="Danh mục"
                           ItemsSource="{Binding Source={x:Static model:TYPE_PRODUCT.Instance}, Path=ListType}"
@@ -72,18 +85,43 @@
                           Margin="100,5" />
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Giá"
-                         Text="{Binding Newproduct.Price}"
                          FontSize="16"
                          materialDesign:TextFieldAssist.SuffixText="đ"
                          MaxWidth="500"
-                         Margin="100,5" />
+                         Margin="100,5"
+                         Validation.Error="Validation_Error">
+                    <TextBox.Text>
+                        <Binding Path="Newproduct.Price"
+                                 StringFormat="{}{0:N0}"
+                                 NotifyOnValidationError="True">
+                            <Binding.ValidationRules>
+                                <rules:CharacterValidationRule ValidCharacterSet="0123456789"
+                                                               ErrorMessage="Chỉ được nhập số" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Mô tả"
-                         Text="{Binding Newproduct.Decription}"
-                         materialDesign:TextFieldAssist.SuffixText="0/30"
+                         Name="Description"
+                         materialDesign:TextFieldAssist.SuffixText="{Binding ElementName=Description, Path=Text.Length, StringFormat='{}{0}/30'}"
                          TextWrapping="Wrap"
                          MaxWidth="500"
-                         Margin="100,5" />
+                         Margin="100,5"
+                         Validation.Error="Validation_Error">
+                    <TextBox.Text>
+                        <Binding Path="Newproduct.Decription"
+                                 ValidatesOnDataErrors="True"
+                                 UpdateSourceTrigger="PropertyChanged"
+                                 NotifyOnValidationError="True">
+                            <Binding.ValidationRules>
+                                <rules:LengthRangeValidationRule Min="0"
+                                                                 Max="30"
+                                                                 ErrorMessage="Không được vượt quá số ký tự cho phép" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
                 <Grid Margin="100,30"
                       MaxWidth="500">
                     <Grid.ColumnDefinitions>
@@ -103,6 +141,7 @@
                             Grid.Column="1"
                             Height="50"
                             Command="{Binding AddProduct_Command_Command}"
+                            CommandParameter="{Binding IsValid, ElementName=UserControl}"
                             HorizontalAlignment="Stretch"
                             Background="{StaticResource MainColor}"
                             BorderBrush="#31CA62"

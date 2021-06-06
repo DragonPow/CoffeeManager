@@ -74,6 +74,7 @@ namespace MainProject.ViewModel
         #region Properties
 
         public ObservableCollection<PRODUCT> ListPoduct { get => _ListProduct; set { if (value != _ListProduct) { _ListProduct = value; OnPropertyChanged(); } } }
+        public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); SearchName(); } } }
 
         public int IndexCurrentProduct { get => _IndexCurrentproduct; set { if (_IndexCurrentproduct != value) { _IndexCurrentproduct = value; OnPropertyChanged(); } } }
         public int IndexCurrentproductInMainView 
@@ -103,7 +104,7 @@ namespace MainProject.ViewModel
             } 
         }
 
-        public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); SearchName(); } } }
+       /* public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); SearchName(); } } }*/
         public string EditTypeInEditCatefory { get => _EditTypeInEditCatefory; set { if (_EditTypeInEditCatefory != value) { _EditTypeInEditCatefory = value; OnPropertyChanged(); } } }
         public string Type_in_Combobox_AddPro { get => _Type_in_Combobox_AddPro; set { if (_Type_in_Combobox_AddPro != value) { _Type_in_Combobox_AddPro= value; OnPropertyChanged(); } } }
 
@@ -156,20 +157,16 @@ namespace MainProject.ViewModel
             {
                 if (_AddProduct == null)
                 {
-                    _AddProduct = new RelayingCommand<Object>(a => Add());
+                    _AddProduct = new RelayingCommand<bool>(isValid => Add(isValid));
                 }
                 return _AddProduct;
             }
         }
 
 
-        public void Add()
+        public void Add(bool isValid)
         {
-            if ( Newproduct.Name == null)
-            {
-                WindowService.Instance.OpenMessageBox("Chưa nhập tên sản phẩm", "Lỗi", System.Windows.MessageBoxImage.Error);
-                return;
-            }
+            if (!isValid) return;
             using (var db = new mainEntities())
             {
                 {
@@ -294,25 +291,33 @@ namespace MainProject.ViewModel
         }
 
         public void SearchName()
-        {           
+        {      
+     
             using (var db = new mainEntities())
-            {
-                Type = db.TYPE_PRODUCT.Where(t => t.ID == 0).FirstOrDefault();
+            {            
 
                 if ( SearchProduct =="")
                 {
                     ListPoduct = new ObservableCollection<PRODUCT>(db.PRODUCTs.ToList());
                     return;
-                }                    
+                }
 
-                var listpro = db.PRODUCTs.Where(p => (ConvertToUnSign(p.Name).ToLower().Contains(ConvertToUnSign(SearchProduct).ToLower())));
+                string s = ConvertToUnSign(SearchProduct).ToLower();
+                var listpro = db.PRODUCTs.ToList();
+
                 if (listpro == null)
                 {
                     ListPoduct = new ObservableCollection<PRODUCT>();
                     return;
-                }    
+                }
 
-                ListPoduct = new ObservableCollection<PRODUCT>(listpro.ToList());
+                ListPoduct = new ObservableCollection<PRODUCT>();
+
+                foreach ( var p in listpro)
+                {
+                    if (ConvertToUnSign(p.Name).ToLower().Contains(s)) ListPoduct.Add(p);
+                }                
+            
             }
 
         }

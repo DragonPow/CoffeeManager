@@ -5,12 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
+        xmlns:local="clr-namespace:MainProject.ApplicationWorkSpace"
         xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
         xmlns:MainWorkSpace="clr-namespace:MainProject.MainWorkSpace"
         xmlns:HistoryWorkSpace="clr-namespace:MainProject.HistoryWorkSpace"
         xmlns:StatisticWorkSpace="clr-namespace:MainProject.StatisticWorkSpace"
         xmlns:TableManagerWorkSpace="clr-namespace:MainProject.MainWorkSpace.Table"
         xmlns:SettingWorkSpace="clr-namespace:MainProject.SettingWorkSpace"
+        d:DataContext="{d:DesignInstance Type=local:ApplicationViewModel}"
         Title="Coffee Manager">
     <Window.Resources>
         <DataTemplate DataType="{x:Type MainWorkSpace:MainViewModel}">
@@ -39,7 +41,8 @@
     <DockPanel>
         <TabControl ItemsSource="{Binding WorkSpaces}"
                     Style="{StaticResource MaterialDesignNavigatilRailTabControl}"
-                    materialDesign:ColorZoneAssist.Mode="PrimaryMid">
+                    materialDesign:ColorZoneAssist.Mode="PrimaryMid"
+                    SelectedItem="{Binding CurrentWorkSpace}">
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal"

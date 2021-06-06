@@ -30,8 +30,8 @@ namespace MainProject.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<DETAILBILL> DETAILBILLs { get; set; }
+        public virtual TYPE_PRODUCT TYPE_PRODUCT { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<DETAILREPORTSALE> DETAILREPORTSALES { get; set; }
-        public virtual TYPE_PRODUCT TYPE_PRODUCT { get; set; }
     }
 }
