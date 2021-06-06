@@ -208,7 +208,7 @@ namespace MainProject.MainWorkSpace.Bill
 
             foreach (var p in CurrentTable.ListPro)
             {
-                CurrentBill.DETAILBILLs.Add(new DETAILBILL() { Amount = p.Quantity, ID_Product = p.Pro.ID });
+                CurrentBill.DETAILBILLs.Add(new DETAILBILL() { Quantity = p.Quantity, ID_Product = p.Pro.ID });
             }
 
             Discount = 0;
@@ -226,7 +226,7 @@ namespace MainProject.MainWorkSpace.Bill
                 return;
             }
 
-            CurrentBill.ID_Tables = CurrentTable.table.ID;
+            CurrentBill.ID_Table = CurrentTable.table.ID;
             CurrentBill.TotalPrice = Total;
 
             using (var db = new mainEntities())

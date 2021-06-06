@@ -23,9 +23,6 @@ namespace MainProject.ApplicationWorkSpace
         public ApplicationView()
         {
             InitializeComponent();
-
-            VoucherWorkSpace.VoucherView view = new VoucherWorkSpace.VoucherView();
-            this.AddVisualChild(view);
         }
     }
 }

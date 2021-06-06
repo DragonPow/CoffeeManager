@@ -148,7 +148,7 @@ namespace MainProject.ViewModel
         {
            
             BillView view = new BillView();
-            view.DataContext = new BillViewModel() { Total = (long)CurrentBill.TotalPrice, CurrentBill = CurrentBill, CodeDiscount = CurrentBill.VOUCHER.CODE, Discount = ( (int)CurrentBill.TotalPrice*CurrentBill.VOUCHER.Percent/ ( 100 - CurrentBill.VOUCHER.Percent)) };
+            view.DataContext = new BillViewModel() { Total = CurrentBill.TotalPrice, CurrentBill = CurrentBill };
             view.Show();
 
         }

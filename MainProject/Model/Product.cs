@@ -18,18 +18,20 @@ namespace MainProject.Model
         public PRODUCT()
         {
             this.DETAILBILLs = new  ObservableCollection<DETAILBILL>();
+            this.DETAILREPORTSALES = new  ObservableCollection<DETAILREPORTSALE>();
         }
     
         public long ID { get; set; }
         public string Name { get; set; }
-        public string Detail { get; set; }
+        public string Decription { get; set; }
         public byte[] Image { get; set; }
-        public Nullable<long> ID_TypeProduct { get; set; }
-        public int Price { get; set; }
-        public int DELETED { get; set; }
+        public long Price { get; set; }
+        public Nullable<long> ID_Type { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<DETAILBILL> DETAILBILLs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ObservableCollection<DETAILREPORTSALE> DETAILREPORTSALES { get; set; }
         public virtual TYPE_PRODUCT TYPE_PRODUCT { get; set; }
     }
 }

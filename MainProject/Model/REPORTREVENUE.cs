@@ -12,23 +12,20 @@ namespace MainProject.Model
     using System;
     using System.Collections.ObjectModel;
     
-    public partial class VOUCHER : BaseViewModel
+    public partial class REPORTREVENUE : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public VOUCHER()
+        public REPORTREVENUE()
         {
-            this.BILLs = new  ObservableCollection<BILL>();
+            this.DETAILREPORTREVENUEs = new  ObservableCollection<DETAILREPORTREVENUE>();
         }
     
-        public string ID { get; set; }
-        public Nullable<System.DateTime> BeginTime { get; set; }
-        public Nullable<System.DateTime> EndTime { get; set; }
-        public int Percent { get; set; }
-        public int DELETED { get; set; }
-        public string Description { get; set; }
-        public string CODE { get; set; }
+        public long ID { get; set; }
+        public long Month { get; set; }
+        public long Year { get; set; }
+        public long TotalRevenue { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ObservableCollection<BILL> BILLs { get; set; }
+        public virtual ObservableCollection<DETAILREPORTREVENUE> DETAILREPORTREVENUEs { get; set; }
     }
 }

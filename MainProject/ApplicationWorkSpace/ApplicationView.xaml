@@ -6,24 +6,22 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         xmlns:MainWorkSpace="clr-namespace:MainProject.MainWorkSpace"
-        xmlns:AccountWorkSpace="clr-namespace:MainProject.AccountWorkSpace"
         xmlns:HistoryWorkSpace="clr-namespace:MainProject.HistoryWorkSpace"
-        xmlns:VoucherWorkSpace="clr-namespace:MainProject.VoucherWorkSpace"
         xmlns:StatisticWorkSpace="clr-namespace:MainProject.StatisticWorkSpace"
         Title="Coffee Manager">
     <Window.Resources>
         <DataTemplate DataType="{x:Type MainWorkSpace:MainViewModel}">
             <MainWorkSpace:MainView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type AccountWorkSpace:AccountViewModel}">
+        <!--<DataTemplate DataType="{x:Type AccountWorkSpace:AccountViewModel}">
             <AccountWorkSpace:AccountView />
-        </DataTemplate>
+        </DataTemplate>-->
         <DataTemplate DataType="{x:Type HistoryWorkSpace:HistoryViewModel}">
             <HistoryWorkSpace:HistoryView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type VoucherWorkSpace:VoucherViewModel}">
+        <!--<DataTemplate DataType="{x:Type VoucherWorkSpace:VoucherViewModel}">
             <VoucherWorkSpace:VoucherPreviewPanel />
-        </DataTemplate>
+        </DataTemplate>-->
         <DataTemplate DataType="{x:Type StatisticWorkSpace:StatisticViewModel}">
             <StatisticWorkSpace:StatisticView />
         </DataTemplate>

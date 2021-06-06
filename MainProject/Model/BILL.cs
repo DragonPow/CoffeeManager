@@ -21,15 +21,11 @@ namespace MainProject.Model
         }
     
         public long ID { get; set; }
-        public Nullable<long> TotalPrice { get; set; }
-        public Nullable<System.DateTime> CheckoutDay { get; set; }
-        public string ID_Voucher { get; set; }
-        public long ID_Tables { get; set; }
-        public Nullable<long> ID_Employee { get; set; }
+        public long TotalPrice { get; set; }
+        public System.DateTime CheckoutDay { get; set; }
+        public Nullable<long> ID_Table { get; set; }
     
         public virtual TABLE TABLE { get; set; }
-        public virtual EMPLOYEE EMPLOYEE { get; set; }
-        public virtual VOUCHER VOUCHER { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<DETAILBILL> DETAILBILLs { get; set; }
     }

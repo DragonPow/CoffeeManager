@@ -12,14 +12,12 @@ namespace MainProject.Model
     using System;
     using System.Collections.ObjectModel;
     
-    public partial class DETAILBILL : BaseViewModel
+    public partial class DETAILREPORTREVENUE : BaseViewModel
     {
-        public long ID_Product { get; set; }
-        public long ID_Bill { get; set; }
-        public long Quantity { get; set; }
-        public long UnitPrice { get; set; }
+        public long ID_ReportRevenue { get; set; }
+        public long Day { get; set; }
+        public long Revenue { get; set; }
     
-        public virtual BILL BILL { get; set; }
-        public virtual PRODUCT PRODUCT { get; set; }
+        public virtual REPORTREVENUE REPORTREVENUE { get; set; }
     }
 }

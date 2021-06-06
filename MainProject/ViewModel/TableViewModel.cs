@@ -58,7 +58,7 @@ namespace MainProject.ViewModel
 
             using (var db = new mainEntities())
             {
-                var listtab = db.TABLES.Where(t => (t.Floor == CurrentFloors && t.DELETED == 0)).ToList();
+                var listtab = db.TABLEs.Where(t => (t.Floor == CurrentFloors)).ToList();
 
                 if (listtab == null) return;
 
@@ -72,7 +72,7 @@ namespace MainProject.ViewModel
                 ListTable = new ObservableCollection<TABLECUSTOM>(Tablecustoms);
                 ListFloor = new ObservableCollection<int>();
 
-                var list = db.TABLES.Where( f => f.Floor != 0).Select(f => f.Floor ).Distinct();
+                var list = db.TABLEs.Where( f => f.Floor != 0).Select(f => f.Floor ).Distinct();
 
                 foreach( int f in list)
                 {
@@ -155,7 +155,7 @@ namespace MainProject.ViewModel
 
                     using (var db = new mainEntities())
                     {
-                        var listtab = db.TABLES.Where(t => (t.Floor == CurrentFloors && t.DELETED == 0)).ToList();
+                        var listtab = db.TABLEs.Where(t => (t.Floor == CurrentFloors)).ToList();
 
                         if (listtab == null) return;
 
@@ -381,7 +381,7 @@ namespace MainProject.ViewModel
             {
                 using (var db = new mainEntities())
                 {
-                    CurrentTable = new TABLECUSTOM() { table = db.TABLES.Where(t => t.ID == 0).FirstOrDefault() };
+                    CurrentTable = new TABLECUSTOM() { table = db.TABLEs.Where(t => t.ID == 0).FirstOrDefault() };
                 }
             }
 
@@ -432,15 +432,13 @@ namespace MainProject.ViewModel
 
             using (var db = new mainEntities())
             {
-                TABLE table = db.TABLES.Where(d => (d.Number == number && d.Floor == CurrentFloors) && (d.DELETED == 0)).FirstOrDefault();
+                TABLE table = db.TABLEs.Where(d => (d.Number == number && d.Floor == CurrentFloors)).FirstOrDefault();
 
                 if (table != null)
                 {
-                    table.DELETED = 1;
+                    var TABLEs = db.TABLEs.Where(t => t.Number > number && t.Floor == CurrentFloors);
 
-                    var TABLES = db.TABLES.Where(t => t.Number > number && t.Floor == CurrentFloors && t.DELETED == 0);
-
-                    foreach (TABLE tab in TABLES)
+                    foreach (TABLE tab in TABLEs)
                     {
                         --tab.Number;
                     }
@@ -465,13 +463,13 @@ namespace MainProject.ViewModel
 
         public void Insert()
         {
-            TABLE tab = new TABLE() { Floor = CurrentFloors, STATUS_TABLE = new STATUS_TABLE() { Status = "Empty"}, Number = ListTable.Count + 1, DELETED = 0 };
+            TABLE tab = new TABLE() { Floor = CurrentFloors, STATUS_TABLE = new STATUS_TABLE() { Status = "Empty"}, Number = ListTable.Count + 1};
 
             ListTable.Add(new TABLECUSTOM() { table = tab });
 
             using (var db = new mainEntities())
             {
-                db.TABLES.Add(tab);
+                db.TABLEs.Add(tab);
                 db.SaveChanges();
             }
 

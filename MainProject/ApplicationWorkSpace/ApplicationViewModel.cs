@@ -1,9 +1,6 @@
-﻿using MainProject.AccountWorkSpace;
-using MainProject.HistoryWorkSpace;
-using MainProject.LoginWorkSpace;
+﻿using MainProject.HistoryWorkSpace;
 using MainProject.MainWorkSpace;
 using MainProject.StatisticWorkSpace;
-using MainProject.VoucherWorkSpace;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,16 +23,16 @@ namespace MainProject.ApplicationWorkSpace
         #region Constructors
         public ApplicationViewModel()
         {
-            LoginView LoginView = new LoginView();
-            LoginView.DataContext = new LoginViewModel();
-            LoginView.ShowDialog();
+            //LoginView LoginView = new LoginView();
+            //LoginView.DataContext = new LoginViewModel();
+            //LoginView.ShowDialog();
 
             //Add list MainWorkSpace here
             WorkSpaces.Add(new MainViewModel());
-            WorkSpaces.Add(new AccountViewModel());
+            //WorkSpaces.Add(new AccountViewModel());
             WorkSpaces.Add(new HistoryViewModel());
             WorkSpaces.Add(new StatisticViewModel());
-            WorkSpaces.Add(new VoucherViewModel());
+            //WorkSpaces.Add(new VoucherViewModel());
 
             //Define current workspace
             //CurrentWorkSpace = WorkSpaces[0];

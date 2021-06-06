@@ -17,13 +17,13 @@ namespace MainProject.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public STATUS_TABLE()
         {
-            this.TABLES = new  ObservableCollection<TABLE>();
+            this.TABLEs = new  ObservableCollection<TABLE>();
         }
     
         public long ID { get; set; }
         public string Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ObservableCollection<TABLE> TABLES { get; set; }
+        public virtual ObservableCollection<TABLE> TABLEs { get; set; }
     }
 }
