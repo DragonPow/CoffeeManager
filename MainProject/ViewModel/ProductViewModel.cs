@@ -166,6 +166,11 @@ namespace MainProject.ViewModel
 
         public void Add()
         {
+            if ( Newproduct.Name == null)
+            {
+                WindowService.Instance.OpenMessageBox("Chưa nhập tên sản phẩm", "Lỗi", System.Windows.MessageBoxImage.Error);
+                return;
+            }
             using (var db = new mainEntities())
             {
                 {
@@ -640,6 +645,7 @@ namespace MainProject.ViewModel
                 var i = db.TYPE_PRODUCT.Where(t => t.Type.Contains("Danh mục mới")).Count();
 
                 db.TYPE_PRODUCT.Add(new TYPE_PRODUCT() { Type = "Danh mục mới " + (i == 0 ? "" : i.ToString()) });
+
                 db.SaveChanges();
 
                 WindowService.Instance.OpenMessageBox("Thêm mới thành công. Tiến hành chỉnh sửa ở Sửa danh mục", "Thông báo", System.Windows.MessageBoxImage.Information);
