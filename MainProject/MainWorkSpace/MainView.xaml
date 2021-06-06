@@ -92,7 +92,7 @@
                             Padding="0"
                             Height="40"
                             Margin="5"
-                                Command="{Binding AddEditCategory_Command}">
+                                Command="{Binding DataContext.AddEditCategory_Command, ElementName=Main_View}">
                                 <DockPanel>
                                     <TextBlock DockPanel.Dock="Left" Text="Thêm danh mục" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{StaticResource MainColor}" Margin="10,0,0,0"></TextBlock>
                                     <materialDesign:PackIcon Kind="PlusCircle" DockPanel.Dock="Right" Height="Auto" Width="auto" HorizontalAlignment="Right" Margin="7" Foreground="{StaticResource MainColor}"/>
@@ -124,11 +124,11 @@
                         ItemsSource="{Binding ListType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                         SelectedItem="{Binding CurrentType}"
                         Style="{StaticResource MaterialDesignNavigatilRailTabControl}"
-                         materialDesign:ColorZoneAssist.Mode="PrimaryMid">
+                         materialDesign:ColorZoneAssist.Mode="PrimaryMid" >
                 <TabControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel >
-                            <TextBlock Text="{Binding Path=ID}" FontSize="18" 
+                            <TextBlock Text="" FontSize="18" 
                                    FontWeight="Bold" 
                                    Foreground="White" 
                                    HorizontalAlignment="Center"/>

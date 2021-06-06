@@ -525,14 +525,14 @@ namespace MainProject.ViewModel
             {
                 if (_OpenViewEditCategory == null)
                 {
-                    _OpenViewEditCategory = new RelayingCommand<Object>(a => OpenViewEditCategory(a));
+                    _OpenViewEditCategory = new RelayingCommand<Object>(a => OpenViewEditCategory());
                 }
                 return _OpenViewEditCategory;
             }
         }
 
 
-        public void OpenViewEditCategory(object a)
+        public void OpenViewEditCategory()
         {
 
             TypeInEditCATEGORYCombobox = Type;
@@ -675,6 +675,7 @@ namespace MainProject.ViewModel
 
         public void DeleteTypeEditCategory()
         {
+            if (TypeInEditCATEGORYCombobox == null) return;
 
             using (var db = new mainEntities())
             {

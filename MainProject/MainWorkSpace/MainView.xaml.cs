@@ -26,9 +26,5 @@ namespace MainProject.MainWorkSpace
             Console.WriteLine("MainView is created");
         }
 
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }

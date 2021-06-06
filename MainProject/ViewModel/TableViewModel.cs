@@ -391,7 +391,7 @@ namespace MainProject.ViewModel
             {
                 using (var db = new mainEntities())
                 {
-                    CurrentTable = new TABLECUSTOM() { };
+                    CurrentTable = new TABLECUSTOM() { table = new TABLE()};
                 }
             }
 
