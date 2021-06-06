@@ -31,7 +31,7 @@
             <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                           materialDesign:HintAssist.Hint="Danh mục"
                           ItemsSource="{Binding Source={x:Static model:TYPE_PRODUCT.Instance}, Path=ListType}"
-                          SelectedItem="{Binding Type_In_Edit_CATEGORY, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}"
+                          SelectedItem="{Binding TypeInEditCATEGORYCombobox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}"
                           IsSynchronizedWithCurrentItem="True"
                           FontSize="14"
                           MaxWidth="500"
@@ -39,7 +39,7 @@
                           Margin="100,30,100,0" />
             <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Tên danh mục"
-                         Text="{Binding Type_In_Edit_CATEGORY.Type,UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding EditTypeInEditCatefory,UpdateSourceTrigger=PropertyChanged}"
                          FontSize="14"
                          Margin="100,20"
                          Height="50"

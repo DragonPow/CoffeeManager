@@ -55,7 +55,7 @@ namespace MainProject.MainWorkSpace
             }
         }
 
-        public TYPE_PRODUCT Type_In_Edit_CATEGORY { get => _Type_In_Edit_CATEGORY; set { if (_Type_In_Edit_CATEGORY != value) { _Type_In_Edit_CATEGORY = value; OnPropertyChanged(); Productviewmodel.Type_In_Edit_CATEGORY = value ; } } }
+        public TYPE_PRODUCT Type_In_Edit_CATEGORY { get => _Type_In_Edit_CATEGORY; set { if (_Type_In_Edit_CATEGORY != value) { _Type_In_Edit_CATEGORY = value; OnPropertyChanged(); Productviewmodel.TypeInEditCATEGORYCombobox = value ; } } }
 
 
         #endregion

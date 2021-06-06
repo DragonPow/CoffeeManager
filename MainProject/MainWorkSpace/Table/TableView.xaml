@@ -14,7 +14,7 @@
     <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                   VerticalScrollBarVisibility="Auto">
         <ListView ItemsSource="{Binding ListTable}"
-                  SelectedItem="{Binding CurrentTable, Mode=TwoWay}">
+                  SelectedItem="{Binding CurrentTable, Mode=TwoWay}" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <local:FreeTable_UC DataContext="{Binding}">

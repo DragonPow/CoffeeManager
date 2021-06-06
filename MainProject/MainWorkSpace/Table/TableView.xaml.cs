@@ -24,5 +24,7 @@ namespace MainProject.MainWorkSpace.Table
         {
             InitializeComponent();
         }
+
+        
     }
 }
