@@ -494,6 +494,7 @@ namespace MainProject.ViewModel
             
            WindowService.Instance.OpenWindow(this, new EditType());
 
+            LoadProductByType(Type.Type);
 
         }
 
