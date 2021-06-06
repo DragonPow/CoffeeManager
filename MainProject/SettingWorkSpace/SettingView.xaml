@@ -57,7 +57,7 @@
                             BorderBrush="#FF666666" 
                             HorizontalContentAlignment="Left" 
                             VerticalContentAlignment="Center"
-                            Click="Overview_click"/>
+                            />
                     <Button x:Name="btn_Ruler"
                             Background="{x:Null}" 
                             VerticalAlignment="Top"

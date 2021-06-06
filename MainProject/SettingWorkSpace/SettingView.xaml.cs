@@ -97,11 +97,6 @@ namespace MainProject.SettingWorkSpace
             txb_NumberFloor.Focusable = true;
         }
 
-        private void btn_Overview_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void txb_Name_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             _nameStore = txb_Name.Text;
@@ -127,6 +122,11 @@ namespace MainProject.SettingWorkSpace
         }
 
         private void btn_Save_change_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btn_Overview_Click(object sender, RoutedEventArgs e)
         {
 
         }
