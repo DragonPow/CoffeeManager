@@ -24,15 +24,17 @@ namespace MainProject.ViewModel
         private ObservableCollection<PRODUCT> _ListProduct;
         private int _IndexCurrentproduct;
         private int _IndexCurrentproductInMainView;
+
         private TYPE_PRODUCT _Type;
         private TYPE_PRODUCT _TypeInEditCATEGORYCombobox;
-        private string _EditTypeInEditCatefory;
-        string _SearchProduct;
-        string _Type_in_Combobox_AddPro;
-        TYPE_PRODUCT _Type_in_Combobox_AddProduct;
-        PRODUCT _Newproduct;
+        private TYPE_PRODUCT _Type_in_Combobox_AddProduct;
 
-        TableViewModel _Tableviewmodel;
+        private string _EditTypeInEditCatefory;
+        private string _SearchProduct;
+        private string _Type_in_Combobox_AddPro;
+        private PRODUCT _Newproduct;
+
+        private TableViewModel _Tableviewmodel;
         
         private ICommand _DeletePro;
 
@@ -97,7 +99,7 @@ namespace MainProject.ViewModel
             } 
         }
 
-        public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); } } }
+        public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); SearchName(); } } }
         public string EditTypeInEditCatefory { get => _EditTypeInEditCatefory; set { if (_EditTypeInEditCatefory != value) { _EditTypeInEditCatefory = value; OnPropertyChanged(); } } }
         public string Type_in_Combobox_AddPro { get => _Type_in_Combobox_AddPro; set { if (_Type_in_Combobox_AddPro != value) { _Type_in_Combobox_AddPro= value; OnPropertyChanged(); } } }
 
@@ -258,10 +260,16 @@ namespace MainProject.ViewModel
         }
 
         public void SearchName()
-        {
+        {           
             using (var db = new mainEntities())
             {
                 Type = db.TYPE_PRODUCT.Where(t => t.ID == 0).FirstOrDefault();
+
+                if ( SearchProduct =="")
+                {
+                    ListPoduct = new ObservableCollection<PRODUCT>(db.PRODUCTs.Where(t => t.DELETED == 0).ToList());
+                    return;
+                }                    
 
                 var listpro = db.PRODUCTs.Where(p => (ConvertToUnSign(p.Name).ToLower().Contains(ConvertToUnSign(SearchProduct).ToLower()) && p.DELETED == 0));
                 if (listpro == null)
@@ -269,6 +277,7 @@ namespace MainProject.ViewModel
                     ListPoduct = new ObservableCollection<PRODUCT>();
                     return;
                 }    
+
                 ListPoduct = new ObservableCollection<PRODUCT>(listpro.ToList());
             }
 
