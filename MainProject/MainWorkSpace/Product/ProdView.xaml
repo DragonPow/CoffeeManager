@@ -12,6 +12,9 @@
              d:DataContext="{d:DesignInstance Type=ViewModel:ProductViewModel}"
              d:DesignHeight="480"
              d:DesignWidth="600">
+    <UserControl.DataContext>
+        <ViewModel:ProductViewModel/>
+    </UserControl.DataContext>
     <ListView ItemsSource="{Binding ListPoduct}"
                   SelectedIndex="{Binding IndexCurrentproductInMainView,Mode=TwoWay}"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled">
@@ -31,5 +34,11 @@
                 </local:Pro_UC>
             </DataTemplate>
         </ListView.ItemTemplate>
+        <ListView.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Chi tiết sản phẩm" Command="{Binding OpenViewDetailProduct_Command}"/>
+                <MenuItem Header="Xóa sản phẩm" Command="{Binding DeleteProduct_Command}"/>
+            </ContextMenu>
+        </ListView.ContextMenu>
     </ListView>
 </UserControl>
