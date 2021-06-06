@@ -284,7 +284,8 @@ namespace MainProject.ViewModel
 
         public void Minus()
         {
-            if (CurrentDetailPro.Quantity < 1) return;
+            
+            if (CurrentDetailPro == null || CurrentDetailPro.Quantity < 1) return;
 
             CurrentDetailPro.Quantity--;
             TotalCurrentTable -=  CurrentDetailPro.Pro.Price;

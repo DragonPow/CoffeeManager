@@ -74,6 +74,7 @@ namespace MainProject.MainWorkSpace
             using (var db = new mainEntities())
             {
                 var l = new List<TYPE_PRODUCT>() { new TYPE_PRODUCT() { Type = "Tất cả", ID = new long() } };
+                CurrentType = l.ElementAt(0);
              
                 l.AddRange(db.TYPE_PRODUCT.Distinct().ToList());
 
