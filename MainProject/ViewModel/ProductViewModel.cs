@@ -52,6 +52,7 @@ namespace MainProject.ViewModel
         private ICommand _ExitAddProview;
 
 
+
         private ICommand _RightClickDetailPro;
         private ICommand _ExitDetailProduct;
         private ICommand _OpenViewDetailProduct;
@@ -368,7 +369,7 @@ namespace MainProject.ViewModel
 
         public void LoadViewUpdate()
         {
-            //open viewUpdatate
+            WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditProd());
         }
 
         public ICommand UpdateProduct_Command
@@ -416,7 +417,8 @@ namespace MainProject.ViewModel
 
         public void ExitUpdate(Object a)
         {
-            //Exit view Update_pro(a)
+            var window = WindowService.Instance.FindWindowbyTag("EditPro").First();
+            window.Close();
         }
 
         public ICommand OpenViewDetailProduct_Command
