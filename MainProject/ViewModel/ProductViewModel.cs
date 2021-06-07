@@ -22,8 +22,7 @@ namespace MainProject.ViewModel
         #region Field
 
         private ObservableCollection<PRODUCT> _ListProduct;
-        private int _IndexCurrentproduct;
-        private int _IndexCurrentproductInMainView;
+        private PRODUCT _Currentproduct;    
 
         private TYPE_PRODUCT _Type;
         private TYPE_PRODUCT _TypeInEditCATEGORYCombobox;
@@ -76,21 +75,8 @@ namespace MainProject.ViewModel
         public ObservableCollection<PRODUCT> ListPoduct { get => _ListProduct; set { if (value != _ListProduct) { _ListProduct = value; OnPropertyChanged(); } } }
         public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); SearchName(); } } }
 
-        public int IndexCurrentProduct { get => _IndexCurrentproduct; set { if (_IndexCurrentproduct != value) { _IndexCurrentproduct = value; OnPropertyChanged(); } } }
-        public int IndexCurrentproductInMainView 
-        {
-            get => _IndexCurrentproductInMainView;
-            set 
-            {
-                if (_IndexCurrentproductInMainView != value)
-                {
-                    _IndexCurrentproductInMainView = value;
-                    OnPropertyChanged();
-                  
-                } 
-            } 
-        }
-
+        public PRODUCT Currentproduct { get => _Currentproduct; set { if (_Currentproduct != value) { _Currentproduct = value; OnPropertyChanged(); } } }
+       
         public PRODUCT Newproduct 
         { 
             get => _Newproduct; 
@@ -243,13 +229,13 @@ namespace MainProject.ViewModel
 
         public void DeletePro()
         {
-            if (IndexCurrentProduct == null) return;
+            if (Currentproduct == null) return;
 
             using (var db = new mainEntities())
             {
                 using (var transaction = db.Database.BeginTransaction())
                 {
-                    PRODUCT product = db.PRODUCTs.Where(p => (p.ID == ListPoduct.ElementAt(IndexCurrentProduct).ID)).FirstOrDefault();
+                    PRODUCT product = db.PRODUCTs.Where(p => (p.ID == Currentproduct.ID)).FirstOrDefault();
 
 
                     if (product == null) return;
@@ -275,7 +261,7 @@ namespace MainProject.ViewModel
                     
                 }               
             }
-            ListPoduct.Remove(ListPoduct.ElementAt(IndexCurrentProduct));
+            ListPoduct.Remove(Currentproduct);
         }
 
         public ICommand SearchByName_Command
@@ -383,13 +369,13 @@ namespace MainProject.ViewModel
         {
             using (var db = new mainEntities())
             {
-                PRODUCT pro = db.PRODUCTs.Where(p => (p.ID == ListPoduct.ElementAt(IndexCurrentProduct).ID) ).FirstOrDefault();
+                PRODUCT pro = db.PRODUCTs.Where(p => (p.ID == Currentproduct.ID) ).FirstOrDefault();
 
                 Newproduct.ID = pro.ID;
                 pro = Newproduct;           
                 db.SaveChanges();
 
-                var item = ListPoduct.ElementAt(IndexCurrentProduct);
+                var item = Currentproduct;
                 if (item != null)
                 {
                     item = Newproduct;
@@ -479,7 +465,7 @@ namespace MainProject.ViewModel
                 path = openFile.FileName;
                 if (Newproduct == null)
                 {
-                    ListPoduct.ElementAt(IndexCurrentProduct).Image = converImgToByte(path);                
+                   Currentproduct.Image = converImgToByte(path);                
                 }   
                 else
                 {
@@ -503,15 +489,15 @@ namespace MainProject.ViewModel
 
          public void AddDetailProToTable()
          {
-            if (IndexCurrentproductInMainView >= ListPoduct.Count || IndexCurrentproductInMainView < 0) return;
+            if (!ListPoduct.Contains(Currentproduct)) return;        
 
-            Tableviewmodel.TotalCurrentTable += (long) ListPoduct.ElementAt(IndexCurrentproductInMainView).Price;
+            Tableviewmodel.TotalCurrentTable += (long)Currentproduct.Price;
 
             if (Tableviewmodel.Currentlistdetailpro != null)
             {
                 foreach (var p in Tableviewmodel.Currentlistdetailpro)
                 {
-                    if (p.Pro.ID == ListPoduct.ElementAt(IndexCurrentproductInMainView).ID)
+                    if (p.Pro.ID == Currentproduct.ID)
                     {
                         ++p.Quantity;
                         return;
@@ -521,7 +507,7 @@ namespace MainProject.ViewModel
             else Tableviewmodel.Currentlistdetailpro = new ObservableCollection<DetailPro>();
 
 
-            Tableviewmodel.Currentlistdetailpro.Add(new DetailPro(ListPoduct.ElementAt(IndexCurrentproductInMainView)));
+            Tableviewmodel.Currentlistdetailpro.Add(new DetailPro(Currentproduct));
          }
         #endregion
         public ICommand OpenViewEditCategory_Command
@@ -563,13 +549,13 @@ namespace MainProject.ViewModel
 
         public void ClickCheckboxSelectedPro(object a)
         {
-            if (ListPoduct.ElementAt(IndexCurrentProduct).TYPE_PRODUCT== null)
+            if (Currentproduct.TYPE_PRODUCT== null)
             {
-                ListPoduct.ElementAt(IndexCurrentProduct).TYPE_PRODUCT = Type;
+                Currentproduct.TYPE_PRODUCT = Type;
             }                 
             else
             {
-                ListPoduct.ElementAt(IndexCurrentProduct).TYPE_PRODUCT = null ;
+                Currentproduct.TYPE_PRODUCT = null ;
             }
         }
           public ICommand SaveEditCategory_Command
