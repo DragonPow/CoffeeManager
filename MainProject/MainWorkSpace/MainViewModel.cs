@@ -40,6 +40,7 @@ namespace MainProject.MainWorkSpace
         private ICommand _CloseEditCategory;
         private ICommand _ClickCheckboxSelectedPro;
         private ICommand _OpenViewAddCategory;
+        private ICommand _CloseViewAddCategory;
 
 
 
@@ -152,6 +153,25 @@ namespace MainProject.MainWorkSpace
 
             Productviewmodel.LoadProductByType(CurrentType.Type);
 
+        }
+
+        public ICommand CloseViewAddCategory_Command
+        {
+            get
+            {
+                if (_CloseViewAddCategory == null)
+                {
+                    _CloseViewAddCategory = new RelayingCommand<Object>(a => CloseViewAddCategory());
+                }
+                return _CloseViewAddCategory;
+            }
+        }
+
+
+        public void CloseViewAddCategory()
+        {
+            Window window = WindowService.Instance.FindWindowbyTag("NewType").First();
+            window.Close();
         }
 
         public ICommand DeleteTypeEditCategory_Command

@@ -86,7 +86,7 @@ namespace MainProject.ViewModel
 
                     using ( var db = new mainEntities())
                     {
-                        if ( value != null &&value.ID_Type != null) _Currentproduct.TYPE_PRODUCT = db.TYPE_PRODUCT.Where(t => t.ID == value.ID_Type).FirstOrDefault(); ;
+                        if ( value != null) _Currentproduct.TYPE_PRODUCT = db.TYPE_PRODUCT.Where(t => t.ID == value.ID_Type).FirstOrDefault(); ;
                     }
                     OnPropertyChanged(); 
                 } 
@@ -403,18 +403,22 @@ namespace MainProject.ViewModel
         {
             using (var db = new mainEntities())
             {
-                PRODUCT pro = db.PRODUCTs.Where(p => (p.ID == Currentproduct.ID) ).FirstOrDefault();
+                var pro = db.PRODUCTs.Where(p => (p.ID == Currentproduct.ID)).FirstOrDefault();             
 
-                pro = Currentproduct;
+                pro.Name = Currentproduct.Name;
+                pro.Price = Currentproduct.Price;
+                pro.ID_Type = Type_in_Combobox_AddProduct.ID;
+                pro.Decription = Currentproduct.Decription;
 
                 db.SaveChanges();
-
-                var item = Currentproduct;
-                if (item != null)
-                {
-                    item = Newproduct;
-                }              
             }
+
+            var item = Currentproduct;
+            if (item != null)
+            {
+                item = Newproduct;
+            }
+
             ExitUpdate();
         }
 
