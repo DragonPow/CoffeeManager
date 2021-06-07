@@ -80,6 +80,11 @@ namespace MainProject.ViewModel
                     Tablecustoms.Add(new TABLECUSTOM() { Total = 0, table = t, ListPro = null}) ;
                 }
 
+                //Testing color of table
+                //Tablecustoms[0].table.CurrentStatus = "Already";
+                //Tablecustoms[1].table.CurrentStatus = "Fix";
+                //Tablecustoms[2].table.CurrentStatus = "Normal";
+
                 ListTable = new ObservableCollection<TABLECUSTOM>(Tablecustoms);
                /* ListFloor = new ObservableCollection<int>(); */
             }
