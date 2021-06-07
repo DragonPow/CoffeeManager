@@ -25,6 +25,7 @@ namespace MainProject.MainWorkSpace
         private TYPE_PRODUCT _CurrentType;
         private TYPE_PRODUCT _Type_In_Edit_CATEGORY;
         private string _SearchProduct;
+        private string _NameNewTypeProduct;
 
         private TYPE_PRODUCT _TypeInEditCATEGORYCombobox;
         private string _EditTypeInEditCatefory;
@@ -51,6 +52,7 @@ namespace MainProject.MainWorkSpace
         public TableViewModel Tableviewmodel { get => _Tableviewmodel; set { if (_Tableviewmodel != value) { _Tableviewmodel = value; OnPropertyChanged(); } } }
         public TYPE_PRODUCT TypeInEditCATEGORYCombobox { get => _TypeInEditCATEGORYCombobox; set { if (_TypeInEditCATEGORYCombobox != value) { _TypeInEditCATEGORYCombobox = value; OnPropertyChanged(); EditTypeInEditCatefory = value.Type; LoadProductBYType_EditType(); } } }
         public string EditTypeInEditCatefory { get => _EditTypeInEditCatefory; set { if (_EditTypeInEditCatefory != value) { _EditTypeInEditCatefory = value; TypeInEditCATEGORYCombobox.Type = value; OnPropertyChanged(); } } }
+        public string NameNewTypeProduct { get => _NameNewTypeProduct; set { if (_NameNewTypeProduct != value) { _NameNewTypeProduct = value; OnPropertyChanged(); } } }
         public ObservableCollection<TYPE_PRODUCT> ListType
         {
             get => _ListType;
@@ -114,9 +116,8 @@ namespace MainProject.MainWorkSpace
 
             using (var db = new mainEntities())
             {
-                var i = db.TYPE_PRODUCT.Where(t => t.Type.Contains("Danh mục mới")).Count();
-
-                db.TYPE_PRODUCT.Add(new TYPE_PRODUCT() { Type = "Danh mục mới " + (i == 0 ? "" : i.ToString()) });
+              
+                db.TYPE_PRODUCT.Add(new TYPE_PRODUCT() { Type = NameNewTypeProduct });
 
                 db.SaveChanges();
 
