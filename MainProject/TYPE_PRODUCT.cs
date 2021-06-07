@@ -8,7 +8,7 @@
         public bool IsChecked
         {
             get
-            {
+            {   
                 return ID_Type == null ? false : true;
             }
             set

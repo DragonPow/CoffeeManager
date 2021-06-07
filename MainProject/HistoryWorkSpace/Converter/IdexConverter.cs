@@ -15,9 +15,15 @@ namespace MainProject.HistoryWorkSpace.Converter
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             int index;
+
+            if (values[1].GetType() != typeof(int)) return -1;
+
             int currentPage = (int)values[1];
             ListViewItem listitem = (ListViewItem)values[0];
             ListView listView = ItemsControl.ItemsControlFromItemContainer(listitem) as ListView;
+
+            if (listView == null) return -1;
+
             index = listView.ItemContainerGenerator.IndexFromContainer(listitem);
             return index + (currentPage - 1) * MainProject.ViewModel.HistoryViewModel.Number_Bill_in_Page + 1;
         }
