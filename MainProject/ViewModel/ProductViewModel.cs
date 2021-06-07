@@ -369,6 +369,7 @@ namespace MainProject.ViewModel
 
         public void LoadViewUpdate()
         {
+            Newproduct = new PRODUCT() { Image = imageToByteArray(Properties.Resources.Empty_Image), TYPE_PRODUCT = new TYPE_PRODUCT() };
             EditProd v = new EditProd();
             v.DataContext = this;
             WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditProd());
@@ -392,8 +393,8 @@ namespace MainProject.ViewModel
             {
                 PRODUCT pro = db.PRODUCTs.Where(p => (p.ID == Currentproduct.ID) ).FirstOrDefault();
 
-                Newproduct.ID = pro.ID;
-                pro = Newproduct;           
+                pro = Currentproduct;
+
                 db.SaveChanges();
 
                 var item = Currentproduct;
@@ -419,7 +420,7 @@ namespace MainProject.ViewModel
 
         public void ExitUpdate(Object a)
         {
-            var window = WindowService.Instance.FindWindowbyTag("DetaiPro").First();
+            var window = WindowService.Instance.FindWindowbyTag("EditPro").First();
             window.Close();
         }
 
@@ -454,7 +455,7 @@ namespace MainProject.ViewModel
 
         public void ExitDetail(object a)
         {
-            var window = WindowService.Instance.FindWindowbyTag("DetaiPro").First();
+            var window = WindowService.Instance.FindWindowbyTag("DetailPro").First();
             window.Close();
         }
 

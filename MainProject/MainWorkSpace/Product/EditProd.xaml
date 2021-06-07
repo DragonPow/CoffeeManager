@@ -11,6 +11,7 @@
              xmlns:rules="clr-namespace:MainProject.ValidationRules"
              mc:Ignorable="d"
              x:Name="Edit_Pro"
+             Tag="EditPro"
              d:DataContext="{d:DesignInstance Type=viewmodel:ProductViewModel}"
              Height="650"
              Width="500">
