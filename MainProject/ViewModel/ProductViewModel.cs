@@ -3,6 +3,7 @@ using MainProject.MainWorkSpace.Product;
 using MainProject.Model;
 using System;
 using System.Collections.ObjectModel;
+using System.Data.Entity.Validation;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -153,26 +154,43 @@ namespace MainProject.ViewModel
         public void Add(bool isValid)
         {
             if (!isValid) return;
+
             using (var db = new mainEntities())
             {
+                try
                 {
-                    TYPE_PRODUCT type= db.TYPE_PRODUCT.Where(t => (t.Type == Type_in_Combobox_AddPro)).FirstOrDefault();
+                        TYPE_PRODUCT type = db.TYPE_PRODUCT.Where(t => (t.Type == Type_in_Combobox_AddPro)).FirstOrDefault();
 
-                    if (type == null) Newproduct.TYPE_PRODUCT = null;
-                    else 
-                    Newproduct.TYPE_PRODUCT = type ;                
+                        if (type == null) Newproduct.TYPE_PRODUCT = null;
+                        else
+                            Newproduct.ID_Type = type.ID;
 
 
-                    db.PRODUCTs.Add(Newproduct);
+                        db.PRODUCTs.Add(Newproduct);
 
-                    ListPoduct.Add(Newproduct);
+                        ListPoduct.Add(Newproduct);
 
-                    db.SaveChanges();
-                    Exitaddproview();
+                        db.SaveChanges();
 
                 }
+                catch (DbEntityValidationException e)
+                {
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+                    throw;
+                }
+                
             }
-       
+
+            Exitaddproview();
         }
 
         public ICommand CancelAddProduct_Command
@@ -432,7 +450,7 @@ namespace MainProject.ViewModel
 
         public void ExitDetail(object a)
         {
-            var window = WindowService.Instance.FindWindowbyTag("Edit category").First();
+            var window = WindowService.Instance.FindWindowbyTag("DetaiPro").First();
             window.Close();
         }
 
@@ -549,13 +567,15 @@ namespace MainProject.ViewModel
 
         public void ClickCheckboxSelectedPro(object a)
         {
-            if (Currentproduct.TYPE_PRODUCT== null)
+            if (Currentproduct.ID_Type== null)
             {
-                Currentproduct.TYPE_PRODUCT = Type;
+                Currentproduct.ID_Type = Type.ID;
+                
             }                 
             else
             {
-                Currentproduct.TYPE_PRODUCT = null ;
+                Currentproduct.ID_Type = null ;
+           
             }
         }
           public ICommand SaveEditCategory_Command
@@ -588,7 +608,7 @@ namespace MainProject.ViewModel
                 int i = 0; 
                 foreach ( var p in list)
                 {
-                    p.TYPE_PRODUCT = ListPoduct.ElementAt(i).TYPE_PRODUCT;
+                    p.ID_Type = ListPoduct.ElementAt(i).ID_Type;
                     ++i;
                 }
 
