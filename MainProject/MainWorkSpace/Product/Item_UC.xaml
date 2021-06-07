@@ -31,7 +31,7 @@
                    Visibility="Hidden"></TextBlock>
         <StackPanel Grid.Column="0"
                     VerticalAlignment="Center">
-            <TextBlock Text="{Binding Pro.Name, FallbackValue='Trà sữa trân châu'}"
+            <TextBlock Text="{Binding Pro.Name}"
                        Grid.Column="0"
                        Grid.ColumnSpan="1"
                        HorizontalAlignment="Stretch"
@@ -40,7 +40,7 @@
                        Foreground="#BD8722"
                        FontSize="16" />
             <TextBlock Grid.Column="0"
-                       Text="{Binding Pro.Detail, FallbackValue='Trân châu đường đen'}"
+                       Text="{Binding Pro.Decription}"
                        HorizontalAlignment="Stretch"
                        VerticalAlignment="Stretch"
                        Margin="10 0"

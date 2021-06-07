@@ -25,6 +25,7 @@ namespace MainProject.StatisticWorkSpace
                             {
                                 TimeMin = new DateTime(minDate.Year, minDate.Month, (int)detail.Day, 0, 0, 0),
                                 TimeMax = new DateTime(minDate.Year, minDate.Month, (int)detail.Day, 23, 59, 59),
+
                                 Revenue = (long)detail.Revenue,
                                 Amount = (int)detail.AmountBill
                             };
@@ -44,12 +45,14 @@ namespace MainProject.StatisticWorkSpace
                         b.CheckoutDay,
                         b.DETAILBILLs, 
                         b.TotalPrice
+
                     });
 
                 Dictionary<DateTime, StatisticModel> dictionary = new Dictionary<DateTime, StatisticModel>();
 
                 foreach (var bill in data)
                 {
+
                     DateTime date = new DateTime(bill.CheckoutDay.Year, bill.CheckoutDay.Month, bill.CheckoutDay.Day, 0, 0, 0);
                     StatisticModel model;
                     if (!dictionary.ContainsKey(date))
@@ -73,6 +76,7 @@ namespace MainProject.StatisticWorkSpace
                     {
                         model.Revenue += detail.Quantity * detail.UnitPrice;
                     }*/
+
                 }
 
                 System.Windows.Threading.Dispatcher.CurrentDispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Background
@@ -136,6 +140,7 @@ namespace MainProject.StatisticWorkSpace
                         {
                             ProductName = dt.PRODUCT.Name,
                             ProductPrice = dt.PRODUCT.Price,
+                            // dt.Revenue,
                             dt.Amount,
                             dt.Rate
                         }))
