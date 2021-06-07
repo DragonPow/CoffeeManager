@@ -165,6 +165,7 @@
       <DependentUpon>MainModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CustomModel\STATUS_TABLE.cs" />
+    <Compile Include="Model\CustomModel\TABLE.cs" />
     <Compile Include="Model\CustomModel\TYPE_PRODUCT.cs" />
     <Compile Include="Model\DETAILBILL.cs">
       <DependentUpon>MainModel.tt</DependentUpon>
@@ -196,8 +197,6 @@
     <Compile Include="Model\TYPE_PRODUCT.cs">
       <DependentUpon>MainModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\CustomModel\STATUS_TABLE.cs" />
-    <Compile Include="Model\CustomModel\TYPE_PRODUCT.cs" />
     <Compile Include="SettingWorkSpace\InfoAccountView.xaml.cs">
       <DependentUpon>InfoAccountView.xaml</DependentUpon>
     </Compile>
@@ -501,6 +500,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\fixTable.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\unnamed.png" />
     <None Include="Resources\Empty_Image.png" />
     <Resource Include="Resources\add-image-icon-png-14.jpg" />
