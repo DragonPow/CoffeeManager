@@ -9,6 +9,7 @@
              xmlns:main="clr-namespace:MainProject.MainWorkSpace"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
+             Tag="DetailPro"
              d:DataContext="{d:DesignInstance ViewModel:ProductViewModel}"
              Height="600"
              Width="500">
