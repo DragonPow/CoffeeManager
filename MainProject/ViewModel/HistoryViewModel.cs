@@ -190,7 +190,7 @@ namespace MainProject.ViewModel
             NumberPage = 1;
             using ( var db = new mainEntities())
             {
-                NumberAllPage = ((db.BILLs.Where((b => (b.CheckoutDay >= BeginTime && b.CheckoutDay <= EndTime))).Count() / Number_Bill_in_Page) + (db.BILLs.Count() % Number_Bill_in_Page != 0 ? 1 : 0));
+                NumberAllPage = ((db.BILLs.Where((b => (b.CheckoutDay >= BeginTime && b.CheckoutDay <= EndTime))).Count() / Number_Bill_in_Page) + (db.BILLs.Where((b => (b.CheckoutDay >= BeginTime && b.CheckoutDay <= EndTime))).Count() % Number_Bill_in_Page != 0 ? 1 : 0));
 
                 var list = db.BILLs.Where(b => (b.CheckoutDay >= BeginTime && b.CheckoutDay <= EndTime)).OrderBy(b => b.ID).Take(Number_Bill_in_Page).ToList();
 

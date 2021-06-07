@@ -11,6 +11,10 @@
             {
                 return ID_Type == null ? false : true;
             }
+            set
+            {
+
+            }
         }
     }
 }

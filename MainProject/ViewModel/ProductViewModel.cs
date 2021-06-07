@@ -635,6 +635,7 @@ namespace MainProject.ViewModel
         {
             Window window = WindowService.Instance.FindWindowbyTag("Edit category").First();
             window.Close();
+            LoadProductByType(Type.Type);
         }
 
 
