@@ -101,8 +101,8 @@
                 <!--Button Add new Table-->
                
                 <materialDesign:PopupBox
-                      Background="#0E0E2F"
-                      BorderBrush="#0E0E2F"
+                      Background="{StaticResource MainColor}"
+                      BorderBrush="{StaticResource MainColor}"
                       Foreground="White"
                       Style="{StaticResource MaterialDesignMultiFloatingActionAccentPopupBox}"
                       PlacementMode="TopAndAlignCentres"

@@ -35,7 +35,7 @@
                 <Setter Property="VerticalContentAlignment"
                         Value="Stretch" />
                 <Setter Property="Background"
-                        Value="Green" />
+                        Value="{StaticResource MainColor}" />
                 <Setter Property="Foreground"
                         Value="White" />
             </Style>

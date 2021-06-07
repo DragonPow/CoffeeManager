@@ -132,7 +132,7 @@
                             Command="{Binding UpdateProduct_Command}"
                             HorizontalAlignment="Stretch"
                             Background="{StaticResource MainColor}"
-                            BorderBrush="#31CA62"
+                            BorderBrush="{StaticResource MainColor}"
                             Foreground="White"
                             Content="Lưu"
                             FontSize="20">
