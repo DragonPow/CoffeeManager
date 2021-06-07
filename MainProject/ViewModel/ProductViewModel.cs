@@ -558,18 +558,18 @@ namespace MainProject.ViewModel
             {
                 if (_ClickCheckboxSelectedPro == null)
                 {
-                    _ClickCheckboxSelectedPro = new RelayingCommand<Object>(a => ClickCheckboxSelectedPro(a));
+                    _ClickCheckboxSelectedPro = new RelayingCommand<Object>(a => ClickCheckboxSelectedPro());
                 }
                 return _ClickCheckboxSelectedPro;
             }
         }
 
 
-        public void ClickCheckboxSelectedPro(object a)
+        public void ClickCheckboxSelectedPro()
         {
             if (Currentproduct.ID_Type== null)
             {
-                Currentproduct.ID_Type = Type.ID;
+                Currentproduct.ID_Type =  TypeInEditCATEGORYCombobox.ID;
                 
             }                 
             else
@@ -597,12 +597,12 @@ namespace MainProject.ViewModel
 
             using (var db = new mainEntities())
             {
-                var type = db.TYPE_PRODUCT.Where(t => t.ID == TypeInEditCATEGORYCombobox.ID).FirstOrDefault();
+                var type = db.TYPE_PRODUCT.Where(t => t.ID== TypeInEditCATEGORYCombobox.ID).FirstOrDefault();
 
-                if (EditTypeInEditCatefory != "") 
+                if (EditTypeInEditCatefory != null) 
                     type.Type = EditTypeInEditCatefory;
 
-                var list = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT.ID == type.ID || p.ID_Type == null)).ToList();
+                var list = db.PRODUCTs.Where(p => (p.ID_Type == type.ID || p.ID_Type == null)).ToList();
                 if (list == null) return;
           
                 int i = 0; 
@@ -667,15 +667,15 @@ namespace MainProject.ViewModel
                 if(TypeInEditCATEGORYCombobox.Type == "Tất cả")
                 {
                     var list = db.PRODUCTs.ToList();
+                    list.ForEach(p => p.IsChecked = true);
                     ListPoduct = new ObservableCollection<PRODUCT>(list);
                     return;
                 }    
 
-                var l = db.PRODUCTs.Where(p =>  p.ID_Type == null || p.ID == TypeInEditCATEGORYCombobox.ID  ).ToList();
+                var l = db.PRODUCTs.Where(p =>  p.ID_Type == null || p.ID_Type == TypeInEditCATEGORYCombobox.ID  ).ToList();
            
                 if (l == null) return;
-               
-            /*  l.ForEach(p => p.IsChecked = p.TYPE_PRODUCT == null ? false : true);*/
+                       
                 ListPoduct = new ObservableCollection<PRODUCT>(l);
             }
         }
