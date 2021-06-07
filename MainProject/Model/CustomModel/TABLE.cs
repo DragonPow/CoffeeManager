@@ -8,17 +8,23 @@ namespace MainProject.Model
 {
     public partial class TABLE
     {
-        private string _currentStatus;
-        public string CurrentStatus
+        public void OnPropertyChanged(string propertyName, object before, object after)
         {
-            get => _currentStatus;
-            set
-            {
-                if (value!=_currentStatus)
+            OnPropertyChanged(propertyName);
+            if (propertyName == "Status")
+                if ((string)after == "Fix" || (string)before == "Fix")
                 {
-                    _currentStatus = value;
-                    OnPropertyChanged();
+                    //ChangeStatusDB((string)after == "Fix");
                 }
+        }
+        private void ChangeStatusDB(bool isFixStatus)
+        {
+            using (var db = new mainEntities())
+            {
+                string status = db.STATUS_TABLE.Include("STATUS_TABLE").Where(table => this.ID == table.ID).Select(i => i.Status).FirstOrDefault();
+                if (isFixStatus) status = "Fix";
+                else status = "Normal";
+                db.SaveChanges();
             }
         }
     }
