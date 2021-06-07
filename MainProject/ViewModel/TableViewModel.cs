@@ -328,6 +328,7 @@ namespace MainProject.ViewModel
         public void OpenChooseTable( )
         {
             SelectTableView v = new SelectTableView();
+            v.DataContext = this;
             WindowService.Instance.OpenWindow(this, v);
         }
 

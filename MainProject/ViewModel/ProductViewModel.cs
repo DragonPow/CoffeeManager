@@ -369,6 +369,8 @@ namespace MainProject.ViewModel
 
         public void LoadViewUpdate()
         {
+            EditProd v = new EditProd();
+            v.DataContext = this;
             WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditProd());
         }
 
@@ -417,7 +419,7 @@ namespace MainProject.ViewModel
 
         public void ExitUpdate(Object a)
         {
-            var window = WindowService.Instance.FindWindowbyTag("EditPro").First();
+            var window = WindowService.Instance.FindWindowbyTag("DetaiPro").First();
             window.Close();
         }
 
