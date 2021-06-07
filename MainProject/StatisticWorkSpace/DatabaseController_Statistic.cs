@@ -25,8 +25,8 @@ namespace MainProject.StatisticWorkSpace
                             {
                                 TimeMin = new DateTime(minDate.Year, minDate.Month, (int)detail.Day, 0, 0, 0),
                                 TimeMax = new DateTime(minDate.Year, minDate.Month, (int)detail.Day, 23, 59, 59),
-                                Revenue = detail.Revenue,
-                                Amount = 0
+                                Revenue = (long)detail.Revenue,
+                                Amount = (int)detail.AmountBill
                             };
                             rs.Add(model);
                         }
@@ -42,14 +42,15 @@ namespace MainProject.StatisticWorkSpace
                     .Select(b => new
                     {
                         b.CheckoutDay,
-                        b.DETAILBILLs
+                        b.DETAILBILLs, 
+                        b.TotalPrice
                     });
 
                 Dictionary<DateTime, StatisticModel> dictionary = new Dictionary<DateTime, StatisticModel>();
 
-                foreach (var group in data)
+                foreach (var bill in data)
                 {
-                    DateTime date = new DateTime(group.CheckoutDay.Year, group.CheckoutDay.Month, group.CheckoutDay.Day, 0, 0, 0);
+                    DateTime date = new DateTime(bill.CheckoutDay.Year, bill.CheckoutDay.Month, bill.CheckoutDay.Day, 0, 0, 0);
                     StatisticModel model;
                     if (!dictionary.ContainsKey(date))
                     {
@@ -66,16 +67,17 @@ namespace MainProject.StatisticWorkSpace
 
                     model.Amount += 1;
 
-                    foreach (var detail in group.DETAILBILLs)
+                    model.Revenue += bill.TotalPrice;
+
+                    /*foreach (var detail in group.DETAILBILLs)
                     {
                         model.Revenue += detail.Quantity * detail.UnitPrice;
-                    }
+                    }*/
                 }
 
                 System.Windows.Threading.Dispatcher.CurrentDispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Background
                 , new Action<Dictionary<DateTime, StatisticModel>, int, int>(addReportRevenue)
                 , dictionary, minDate.Year, minDate.Month);
-
 
                 return dictionary.Values.ToList();
             } 
@@ -101,7 +103,8 @@ namespace MainProject.StatisticWorkSpace
                         var detail = new DETAILREPORTREVENUE()
                         {
                             Day = model.TimeMin.Day,
-                            Revenue = model.Revenue
+                            Revenue = model.Revenue,
+                            AmountBill = model.Amount
                         };
                         report.DETAILREPORTREVENUEs.Add(detail);
                     }
@@ -133,7 +136,6 @@ namespace MainProject.StatisticWorkSpace
                         {
                             ProductName = dt.PRODUCT.Name,
                             ProductPrice = dt.PRODUCT.Price,
-                            // dt.Revenue
                             dt.Amount,
                             dt.Rate
                         }))
@@ -383,35 +385,46 @@ namespace MainProject.StatisticWorkSpace
             DateTime maxDate = new DateTime(2021, 6, 3, 23, 59, 59);
             TimeSpan step = new TimeSpan(1, 0, 0, 0, 0);
 
-            var productIDs = new long[] { 1, 2, 3, 4, 5};
-            var prices = new long[] { 10000, 20000, 15000, 32000, 14000 };
-
             Random random = new Random();
             using (mainEntities db = new mainEntities())
             {
+                var products = db.PRODUCTs.Select(pd => new
+                {
+                    pd.ID,
+                    pd.Name,
+                    pd.Price
+                });
+                var tables = db.TABLEs.Select(tb => new
+                {
+                    tb.ID
+                }).ToArray();
                 var transaction = db.Database.BeginTransaction();
                 for (DateTime date = minDate; date < maxDate; date += step)
                 {
+                    long total = 0;
                     var bill = new BILL
                     {
-                        CheckoutDay = date,
-                        TotalPrice = 0
+                        CheckoutDay = date, 
+                        ID_Table = tables[random.Next(tables.Length)].ID
                     };
 
-                    var listPDs = new List<long>(productIDs);
+                    var listPDs = new List<Tuple<long, String, long>>();
+                    foreach (var pd in products) { listPDs.Add(new Tuple<long, string, long>(pd.ID, pd.Name, pd.Price)); }
                     int count = random.Next(3) + 1;
                     for (int i = 0; i < count; i++)
                     {
                         int temp = random.Next(listPDs.Count);
                         var dt = new DETAILBILL
                         {
-                            ID_Product = listPDs[temp],
+                            ID_Product = listPDs[temp].Item1,
                             Quantity = random.Next(4) + 1,
-                            UnitPrice = prices[temp]
+                            UnitPrice = listPDs[temp].Item3
                         };
+                        total += dt.Quantity * dt.UnitPrice;
                         bill.DETAILBILLs.Add(dt);
                         listPDs.RemoveAt(temp);
                     }
+                    bill.TotalPrice = total;
                     db.BILLs.Add(bill);
                 }
                 try
