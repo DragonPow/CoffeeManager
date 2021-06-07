@@ -5,7 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Product"
+             xmlns:main="clr-namespace:MainProject.MainWorkSpace"
              mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=main:MainViewModel}"
              Height="260" Width="500" Background="White">
     <StackPanel>
         <Grid 
@@ -26,14 +28,14 @@
         </Grid>
         <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                      materialDesign:HintAssist.Hint="Tên danh mục"
-                     Text="{Binding EditTypeInEditCatefory,UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding NameNewTypeProduct,UpdateSourceTrigger=PropertyChanged}"
                      FontSize="14"
                      Margin="50,40"
                      Height="50"
                      MaxWidth="500" />
         <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
                         Height="50"
-                        Command="{Binding AddProduct_Command_Command}"
+                        Command="{Binding AddEditCategory_Command}"
                         HorizontalAlignment="Stretch"
                         Background="{StaticResource MainColor}"
                         BorderBrush="#31CA62"

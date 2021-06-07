@@ -35,58 +35,9 @@
                        Foreground="White"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"/>
-            <Button BorderBrush="Transparent"
-                    Style="{StaticResource MaterialDesignOutlinedButton}"
-                    ToolTip="MaterialDesignOutlinedButton"
-                    Content="XÓA TẦNG" 
-                    FontSize="20" 
-                    Foreground="#E6FFED"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Visibility="Visible"
-                    Command="{Binding DeleteFloorCommand}"/>
-          
+
         </Grid>
         <!--Floors here-->
-        <Grid DockPanel.Dock="Top" Margin="20">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="8*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid Margin="10,0">
-                <Border BorderThickness="2"
-                BorderBrush="Gray"
-                CornerRadius="5" Grid.Column="1"/>
-                <TextBlock Text="Tầng" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" Margin="20,0"/>
-                <ComboBox 
-                      Width="50"
-                      FontSize="20"
-                      Foreground="#9393A1"
-                      BorderBrush="#737373"
-                      BorderThickness="0"
-                      Margin="10 0"
-                      HorizontalAlignment="Right"
-                    HorizontalContentAlignment="Right"
-                    VerticalContentAlignment="Center"
-                      ItemsSource="{Binding ListFloor}"
-                      SelectedItem="{Binding CurrentFloors}"/>
-            </Grid>
-         
-            <Border BorderThickness="2"
-                BorderBrush="Gray"
-                CornerRadius="5" Grid.Column="1" >
-                <Button Width="Auto" Height="auto"  Background="Transparent" BorderBrush="Transparent"
-                        Command="{Binding AddFloorCommand}">
-                    <materialDesign:PackIcon Kind="Plus"
-                                 Foreground="Gray"
-                                 HorizontalAlignment="Center"
-                                 VerticalAlignment="Center"
-                                 Width="50"
-                                 Height="50"/>
-                </Button>
-                
-            </Border>
-        </Grid>
         <Grid DockPanel.Dock="Bottom">
             <Canvas x:Name="InfoCanvas"
                     Margin="20 10">
