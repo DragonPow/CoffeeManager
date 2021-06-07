@@ -12,7 +12,7 @@
              d:DesignWidth="100">
     <UserControl.Resources>
         <model:STATUS_TABLE x:Key="StatusTable" />
-        <SolidColorBrush x:Key="textColor" x:Name="textColor"></SolidColorBrush>
+        <SolidColorBrush x:Key="textColor">#ffff</SolidColorBrush>
     </UserControl.Resources>
     <Grid>
         <TextBlock Text="{Binding Name, FallbackValue='1'}" 
@@ -41,9 +41,9 @@
                                     </Image>
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="Color"
-                                    TargetName="textColor"
-                                    Value="#D31D1D" />
+                            <!--<Setter Property="Color"
+                                    TargetName="{Binding ElementName=text}"
+                                    Value="#D31D1D" />-->
                         </DataTrigger>
 
                         <!--Free table-->
@@ -59,9 +59,9 @@
                                     </Image>
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="Color"
-                                    TargetName="textColor"
-                                    Value="#0E0E2F" />
+                            <!--<Setter Property="Color"
+                                    TargetName="{Binding Source={StaticResource textColor}}"
+                                    Value="#0E0E2F" />-->
                         </DataTrigger>
 
                         <!--Fix table-->
@@ -77,9 +77,9 @@
                                     </Image>
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="Color"
-                                    TargetName="textColor"
-                                    Value="#D3D3D3D3" />
+                            <!--<Setter Property="Color"
+                                    TargetName="{Binding Source={StaticResource textColor}}"
+                                    Value="#D3D3D3D3" />-->
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
