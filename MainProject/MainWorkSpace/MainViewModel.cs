@@ -1,4 +1,5 @@
-﻿using MainProject.Model;
+﻿using MainProject.MainWorkSpace.Product;
+using MainProject.Model;
 using MainProject.ViewModel;
 using MaterialDesignThemes.Wpf;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Markup;
 
@@ -24,9 +26,18 @@ namespace MainProject.MainWorkSpace
         private TYPE_PRODUCT _Type_In_Edit_CATEGORY;
         private string _SearchProduct;
 
+        private TYPE_PRODUCT _TypeInEditCATEGORYCombobox;
+        private string _EditTypeInEditCatefory;
+
+
         private const PackIconKind _iconDisplay = PackIconKind.Home;
 
+        private ICommand _OpenViewEditCategory;
         private ICommand _AddEditCategory;
+        private ICommand _SaveEditCategory;
+        private ICommand _DeleteTypeEditCategory;
+        private ICommand _CloseEditCategory;
+        private ICommand _ClickCheckboxSelectedPro;
 
 
 
@@ -37,6 +48,8 @@ namespace MainProject.MainWorkSpace
         public ProductViewModel Productviewmodel { get => _Productviewmodel; set { if (_Productviewmodel != value) { _Productviewmodel = value; OnPropertyChanged(); } } }
         public TYPE_PRODUCT CurrentType { get => _CurrentType; set { if (_CurrentType != value) { _CurrentType = value; OnPropertyChanged();  Productviewmodel.Type = value; } } }
         public TableViewModel Tableviewmodel { get => _Tableviewmodel; set { if (_Tableviewmodel != value) { _Tableviewmodel = value; OnPropertyChanged(); } } }
+        public TYPE_PRODUCT TypeInEditCATEGORYCombobox { get => _TypeInEditCATEGORYCombobox; set { if (_TypeInEditCATEGORYCombobox != value) { _TypeInEditCATEGORYCombobox = value; OnPropertyChanged(); EditTypeInEditCatefory = value.Type; LoadProductBYType_EditType(); } } }
+        public string EditTypeInEditCatefory { get => _EditTypeInEditCatefory; set { if (_EditTypeInEditCatefory != value) { _EditTypeInEditCatefory = value; TypeInEditCATEGORYCombobox.Type = value; OnPropertyChanged(); } } }
         public ObservableCollection<TYPE_PRODUCT> ListType
         {
             get => _ListType;
@@ -59,7 +72,7 @@ namespace MainProject.MainWorkSpace
             }
         }
 
-        public TYPE_PRODUCT Type_In_Edit_CATEGORY { get => _Type_In_Edit_CATEGORY; set { if (_Type_In_Edit_CATEGORY != value) { _Type_In_Edit_CATEGORY = value; OnPropertyChanged(); Productviewmodel.TypeInEditCATEGORYCombobox = value ; } } }
+        public TYPE_PRODUCT Type_In_Edit_CATEGORY { get => _Type_In_Edit_CATEGORY; set { if (_Type_In_Edit_CATEGORY != value) { _Type_In_Edit_CATEGORY = value; OnPropertyChanged(); TypeInEditCATEGORYCombobox = value ; } } }
 
 
         #endregion
@@ -71,15 +84,10 @@ namespace MainProject.MainWorkSpace
             Tableviewmodel = new TableViewModel();
             Productviewmodel = new ProductViewModel() { Tableviewmodel = Tableviewmodel };
 
-            using (var db = new mainEntities())
-            {
-                var l = new List<TYPE_PRODUCT>() { new TYPE_PRODUCT() { Type = "Tất cả", ID = new long() } };
-                CurrentType = l.ElementAt(0);
-             
-                l.AddRange(db.TYPE_PRODUCT.Distinct().ToList());
+            Load_Type();
 
-                ListType = new ObservableCollection<TYPE_PRODUCT>(l);
-            }
+            CurrentType = ListType.ElementAt(0);
+
         }
         #endregion
 
@@ -117,13 +125,198 @@ namespace MainProject.MainWorkSpace
                 WindowService.Instance.OpenMessageBox("Thêm mới thành công. Tiến hành chỉnh sửa ở Sửa danh mục", "Thông báo", System.Windows.MessageBoxImage.Information);
 
                 Productviewmodel.Type = Type;
-                Productviewmodel.OpenViewEditCategory();
+                OpenViewEditCategory();
 
             }
 
         }
 
+        public ICommand DeleteTypeEditCategory_Command
+        {
+            get
+            {
+                if (_DeleteTypeEditCategory == null)
+                {
+                    _DeleteTypeEditCategory = new RelayingCommand<Object>(a => DeleteTypeEditCategory());
+                }
+                return _DeleteTypeEditCategory;
+            }
+        }
+
+
+        public void DeleteTypeEditCategory()
+        {
+            if (TypeInEditCATEGORYCombobox == null) return;
+
+            using (var db = new mainEntities())
+            {
+                var list = db.PRODUCTs.Where(p => (p.ID_Type == TypeInEditCATEGORYCombobox.ID)).ToList();
+                if (list == null) return;
+
+                foreach (var p in list)
+                {
+                    p.TYPE_PRODUCT = null;
+                }
+
+                db.TYPE_PRODUCT.Attach(TypeInEditCATEGORYCombobox);
+                db.TYPE_PRODUCT.Remove(TypeInEditCATEGORYCombobox);
+
+                db.SaveChanges();
+            }
+
+            ListType.Remove(Type_In_Edit_CATEGORY);
+            TypeInEditCATEGORYCombobox = null;
+
+
+        }
+        public ICommand OpenViewEditCategory_Command
+        {
+            get
+            {
+                if (_OpenViewEditCategory == null)
+                {
+                    _OpenViewEditCategory = new RelayingCommand<Object>(a => OpenViewEditCategory());
+                }
+                return _OpenViewEditCategory;
+            }
+        }
+
+
+        public void OpenViewEditCategory()
+        {
+
+            TypeInEditCATEGORYCombobox = CurrentType;
+
+            WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditType());
+
+            Productviewmodel.LoadProductByType(CurrentType.Type);
+
+        }
+
+        public ICommand SaveEditCategory_Command
+        {
+            get
+            {
+                if (_SaveEditCategory == null)
+                {
+                    _SaveEditCategory = new RelayingCommand<Object>(a => SaveEditCategory(a));
+                }
+                return _SaveEditCategory;
+
+            }
+        }
+
+
+        public void SaveEditCategory(object a)
+        {
+            if (EditTypeInEditCatefory == "")
+            {
+                WindowService.Instance.OpenMessageBox("Vui lòng nhập tên danh mục!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                return;
+            }
+            using (var db = new mainEntities())
+            {
+                var type = db.TYPE_PRODUCT.Where(t => t.ID == TypeInEditCATEGORYCombobox.ID).FirstOrDefault();
+
+                type = TypeInEditCATEGORYCombobox;               
+
+
+                var list = db.PRODUCTs.Where(p => (p.ID_Type == type.ID || p.ID_Type == null)).ToList();
+                if (list == null) return;
+
+                int i = 0;
+                foreach (var p in list)
+                {
+                    p.ID_Type = Productviewmodel.ListPoduct.ElementAt(i).ID_Type;
+                    ++i;
+                }
+               
+
+                
+                db.SaveChanges();
+            }
+
+        }
+        public ICommand ClickCheckboxSelectedPro_Command
+        {
+            get
+            {
+                if (_ClickCheckboxSelectedPro == null)
+                {
+                    _ClickCheckboxSelectedPro = new RelayingCommand<Object>(a => ClickCheckboxSelectedPro());
+                }
+                return _ClickCheckboxSelectedPro;
+            }
+        }
+
+
+        public void ClickCheckboxSelectedPro()
+        {
+            if (Productviewmodel.Currentproduct.ID_Type == null)
+            {
+                Productviewmodel.Currentproduct.ID_Type = TypeInEditCATEGORYCombobox.ID;
+
+            }
+            else
+            {
+                Productviewmodel.Currentproduct.ID_Type = null;
+
+            }
+        }
+        public ICommand CloseEditCategory_Command
+        {
+            get
+            {
+                if (_CloseEditCategory == null)
+                {
+                    _CloseEditCategory = new RelayingCommand<Object>(a => CloseEditCategory());
+                }
+                return _CloseEditCategory;
+            }
+        }
+
+
+        public void CloseEditCategory()
+        {
+            Window window = WindowService.Instance.FindWindowbyTag("Edit category").First();
+            window.Close();
+            Productviewmodel.LoadProductByType(CurrentType.Type);
+        }
+
 
         #endregion
+
+        private void LoadProductBYType_EditType()
+        {
+            using (var db = new mainEntities())
+            {
+                if (TypeInEditCATEGORYCombobox == null) return;
+                if (TypeInEditCATEGORYCombobox.Type == "Tất cả")
+                {
+                    var list = db.PRODUCTs.ToList();
+                    list.ForEach(p => p.IsChecked = true);
+                    Productviewmodel.ListPoduct = new ObservableCollection<PRODUCT>(list);
+                    return;
+                }
+
+                var l = db.PRODUCTs.Where(p => p.ID_Type == null || p.ID_Type == TypeInEditCATEGORYCombobox.ID).ToList();
+
+                if (l == null) return;
+
+                Productviewmodel.ListPoduct = new ObservableCollection<PRODUCT>(l);
+            }
+        }
+
+        void Load_Type()
+        {
+            using (var db = new mainEntities())
+            {
+                var l = new List<TYPE_PRODUCT>() { new TYPE_PRODUCT() { Type = "Tất cả", ID = new long() } };
+
+                l.AddRange(db.TYPE_PRODUCT.Distinct().ToList());
+
+                ListType = new ObservableCollection<TYPE_PRODUCT>(l);
+            }
+        }
     }
 }
