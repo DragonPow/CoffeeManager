@@ -8,12 +8,9 @@
              mc:Ignorable="d"
              MinWidth="100"
              MinHeight="100"
+             d:DataContext="{d:DesignInstance Type=model:TABLE}"
              d:DesignHeight="100"
              d:DesignWidth="100">
-    <UserControl.Resources>
-        <model:STATUS_TABLE x:Key="StatusTable" />
-        <SolidColorBrush x:Key="textColor">#ffff</SolidColorBrush>
-    </UserControl.Resources>
     <Grid>
         <!--Number table-->
         <TextBlock Text="{Binding Name, FallbackValue='1'}"
@@ -26,21 +23,21 @@
                 <Style TargetType="{x:Type TextBlock}">
                     <Style.Triggers>
                         <!--Already table-->
-                        <DataTrigger Binding="{Binding CurrentStatus}"
+                        <DataTrigger Binding="{Binding STATUS_TABLE.Status}"
                                      Value="Already">
                             <Setter Property="Foreground"
                                     Value="#D31D1D" />
                         </DataTrigger>
 
                         <!--Free table-->
-                        <DataTrigger Binding="{Binding CurrentStatus}"
+                        <DataTrigger Binding="{Binding STATUS_TABLE.Status}"
                                      Value="Normal">
                             <Setter Property="Foreground"
                                     Value="#31CA62" />
                         </DataTrigger>
 
                         <!--Fix table-->
-                        <DataTrigger Binding="{Binding CurrentStatus}"
+                        <DataTrigger Binding="{Binding STATUS_TABLE.Status}"
                                      Value="Fix">
                             <Setter Property="Foreground"
                                     Value="Gray" />
@@ -59,7 +56,7 @@
                 <Style TargetType="{x:Type ContentControl}">
                     <Style.Triggers>
                         <!--Already table-->
-                        <DataTrigger Binding="{Binding CurrentStatus}"
+                        <DataTrigger Binding="{Binding STATUS_TABLE.Status}"
                                      Value="Already">
                             <Setter Property="Content">
                                 <Setter.Value>
@@ -74,7 +71,7 @@
                         </DataTrigger>
 
                         <!--Free table-->
-                        <DataTrigger Binding="{Binding CurrentStatus}"
+                        <DataTrigger Binding="{Binding STATUS_TABLE.Status}"
                                      Value="Normal">
                             <Setter Property="Content">
                                 <Setter.Value>
@@ -89,7 +86,7 @@
                         </DataTrigger>
 
                         <!--Fix table-->
-                        <DataTrigger Binding="{Binding CurrentStatus}"
+                        <DataTrigger Binding="{Binding STATUS_TABLE.Status}"
                                      Value="Fix">
                             <Setter Property="Content">
                                 <Setter.Value>
