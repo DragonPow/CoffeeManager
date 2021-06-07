@@ -77,9 +77,9 @@
                         Name="btn_Save_change"
                         Click="btn_Save_change_Click"
                         Content="Lưu thay đổi"
-                        Foreground="Green"
+                        Foreground="{StaticResource MainColor}"
                         Background="White"
-                        BorderBrush="Red"
+                        BorderBrush="{StaticResource MainColor}"
                         FontSize="20"
                         Margin="10" IsEnabled="False"/>
             </Grid>

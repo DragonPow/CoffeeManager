@@ -149,6 +149,9 @@
     <Compile Include="MainWorkSpace\Bill\BillView.xaml.cs">
       <DependentUpon>BillView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainWorkSpace\Product\EditProd.xaml.cs">
+      <DependentUpon>EditProd.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWorkSpace\Product\EditType.xaml.cs">
       <DependentUpon>EditType.xaml</DependentUpon>
     </Compile>
@@ -364,6 +367,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MainWorkSpace\Product\CreateProd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWorkSpace\Product\EditProd.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

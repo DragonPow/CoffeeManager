@@ -33,7 +33,7 @@
             <TextBlock Text="{Binding Name, FallbackValue='Trà sữa trân châu'}" Grid.Column="0" 
                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5 0" 
                        Foreground="#BD8722" FontSize="16" FontWeight="DemiBold"/>
-            <TextBlock Grid.Column="0" Text="{Binding Detail, FallbackValue='Trân châu đường đen'}"
+            <TextBlock Grid.Column="0" Text="{Binding Decription }"
                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5 0" 
                        Foreground="#958360" FontSize="12" FontWeight="Light" FontStyle="Italic"></TextBlock>
         </StackPanel>
