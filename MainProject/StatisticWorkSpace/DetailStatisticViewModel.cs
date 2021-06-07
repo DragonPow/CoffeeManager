@@ -8,25 +8,53 @@ namespace MainProject.StatisticWorkSpace
 {
     class DetailStatisticViewModel : StatisticViewModel
     {
-        public new String CreateTitle(StatisticModel model)
+        string dateTimeRangeTitle;
+        public string DateTimeRangeTitle => dateTimeRangeTitle;
+        public string TitleDataGrid => String.Format("Báo cáo bán hàng {0}", DateTimeRangeTitle);
+        public override void SetTimeRange(DateTime minDate, DateTime maxDate)
+        {
+            List<StatisticModel> data;
+            DatabaseController_Statistic dbController = new DatabaseController_Statistic();
+
+            data = dbController.statisticByName(minDate, maxDate);
+
+            dateTimeRangeTitle = getDateTimeRangeString(minDate, maxDate);
+
+            ListModel.Clear();
+            data.Sort((m1, m2) => (m1.Revenue < m2.Revenue) ? -1 : 1);
+            listModel = data;
+            OnPropertyChanged(nameof(ListModel));
+        }
+
+        public String getDateTimeRangeString(DateTime minDate, DateTime maxDate)
+        {
+            String rs = String.Format("{0} - {1}", minDate.ToString("dd/MM/yyy"), maxDate.ToString("dd/MM/yyy"));
+            if (maxDate.Year == minDate.Year)
+            {
+                if (maxDate.Month == minDate.Month)
+                {
+                    if (minDate.Day == 1 && maxDate.Day == DateTime.DaysInMonth(maxDate.Year, maxDate.Month))
+                    {
+                        rs = String.Format("tháng {0}", minDate.ToString("MM/yyyy"));
+                    }
+                }
+            }
+            return rs;
+        }
+
+        public override String CreateTitle(StatisticModel model)
         {
             return model.Title;
+        }
+        public override String CreateLabel(StatisticModel model)
+        {
+            return model.Label;
         }
 
         public DetailStatisticViewModel()
         {
-            listModel = new List<StatisticModel>
-            {
-                new StatisticModel(){ Title = "Title1", Revenue = 10000},
-                new StatisticModel(){ Title = "Title2", Revenue = 20000},
-                new StatisticModel(){ Title = "Title3", Revenue = 15000},
-                new StatisticModel(){ Title = "Title4", Revenue = 100000},
-                new StatisticModel(){ Title = "Title5", Revenue = 130000}
-            };
-            foreach (var model in ListModel) { model.Label = CreateLabel(model); model.Title = CreateTitle(model); }
-            SelectedOptionProduct = OPTION_ALL_PRODUCT;
-            formaterLabelAxisY = val => getMoneyLabel((int)val);
-            this.PropertyChanged += StatisticViewModel_PropertyChanged;
+            formaterLabelAxisY = null;
+            dateTimeRangeTitle = "tháng 5/2021";
         }
     }
 }

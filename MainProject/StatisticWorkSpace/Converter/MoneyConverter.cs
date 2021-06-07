@@ -22,10 +22,14 @@ namespace MainProject.StatisticWorkSpace.Converter
 
             String rs = "Cannot convert";
             long money;
-            if (long.TryParse(value.ToString(),out money))
+
+            try
             {
-                rs = money.ToString("N0")+currency;
+                money = (long)value;
+                rs = money.ToString("N0") + currency;
             }
+            catch (Exception e) { Console.WriteLine(e.Message); }
+
             return rs;
         }
 

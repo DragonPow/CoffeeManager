@@ -25,10 +25,10 @@ namespace MainProject.StatisticWorkSpace.Converter
                     series.Title = model.Title;
                     series.Values = new ChartValues<long>() { model.Revenue };
                     rs.Add(series);
-                    if (rs.Count > 50)
+                    if (rs.Count >= 49)
                     {
                         var tempSeries = new PieSeries();
-                        series.Title = "Khác";
+                        series.Title = String.Format("Khác ({0})", (list.Count -i).ToString());
                         long val = 0;
                         for (i++; i < list.Count; i++)
                         {

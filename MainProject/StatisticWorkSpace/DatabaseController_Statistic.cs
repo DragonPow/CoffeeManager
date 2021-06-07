@@ -62,8 +62,8 @@ namespace MainProject.StatisticWorkSpace
                         };
                         dictionary.Add(date, model);
                     }
+                    else { model = dictionary[date]; }
 
-                    model = dictionary[date];
                     model.Amount += 1;
 
                     foreach (var detail in group.DETAILBILLs)
@@ -104,6 +104,135 @@ namespace MainProject.StatisticWorkSpace
                             Revenue = model.Revenue
                         };
                         report.DETAILREPORTREVENUEs.Add(detail);
+                    }
+                    db.SaveChanges();
+                    tran.Commit();
+                    Console.WriteLine("SUCCESS: Saved report to database");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("FAILED: Cannot saved report to database");
+                    Console.WriteLine(e.Message);
+                    tran.Rollback();
+                }
+                dictionary.Clear();
+            }
+        }
+
+        public List<StatisticModel> statisticByName(DateTime minDate, DateTime maxDate)
+        {
+            using (mainEntities db = new mainEntities())
+            {
+                if (minDate.Year == maxDate.Year && minDate.Month == maxDate.Month)
+                {
+                    var data = db.REPORTSALES.Where(rp => rp.Year == minDate.Year && rp.Month == minDate.Month).FirstOrDefault();
+                    if (data != null)
+                    {
+                        var rs = new List<StatisticModel>();
+                        foreach (var detail in data.DETAILREPORTSALES.Select(dt => new
+                        {
+                            ProductName = dt.PRODUCT.Name,
+                            ProductPrice = dt.PRODUCT.Price,
+                            // dt.Revenue
+                            dt.Amount,
+                            dt.Rate
+                        }))
+                        {
+                            var model = new StatisticModel()
+                            {
+                                TimeMin = minDate,
+                                TimeMax = maxDate,
+                                Title = detail.ProductName,
+                                //Revenue = detail.Revenue,
+                                Revenue = detail.ProductPrice * detail.Amount,
+                                Amount = (int)detail.Amount,
+                                Label = String.Format("{0}", detail.Rate.ToString())
+                            };
+                            rs.Add(model);
+                        }
+                        return rs;
+                    }
+                }
+            }
+
+            // If this is first-time statistc. Starting calculate
+            using (mainEntities db = new mainEntities())
+            {
+                var data = db.BILLs.Where(b => b.CheckoutDay >= minDate && b.CheckoutDay <= maxDate);
+
+                Dictionary<String, StatisticModel> dictionary = new Dictionary<String, StatisticModel>();
+                Dictionary<String, long> productIDs = new Dictionary<String, long>();
+
+                foreach (var group in data)
+                {
+                    StatisticModel model;
+
+                    foreach (var detail in group.DETAILBILLs.Select(dt => new
+                    {
+                        ProductID = dt.PRODUCT.ID,
+                        ProductName = dt.PRODUCT.Name,
+                        dt.Quantity,
+                        dt.UnitPrice
+                    }))
+                    {
+                        String name = detail.ProductName;
+                        if (!dictionary.ContainsKey(name))
+                        {
+                            model = new StatisticModel
+                            {
+                                TimeMin = minDate,
+                                TimeMax = maxDate,
+                                Title = name,
+                                Revenue = 0,
+                                Amount = 0
+                            };
+                            dictionary.Add(name, model);
+                            productIDs.Add(name, detail.ProductID);
+                        }
+                        else { model = dictionary[name]; }
+
+                        model.Amount += (int)detail.Quantity;
+                        model.Revenue += detail.Quantity * detail.UnitPrice;
+                    }
+                }
+                long totalRevenue = 0;
+                foreach (var model in dictionary.Values) { totalRevenue += model.Revenue; }
+                foreach (var model in dictionary.Values) { model.Label = (model.Revenue * 100 / totalRevenue).ToString(); }
+
+                System.Windows.Threading.Dispatcher.CurrentDispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background
+                , new Action<Dictionary<string, StatisticModel>, Dictionary<string, long>, int, int>(addReportSale)
+                , dictionary, productIDs, minDate.Year, minDate.Month);
+
+
+                return dictionary.Values.ToList();
+            }
+        }
+
+        void addReportSale(Dictionary<string, StatisticModel> dictionary, Dictionary<string, long> productIDs, int year, int month)
+        {
+            using (mainEntities db = new mainEntities())
+            {
+                var tran = db.Database.BeginTransaction();
+                try
+                {
+                    var report = new REPORTSALE()
+                    {
+                        Year = year,
+                        Month = month
+                    };
+
+                    db.REPORTSALES.Add(report);
+
+                    foreach(var model in dictionary.Values)
+                    {
+                        var detail = new DETAILREPORTSALE()
+                        {
+                            ID_Product = productIDs[model.Title],
+                            Amount = model.Amount,
+                            // Revenue = model.Revenue
+                            Rate = long.Parse(model.Label)
+                        };
+                        report.DETAILREPORTSALES.Add(detail);
                     }
                     db.SaveChanges();
                     tran.Commit();

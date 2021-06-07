@@ -9,11 +9,13 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=local:DetailStatisticViewModel,IsDesignTimeCreatable=True}"
-        Title="DetailStatisticWindow" Height="450" Width="800">
+        Title="DetailStatisticWindow" Height="450" Width="800"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="labelStyle" TargetType="Label">
             <Setter Property="Margin" Value="5,5,5,5"/>
-            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontSize" Value="16"/>
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
         <Style x:Key="headerStyle" TargetType="Control">
@@ -21,7 +23,7 @@
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
-        <conver:MoneyConverter x:Key="moneyConverter"/>
+        <conver:MoneyConverter x:Key="moneyConverter" Currency="đ"/>
         <conver:DetailPieChartConverter x:Key="chartConverter"/>
     </Window.Resources>
     <DockPanel>
@@ -31,13 +33,12 @@
               Background="{DynamicResource MainColor}">
             <Border BorderThickness="1" 
                     BorderBrush="#9393A1"/>
-            <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}" x:Name="btnBack"
+            <Button 
+                    x:Name="btnBack"
                     HorizontalAlignment="Left"
                     Background="Transparent"
                     BorderBrush="Transparent">
-                <materialDesign:PackIcon Kind="ArrowLeft"
-                                         Height="{Binding Height, RelativeSource={RelativeSource AncestorLevel=1}}"
-                                         Width="{Binding Width, RelativeSource={RelativeSource AncestorLevel=1}}"/>
+                <materialDesign:PackIcon Kind="ArrowLeft" Width="32" Height="32"/>
             </Button>
             <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}"
                        Text="THỐNG KÊ CHI TIÉT" 
@@ -50,10 +51,11 @@
             <DockPanel
             DockPanel.Dock="Left" Background="GhostWhite" Width="300"
             Margin="5,5">
+
                 <Label 
-                DockPanel.Dock="Top" Style="{StaticResource labelStyle}">
-                    Danh sách
-                </Label>
+                    DockPanel.Dock="Top"
+                    Style="{StaticResource labelStyle}" Content="{Binding Path=TitleDataGrid, Mode=OneWay}"/>
+
                 <Grid
                 DockPanel.Dock="Bottom">
                     <Label HorizontalAlignment="Left" Margin="0" Style="{StaticResource labelStyle}">Tổng doanh thu</Label>
@@ -82,23 +84,23 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn 
-                        Header="Doanh Thu" HeaderStyle="{StaticResource headerStyle}"
-                        Width="*" IsReadOnly="True" CanUserResize="True">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Path=Revenue, Converter={StaticResource moneyConverter}, Mode=OneWay}" TextAlignment="Center"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn 
                         Header="Bán Ra" HeaderStyle="{StaticResource headerStyle}"
-                        Width="*" IsReadOnly="True" CanUserResize="True">
+                        IsReadOnly="True" CanUserResize="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Path=Amount, Mode=OneWay}" TextAlignment="Center"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+                        <DataGridTemplateColumn 
+                        Header="Doanh Thu" HeaderStyle="{StaticResource headerStyle}"
+                        IsReadOnly="True" CanUserResize="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=Revenue, Converter={StaticResource moneyConverter}, Mode=OneWay}" TextAlignment="Center"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                         <DataGridTemplateColumn 
                         Header="Tỉ Lệ (%)" HeaderStyle="{StaticResource headerStyle}"
                         Width="*" IsReadOnly="True" CanUserResize="True">
@@ -112,12 +114,19 @@
                 </DataGrid>
 
             </DockPanel>
-
-            <charting:PieChart 
-                DockPanel.Dock="Left"
-                Series="{Binding Path=ListModel, Converter={StaticResource chartConverter}}"
-                >
-            </charting:PieChart>
+            <DockPanel
+                DockPanel.Dock="Left">
+                <Label 
+                    DockPanel.Dock="Top"
+                    ToolTip="Biểu đồ tỉ lệ doanh thu (thu gọn top 50 doanh thu)" HorizontalAlignment="Center"
+                    Style="{StaticResource labelStyle}" Content="Biểu Đồ Tỉ Lệ Doanh Thu"/>
+                <charting:PieChart 
+                    DockPanel.Dock="Top"
+                    Series="{Binding Path=ListModel, Converter={StaticResource chartConverter}}"
+                    LegendLocation="Bottom"
+                    >
+                </charting:PieChart>
+            </DockPanel>
         </DockPanel>
     </DockPanel>
 </Window>

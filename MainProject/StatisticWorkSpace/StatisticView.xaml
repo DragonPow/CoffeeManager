@@ -81,10 +81,20 @@
         <DockPanel
             Grid.Column="1" Background="GhostWhite"
             Margin="5,5">
-            <Label 
-                DockPanel.Dock="Top" Style="{StaticResource labelStyle}">
-                Kết quả thống kê
-            </Label>
+            <Grid
+                DockPanel.Dock="Top">
+                <Label  
+                    HorizontalAlignment="Left" VerticalAlignment="Center"
+                    Style="{StaticResource labelStyle}">
+                    Kết quả thống kê
+                </Label>
+                <Button
+                    Content="Chi tiết>>" FontSize="11" HorizontalAlignment="Right"
+                    Click="ShowDetail_Click"
+                    VerticalAlignment="Center" Height="20" Padding="4,2,4,4" Background="GhostWhite" Foreground="#DD000000" 
+                    />
+            </Grid>
+            
             <Grid
                 DockPanel.Dock="Bottom">
                 <Label HorizontalAlignment="Left" Margin="0" Style="{StaticResource labelStyle}">Tổng doanh thu</Label>
