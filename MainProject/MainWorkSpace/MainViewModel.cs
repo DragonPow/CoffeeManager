@@ -164,7 +164,7 @@ namespace MainProject.MainWorkSpace
                 db.SaveChanges();
             }
 
-            ListType.Remove(Type_In_Edit_CATEGORY);
+            ListType.Remove(TypeInEditCATEGORYCombobox);
             TypeInEditCATEGORYCombobox = null;
 
 
