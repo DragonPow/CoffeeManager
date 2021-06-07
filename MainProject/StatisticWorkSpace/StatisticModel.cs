@@ -10,7 +10,7 @@ namespace MainProject.StatisticWorkSpace
     {
         public DateTime TimeMin;
         public DateTime TimeMax;
-        public int Revenue { get; set; }
+        public long Revenue { get; set; }
         public int Amount { get; set; }
         public String RevenueString => Revenue.ToString("N0") + "đ";
         public String Title { get; set; }

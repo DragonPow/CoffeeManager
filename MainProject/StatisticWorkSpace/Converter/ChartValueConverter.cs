@@ -17,7 +17,7 @@ namespace MainProject.StatisticWorkSpace.Converter
         {
             if (value is List<StatisticModel> list)
             {
-                ChartValues<int> rs = new ChartValues<int>();
+                var rs = new ChartValues<long>();
                 if (PropertyName == "Revenue")
                 {
                     foreach (var model in list)

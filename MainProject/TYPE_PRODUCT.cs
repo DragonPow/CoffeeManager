@@ -9,7 +9,11 @@
         {
             get
             {
-                return TYPE_PRODUCT == null ? false : true;
+                return ID_Type == null ? false : true;
+            }
+            set
+            {
+
             }
         }
     }

@@ -22,12 +22,64 @@ namespace MainProject.StatisticWorkSpace
     /// </summary>
     public partial class StatisticView : UserControl
     {
+        public ContextMenu ContextMenuRowDataGrid { get; set; }
         public StatisticView()
         {
             Initialized += StatisticView_Initialized;
             InitializeComponent();
             txtDatePicker.CalendarOpened += TxtDatePicker_CalendarOpened;
             btnSubmit.Click += BtnSubmit_Click;
+            this.ContextMenuRowDataGrid = new ContextMenu();
+            MenuItem menuItem = new MenuItem();
+            menuItem.Header = "Xem chi tiết";
+            menuItem.Click += ShowDetail_Click;
+            this.ContextMenuRowDataGrid.Items.Add(menuItem);
+        }
+
+        private void DatagridView_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var target = datagridView;
+            if (target != null)
+            {
+                ContextMenu contextMenu = new ContextMenu();
+                MenuItem menuItem = new MenuItem();
+                menuItem.Header = "Xem chi tiết";
+                menuItem.Click += ShowDetail_Click;
+                contextMenu.Items.Add(menuItem);
+                contextMenu.PlacementTarget = target;
+                contextMenu.IsOpen = true;
+            }
+        }
+
+        private void ShowDetail_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtDatePicker.SelectedDate != null)
+            {
+                DateTime selectedDate = (DateTime)txtDatePicker.SelectedDate;
+                int selectedMode = cbxStatisticMode.SelectedIndex;
+                DateTime minDate;
+                DateTime maxDate;
+
+                if (selectedMode == 0)
+                {
+                    selectWeek(selectedDate, out minDate, out maxDate);
+                }
+                else if (selectedMode == 1 || selectedMode == 2)
+                {
+                    selectMonth(selectedDate, out minDate, out maxDate);
+                }
+                else // Last element
+                {
+                    selectYear(selectedDate, out minDate, out maxDate);
+                }
+
+                DetailStatisticViewModel vmodel = new DetailStatisticViewModel();
+                DetailStatisticWindow detailStatisticWindow = new DetailStatisticWindow();
+                detailStatisticWindow.min = minDate;
+                detailStatisticWindow.max = maxDate;
+                detailStatisticWindow.DataContext = vmodel;
+                detailStatisticWindow.Show();
+            }
         }
 
         private void TxtDatePicker_CalendarOpened(object sender, RoutedEventArgs e)
@@ -55,9 +107,10 @@ namespace MainProject.StatisticWorkSpace
         private void StatisticView_Initialized(object sender, EventArgs e)
         {
             DateTime today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 1);
+            cbxStatisticMode.SelectedIndex = 1;
             cbxStatisticMode_SelectionChanged(cbxStatisticMode, null);
-            txtDatePicker.DisplayDateEnd = today;
-            txtDatePicker.SelectedDate = today.AddDays(-6);
+            txtDatePicker.DisplayDateEnd = new DateTime(today.Year, today.Month, 1).AddDays(-1);
+            txtDatePicker.SelectedDate = new DateTime(txtDatePicker.DisplayDate.Year, txtDatePicker.DisplayDate.Month, 1);
         }
 
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
@@ -70,7 +123,7 @@ namespace MainProject.StatisticWorkSpace
                 {
                     // Task in main thread 
                     var button = sender as Button;
-                    button.Content = "Đổi cài đặt";
+                    button.Content = "Đổi thời gian";
                     foreach (Control child in (button.Parent as Panel).Children)
                     {
                         if (!(child == button)){ child.IsEnabled = false; }
@@ -185,5 +238,9 @@ namespace MainProject.StatisticWorkSpace
             }
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace MainProject.StatisticWorkSpace
             }
         }
 
-        List<StatisticModel> listModel;
+        protected List<StatisticModel> listModel;
         public List<StatisticModel> ListModel { get => listModel; }
         public void SetListModel(List<StatisticModel> list)
         {
@@ -36,7 +36,7 @@ namespace MainProject.StatisticWorkSpace
             OnPropertyChanged(nameof(ListModel));
         }
 
-        StatisticMode currentMode = StatisticMode.DayOfWeek;
+        protected StatisticMode currentMode = StatisticMode.DayOfMonth;
         public StatisticMode CurrentMode => currentMode;
         public String CurrentMode_String => StatisticEnum.GetString(currentMode);
         public void SetCurrentMode(int index)
@@ -44,7 +44,7 @@ namespace MainProject.StatisticWorkSpace
             if (index < 0 && index >= Enum.GetValues(typeof(StatisticMode)).Length) return;
             currentMode = (StatisticMode)index;
         }
-        string OPTION_ALL_PRODUCT = "Tất cả sản phẩm";
+        protected string OPTION_ALL_PRODUCT = "Tất cả sản phẩm";
         public List<string> ListOptionForProduct
         {
             get
@@ -81,7 +81,7 @@ namespace MainProject.StatisticWorkSpace
         }
 
         public Func<double, string> formaterLabelAxisY { get; set; }
-        private String getMoneyLabel(int money)
+        protected String getMoneyLabel(int money)
         {
             string[] prefix = new string[] { "k", "tr", "tỷ" };
             int i = 0;
@@ -100,7 +100,7 @@ namespace MainProject.StatisticWorkSpace
             SetListModel(new List<StatisticModel>());
         }
 
-        public void SetTimeRange(DateTime minDate, DateTime maxDate)
+        public virtual void SetTimeRange(DateTime minDate, DateTime maxDate)
         {
             List<StatisticModel> data = null;
             DatabaseController_Statistic dbController = new DatabaseController_Statistic();
@@ -109,9 +109,9 @@ namespace MainProject.StatisticWorkSpace
             switch (CurrentMode)
             {
                 case StatisticMode.DayOfWeek:
+                case StatisticMode.DayOfMonth:
                     data = dbController.statisticByDay(minDate, maxDate, option);
                     break;
-                case StatisticMode.DayOfMonth:
                 case StatisticMode.WeekOfMonth:
                     data = dbController.statisticByWeek(minDate, maxDate, option);
                     break;
@@ -122,7 +122,7 @@ namespace MainProject.StatisticWorkSpace
             SetListModel(data);
         }
 
-        public String CreateLabel(StatisticModel model)
+        public virtual String CreateLabel(StatisticModel model)
         {
             String rs = "<Error>";
             switch (CurrentMode)
@@ -145,7 +145,7 @@ namespace MainProject.StatisticWorkSpace
             return rs;
         }
 
-        public String CreateTitle(StatisticModel model)
+        public virtual String CreateTitle(StatisticModel model)
         {
             String rs = "<Error>";
             switch (CurrentMode)
@@ -210,7 +210,11 @@ namespace MainProject.StatisticWorkSpace
         {
             listModel = new List<StatisticModel>
             {
-                
+                new StatisticModel(){ Title = "Title1", Revenue = 10000},
+                new StatisticModel(){ Title = "Title2", Revenue = 20000},
+                new StatisticModel(){ Title = "Title3", Revenue = 15000},
+                new StatisticModel(){ Title = "Title4", Revenue = 100000},
+                new StatisticModel(){ Title = "Title5", Revenue = 130000}
             };
             foreach (var model in ListModel) { model.Label = CreateLabel(model); model.Title = CreateTitle(model); }
             SelectedOptionProduct = OPTION_ALL_PRODUCT;
@@ -218,7 +222,7 @@ namespace MainProject.StatisticWorkSpace
             this.PropertyChanged += StatisticViewModel_PropertyChanged;
         }
 
-        private void StatisticViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        protected void StatisticViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName.Equals(nameof(ListModel)))
             {
