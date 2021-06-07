@@ -21,7 +21,7 @@ namespace MainProject.StatisticWorkSpace
             dateTimeRangeTitle = getDateTimeRangeString(minDate, maxDate);
 
             ListModel.Clear();
-            data.Sort((m1, m2) => (m1.Revenue < m2.Revenue) ? -1 : 1);
+            data.Sort((m1, m2) => (m1.Revenue < m2.Revenue) ? 1 : -1);
             listModel = data;
             OnPropertyChanged(nameof(ListModel));
         }

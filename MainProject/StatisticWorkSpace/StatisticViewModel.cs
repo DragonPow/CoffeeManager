@@ -210,11 +210,11 @@ namespace MainProject.StatisticWorkSpace
         {
             listModel = new List<StatisticModel>
             {
-                new StatisticModel(){ Title = "Title1", Revenue = 10000},
-                new StatisticModel(){ Title = "Title2", Revenue = 20000},
-                new StatisticModel(){ Title = "Title3", Revenue = 15000},
-                new StatisticModel(){ Title = "Title4", Revenue = 100000},
-                new StatisticModel(){ Title = "Title5", Revenue = 130000}
+                new StatisticModel(){ Title = "Title1", Label = "Label1", Revenue = 10000},
+                new StatisticModel(){ Title = "Title2", Label = "Label2", Revenue = 20000},
+                new StatisticModel(){ Title = "Title3", Label = "Label3", Revenue = 15000},
+                new StatisticModel(){ Title = "Title4", Label = "Label4", Revenue = 100000},
+                new StatisticModel(){ Title = "Title5", Label = "Label5", Revenue = 130000}
             };
             foreach (var model in ListModel) { model.Label = CreateLabel(model); model.Title = CreateTitle(model); }
             SelectedOptionProduct = OPTION_ALL_PRODUCT;
