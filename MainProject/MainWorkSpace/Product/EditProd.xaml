@@ -10,7 +10,6 @@
              xmlns:viewmodel="clr-namespace:MainProject.ViewModel"
              xmlns:rules="clr-namespace:MainProject.ValidationRules"
              mc:Ignorable="d"
-             Tag="EditPro"
              d:DataContext="{d:DesignInstance Type=main:MainViewModel}"
              Height="650"
              Width="500">
