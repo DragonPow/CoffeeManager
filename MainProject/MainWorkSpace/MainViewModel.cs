@@ -38,6 +38,7 @@ namespace MainProject.MainWorkSpace
         private ICommand _DeleteTypeEditCategory;
         private ICommand _CloseEditCategory;
         private ICommand _ClickCheckboxSelectedPro;
+        private ICommand _OpenViewAddCategory;
 
 
 
@@ -110,6 +111,7 @@ namespace MainProject.MainWorkSpace
 
         public void AddEditCategory()
         {
+
             using (var db = new mainEntities())
             {
                 var i = db.TYPE_PRODUCT.Where(t => t.Type.Contains("Danh mục mới")).Count();
@@ -125,9 +127,31 @@ namespace MainProject.MainWorkSpace
                 WindowService.Instance.OpenMessageBox("Thêm mới thành công. Tiến hành chỉnh sửa ở Sửa danh mục", "Thông báo", System.Windows.MessageBoxImage.Information);
 
                 Productviewmodel.Type = Type;
-                OpenViewEditCategory();
+
+                CurrentType = ListType.Last();
 
             }
+
+        }
+
+        public ICommand OpenViewAddCategory_Command
+        {
+            get
+            {
+                if (_OpenViewAddCategory == null)
+                {
+                    _OpenViewAddCategory = new RelayingCommand<Object>(a => OpenViewAddCategory());
+                }
+                return _OpenViewAddCategory;
+            }
+        }
+
+
+        public void OpenViewAddCategory()
+        {
+            WindowService.Instance.OpenWindowWithoutBorderControl(this, new NewType());           
+
+            Productviewmodel.LoadProductByType(CurrentType.Type);
 
         }
 
@@ -185,7 +209,7 @@ namespace MainProject.MainWorkSpace
         public void OpenViewEditCategory()
         {
 
-            TypeInEditCATEGORYCombobox = CurrentType;
+            /*TypeInEditCATEGORYCombobox = CurrentType;*/
 
             WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditType());
 
