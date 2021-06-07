@@ -9,7 +9,7 @@
              Background="White"
              d:DataContext="{d:DesignInstance Type=ViewModel:ProductViewModel}"
              x:Name="Select_Item"
-             d:DesignHeight="100" d:DesignWidth="500">
+             d:DesignHeight="100" Width="450">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -26,16 +26,16 @@
             Foreground="{StaticResource MainColor}"
             HorizontalAlignment="Center" 
             VerticalAlignment="Center"
-            IsChecked="False" 
+            IsChecked="{Binding IsChecked, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
             Margin="10"
-           />
-        <Image Source="{Binding Image}" Grid.Column="1" Stretch="Fill" Height="40" Width="50"></Image>
+            Command="{Binding DataContext.ClickCheckboxSelectedPro_Command, ElementName=Select_Item}"/>
+        <Image Source="{Binding Image}" Grid.Column="1" Stretch="Fill" Height="50" Width="70"></Image>
         <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="10,0">
             <TextBlock Text="{Binding Name, FallbackValue='Trà sữa trân châu'}" Grid.Column="0" 
-                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10 0" 
+                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5 0" 
                        Foreground="#BD8722" FontSize="16" FontWeight="DemiBold"/>
             <TextBlock Grid.Column="0" Text="{Binding Detail, FallbackValue='Trân châu đường đen'}"
-                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10 0" 
+                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5 0" 
                        Foreground="#958360" FontSize="12" FontWeight="Light" FontStyle="Italic"></TextBlock>
         </StackPanel>
         <TextBlock Grid.Column="3" Text="{Binding Price, FallbackValue='25,000đ', StringFormat='{}{0:N0} đ'}" 
