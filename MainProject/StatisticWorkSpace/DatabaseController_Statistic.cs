@@ -79,7 +79,7 @@ namespace MainProject.StatisticWorkSpace
 
                 }
 
-                System.Windows.Threading.Dispatcher.CurrentDispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Background
+                System.Windows.Threading.Dispatcher.CurrentDispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background
                 , new Action<Dictionary<DateTime, StatisticModel>, int, int>(addReportRevenue)
                 , dictionary, minDate.Year, minDate.Month);
 
@@ -139,8 +139,7 @@ namespace MainProject.StatisticWorkSpace
                         foreach (var detail in data.DETAILREPORTSALES.Select(dt => new
                         {
                             ProductName = dt.PRODUCT.Name,
-                            ProductPrice = dt.PRODUCT.Price,
-                            // dt.Revenue,
+                            dt.Revenue,
                             dt.Amount,
                             dt.Rate
                         }))
@@ -150,10 +149,9 @@ namespace MainProject.StatisticWorkSpace
                                 TimeMin = minDate,
                                 TimeMax = maxDate,
                                 Title = detail.ProductName,
-                                //Revenue = detail.Revenue,
-                                Revenue = detail.ProductPrice * detail.Amount,
+                                Revenue = detail.Revenue,
                                 Amount = (int)detail.Amount,
-                                Label = String.Format("{0}", detail.Rate.ToString())
+                                Label = detail.Rate.ToString()
                             };
                             rs.Add(model);
                         }
@@ -236,7 +234,7 @@ namespace MainProject.StatisticWorkSpace
                         {
                             ID_Product = productIDs[model.Title],
                             Amount = model.Amount,
-                            // Revenue = model.Revenue
+                            Revenue = model.Revenue,
                             Rate = long.Parse(model.Label)
                         };
                         report.DETAILREPORTSALES.Add(detail);
@@ -415,7 +413,7 @@ namespace MainProject.StatisticWorkSpace
 
                     var listPDs = new List<Tuple<long, String, long>>();
                     foreach (var pd in products) { listPDs.Add(new Tuple<long, string, long>(pd.ID, pd.Name, pd.Price)); }
-                    int count = random.Next(3) + 1;
+                    int count = random.Next(listPDs.Count - 1) + 1;
                     for (int i = 0; i < count; i++)
                     {
                         int temp = random.Next(listPDs.Count);
