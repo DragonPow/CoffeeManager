@@ -26,9 +26,8 @@ namespace MainProject.ViewModel
         #region Fields
         private ObservableCollection<BILL> _ListBill;
         private BILL _CurrentBill;
-        private int _NumberPage;
-        private int _NumberAllpage;
-        public static int Number_Bill_in_Page = 1;      
+        private int _NumberPage;    
+        public static int Number_Bill_in_Page = 5;      
 
         private DateTime _BeginTime;
         private DateTime _EndTime;
@@ -68,7 +67,7 @@ namespace MainProject.ViewModel
         {
             get
             {
-                return _NumberPage > 0 ? _NumberPage : 1;
+                return _NumberPage ;
             }                
                 
             set
@@ -129,22 +128,7 @@ namespace MainProject.ViewModel
         #region Init
         public HistoryViewModel()
         {
-            //LoadBillByNumberPage();
-
-            //testing
-            //for (int i=1;i<=20;i++)
-            //{
-            //    ListBill.Add(new BILL()
-            //    {
-            //        ID = 10,
-            //        CheckoutDay = new DateTime(2021, i%12 + 1, i%29 + 1),
-            //        TotalPrice = i * 100,
-            //        TABLE = new TABLE() { Number = i }
-            //    });
-            //}
-            //_NumberPage = 1;
-            //NumberAllPage = 5;
-            //end testing
+           
         }
         #endregion
 
@@ -181,25 +165,53 @@ namespace MainProject.ViewModel
 
         public void Search_Bill()
         {
+            if (Number_Bill_in_Page == 0) return;
+
             if (EndTime < BeginTime)
             {
                 WindowService.Instance.OpenMessageBox("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc!", "Lỗi", System.Windows.MessageBoxImage.Error);
                 return;
             }
-
-            NumberPage = 1;
+        
             using ( var db = new mainEntities())
             {
-                NumberAllPage = ((db.BILLs.Where((b => (b.CheckoutDay >= BeginTime && b.CheckoutDay <= EndTime))).Count() / Number_Bill_in_Page) + (db.BILLs.Where((b => (b.CheckoutDay >= BeginTime && b.CheckoutDay <= EndTime))).Count() % Number_Bill_in_Page != 0 ? 1 : 0));
 
-                var list = db.BILLs.Where(b => (b.CheckoutDay >= BeginTime && b.CheckoutDay <= EndTime)).OrderBy(b => b.ID).Take(Number_Bill_in_Page).ToList();
+                int d = db.BILLs.Where(b => (b.CheckoutDay >= BeginTime && b.CheckoutDay <= EndTime)).Count();
 
-                if (list == null) return;
 
-                ListBill = new ObservableCollection<BILL>(list);
+                if (d == 0)
+                {
+                    NumberAllPage = 0;
+                    return;
+                }
+
+                var listbill = (from b in db.BILLs.Where(b => (b.CheckoutDay >= BeginTime && b.CheckoutDay <= EndTime))
+                                from t in db.TABLEs
+                                .Where( t => t.ID == b.ID_Table)
+                                .DefaultIfEmpty()
+                                select new
+                                 {
+                                    ID = b.ID,
+                                    CheckoutDay = b.CheckoutDay,
+                                    TotalPrice = b.TotalPrice,
+                                    Table= t
+                                }).OrderBy(b => b.ID).Take(Number_Bill_in_Page).ToList();              
+
+
+                NumberAllPage = (d / Number_Bill_in_Page) + (d % Number_Bill_in_Page != 0 ? 1 : 0);
+
+
+                ListBill = new ObservableCollection<BILL>();
+
+                foreach ( var b in listbill.ToList())
+                {
+                    ListBill.Add(new BILL() { CheckoutDay = b.CheckoutDay, ID = b.ID, TotalPrice = b.TotalPrice, TABLE = b.Table });
+                }
+
+               
             }
-           
 
+            NumberPage = 1;
         }
         public ICommand Exit_Detail_BillCommand
         {
@@ -214,17 +226,32 @@ namespace MainProject.ViewModel
 
         void LoadBillByNumberPage()
         {
-            
+            if ( NumberPage == 0) return;
+
             using (var db = new mainEntities())
             {
+                var listbill = (from b in db.BILLs.Where(b => (b.CheckoutDay >= BeginTime && b.CheckoutDay <= EndTime))
+                                from t in db.TABLEs
+                                .Where(t => t.ID == b.ID_Table)
+                                .DefaultIfEmpty()
+                                select new
+                                {
+                                    ID = b.ID,
+                                    CheckoutDay = b.CheckoutDay,
+                                    TotalPrice = b.TotalPrice,
+                                    Table = t
+                                }).OrderBy(b => b.ID).Skip((NumberPage - 1) * Number_Bill_in_Page).Take(Number_Bill_in_Page);
+           
 
 
-                var list = db.BILLs.Where(b => (b.CheckoutDay >= BeginTime && b.CheckoutDay <= EndTime)).OrderBy(b => b.ID).Skip(NumberPage - 1).Take(Number_Bill_in_Page);
+                if (listbill == null ||  listbill.ToList().Count == 0 ) return;
 
+                ListBill = new ObservableCollection<BILL>();
 
-                if (list == null ) return;
-
-                ListBill = new ObservableCollection<BILL>(list.ToList());
+                foreach (var b in listbill.ToList())
+                {
+                    ListBill.Add(new BILL() { CheckoutDay = b.CheckoutDay, ID = b.ID, TotalPrice = b.TotalPrice, TABLE = b.Table });
+                }
             }
         }
     }

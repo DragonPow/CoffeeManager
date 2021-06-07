@@ -24,5 +24,10 @@ namespace MainProject.HistoryWorkSpace
         {
             InitializeComponent();
         }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
