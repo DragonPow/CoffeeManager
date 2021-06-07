@@ -21,8 +21,8 @@
         <CheckBox
             Grid.Column="0"
             BorderBrush="Gray"
-            Background="{StaticResource MainColor}"
-            Foreground="{StaticResource MainColor}"
+            Background="#31CA62"
+            Foreground="White"
             HorizontalAlignment="Center" 
             VerticalAlignment="Center"
             IsChecked="{Binding IsChecked, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 

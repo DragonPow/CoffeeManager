@@ -136,7 +136,7 @@
                             Content="Hủy"
                             Command="{Binding CancelAddProduct_Command}"
                             Foreground="{StaticResource MainColor}"
-                            BorderBrush="#31CA62"
+                            BorderBrush="{StaticResource MainColor}"
                             FontSize="20"
                             Margin="10" />
                     <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
@@ -146,7 +146,7 @@
                             CommandParameter="{Binding IsValid, ElementName=UserControl}"
                             HorizontalAlignment="Stretch"
                             Background="{StaticResource MainColor}"
-                            BorderBrush="#31CA62"
+                            BorderBrush="{StaticResource MainColor}"
                             Foreground="White"
                             Margin="10"
                             Content="Thêm"

@@ -15,7 +15,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/materialdesign.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <SolidColorBrush x:Key="MainColor" Color="#31CA62"/>
+            <SolidColorBrush x:Key="MainColor" Color="#0E0E2F"/>
             <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#0E0E2F"/>
             <!-- tell Dragablz tab control to use the Material Design theme -->
             <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MaterialDesignTabablzControlStyle}" />

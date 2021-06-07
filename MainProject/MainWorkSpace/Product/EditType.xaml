@@ -5,15 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Product"
-             xmlns:Main="clr-namespace:MainProject.MainWorkSpace"
+             xmlns:main="clr-namespace:MainProject.MainWorkSpace"
              xmlns:model="clr-namespace:MainProject.Model"
+             xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
              mc:Ignorable="d"
              Tag="Edit category"
+             x:Name="Edit_Type"
+             d:DataContext="{d:DesignInstance Type=ViewModel:ProductViewModel}"
              Height="700"
              Width="600">
-    <UserControl.DataContext>
-        <Main:MainViewModel></Main:MainViewModel>
-    </UserControl.DataContext>
+    <UserControl.Resources>
+        <main:MainViewModel x:Key="MainVM"></main:MainViewModel>
+    </UserControl.Resources>
     <DockPanel>
         <Grid DockPanel.Dock="Top"
               Background="{StaticResource MainColor}">
@@ -26,7 +29,7 @@
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"/>
             <Button Background="Transparent" BorderBrush="Transparent" Margin="10" HorizontalAlignment="Right"
-                    Command="{Binding Productviewmodel.CloseEditCategory_Command}">
+                    Command="{Binding CloseEditCategory_Command}">
                 <materialDesign:PackIcon Kind="Close" Width="25" Height="25" />
 
             </Button>
@@ -35,8 +38,8 @@
                     Background="White">
             <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                           materialDesign:HintAssist.Hint="Danh mục"
-                          ItemsSource="{Binding ListType}"
-                          SelectedItem="{Binding Productviewmodel.TypeInEditCATEGORYCombobox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}"
+                          ItemsSource="{Binding Source={StaticResource MainVM}, Path=ListType}" 
+                          SelectedItem="{Binding TypeInEditCATEGORYCombobox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}"
                           DisplayMemberPath="Type"
                           IsSynchronizedWithCurrentItem="True"
                           FontSize="14"
@@ -65,7 +68,7 @@
                        Margin="0,10"/>
             <ListView  Grid.Row="1"
                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                       ItemsSource="{Binding Productviewmodel.ListPoduct}">
+                       ItemsSource="{Binding ListPoduct}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <local:SelectPro DataContext="{Binding}" />
@@ -88,10 +91,10 @@
                 </Grid.ColumnDefinitions>
                 <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
                         Height="50"
-                        Command="{Binding Productviewmodel.SaveEditCategory_Command}"
+                        Command="{Binding SaveEditCategory_Command}"
                         HorizontalAlignment="Stretch"
                         Background="{StaticResource MainColor}"
-                        BorderBrush="#31CA62"
+                        BorderBrush="{StaticResource MainColor}"
                         Foreground="White"
                         Grid.Column="1"
                         Margin="10"
@@ -105,7 +108,7 @@
                         Foreground="Red"
                         BorderBrush="Red"
                         FontSize="14"
-                        Command="{Binding Productviewmodel.DeleteTypeEditCategory_Command}"
+                        Command="{Binding DeleteTypeEditCategory_Command}"
                         Margin="10" />
             </Grid>
 
