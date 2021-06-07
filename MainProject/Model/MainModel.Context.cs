@@ -25,7 +25,6 @@ namespace MainProject.Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<BILL> BILLs { get; set; }
         public virtual DbSet<DETAILBILL> DETAILBILLs { get; set; }
         public virtual DbSet<PARAMETER> PARAMETERs { get; set; }
         public virtual DbSet<PRODUCT> PRODUCTs { get; set; }
@@ -36,5 +35,6 @@ namespace MainProject.Model
         public virtual DbSet<DETAILREPORTREVENUE> DETAILREPORTREVENUEs { get; set; }
         public virtual DbSet<DETAILREPORTSALE> DETAILREPORTSALES { get; set; }
         public virtual DbSet<REPORTSALE> REPORTSALES { get; set; }
+        public virtual DbSet<BILL> BILLs { get; set; }
     }
 }

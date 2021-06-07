@@ -13,6 +13,7 @@
           <Property Name="TotalPrice" Type="decimal" Precision="53" Scale="0" Nullable="false" />
           <Property Name="TIMECHECKOUT" Type="datetime" Nullable="false" />
           <Property Name="ID_Table" Type="integer" />
+          <Property Name="MoneyCustomer" Type="decimal" Precision="53" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="DETAILBILL">
           <Key>
@@ -250,17 +251,12 @@
     <edmx:ConceptualModels>
       <Schema Namespace="mainModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="mainEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="BILLs" EntityType="mainModel.BILL" />
           <EntitySet Name="DETAILBILLs" EntityType="mainModel.DETAILBILL" />
           <EntitySet Name="PARAMETERs" EntityType="mainModel.PARAMETER" />
           <EntitySet Name="PRODUCTs" EntityType="mainModel.PRODUCT" />
           <EntitySet Name="REPORTREVENUEs" EntityType="mainModel.REPORTREVENUE" />
           <EntitySet Name="STATUS_TABLE" EntityType="mainModel.STATUS_TABLE" />
           <EntitySet Name="TYPE_PRODUCT" EntityType="mainModel.TYPE_PRODUCT" />
-          <AssociationSet Name="FK_DETAILBILL_1_0" Association="mainModel.FK_DETAILBILL_1_0">
-            <End Role="BILL" EntitySet="BILLs" />
-            <End Role="DETAILBILL" EntitySet="DETAILBILLs" />
-          </AssociationSet>
           <AssociationSet Name="FK_DETAILBILL_0_0" Association="mainModel.FK_DETAILBILL_0_0">
             <End Role="PRODUCT" EntitySet="PRODUCTs" />
             <End Role="DETAILBILL" EntitySet="DETAILBILLs" />
@@ -270,10 +266,6 @@
             <End Role="PRODUCT" EntitySet="PRODUCTs" />
           </AssociationSet>
           <EntitySet Name="TABLEs" EntityType="mainModel.TABLE" />
-          <AssociationSet Name="FK_BILL_0_0" Association="mainModel.FK_BILL_0_0">
-            <End Role="TABLE" EntitySet="TABLEs" />
-            <End Role="BILL" EntitySet="BILLs" />
-          </AssociationSet>
           <AssociationSet Name="FK_TABLE_0_0" Association="mainModel.FK_TABLE_0_0">
             <End Role="STATUS_TABLE" EntitySet="STATUS_TABLE" />
             <End Role="TABLE" EntitySet="TABLEs" />
@@ -293,18 +285,16 @@
             <End Role="REPORTSALE" EntitySet="REPORTSALES" />
             <End Role="DETAILREPORTSALE" EntitySet="DETAILREPORTSALES" />
           </AssociationSet>
+          <EntitySet Name="BILLs" EntityType="mainModel.BILL" />
+          <AssociationSet Name="FK_BILL_0_0" Association="mainModel.FK_BILL_0_0">
+            <End Role="TABLE" EntitySet="TABLEs" />
+            <End Role="BILL" EntitySet="BILLs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DETAILBILL_1_0" Association="mainModel.FK_DETAILBILL_1_0">
+            <End Role="BILL" EntitySet="BILLs" />
+            <End Role="DETAILBILL" EntitySet="DETAILBILLs" />
+          </AssociationSet>
           </EntityContainer>
-        <EntityType Name="BILL">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TotalPrice" Type="Int64" Nullable="false" />
-          <Property Name="CheckoutDay" Type="DateTime" Nullable="false" />
-          <Property Name="ID_Table" Type="Int64" />
-          <NavigationProperty Name="DETAILBILLs" Relationship="mainModel.FK_DETAILBILL_1_0" FromRole="BILL" ToRole="DETAILBILL" />
-          <NavigationProperty Name="TABLE" Relationship="mainModel.FK_BILL_0_0" FromRole="BILL" ToRole="TABLE" />
-        </EntityType>
         <EntityType Name="DETAILBILL">
           <Key>
             <PropertyRef Name="ID_Product" />
@@ -314,8 +304,8 @@
           <Property Name="ID_Bill" Type="Int64" Nullable="false" />
           <Property Name="Quantity" Type="Int64" Nullable="false" />
           <Property Name="UnitPrice" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="BILL" Relationship="mainModel.FK_DETAILBILL_1_0" FromRole="DETAILBILL" ToRole="BILL" />
           <NavigationProperty Name="PRODUCT" Relationship="mainModel.FK_DETAILBILL_0_0" FromRole="DETAILBILL" ToRole="PRODUCT" />
+          <NavigationProperty Name="BILL" Relationship="mainModel.FK_DETAILBILL_1_0" FromRole="DETAILBILL" ToRole="BILL" />
         </EntityType>
         <EntityType Name="PARAMETER">
           <Key>
@@ -364,18 +354,6 @@
           <Property Name="Type" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PRODUCTs" Relationship="mainModel.FK_PRODUCT_0_0" FromRole="TYPE_PRODUCT" ToRole="PRODUCT" />
         </EntityType>
-        <Association Name="FK_DETAILBILL_1_0">
-          <End Type="mainModel.BILL" Role="BILL" Multiplicity="1" />
-          <End Type="mainModel.DETAILBILL" Role="DETAILBILL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BILL">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DETAILBILL">
-              <PropertyRef Name="ID_Bill" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DETAILBILL_0_0">
           <End Type="mainModel.PRODUCT" Role="PRODUCT" Multiplicity="1" />
           <End Type="mainModel.DETAILBILL" Role="DETAILBILL" Multiplicity="*" />
@@ -407,21 +385,9 @@
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="Int64" Nullable="false" />
           <Property Name="ID_Status" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="BILLs" Relationship="mainModel.FK_BILL_0_0" FromRole="TABLE" ToRole="BILL" />
           <NavigationProperty Name="STATUS_TABLE" Relationship="mainModel.FK_TABLE_0_0" FromRole="TABLE" ToRole="STATUS_TABLE" />
+          <NavigationProperty Name="BILLs" Relationship="mainModel.FK_BILL_0_0" FromRole="TABLE" ToRole="BILL" />
         </EntityType>
-        <Association Name="FK_BILL_0_0">
-          <End Type="mainModel.TABLE" Role="TABLE" Multiplicity="0..1" />
-          <End Type="mainModel.BILL" Role="BILL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TABLE">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="BILL">
-              <PropertyRef Name="ID_Table" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TABLE_0_0">
           <End Type="mainModel.STATUS_TABLE" Role="STATUS_TABLE" Multiplicity="1" />
           <End Type="mainModel.TABLE" Role="TABLE" Multiplicity="*" />
@@ -505,22 +471,48 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="BILL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TotalPrice" Type="Int64" Nullable="false" />
+          <Property Name="CheckoutDay" Type="DateTime" Nullable="false" />
+          <Property Name="ID_Table" Type="Int64" />
+          <Property Name="MoneyCustomer" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="TABLE" Relationship="mainModel.FK_BILL_0_0" FromRole="BILL" ToRole="TABLE" />
+          <NavigationProperty Name="DETAILBILLs" Relationship="mainModel.FK_DETAILBILL_1_0" FromRole="BILL" ToRole="DETAILBILL" />
+        </EntityType>
+        <Association Name="FK_BILL_0_0">
+          <End Type="mainModel.TABLE" Role="TABLE" Multiplicity="0..1" />
+          <End Type="mainModel.BILL" Role="BILL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TABLE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BILL">
+              <PropertyRef Name="ID_Table" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DETAILBILL_1_0">
+          <End Type="mainModel.BILL" Role="BILL" Multiplicity="1" />
+          <End Type="mainModel.DETAILBILL" Role="DETAILBILL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BILL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DETAILBILL">
+              <PropertyRef Name="ID_Bill" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="mainModelStoreContainer" CdmEntityContainer="mainEntities">
-          <EntitySetMapping Name="BILLs">
-            <EntityTypeMapping TypeName="mainModel.BILL">
-              <MappingFragment StoreEntitySet="BILL">
-                <ScalarProperty Name="ID_Table" ColumnName="ID_Table" />
-                <ScalarProperty Name="CheckoutDay" ColumnName="TIMECHECKOUT" />
-                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="DETAILBILLs">
             <EntityTypeMapping TypeName="mainModel.DETAILBILL">
               <MappingFragment StoreEntitySet="DETAILBILL">
@@ -614,6 +606,17 @@
                 <ScalarProperty Name="TotalAmout" ColumnName="TotalAmout" />
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BILLs">
+            <EntityTypeMapping TypeName="mainModel.BILL">
+              <MappingFragment StoreEntitySet="BILL">
+                <ScalarProperty Name="MoneyCustomer" ColumnName="MoneyCustomer" />
+                <ScalarProperty Name="ID_Table" ColumnName="ID_Table" />
+                <ScalarProperty Name="CheckoutDay" ColumnName="TIMECHECKOUT" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

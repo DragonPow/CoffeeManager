@@ -19,7 +19,7 @@ namespace MainProject.Model
         public long Quantity { get; set; }
         public long UnitPrice { get; set; }
     
-        public virtual BILL BILL { get; set; }
         public virtual PRODUCT PRODUCT { get; set; }
+        public virtual BILL BILL { get; set; }
     }
 }

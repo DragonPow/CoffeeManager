@@ -24,9 +24,10 @@ namespace MainProject.Model
         public long TotalPrice { get; set; }
         public System.DateTime CheckoutDay { get; set; }
         public Nullable<long> ID_Table { get; set; }
+        public long MoneyCustomer { get; set; }
     
+        public virtual TABLE TABLE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<DETAILBILL> DETAILBILLs { get; set; }
-        public virtual TABLE TABLE { get; set; }
     }
 }
