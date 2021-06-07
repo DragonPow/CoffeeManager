@@ -382,10 +382,8 @@ namespace MainProject.ViewModel
         }
 
         public void LoadViewUpdate()
-        {
-            Newproduct = new PRODUCT() { Image = imageToByteArray(Properties.Resources.Empty_Image), TYPE_PRODUCT = new TYPE_PRODUCT() };
-            EditProd v = new EditProd();
-            v.DataContext = this;
+        {         
+
             WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditProd());
         }
 
@@ -417,6 +415,7 @@ namespace MainProject.ViewModel
                     item = Newproduct;
                 }              
             }
+            ExitUpdate();
         }
 
         public ICommand ExitUpdateProduct_Command
@@ -425,14 +424,14 @@ namespace MainProject.ViewModel
             {
                 if (_ExitUpdateProduct == null)
                 {
-                    _ExitUpdateProduct = new RelayingCommand<Object>(a => ExitUpdate(a));
+                    _ExitUpdateProduct = new RelayingCommand<Object>(a => ExitUpdate());
                 }
                 return _ExitUpdateProduct;
             }
         }
 
 
-        public void ExitUpdate(Object a)
+        public void ExitUpdate()
         {
             var window = WindowService.Instance.FindWindowbyTag("EditPro").First();
             window.Close();

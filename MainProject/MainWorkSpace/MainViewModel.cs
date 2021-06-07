@@ -122,9 +122,7 @@ namespace MainProject.MainWorkSpace
 
                 TYPE_PRODUCT Type = db.TYPE_PRODUCT.OrderByDescending(p => p.ID).FirstOrDefault();
 
-                ListType.Add(Type);
-
-                WindowService.Instance.OpenMessageBox("Thêm mới thành công. Tiến hành chỉnh sửa ở Sửa danh mục", "Thông báo", System.Windows.MessageBoxImage.Information);
+                ListType.Add(Type);            
 
                 Productviewmodel.Type = Type;
 
