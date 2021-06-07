@@ -43,6 +43,7 @@
           <Property Name="ID_Product" Type="integer" Nullable="false" />
           <Property Name="Rate" Type="integer" Nullable="false" />
           <Property Name="Amount" Type="integer" Nullable="false" />
+          <Property Name="Revenue" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="PARAMETER">
           <Key>
@@ -79,6 +80,7 @@
           <Property Name="Month" Type="integer" Nullable="false" />
           <Property Name="Year" Type="integer" Nullable="false" />
           <Property Name="TotalAmout" Type="integer" Nullable="false" />
+          <Property Name="TotalRevenue" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="STATUS_TABLE">
           <Key>
@@ -253,7 +255,6 @@
           <EntitySet Name="PARAMETERs" EntityType="mainModel.PARAMETER" />
           <EntitySet Name="PRODUCTs" EntityType="mainModel.PRODUCT" />
           <EntitySet Name="REPORTREVENUEs" EntityType="mainModel.REPORTREVENUE" />
-          <EntitySet Name="REPORTSALES" EntityType="mainModel.REPORTSALE" />
           <EntitySet Name="STATUS_TABLE" EntityType="mainModel.STATUS_TABLE" />
           <EntitySet Name="TYPE_PRODUCT" EntityType="mainModel.TYPE_PRODUCT" />
           <AssociationSet Name="FK_DETAILBILL_1_0" Association="mainModel.FK_DETAILBILL_1_0">
@@ -268,19 +269,10 @@
             <End Role="TYPE_PRODUCT" EntitySet="TYPE_PRODUCT" />
             <End Role="PRODUCT" EntitySet="PRODUCTs" />
           </AssociationSet>
-          <EntitySet Name="DETAILREPORTSALES" EntityType="mainModel.DETAILREPORTSALE" />
           <EntitySet Name="TABLEs" EntityType="mainModel.TABLE" />
           <AssociationSet Name="FK_BILL_0_0" Association="mainModel.FK_BILL_0_0">
             <End Role="TABLE" EntitySet="TABLEs" />
             <End Role="BILL" EntitySet="BILLs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DETAILREPORTSALES_0_0" Association="mainModel.FK_DETAILREPORTSALES_0_0">
-            <End Role="PRODUCT" EntitySet="PRODUCTs" />
-            <End Role="DETAILREPORTSALE" EntitySet="DETAILREPORTSALES" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DETAILREPORTSALES_1_0" Association="mainModel.FK_DETAILREPORTSALES_1_0">
-            <End Role="REPORTSALE" EntitySet="REPORTSALES" />
-            <End Role="DETAILREPORTSALE" EntitySet="DETAILREPORTSALES" />
           </AssociationSet>
           <AssociationSet Name="FK_TABLE_0_0" Association="mainModel.FK_TABLE_0_0">
             <End Role="STATUS_TABLE" EntitySet="STATUS_TABLE" />
@@ -290,6 +282,16 @@
           <AssociationSet Name="FK_DETAILREPORTREVENUE_0_0" Association="mainModel.FK_DETAILREPORTREVENUE_0_0">
             <End Role="REPORTREVENUE" EntitySet="REPORTREVENUEs" />
             <End Role="DETAILREPORTREVENUE" EntitySet="DETAILREPORTREVENUEs" />
+          </AssociationSet>
+          <EntitySet Name="DETAILREPORTSALES" EntityType="mainModel.DETAILREPORTSALE" />
+          <EntitySet Name="REPORTSALES" EntityType="mainModel.REPORTSALE" />
+          <AssociationSet Name="FK_DETAILREPORTSALES_0_0" Association="mainModel.FK_DETAILREPORTSALES_0_0">
+            <End Role="PRODUCT" EntitySet="PRODUCTs" />
+            <End Role="DETAILREPORTSALE" EntitySet="DETAILREPORTSALES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DETAILREPORTSALES_1_0" Association="mainModel.FK_DETAILREPORTSALES_1_0">
+            <End Role="REPORTSALE" EntitySet="REPORTSALES" />
+            <End Role="DETAILREPORTSALE" EntitySet="DETAILREPORTSALES" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="BILL">
@@ -346,16 +348,6 @@
           <Property Name="TotalRevenue" Type="Int64" Nullable="false" />
           <NavigationProperty Name="DETAILREPORTREVENUEs" Relationship="mainModel.FK_DETAILREPORTREVENUE_0_0" FromRole="REPORTREVENUE" ToRole="DETAILREPORTREVENUE" />
         </EntityType>
-        <EntityType Name="REPORTSALE">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Month" Type="Int64" Nullable="false" />
-          <Property Name="Year" Type="Int64" Nullable="false" />
-          <Property Name="TotalAmout" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="DETAILREPORTSALES" Relationship="mainModel.FK_DETAILREPORTSALES_1_0" FromRole="REPORTSALE" ToRole="DETAILREPORTSALE" />
-        </EntityType>
         <EntityType Name="STATUS_TABLE">
           <Key>
             <PropertyRef Name="ID" />
@@ -408,18 +400,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="DETAILREPORTSALE">
-          <Key>
-            <PropertyRef Name="ID_ReportSales" />
-            <PropertyRef Name="ID_Product" />
-          </Key>
-          <Property Name="ID_ReportSales" Type="Int64" Nullable="false" />
-          <Property Name="ID_Product" Type="Int64" Nullable="false" />
-          <Property Name="Rate" Type="Int64" Nullable="false" />
-          <Property Name="Amount" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="PRODUCT" Relationship="mainModel.FK_DETAILREPORTSALES_0_0" FromRole="DETAILREPORTSALE" ToRole="PRODUCT" />
-          <NavigationProperty Name="REPORTSALE" Relationship="mainModel.FK_DETAILREPORTSALES_1_0" FromRole="DETAILREPORTSALE" ToRole="REPORTSALE" />
-        </EntityType>
         <EntityType Name="TABLE">
           <Key>
             <PropertyRef Name="ID" />
@@ -439,30 +419,6 @@
             </Principal>
             <Dependent Role="BILL">
               <PropertyRef Name="ID_Table" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DETAILREPORTSALES_0_0">
-          <End Type="mainModel.PRODUCT" Role="PRODUCT" Multiplicity="1" />
-          <End Type="mainModel.DETAILREPORTSALE" Role="DETAILREPORTSALE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PRODUCT">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DETAILREPORTSALE">
-              <PropertyRef Name="ID_Product" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DETAILREPORTSALES_1_0">
-          <End Type="mainModel.REPORTSALE" Role="REPORTSALE" Multiplicity="1" />
-          <End Type="mainModel.DETAILREPORTSALE" Role="DETAILREPORTSALE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="REPORTSALE">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DETAILREPORTSALE">
-              <PropertyRef Name="ID_ReportSales" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -498,6 +454,54 @@
             </Principal>
             <Dependent Role="DETAILREPORTREVENUE">
               <PropertyRef Name="ID_ReportRevenue" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DETAILREPORTSALE">
+          <Key>
+            <PropertyRef Name="ID_ReportSales" />
+            <PropertyRef Name="ID_Product" />
+          </Key>
+          <Property Name="ID_ReportSales" Type="Int64" Nullable="false" />
+          <Property Name="ID_Product" Type="Int64" Nullable="false" />
+          <Property Name="Rate" Type="Int64" Nullable="false" />
+          <Property Name="Amount" Type="Int64" Nullable="false" />
+          <Property Name="Revenue" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="PRODUCT" Relationship="mainModel.FK_DETAILREPORTSALES_0_0" FromRole="DETAILREPORTSALE" ToRole="PRODUCT" />
+          <NavigationProperty Name="REPORTSALE" Relationship="mainModel.FK_DETAILREPORTSALES_1_0" FromRole="DETAILREPORTSALE" ToRole="REPORTSALE" />
+        </EntityType>
+        <EntityType Name="REPORTSALE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Month" Type="Int64" Nullable="false" />
+          <Property Name="Year" Type="Int64" Nullable="false" />
+          <Property Name="TotalAmout" Type="Int64" Nullable="false" />
+          <Property Name="TotalRevenue" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="DETAILREPORTSALES" Relationship="mainModel.FK_DETAILREPORTSALES_1_0" FromRole="REPORTSALE" ToRole="DETAILREPORTSALE" />
+        </EntityType>
+        <Association Name="FK_DETAILREPORTSALES_0_0">
+          <End Type="mainModel.PRODUCT" Role="PRODUCT" Multiplicity="1" />
+          <End Type="mainModel.DETAILREPORTSALE" Role="DETAILREPORTSALE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DETAILREPORTSALE">
+              <PropertyRef Name="ID_Product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DETAILREPORTSALES_1_0">
+          <End Type="mainModel.REPORTSALE" Role="REPORTSALE" Multiplicity="1" />
+          <End Type="mainModel.DETAILREPORTSALE" Role="DETAILREPORTSALE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REPORTSALE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DETAILREPORTSALE">
+              <PropertyRef Name="ID_ReportSales" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -557,16 +561,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="REPORTSALES">
-            <EntityTypeMapping TypeName="mainModel.REPORTSALE">
-              <MappingFragment StoreEntitySet="REPORTSALES">
-                <ScalarProperty Name="TotalAmout" ColumnName="TotalAmout" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="Month" ColumnName="Month" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="STATUS_TABLE">
             <EntityTypeMapping TypeName="mainModel.STATUS_TABLE">
               <MappingFragment StoreEntitySet="STATUS_TABLE">
@@ -580,16 +574,6 @@
               <MappingFragment StoreEntitySet="TYPE_PRODUCT">
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DETAILREPORTSALES">
-            <EntityTypeMapping TypeName="mainModel.DETAILREPORTSALE">
-              <MappingFragment StoreEntitySet="DETAILREPORTSALES">
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
-                <ScalarProperty Name="ID_Product" ColumnName="ID_Product" />
-                <ScalarProperty Name="ID_ReportSales" ColumnName="ID_ReportSales" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -609,6 +593,28 @@
                 <ScalarProperty Name="Revenue" ColumnName="Revenue" />
                 <ScalarProperty Name="Day" ColumnName="Day" />
                 <ScalarProperty Name="ID_ReportRevenue" ColumnName="ID_ReportRevenue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DETAILREPORTSALES">
+            <EntityTypeMapping TypeName="mainModel.DETAILREPORTSALE">
+              <MappingFragment StoreEntitySet="DETAILREPORTSALES">
+                <ScalarProperty Name="Revenue" ColumnName="Revenue" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="ID_Product" ColumnName="ID_Product" />
+                <ScalarProperty Name="ID_ReportSales" ColumnName="ID_ReportSales" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REPORTSALES">
+            <EntityTypeMapping TypeName="mainModel.REPORTSALE">
+              <MappingFragment StoreEntitySet="REPORTSALES">
+                <ScalarProperty Name="TotalRevenue" ColumnName="TotalRevenue" />
+                <ScalarProperty Name="TotalAmout" ColumnName="TotalAmout" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

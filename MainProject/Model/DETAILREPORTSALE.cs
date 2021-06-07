@@ -18,6 +18,7 @@ namespace MainProject.Model
         public long ID_Product { get; set; }
         public long Rate { get; set; }
         public long Amount { get; set; }
+        public long Revenue { get; set; }
     
         public virtual PRODUCT PRODUCT { get; set; }
         public virtual REPORTSALE REPORTSALE { get; set; }
