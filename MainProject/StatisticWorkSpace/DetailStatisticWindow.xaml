@@ -80,7 +80,7 @@
                 >
                     <DataGrid.Columns>
                         <DataGridTemplateColumn 
-                        Header="Tên Món" HeaderStyle="{StaticResource headerStyle}"
+                        Header="Tên Món" HeaderStyle="{StaticResource headerStyle}" materialDesign:HintAssist.Hint="áđâsd"
                         Width="*" IsReadOnly="True" CanUserResize="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -102,7 +102,9 @@
                         IsReadOnly="True" CanUserResize="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Path=Revenue, Converter={StaticResource moneyConverter}, Mode=OneWay}" TextAlignment="Center"/>
+                                    <TextBlock 
+                                        ToolTip="Tỉ lệ doanh thu"
+                                        Text="{Binding Path=Revenue, Converter={StaticResource moneyConverter}, Mode=OneWay}" TextAlignment="Center"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -127,7 +129,7 @@
                 Grid.Column="2">
                 <Label 
                     DockPanel.Dock="Top"
-                    ToolTip="Biểu đồ tỉ lệ doanh thu (thu gọn top 50 doanh thu)" HorizontalAlignment="Center"
+                    ToolTip="Biểu đồ tỉ lệ doanh thu (rút gọn Top 7)" HorizontalAlignment="Center"
                     Style="{StaticResource labelStyle}" Content="Biểu Đồ Tỉ Lệ Doanh Thu"/>
                 <charting:PieChart 
                     DockPanel.Dock="Top"

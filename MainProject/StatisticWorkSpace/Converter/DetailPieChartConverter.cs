@@ -29,17 +29,17 @@ namespace MainProject.StatisticWorkSpace.Converter
                     var series = new PieSeries
                     {
                         Title = model.Title,
-                        Tag = string.Format("Top{0}", i + 1),
+                        Tag = string.Format("Hạng {0}", i + 1),
                         Values = new ChartValues<long>() { model.Revenue }
                     };
                     rs.Add(series);
 
-                    if (rs.Count >= 5)
+                    if (rs.Count >= 7 && rs.Count<list.Count)
                     {
                         var tempSeries = new PieSeries
                         {
-                            Title = String.Format("Khác ({0})", (list.Count - i).ToString()),
-                            Tag = "Khác"
+                            Title = String.Format("Còn lại ({0})", (list.Count - rs.Count).ToString()),
+                            Tag = "Còn lại"
                         };
 
                         long val = 0;
