@@ -3,8 +3,18 @@
     using System;
     using System.Collections.ObjectModel;
 
-    public partial class TYPE_PRODUCT : BaseViewModel
+    public partial class PRODUCT : BaseViewModel
     {
-        public int Index { get; set; }
+        public bool IsChecked
+        {
+            get
+            {
+                return ID_Type == null ? false : true;
+            }
+            set
+            {
+
+            }
+        }
     }
 }

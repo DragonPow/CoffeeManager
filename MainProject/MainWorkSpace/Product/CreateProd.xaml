@@ -67,7 +67,8 @@
                     <TextBox.Text>
                         <Binding Path="Newproduct.Name"
                                  ValidatesOnDataErrors="True"
-                                 UpdateSourceTrigger="PropertyChanged">
+                                 UpdateSourceTrigger="PropertyChanged"
+                                 NotifyOnValidationError="True">
                             <Binding.ValidationRules>
                                 <rules:NotNullableValidationRule ErrorMessage="Không được để trống hoặc để trắng"/>
                             </Binding.ValidationRules>
@@ -84,11 +85,22 @@
                           Margin="100,5" />
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Giá"
-                         Text="{Binding Newproduct.Price, StringFormat='{}{0:N0}', FallbackValue='0'}"
                          FontSize="16"
                          materialDesign:TextFieldAssist.SuffixText="đ"
                          MaxWidth="500"
-                         Margin="100,5" />
+                         Margin="100,5"
+                         Validation.Error="Validation_Error">
+                    <TextBox.Text>
+                        <Binding Path="Newproduct.Price"
+                                 StringFormat="{}{0:N0}"
+                                 NotifyOnValidationError="True">
+                            <Binding.ValidationRules>
+                                <rules:CharacterValidationRule ValidCharacterSet="0123456789"
+                                                               ErrorMessage="Chỉ được nhập số" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Mô tả"
                          Name="Description"
@@ -100,7 +112,8 @@
                     <TextBox.Text>
                         <Binding Path="Newproduct.Decription"
                                  ValidatesOnDataErrors="True"
-                                 UpdateSourceTrigger="PropertyChanged">
+                                 UpdateSourceTrigger="PropertyChanged"
+                                 NotifyOnValidationError="True">
                             <Binding.ValidationRules>
                                 <rules:LengthRangeValidationRule Min="0"
                                                                  Max="30"

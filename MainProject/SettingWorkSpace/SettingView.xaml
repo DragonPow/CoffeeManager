@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:MainProject.SettingWorkSpace"
+      xmlns:local="clr-namespace:MainProject.SettingWorkSpace" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       Background="White"
       d:DesignHeight="450" d:DesignWidth="800">
@@ -41,14 +41,13 @@
                     <Button Background="{x:Null}" 
                             Name="btn_Overview"
                             VerticalAlignment="Top"
-                            Content="Tổng quan"
+                            Click="btn_Overview_Click"
+                            Content="Thông tin quán"
                             Foreground="Black"
                             BorderBrush="#FF666666" 
                             HorizontalContentAlignment="Left" 
                             VerticalContentAlignment="Center"
-
-                           />
-
+                            />
                     <Button Background="{x:Null}" 
                             Name="btn_InfoAccount"
                             VerticalAlignment="Top"
@@ -75,15 +74,175 @@
                 <Button Grid.Column="1"
                         Height="50"
                         Width="150"
+                        Name="btn_Save_change"
+                        Click="btn_Save_change_Click"
                         Content="Lưu thay đổi"
                         Foreground="Green"
                         Background="White"
                         BorderBrush="Red"
                         FontSize="20"
-                        Margin="10">
-                </Button>
+                        Margin="10" IsEnabled="False"/>
             </Grid>
-            <StackPanel x:Name="Option_setting"></StackPanel>
+            <StackPanel x:Name="Option_setting">
+                <Grid Margin="0 10">
+                    <TextBlock Text="Tổng quan"
+                                Height="auto"
+                                Width="auto"
+                                Foreground="Black"
+                                FontSize="30"
+                                Padding="10"
+                                HorizontalAlignment="Center"
+                                FontWeight="Bold"
+                                VerticalAlignment="Center" />
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="1">
+                        <Grid Margin="0 2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="5.5*"/>
+                                <ColumnDefinition Width="1.5*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0"
+                                 Text="Tên quán"
+                                 Foreground="Black" 
+                                 VerticalAlignment="Center"
+                                 Background="{x:Null}" 
+                                 BorderBrush="{x:Null}"
+                                 HorizontalAlignment="Left"
+                                 FontWeight="Bold" 
+                                 FontSize="16"/>
+                            <TextBox Grid.Column="1"
+                                 Name="txb_Name"
+                                 Text="Coffee store"
+                                 VerticalAlignment="Center"
+                                 Background="{x:Null}"
+                                 BorderBrush="{x:Null}"
+                                 FontSize="16" IsEnabled="False" DataContextChanged="txb_Name_DataContextChanged"/>
+                            <Button Grid.Column="2"
+                                Name="btn_SaveName"
+                                Click="btn_SaveName_Click"
+                                Background="Transparent"
+                                Content="Sửa"
+                                Foreground="Red" 
+                                VerticalAlignment="Top" 
+                                BorderBrush="{x:Null}"/>
+                        </Grid>
+                        <Grid Margin="0 2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="5.5*"/>
+                                <ColumnDefinition Width="1.5*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0"
+                                 Text="Số tầng"
+                                 Foreground="Black" 
+                                 VerticalAlignment="Center"
+                                 Background="{x:Null}" 
+                                 BorderBrush="{x:Null}"
+                                 HorizontalAlignment="Left"
+                                 FontWeight="Bold" 
+                                 FontSize="16"/>
+                            <TextBox Grid.Column="1"
+                                 Name="txb_NumberFloor"
+                                 Text="2"
+                                 VerticalAlignment="Center"
+                                 Background="{x:Null}"
+                                 BorderBrush="{x:Null}"
+                                 FontSize="16" 
+                                 IsEnabled="False" 
+                                 DataContextChanged="txb_NumberFloor_DataContextChanged"/>
+                            <Button Grid.Column="2"
+                                Name="btn_NumberFloor"
+                                Click="btn_NumberFloor_Click"
+                                Background="Transparent"
+                                Content="Sửa"
+                                Foreground="Red" 
+                                VerticalAlignment="Top" 
+                                BorderBrush="{x:Null}"/>
+                        </Grid>
+                        <Grid Margin="0 2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="5.5*"/>
+                                <ColumnDefinition Width="1.5*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0"
+                                Text="Số điện thoại"
+                                Foreground="Black" 
+                                VerticalAlignment="Center"
+                                Background="{x:Null}" 
+                                BorderBrush="{x:Null}"
+                                HorizontalAlignment="Left" 
+                                FontWeight="Bold" 
+                                FontSize="16" 
+                                />
+                            <TextBox Grid.Column="1"
+                                Text="0123456789" 
+                                Name="txb_numberPhone"
+                                VerticalAlignment="Center"
+                                Background="{x:Null}"
+                                BorderBrush="{x:Null}"
+                                FontSize="16" IsEnabled="False" DataContextChanged="txb_numberPhone_DataContextChanged"/>
+                            <Button Grid.Column="2"
+                                Click="btn_SavePhone_Click"
+                                Name="btn_SavePhone"
+                                Background="Transparent"
+                                Content="Sửa"
+                                Foreground="Red" 
+                                VerticalAlignment="Center" 
+                                BorderBrush="{x:Null}"/>
+                        </Grid>
+                        <Grid Margin="0 2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="5.5*"/>
+                                <ColumnDefinition Width="1.5*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0"
+                                Text="Địa chỉ"
+                                Foreground="Black" 
+                                VerticalAlignment="Center"
+                                Background="{x:Null}" 
+                                BorderBrush="{x:Null}"
+                                HorizontalAlignment="Left" 
+                                FontWeight="Bold" 
+                                FontSize="16" 
+                                />
+                            <TextBox Grid.Column="1"
+                                 Name="txb_address"
+                                 Text="Thủ Đức, HCM" 
+                                 VerticalAlignment="Center"
+                                 Background="{x:Null}"
+                                 BorderBrush="{x:Null}"
+                                 FontSize="16" IsEnabled="False" DataContextChanged="txb_address_DataContextChanged"/>
+                            <Button Grid.Column="2"
+                                Click="btn_SaveAddress_Click"
+                                Name="btn_SaveAddress"
+                                Background="Transparent"
+                                Content="Sửa"
+                                Foreground="Red" 
+                                VerticalAlignment="Center" 
+                                BorderBrush="{x:Null}"/>
+                        </Grid>
+                        <Grid Margin="0 15">
+                            <materialDesign:PackIcon Kind="AlertCircle"
+                                             Width="25"
+                                             Height="25"
+                                             Foreground="Gray" />
+                            <TextBlock Text="Chỉ chủ quán mới được thay đổi những thông tin này."
+                                   FontStyle="Italic"
+                                   Margin="30,0"
+                                   TextWrapping="WrapWithOverflow" />
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
         </DockPanel>
     </Grid>
 </UserControl>

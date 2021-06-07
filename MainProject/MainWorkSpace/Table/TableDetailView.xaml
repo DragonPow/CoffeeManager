@@ -35,7 +35,8 @@
                       materialDesign:ScrollBarAssist.ThumbCornerRadius="10"
                       HorizontalScrollBarVisibility="Auto">
             <!--The Panel contains list product-->
-            <ListView ItemsSource="{Binding Currentlistdetailpro, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+            <ListView ItemsSource="{Binding Currentlistdetailpro, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                      >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Item:Item_UC DataContext="{Binding}"

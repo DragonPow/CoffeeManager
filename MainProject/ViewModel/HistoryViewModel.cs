@@ -28,7 +28,7 @@ namespace MainProject.ViewModel
         private BILL _CurrentBill;
         private int _NumberPage;
         private int _NumberAllpage;
-        public static int Number_Bill_in_Page = 20;      
+        public static int Number_Bill_in_Page = 1;      
 
         private DateTime _BeginTime;
         private DateTime _EndTime;
@@ -66,7 +66,11 @@ namespace MainProject.ViewModel
 
         public int NumberPage
         {
-            get => _NumberPage;
+            get
+            {
+                return _NumberPage > 0 ? _NumberPage : 1;
+            }                
+                
             set
             {
                 if (value != _NumberPage)
@@ -80,6 +84,7 @@ namespace MainProject.ViewModel
                         _NumberPage = 1;
                     }
                     else _NumberPage = value;
+
                     OnPropertyChanged();
                     LoadBillByNumberPage();
                 }
@@ -185,7 +190,7 @@ namespace MainProject.ViewModel
             NumberPage = 1;
             using ( var db = new mainEntities())
             {
-                NumberAllPage = ((db.BILLs.Where((b => (b.CheckoutDay >= BeginTime && b.CheckoutDay <= EndTime))).Count() / Number_Bill_in_Page) + (db.BILLs.Count() % Number_Bill_in_Page != 0 ? 1 : 0));
+                NumberAllPage = ((db.BILLs.Where((b => (b.CheckoutDay >= BeginTime && b.CheckoutDay <= EndTime))).Count() / Number_Bill_in_Page) + (db.BILLs.Where((b => (b.CheckoutDay >= BeginTime && b.CheckoutDay <= EndTime))).Count() % Number_Bill_in_Page != 0 ? 1 : 0));
 
                 var list = db.BILLs.Where(b => (b.CheckoutDay >= BeginTime && b.CheckoutDay <= EndTime)).OrderBy(b => b.ID).Take(Number_Bill_in_Page).ToList();
 
@@ -212,13 +217,14 @@ namespace MainProject.ViewModel
             
             using (var db = new mainEntities())
             {
-              
 
-                var list = db.BILLs.Where(b => (b.CheckoutDay >= BeginTime && b.CheckoutDay <= EndTime)).OrderBy(b => b.ID).Skip(NumberPage - 1).Take(Number_Bill_in_Page).ToList();
 
-                if (list == null) return;
+                var list = db.BILLs.Where(b => (b.CheckoutDay >= BeginTime && b.CheckoutDay <= EndTime)).OrderBy(b => b.ID).Skip(NumberPage - 1).Take(Number_Bill_in_Page);
 
-                ListBill = new ObservableCollection<BILL>(list);
+
+                if (list == null ) return;
+
+                ListBill = new ObservableCollection<BILL>(list.ToList());
             }
         }
     }

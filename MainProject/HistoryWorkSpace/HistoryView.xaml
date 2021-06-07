@@ -62,7 +62,7 @@
         <Button Content="TÌM KIẾM"
                 x:Name="btnFind"
                 Style="{StaticResource MaterialDesignOutlinedButton}"
-                Command="{Binding }"
+                Command="{Binding Search_BillCommand }"
                 Grid.Row="1"
                 Grid.Column="2"
                 Background="{StaticResource MainColor}"

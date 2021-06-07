@@ -16,7 +16,8 @@ namespace MainProject.Model
     {
         public long ID_ReportRevenue { get; set; }
         public long Day { get; set; }
-        public long Revenue { get; set; }
+        public decimal Revenue { get; set; }
+        public Nullable<long> AmountBill { get; set; }
     
         public virtual REPORTREVENUE REPORTREVENUE { get; set; }
     }
