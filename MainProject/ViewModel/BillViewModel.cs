@@ -139,8 +139,9 @@ namespace MainProject.MainWorkSpace.Bill
                 if (_GiveMoney != value)
                 {
                     _GiveMoney = value;
-                    OnPropertyChanged();
                     Refund = value - Total;
+                    OnPropertyChanged();
+                   
                 }
             }
         }

@@ -152,7 +152,7 @@
                        HorizontalAlignment="Right"
                        Margin="0 7 0 0" />
             <TextBlock Text="{Binding Refund, FallbackValue='0,000 đ', 
-                                StringFormat='{}{0:N0} đ'}"
+                                StringFormat='{}{0:N0} đ', Mode=TwoWay}"
                        Grid.Row="3"
                        Grid.Column="1"
                        VerticalAlignment="Center"

@@ -77,7 +77,21 @@ namespace MainProject.ViewModel
         public ObservableCollection<PRODUCT> ListPoduct { get => _ListProduct; set { if (value != _ListProduct) { _ListProduct = value; OnPropertyChanged(); } } }
         public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); SearchName(); } } }
 
-        public PRODUCT Currentproduct { get => _Currentproduct; set { if (_Currentproduct != value) { _Currentproduct = value; OnPropertyChanged(); } } }
+        public PRODUCT Currentproduct { get => _Currentproduct; 
+            set 
+            {
+                if (_Currentproduct != value)
+                {
+                    _Currentproduct = value;
+
+                    using ( var db = new mainEntities())
+                    {
+                        if ( value != null &&value.ID_Type != null) _Currentproduct.TYPE_PRODUCT = db.TYPE_PRODUCT.Where(t => t.ID == value.ID_Type).FirstOrDefault(); ;
+                    }
+                    OnPropertyChanged(); 
+                } 
+            } 
+        }
        
         public PRODUCT Newproduct 
         { 
@@ -619,7 +633,6 @@ namespace MainProject.ViewModel
 
                 db.SaveChanges();
             }
-
           
         }
 
