@@ -19,7 +19,6 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <CheckBox
-             Command="{Binding DataContext.ClickCheckboxSelectedPro_Command, ElementName=Select_Item}"
             Grid.Column="0"
             BorderBrush="Gray"
             Background="{StaticResource MainColor}"
