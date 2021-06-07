@@ -10,10 +10,10 @@
              Tag="DetaiPro"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             
+             d:DataContext="{d:DesignInstance ViewModel:ProductViewModel}"
              Height="650"
              Width="600">
-    <DockPanel DataContext="{Binding Productviewmodel}">
+    <DockPanel>
         <Grid DockPanel.Dock="Top"
               Background="{StaticResource MainColor}">
             <Border BorderBrush="Gray"
@@ -72,34 +72,34 @@
                              Width="200"
                              Height="160">
                         <Image Stretch="UniformToFill"
-                               Source="{Binding ListPoduct[IndexCurrentproductInMainView].Image}"></Image>
+                               Source="{Binding Currentproduct.Image}"></Image>
                     </Border>
                 </Button>
 
 
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Tên mặt hàng"
-                         Text="{Binding ListPoduct[IndexCurrentproductInMainView].Name}"
+                         Text="{Binding Currentproduct.Name}"
                          FontSize="16"
                          Margin="100,5"
                          MaxWidth="500" />
                 <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                           materialDesign:HintAssist.Hint="Danh mục"
                           ItemsSource="{Binding Source={x:Static model:TYPE_PRODUCT.Instance}, Path=ListType}"
-                          SelectedItem="{Binding ListPoduct[IndexCurrentproductInMainView].TYPE_PRODUCT.Type}"
+                          SelectedItem="{Binding Currentproduct.TYPE_PRODUCT.Type}"
                           FontSize="16"
                           Margin="100,5"
                           MaxWidth="500" />
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Giá"
-                         Text="{Binding ListPoduct[IndexCurrentproductInMainView].Price, StringFormat='{}{0}đ'}"
+                         Text="{Binding Currentproduct.Price, StringFormat='{}{0}đ'}"
                          FontSize="16"
                          Margin="100,5"
                          MaxWidth="500" />
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Mô tả"
                          TextWrapping="WrapWithOverflow"
-                         Text="{Binding ListPoduct[IndexCurrentproductInMainView].Decription}"
+                         Text="{Binding Currentproduct.Decription}"
                          FontSize="16"
                          Margin="100,5"
                          MaxWidth="500" />

@@ -10,7 +10,7 @@
              mc:Ignorable="d"
              Tag="Edit category"
              Height="700"
-             Width="500">
+             Width="600">
     <UserControl.DataContext>
         <Main:MainViewModel></Main:MainViewModel>
     </UserControl.DataContext>
@@ -74,7 +74,7 @@
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical"
-                                    Margin="100,20"
+                                    Margin="60,20"
                                     MaxWidth="500"
                                     Height="250"></StackPanel>
                     </ItemsPanelTemplate>
