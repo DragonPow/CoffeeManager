@@ -57,7 +57,7 @@
                         Command="{Binding AddUpdateImageProductCommand}">
                     <Grid Height="160" Width="200">
                         <Image Stretch="Fill"
-                                   Source="{Binding Currentproduct.Image}" />
+                                   Source="{Binding Currentproduct.Image, UpdateSourceTrigger=PropertyChanged}" />
                     </Grid>
                 </Button>
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
