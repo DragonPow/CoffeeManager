@@ -19,6 +19,7 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <CheckBox
+             Command="{Binding DataContext.ClickCheckboxSelectedPro_Command, ElementName=Select_Item}"
             Grid.Column="0"
             BorderBrush="Gray"
             Background="{StaticResource MainColor}"
@@ -27,7 +28,7 @@
             VerticalAlignment="Center"
             IsChecked="False" 
             Margin="10"
-            Command="{Binding DataContext.ClickCheckboxSelectedPro_Command, ElementName=Select_Item}"/>
+           />
         <Image Source="{Binding Image}" Grid.Column="1" Stretch="Fill" Height="40" Width="50"></Image>
         <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="10,0">
             <TextBlock Text="{Binding Name, FallbackValue='Trà sữa trân châu'}" Grid.Column="0" 
