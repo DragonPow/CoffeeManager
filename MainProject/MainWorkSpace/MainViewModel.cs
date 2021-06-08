@@ -318,6 +318,7 @@ namespace MainProject.MainWorkSpace
 
         public void ClickCheckboxSelectedPro()
         {
+            if (Productviewmodel.Currentproduct == null) return;
             if (Productviewmodel.Currentproduct.ID_Type == null)
             {
                 Productviewmodel.Currentproduct.ID_Type = TypeInEditCATEGORYCombobox.ID;
