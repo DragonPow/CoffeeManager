@@ -111,7 +111,7 @@ namespace MainProject.ViewModel
         public string Type_in_Combobox_AddPro { get => _Type_in_Combobox_AddPro; set { if (_Type_in_Combobox_AddPro != value) { _Type_in_Combobox_AddPro= value; OnPropertyChanged(); } } }
 
         public TYPE_PRODUCT Type_in_Combobox_AddProduct { get => _Type_in_Combobox_AddProduct; set { if (_Type_in_Combobox_AddProduct != value) { _Type_in_Combobox_AddProduct = value; OnPropertyChanged(); } } }
-        public TYPE_PRODUCT Type { get => _Type; set { if (_Type != value) { _Type = value; OnPropertyChanged(); LoadProductByType(value.Type); } } }
+        public TYPE_PRODUCT Type { get => _Type; set { if (_Type != value) { _Type = value; OnPropertyChanged(); LoadProductByType(value); } } }
        /* public TYPE_PRODUCT TypeInEditCATEGORYCombobox { get => _TypeInEditCATEGORYCombobox; set { if (_TypeInEditCATEGORYCombobox != value) { _TypeInEditCATEGORYCombobox = value; OnPropertyChanged(); EditTypeInEditCatefory = value.Type; LoadProductBYType_EditType();  } } }*/
 
         public TableViewModel Tableviewmodel { get => _Tableviewmodel; set { if (_Tableviewmodel != value) { _Tableviewmodel = value; OnPropertyChanged(); } } }
@@ -174,13 +174,14 @@ namespace MainProject.ViewModel
             {
                 try
                 {
-                        TYPE_PRODUCT type = db.TYPE_PRODUCT.Where(t => (t.Type == Type_in_Combobox_AddPro)).FirstOrDefault();
+                        TYPE_PRODUCT type = db.TYPE_PRODUCT.Where(t => (t.Type == Type_in_Combobox_AddProduct.Type)).FirstOrDefault();
 
                         if (type == null) Newproduct.TYPE_PRODUCT = null;
                         else
                             Newproduct.ID_Type = type.ID;
 
-
+                         Newproduct.TYPE_PRODUCT = null;
+                  
                         db.PRODUCTs.Add(Newproduct);
 
                         ListPoduct.Add(Newproduct);
@@ -223,8 +224,7 @@ namespace MainProject.ViewModel
 
         public void CancelAddProduct(object a)
         {
-
-            Newproduct = null;
+            Newproduct = new PRODUCT() { Image = imageToByteArray(Properties.Resources.Empty_Image), TYPE_PRODUCT = new TYPE_PRODUCT() };
         }
 
         public ICommand ExitAddProductView_Command
@@ -310,14 +310,13 @@ namespace MainProject.ViewModel
         }
 
         public void SearchName()
-        {      
-     
+        {
             using (var db = new mainEntities())
             {            
 
                 if ( SearchProduct =="")
                 {
-                    ListPoduct = new ObservableCollection<PRODUCT>(db.PRODUCTs.ToList());
+                    ListPoduct = new ObservableCollection<PRODUCT>(db.PRODUCTs.ToList());                    
                     return;
                 }
 
@@ -663,21 +662,20 @@ namespace MainProject.ViewModel
  */
 
 
-        public void LoadProductByType(string Type)
+        public void LoadProductByType(TYPE_PRODUCT Type)
         {
             using (var db = new mainEntities())
-            {
-                if (Type == null) return;           
+            {           
 
-                if (Type.Contains("Tất cả"))
+                if (Type == null ||  Type.Type.Contains("Tất cả"))
                 {
                     ListPoduct = new ObservableCollection<PRODUCT>(db.PRODUCTs.ToList());
                 }
                 else
                 {
-                    var p = db.PRODUCTs.Where(pro => (pro.TYPE_PRODUCT.Type == Type));
-                    if (p == null) return;
-                    ListPoduct = new ObservableCollection<PRODUCT>(p.ToList());
+                    var p = db.PRODUCTs.Where(pro => (pro.TYPE_PRODUCT.Type == Type.Type));
+                    if (p.ToList().Count == 0) ListPoduct = new ObservableCollection<PRODUCT>();
+                    else ListPoduct = new ObservableCollection<PRODUCT>(p.ToList());
                 }
             }
         }

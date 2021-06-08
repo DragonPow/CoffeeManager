@@ -197,7 +197,7 @@ namespace MainProject.ViewModel
                         Isbringtohome = false;
                     }
                     else
-                         if (!Isbringtohome) TableName = "Chọn bàn >";
+                         if (!Isbringtohome) TableName = "Chọn bàn";
                 }
             }
       
