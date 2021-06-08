@@ -10,7 +10,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              Tag="Table Manager "
-             d:DataContext="{d:DesignInstance Type=ViewModel:TableViewModel}"
+             d:DataContext="{d:DesignInstance Type= ViewModel:TableViewModel}"
              d:DesignHeight="630"
              d:DesignWidth="900"
              Background="White">

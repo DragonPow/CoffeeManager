@@ -479,16 +479,16 @@ namespace MainProject.ViewModel
 
         public void Insert()
         {
-            TABLE tab = new TABLE() { ID_Status = 1, Name = ListTable.Count + 1 };
-            ListTable.Add(new TABLECUSTOM() { table = tab });
+            TABLE tab;
 
             using (var db = new mainEntities())
-            {             
+            {
+                tab = new TABLE() { ID_Status = 1, Name = db.TABLEs.Count() == 0 ? 1 : db.TABLEs.Last().Name + 1 };
                 db.TABLEs.Add(tab);
                 db.SaveChanges();
             }
-            
 
+            ListTable.Add(new TABLECUSTOM() { table = tab });
         }
 
         ICommand UpdateStatusTableCommand
