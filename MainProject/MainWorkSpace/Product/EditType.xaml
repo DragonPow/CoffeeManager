@@ -66,6 +66,7 @@
                        Margin="0,10"/>
             <ListView  Grid.Row="1"
                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                       SelectedItem="{Binding Productviewmodel.Currentproduct}"
                        ItemsSource="{Binding Productviewmodel.ListPoduct}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
