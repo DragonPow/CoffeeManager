@@ -86,18 +86,30 @@ namespace MainProject.MainWorkSpace
         {
 
             Tableviewmodel = new TableViewModel();
-            Productviewmodel = new ProductViewModel() { Tableviewmodel = Tableviewmodel };
+            Productviewmodel = new ProductViewModel() { Tableviewmodel =  Tableviewmodel };
 
             Load_Type();
 
             CurrentType = ListType.ElementAt(0);
 
         }
+
+        public MainViewModel( TableViewModel tabVM)
+        {
+           
+            Productviewmodel = new ProductViewModel() { Tableviewmodel = tabVM };
+
+            Load_Type();
+
+            CurrentType = ListType.ElementAt(0);
+
+        }
+
         #endregion
 
         #region Command
 
-       
+
 
         public ICommand AddEditCategory_Command
         {
@@ -114,7 +126,11 @@ namespace MainProject.MainWorkSpace
 
         public void AddEditCategory()
         {
-
+            if (NameNewTypeProduct == null)
+            {
+                WindowService.Instance.OpenMessageBox("Vui lòng nhập tên danh mục!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                return;
+            }                
             using (var db = new mainEntities())
             {
               
@@ -131,6 +147,7 @@ namespace MainProject.MainWorkSpace
                 CurrentType = ListType.Last();
 
             }
+            CloseViewAddCategory();
 
         }
 
@@ -194,22 +211,26 @@ namespace MainProject.MainWorkSpace
             using (var db = new mainEntities())
             {
                 var list = db.PRODUCTs.Where(p => (p.ID_Type == TypeInEditCATEGORYCombobox.ID)).ToList();
-                if (list == null) return;
-
-                foreach (var p in list)
+                if (list.Count != 0)
                 {
-                    p.TYPE_PRODUCT = null;
+                    foreach (var p in list)
+                    {
+                        p.TYPE_PRODUCT = null;
+                    }
                 }
-
-                db.TYPE_PRODUCT.Attach(TypeInEditCATEGORYCombobox);
-                db.TYPE_PRODUCT.Remove(TypeInEditCATEGORYCombobox);
+                
+                db.TYPE_PRODUCT.Remove(db.TYPE_PRODUCT.Where(t => t.ID == TypeInEditCATEGORYCombobox.ID).FirstOrDefault());
 
                 db.SaveChanges();
+
+                int number = ListType.IndexOf(TypeInEditCATEGORYCombobox);
+
+                TypeInEditCATEGORYCombobox = ListType.ElementAt(0);
+                ListType.RemoveAt(number);
+               
+                
             }
-
-            ListType.Remove(TypeInEditCATEGORYCombobox);
-            TypeInEditCATEGORYCombobox = null;
-
+                 
 
         }
         public ICommand OpenViewEditCategory_Command
