@@ -309,15 +309,16 @@ namespace MainProject.MainWorkSpace
             {
                 if (_ClickCheckboxSelectedPro == null)
                 {
-                    _ClickCheckboxSelectedPro = new RelayingCommand<Object>(a => ClickCheckboxSelectedPro());
+                    _ClickCheckboxSelectedPro = new RelayingCommand<PRODUCT>(a => ClickCheckboxSelectedPro(a));
                 }
                 return _ClickCheckboxSelectedPro;
             }
         }
 
 
-        public void ClickCheckboxSelectedPro()
+        public void ClickCheckboxSelectedPro(PRODUCT pro)
         {
+            Productviewmodel.Currentproduct = pro;
             if (Productviewmodel.Currentproduct == null) return;
             if (Productviewmodel.Currentproduct.ID_Type == null)
             {

@@ -19,7 +19,7 @@
         </ListView.ItemTemplate>
         <ListView.ItemsPanel>
             <ItemsPanelTemplate>
-                <WrapPanel Orientation="Horizontal"></WrapPanel>
+                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"></WrapPanel>
             </ItemsPanelTemplate>
         </ListView.ItemsPanel>
         <ListView.ContextMenu>
