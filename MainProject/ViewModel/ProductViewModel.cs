@@ -316,7 +316,8 @@ namespace MainProject.ViewModel
 
                 if ( SearchProduct =="")
                 {
-                    ListPoduct = new ObservableCollection<PRODUCT>(db.PRODUCTs.ToList());                    
+                    LoadProductByType(Type);
+                   /* ListPoduct = new ObservableCollection<PRODUCT>(db.PRODUCTs.ToList());   */                 
                     return;
                 }
 
@@ -402,11 +403,12 @@ namespace MainProject.ViewModel
         {
             using (var db = new mainEntities())
             {
-                var pro = db.PRODUCTs.Where(p => (p.ID == Currentproduct.ID)).FirstOrDefault();             
+                var pro = db.PRODUCTs.Where(p => (p.ID == Currentproduct.ID)).FirstOrDefault();
 
+                pro.Image = Currentproduct.Image;
                 pro.Name = Currentproduct.Name;
                 pro.Price = Currentproduct.Price;
-                pro.ID_Type = Type_in_Combobox_AddProduct.ID;
+                if (Type_in_Combobox_AddProduct != null)  pro.ID_Type = Type_in_Combobox_AddProduct.ID;
                 pro.Decription = Currentproduct.Decription;
 
                 db.SaveChanges();
