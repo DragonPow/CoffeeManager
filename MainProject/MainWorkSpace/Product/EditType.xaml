@@ -10,7 +10,7 @@
              xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
              mc:Ignorable="d"
              Tag="Edit category"
-             x:Name="Edit_Type"
+             Name="Edit_Type"
              d:DataContext="{d:DesignInstance Type=main:MainViewModel}"
              Height="700"
              Width="600">
@@ -69,7 +69,8 @@
                        ItemsSource="{Binding Productviewmodel.ListPoduct}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <local:SelectPro DataContext="{Binding}" />
+                        <local:SelectPro DataContext="{Binding}"
+                                         Tag="{Binding DataContext, ElementName=Edit_Type}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.ItemsPanel>

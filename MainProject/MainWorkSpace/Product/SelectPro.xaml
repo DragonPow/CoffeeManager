@@ -8,8 +8,8 @@
              xmlns:main="clr-namespace:MainProject.MainWorkSpace"
              mc:Ignorable="d" 
              Background="White"
-             d:DataContext="{d:DesignInstance Type=main:MainViewModel}"
-             x:Name="Select_Item"
+             Name="Edit_Type"
+             d:DataContext="{d:DesignInstance Type=ViewModel:ProductViewModel}"
              d:DesignHeight="100" Width="450">
 
     <Grid>
@@ -28,7 +28,7 @@
             VerticalAlignment="Center"
             IsChecked="{Binding IsChecked, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
             Margin="10"
-            Command="{Binding DataContext.ClickCheckboxSelectedPro_Command, ElementName=Select_Item}"/>
+            Command="{Binding Tag.ClickCheckboxSelectedPro_Command, ElementName=Edit_Type}"/>
         <Image Source="{Binding Image}" Grid.Column="1" Stretch="Fill" Height="50" Width="70"></Image>
         <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="10,0">
             <TextBlock Text="{Binding Name, FallbackValue='Trà sữa trân châu'}" Grid.Column="0" 
