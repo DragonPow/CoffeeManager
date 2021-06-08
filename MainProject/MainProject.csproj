@@ -152,6 +152,9 @@
     <Compile Include="MainWorkSpace\Product\EditType.xaml.cs">
       <DependentUpon>EditType.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainWorkSpace\Product\NewType.xaml.cs">
+      <DependentUpon>NewType.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWorkSpace\Product\SelectPro.xaml.cs">
       <DependentUpon>SelectPro.xaml</DependentUpon>
     </Compile>
@@ -162,6 +165,7 @@
       <DependentUpon>MainModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CustomModel\STATUS_TABLE.cs" />
+    <Compile Include="Model\CustomModel\TABLE.cs" />
     <Compile Include="Model\CustomModel\TYPE_PRODUCT.cs" />
     <Compile Include="Model\DETAILBILL.cs">
       <DependentUpon>MainModel.tt</DependentUpon>
@@ -193,8 +197,6 @@
     <Compile Include="Model\TYPE_PRODUCT.cs">
       <DependentUpon>MainModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\CustomModel\STATUS_TABLE.cs" />
-    <Compile Include="Model\CustomModel\TYPE_PRODUCT.cs" />
     <Compile Include="SettingWorkSpace\InfoAccountView.xaml.cs">
       <DependentUpon>InfoAccountView.xaml</DependentUpon>
     </Compile>
@@ -209,10 +211,15 @@
     </Compile>
     <Compile Include="StatisticWorkSpace\Converter\ChartLabelConverter.cs" />
     <Compile Include="StatisticWorkSpace\Converter\ChartValueConverter.cs" />
+    <Compile Include="StatisticWorkSpace\Converter\DetailPieChartConverter.cs" />
     <Compile Include="StatisticWorkSpace\Converter\MoneyConverter.cs" />
     <Compile Include="StatisticWorkSpace\Converter\TimeConverter.cs" />
     <Compile Include="StatisticWorkSpace\DatabaseController_Statistic.cs" />
     <Compile Include="StatisticWorkSpace\DatePickerAssist.cs" />
+    <Compile Include="StatisticWorkSpace\DetailStatisticViewModel.cs" />
+    <Compile Include="StatisticWorkSpace\DetailStatisticWindow.xaml.cs">
+      <DependentUpon>DetailStatisticWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StatisticWorkSpace\StatisticEnum.cs" />
     <Compile Include="StatisticWorkSpace\StatisticModel.cs" />
     <Compile Include="TYPE_PRODUCT.cs" />
@@ -368,6 +375,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="MainWorkSpace\Product\NewType.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWorkSpace\Product\ProdDetail.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -429,6 +440,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SettingWorkSpace\SettingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StatisticWorkSpace\DetailStatisticWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -494,6 +509,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\fixTable.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\unnamed.png" />
     <None Include="Resources\Empty_Image.png" />
     <Resource Include="Resources\add-image-icon-png-14.jpg" />

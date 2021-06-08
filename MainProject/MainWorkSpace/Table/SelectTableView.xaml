@@ -12,36 +12,36 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="520" d:DesignWidth="900" Background="White">
     <DockPanel>
-        <TabControl TabStripPlacement="Top"  
-                    DockPanel.Dock="Top"
-                        ItemsSource="{Binding ListFloor}"
-                        SelectedItem="{Binding CurrentFloors}"
-                        Style="{StaticResource MaterialDesignNavigatilRailTabControl}"
-                         materialDesign:ColorZoneAssist.Mode="PrimaryMid">
-            <TabControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Tầng "/>
-                        <TextBlock Text="{Binding}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </TabControl.ItemTemplate>
-
-            <TabControl.ItemContainerStyle>
-                <Style TargetType="TabItem"
-                       BasedOn="{StaticResource MaterialDesignNavigationRailTabItem}">
-                    <Setter Property="Width"
-                            Value="120" />
-                    <Setter Property="Height"
-                            Value="Auto" />
-                </Style>
-            </TabControl.ItemContainerStyle>
-            <TabControl.ContentTemplate>
-                <DataTemplate>
-                    
-                </DataTemplate>
-            </TabControl.ContentTemplate>
-        </TabControl>
+        <Grid DockPanel.Dock="Top"
+              Background="{StaticResource MainColor}">
+            <Border BorderBrush="Gray"
+                    BorderThickness="1" />
+            <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                       Text="Chọn bàn"
+                       FontSize="26"
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+            <Button Background="Transparent"
+                    BorderBrush="Transparent"
+                    Margin="10"
+                    HorizontalAlignment="Right"
+                    Command="{Binding ExitDetailProduct}">
+                <materialDesign:PackIcon Kind="Close"
+                                         Width="25"
+                                         Height="25" />
+            </Button>
+            <Button BorderBrush="Transparent"
+                    Style="{StaticResource MaterialDesignOutlinedButton}"
+                    ToolTip="MaterialDesignOutlinedButton"
+                    Content="LƯU"
+                    FontSize="20"
+                    Foreground="#E6FFED"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Visibility="Hidden"
+                    Command="{Binding UpdateProduct_Command}" />
+        </Grid>
         <local:TableView DataContext="{Binding}"></local:TableView>
     </DockPanel>
 </UserControl>

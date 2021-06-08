@@ -6,14 +6,13 @@
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Product"
              xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
              xmlns:model="clr-namespace:MainProject.Model"
+             xmlns:main="clr-namespace:MainProject.MainWorkSpace"
+             Tag="DetaiPro"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=ViewModel:ProductViewModel}"
-             d:DesignHeight="650"
-             d:DesignWidth="600">
-    <UserControl.DataContext>
-        <ViewModel:ProductViewModel />
-    </UserControl.DataContext>
+             d:DataContext="{d:DesignInstance ViewModel:ProductViewModel}"
+             Height="650"
+             Width="600">
     <DockPanel>
         <Grid DockPanel.Dock="Top"
               Background="{StaticResource MainColor}">
@@ -73,48 +72,37 @@
                              Width="200"
                              Height="160">
                         <Image Stretch="UniformToFill"
-                               Source="{Binding ListPoduct[IndexCurrentProduct].Image}"></Image>
+                               Source="{Binding Currentproduct.Image}"></Image>
                     </Border>
                 </Button>
 
 
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Tên mặt hàng"
-                         Text="{Binding ListPoduct[IndexCurrentProduct].Name}"
+                         Text="{Binding Currentproduct.Name}"
                          FontSize="16"
                          Margin="100,5"
                          MaxWidth="500" />
                 <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                           materialDesign:HintAssist.Hint="Danh mục"
                           ItemsSource="{Binding Source={x:Static model:TYPE_PRODUCT.Instance}, Path=ListType}"
-                          SelectedItem="{Binding ListPoduct[IndexCurrentProduct].TYPE_PRODUCT.Type}"
+                          SelectedItem="{Binding Currentproduct.TYPE_PRODUCT.Type}"
                           FontSize="16"
                           Margin="100,5"
                           MaxWidth="500" />
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Giá"
-                         Text="{Binding ListPoduct[IndexCurrentProduct].Price, StringFormat='{}{0}đ'}"
+                         Text="{Binding Currentproduct.Price, StringFormat='{}{0}đ'}"
                          FontSize="16"
                          Margin="100,5"
                          MaxWidth="500" />
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Mô tả"
                          TextWrapping="WrapWithOverflow"
-                         Text="{Binding ListPoduct[IndexCurrentProduct].Decription}"
+                         Text="{Binding Currentproduct.Decription}"
                          FontSize="16"
                          Margin="100,5"
                          MaxWidth="500" />
-                <Button Command="{Binding DeleteProduct_Command}"
-                        Grid.Column="1"
-                        Height="50"
-                        Style="{StaticResource MaterialDesignOutlinedButton}"
-                        ToolTip="MaterialDesignOutlinedButton"
-                        Content="Xóa sản phẩm"
-                        Foreground="Red"
-                        BorderBrush="Red"
-                        FontSize="20"
-                        Margin="150,40,150,20"
-                        MaxWidth="400" />
 
 
             </StackPanel>

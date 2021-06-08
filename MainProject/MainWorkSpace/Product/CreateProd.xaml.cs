@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,11 +19,28 @@ namespace MainProject.MainWorkSpace.Product
     /// <summary>
     /// Interaction logic for CreateProd.xaml
     /// </summary>
-    public partial class CreateProd : UserControl
+    public partial class CreateProd : UserControl, INotifyPropertyChanged
     {
         public CreateProd()
         {
             InitializeComponent();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public int ErrorCount{ get; set; }
+        public bool IsValid { get => ErrorCount < 1; }
+
+        private void Validation_Error(object sender, ValidationErrorEventArgs e)
+        {
+            if (e.Action==ValidationErrorEventAction.Added)
+            {
+                ErrorCount++;
+            }
+            else
+            {
+                ErrorCount--;
+            }
         }
     }
 }

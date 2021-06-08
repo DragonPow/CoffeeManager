@@ -15,6 +15,7 @@ namespace MainProject.Model
             using (var db = new mainEntities())
             {
                 Instance.ListStatus = new ObservableCollection<string>(db.STATUS_TABLE.Select(i => i.Status).ToList());
+                Instance.ListStatus.Add("Already");
             }
         }
         private static STATUS_TABLE _instance;

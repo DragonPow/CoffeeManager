@@ -22,16 +22,18 @@ namespace MainProject.MainWorkSpace
         private ObservableCollection<TYPE_PRODUCT> _ListType;
         private TYPE_PRODUCT _CurrentType;
         private TYPE_PRODUCT _Type_In_Edit_CATEGORY;
+        private string _SearchProduct;
 
         private const PackIconKind _iconDisplay = PackIconKind.Home;
 
         private ICommand _AddEditCategory;
 
 
+
         #endregion
 
         #region  propertities
-
+        public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); Productviewmodel.SearchProduct = value; CurrentType = ListType.ElementAt(0); } } }
         public ProductViewModel Productviewmodel { get => _Productviewmodel; set { if (_Productviewmodel != value) { _Productviewmodel = value; OnPropertyChanged(); } } }
         public TYPE_PRODUCT CurrentType { get => _CurrentType; set { if (_CurrentType != value) { _CurrentType = value; OnPropertyChanged();  Productviewmodel.Type = value; } } }
         public TableViewModel Tableviewmodel { get => _Tableviewmodel; set { if (_Tableviewmodel != value) { _Tableviewmodel = value; OnPropertyChanged(); } } }
@@ -72,6 +74,7 @@ namespace MainProject.MainWorkSpace
             using (var db = new mainEntities())
             {
                 var l = new List<TYPE_PRODUCT>() { new TYPE_PRODUCT() { Type = "Tất cả", ID = new long() } };
+                CurrentType = l.ElementAt(0);
              
                 l.AddRange(db.TYPE_PRODUCT.Distinct().ToList());
 

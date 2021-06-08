@@ -6,6 +6,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Product"
              xmlns:MainWS="clr-namespace:MainProject.MainWorkSpace"
+             xmlns:viewmodel="clr-namespace:MainProject.ViewModel"
              xmlns:Main="clr-namespace:MainProject"
              d:DataContext="{d:DesignInstance Type=Main:DetailPro}"
              x:Name="Item"
@@ -30,7 +31,7 @@
                    Visibility="Hidden"></TextBlock>
         <StackPanel Grid.Column="0"
                     VerticalAlignment="Center">
-            <TextBlock Text="{Binding Pro.Name, FallbackValue='Trà sữa trân châu'}"
+            <TextBlock Text="{Binding Pro.Name}"
                        Grid.Column="0"
                        Grid.ColumnSpan="1"
                        HorizontalAlignment="Stretch"
@@ -39,7 +40,7 @@
                        Foreground="#BD8722"
                        FontSize="16" />
             <TextBlock Grid.Column="0"
-                       Text="{Binding Pro.Detail, FallbackValue='Trân châu đường đen'}"
+                       Text="{Binding Pro.Decription}"
                        HorizontalAlignment="Stretch"
                        VerticalAlignment="Stretch"
                        Margin="10 0"
@@ -49,6 +50,7 @@
                        FontStyle="Italic"></TextBlock>
         </StackPanel>
         <MainWS:NumericUpdown DataContext="{Binding}"
+                              Tag="{Binding Tag, ElementName=Item}"
                               Grid.Column="1"
                               Height="20"
                               Width="auto"

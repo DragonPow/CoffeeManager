@@ -64,12 +64,12 @@ namespace MainProject.ViewModel
 
         public TableViewModel()
         {
-            CurrentFloors = 1;
+         /*   CurrentFloors = 1;*/
             TotalCurrentTable = 0;
 
             using (var db = new mainEntities())
             {
-                var listtab = db.TABLEs.Where(t => (t.Floor == CurrentFloors)).ToList();
+                var listtab = db.TABLEs.ToList();
 
                 if (listtab == null) return;
 
@@ -80,15 +80,13 @@ namespace MainProject.ViewModel
                     Tablecustoms.Add(new TABLECUSTOM() { Total = 0, table = t, ListPro = null}) ;
                 }
 
+                //Testing color of table
+                //Tablecustoms[0].table.CurrentStatus = "Already";
+                //Tablecustoms[1].table.CurrentStatus = "Fix";
+                //Tablecustoms[2].table.CurrentStatus = "Normal";
+
                 ListTable = new ObservableCollection<TABLECUSTOM>(Tablecustoms);
-                ListFloor = new ObservableCollection<int>();
-
-                var list = db.TABLEs.Where( f => f.Floor != 0).Select(f => f.Floor ).Distinct();
-
-                foreach( int f in list)
-                {
-                    ListFloor.Add(f);
-                }    
+               /* ListFloor = new ObservableCollection<int>(); */
             }
         }
         #endregion
@@ -154,7 +152,7 @@ namespace MainProject.ViewModel
             }
         }
 
-        public int CurrentFloors
+      /*  public int CurrentFloors
         {
             get => _Currentfloors;
             set
@@ -183,7 +181,7 @@ namespace MainProject.ViewModel
 
                 }
             }
-        }
+        }*/
         public TABLECUSTOM CurrentTable
         {
             get => _CurrentTable;
@@ -259,13 +257,14 @@ namespace MainProject.ViewModel
             get
             {
                 if (_plusQuantityDetailProCommand == null)
-                    _plusQuantityDetailProCommand = new RelayingCommand<object>(a => Plus());
+                    _plusQuantityDetailProCommand = new RelayingCommand<DetailPro>(a => Plus(a));
                 return _plusQuantityDetailProCommand;
             }
         }
 
-        public void Plus()
+        public void Plus(DetailPro pro)
         {
+            CurrentDetailPro = pro;
             CurrentDetailPro.Quantity++;
             TotalCurrentTable += (long) CurrentDetailPro.Pro.Price;
 
@@ -275,16 +274,18 @@ namespace MainProject.ViewModel
             get
             {
                 if (_minusQuantityDetailProCommand == null)
-                    _minusQuantityDetailProCommand = new RelayingCommand<object>(a => Minus());
+                    _minusQuantityDetailProCommand = new RelayingCommand<DetailPro>(a => Minus(a));
 
                 return _minusQuantityDetailProCommand;
             }
 
         }
 
-        public void Minus()
+        public void Minus(DetailPro pro)
         {
-            if (CurrentDetailPro.Quantity < 1) return;
+            CurrentDetailPro = pro;
+
+            if (CurrentDetailPro == null || CurrentDetailPro.Quantity < 1) return;
 
             CurrentDetailPro.Quantity--;
             TotalCurrentTable -=  CurrentDetailPro.Pro.Price;
@@ -427,26 +428,35 @@ namespace MainProject.ViewModel
             {
                 if (_DeleteTableCommand == null)
                 {
-                    _DeleteTableCommand = new RelayingCommand<int>(a => Delete(a));
+                    _DeleteTableCommand = new RelayingCommand<Object>(a => Delete());
                 }
                 return _DeleteTableCommand;
             }
         }
 
-        private void Delete(int number)
+        private void Delete()
         {
-            ListTable.RemoveAt(number - 1);
+        
+            int number = ListTable.Count - 1;
+
+            if ( ListTable.ElementAt(number).Total != 0)
+            {
+                WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn " + number +" trước khi xóa!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                return;
+            }   
+
+                ListTable.RemoveAt(number);
 
             for (int i = number; i < ListTable.Count; ++i)
                 --ListTable[i].table.Name;
 
             using (var db = new mainEntities())
             {
-                TABLE table = db.TABLEs.Where(d => (d.Name == number && d.Floor == CurrentFloors)).FirstOrDefault();
+                TABLE table = db.TABLEs.Where(d => (d.Name == number /*&& d.Floor == CurrentFloors*/)).FirstOrDefault();
 
                 if (table != null)
                 {
-                    var TABLEs = db.TABLEs.Where(t => t.Name > number && t.Floor == CurrentFloors);
+                    var TABLEs = db.TABLEs.Where(t => t.Name > number /*&& t.Floor == CurrentFloors*/);
 
                     foreach (TABLE tab in TABLEs)
                     {
@@ -473,15 +483,15 @@ namespace MainProject.ViewModel
 
         public void Insert()
         {
-            TABLE tab = new TABLE() { Floor = CurrentFloors, STATUS_TABLE = new STATUS_TABLE() { Status = "Empty"}, Name = ListTable.Count + 1};
-
+            TABLE tab = new TABLE() { ID_Status = 1, Name = ListTable.Count + 1 };
             ListTable.Add(new TABLECUSTOM() { table = tab });
 
             using (var db = new mainEntities())
-            {
+            {             
                 db.TABLEs.Add(tab);
                 db.SaveChanges();
             }
+            
 
         }
 

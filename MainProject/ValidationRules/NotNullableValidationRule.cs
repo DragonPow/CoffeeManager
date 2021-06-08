@@ -10,7 +10,7 @@ namespace MainProject.ValidationRules
 {
     public class NotNullableValidationRule : ValidationRule
     {
-        public String ErrorMessage = "This field is required";
+        public String ErrorMessage { get; set; } = "This field is required";
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             bool rs = false;
@@ -19,7 +19,7 @@ namespace MainProject.ValidationRules
                 if (value.GetType() == typeof(String))
                 {
                     String input = value.ToString();
-                    rs = (input.Length > 0);
+                    rs = (input.Length > 0) && !string.IsNullOrWhiteSpace(input);
                 }
                 else { ErrorMessage = "This type cannot be check : " + value.GetType().ToString(); }
             }

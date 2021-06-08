@@ -39,9 +39,9 @@
             <Label
                 Style="{StaticResource labelStyle}"
                 >
-                Thống kê theo:
+                THỐNG KÊ THEO THÁNG
             </Label>
-            <ComboBox
+            <ComboBox Visibility="Collapsed"
                 x:Name="cbxStatisticMode"
                 SelectedIndex="0"
                 SelectionChanged="cbxStatisticMode_SelectionChanged"
@@ -51,19 +51,19 @@
             <Label
                 Style="{StaticResource labelStyle}"
                 >
-                Chọn thời gian:
+                Chọn tháng:
             </Label>
             <DatePicker
                 x:Name="txtDatePicker" Margin="5,0" materialDesign:HintAssist.Hint="Nhấp để chọn"
                 >
             </DatePicker>
 
-            <Label
+            <Label Visibility="Collapsed"
                 Style="{StaticResource labelStyle}"
                 >
                 Sản phẩm:
             </Label>
-            <ComboBox
+            <ComboBox Visibility="Collapsed"
                 SelectedIndex="0" materialDesign:HintAssist.Hint="Nhấp để chọn"
                 Margin="5,0,5,0" ItemsSource="{Binding Path=ListOptionForProduct, Mode=OneWay}" 
                 SelectedValue="{Binding Path=SelectedOptionProduct, Mode=OneWayToSource}"
@@ -81,10 +81,20 @@
         <DockPanel
             Grid.Column="1" Background="GhostWhite"
             Margin="5,5">
-            <Label 
-                DockPanel.Dock="Top" Style="{StaticResource labelStyle}">
-                Kết quả thống kê
-            </Label>
+            <Grid
+                DockPanel.Dock="Top">
+                <Label  
+                    HorizontalAlignment="Left" VerticalAlignment="Center"
+                    Style="{StaticResource labelStyle}">
+                    Kết quả thống kê
+                </Label>
+                <Button
+                    Content="Chi tiết>>" FontSize="11" HorizontalAlignment="Right"
+                    Click="ShowDetail_Click"
+                    VerticalAlignment="Center" Height="20" Padding="4,2,4,4" Background="GhostWhite" Foreground="#DD000000" 
+                    />
+            </Grid>
+            
             <Grid
                 DockPanel.Dock="Bottom">
                 <Label HorizontalAlignment="Left" Margin="0" Style="{StaticResource labelStyle}">Tổng doanh thu</Label>
@@ -93,12 +103,13 @@
                            Text="{Binding Path=TotalRevenue, Mode=OneWay, Converter={StaticResource moneyConverter}}" FontWeight="Bold"/>
             </Grid>
             <DataGrid
-                DockPanel.Dock="Top"
-                SelectionMode="Single" SelectionUnit="FullRow" CanUserSortColumns="True" Margin="2,0"
+                DockPanel.Dock="Top" x:Name="datagridView" Background="White"
+                SelectionMode="Single" CanUserSortColumns="True" Margin="2,0"
                 CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False"
                 HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="LightGray" GridLinesVisibility="All"
                 BorderThickness="1" BorderBrush="Gray"
-                materialDesign:DataGridAssist.CornerRadius="2" AutoGenerateColumns="False"
+                RowBackground="GhostWhite" AlternatingRowBackground="White"
+                materialDesign:DataGridAssist.CornerRadius="2" AutoGenerateColumns="False" IsReadOnly="True"
                 ItemsSource="{Binding Path=ListModel, Mode=OneWay}" 
                 >
                 <DataGrid.Columns>
@@ -122,6 +133,11 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <EventSetter Event="MouseRightButtonUp" Handler="DatagridView_MouseRightButtonUp"/>
+                    </Style>
+                </DataGrid.RowStyle>
             </DataGrid>
 
         </DockPanel>

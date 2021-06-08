@@ -8,6 +8,7 @@
              xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
+             Name="UserControl"
              BorderBrush="Gray" BorderThickness="2"
              d:DataContext="{d:DesignInstance Type=ViewModel:TableViewModel}"
              d:DesignHeight="550" d:DesignWidth="300" Background="#FEFDEB">
@@ -34,10 +35,12 @@
                       materialDesign:ScrollBarAssist.ThumbCornerRadius="10"
                       HorizontalScrollBarVisibility="Auto">
             <!--The Panel contains list product-->
-            <ListView ItemsSource="{Binding Currentlistdetailpro, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+            <ListView ItemsSource="{Binding Currentlistdetailpro, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                      >
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Item:Item_UC DataContext="{Binding}"/>
+                        <Item:Item_UC DataContext="{Binding}"
+                                      Tag="{Binding DataContext, ElementName=UserControl}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.ItemContainerStyle>
