@@ -41,7 +41,6 @@ namespace MainProject.ViewModel
         private ICommand _SearchByName;
         private ICommand _SearchByType;
 
-
         private ICommand _LoadViewUpdateProduct;
         private ICommand _UpdateProduct;
         private ICommand _ExitUpdateProduct;
@@ -51,9 +50,6 @@ namespace MainProject.ViewModel
         private ICommand _CancelAddProduct;
         private ICommand _ExitAddProview;
 
-
-
-        private ICommand _RightClickDetailPro;
         private ICommand _ExitDetailProduct;
         private ICommand _OpenViewDetailProduct;
         private ICommand _AddDetailProToTableCommand;
@@ -408,18 +404,21 @@ namespace MainProject.ViewModel
                 pro.Image = Currentproduct.Image;
                 pro.Name = Currentproduct.Name;
                 pro.Price = Currentproduct.Price;
-                if (Type_in_Combobox_AddProduct != null)  pro.ID_Type = Type_in_Combobox_AddProduct.ID;
                 pro.Decription = Currentproduct.Decription;
+                if (Type_in_Combobox_AddProduct != null)  pro.ID_Type = Type_in_Combobox_AddProduct.ID;
 
+             
                 db.SaveChanges();
             }
 
-            var item = Currentproduct;
-            if (item != null)
-            {
-                item = Newproduct;
-            }
 
+
+            /* var item = Currentproduct;
+             if (item != null)
+             {
+                 item = Newproduct;
+             }*/
+            LoadProductByType(Type);
             ExitUpdate();
         }
 

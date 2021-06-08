@@ -281,23 +281,32 @@ namespace MainProject.MainWorkSpace
                 return;
             }
 
-            TypeInEditCATEGORYCombobox.Type = EditTypeInEditCatefory;
-
             using (var db = new mainEntities())
             {
+                for ( int i = 1; i < ListType.Count; ++i)
+                {
+                    if (ListType[i].ID == TypeInEditCATEGORYCombobox.ID)
+                    {
+                        ListType[i].Type = EditTypeInEditCatefory;
+                        break; 
+                    }    
+                }
+
                 var type = db.TYPE_PRODUCT.Where(t => t.ID == TypeInEditCATEGORYCombobox.ID).FirstOrDefault();
-                type = TypeInEditCATEGORYCombobox;               
+                type.Type = EditTypeInEditCatefory;
 
                 var list = db.PRODUCTs.Where(p => (p.ID_Type == type.ID || p.ID_Type == null)).ToList();
                 if (list == null) return;
 
-                int i = 0;
+                int j = 0;
                 foreach (var p in list)
                 {
-                    p.ID_Type = Productviewmodel.ListPoduct.ElementAt(i).ID_Type;
-                    ++i;
+                    p.ID_Type = Productviewmodel.ListPoduct[j].ID_Type;
+                    ++j;
                 }
-                               
+
+                TypeInEditCATEGORYCombobox = ListType[0];
+
                 db.SaveChanges();
                 CloseEditCategory();
             }
@@ -319,6 +328,7 @@ namespace MainProject.MainWorkSpace
         public void ClickCheckboxSelectedPro(PRODUCT pro)
         {
             Productviewmodel.Currentproduct = pro;
+
             if (Productviewmodel.Currentproduct == null) return;
             if (Productviewmodel.Currentproduct.ID_Type == null)
             {
