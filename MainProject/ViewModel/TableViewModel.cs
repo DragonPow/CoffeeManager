@@ -443,23 +443,27 @@ namespace MainProject.ViewModel
 
                 ListTable.RemoveAt(number);
 
-            for (int i = number; i < ListTable.Count; ++i)
-                --ListTable[i].table.Name;
+            /*for (int i = number; i < ListTable.Count; ++i)
+                --ListTable[i].table.Name;*/
 
             using (var db = new mainEntities())
             {
-                TABLE table = db.TABLEs.Where(d => (d.Name == number /*&& d.Floor == CurrentFloors*/)).FirstOrDefault();
+                long max = db.TABLEs.Max(p => p.ID);
+
+                db.TABLEs.Remove(db.TABLEs.Where( t => t.ID == max).FirstOrDefault());
+
+                /*TABLE table = db.TABLEs.Where(d => (d.Name == number *//*&& d.Floor == CurrentFloors*//*)).FirstOrDefault();
 
                 if (table != null)
                 {
-                    var TABLEs = db.TABLEs.Where(t => t.Name > number /*&& t.Floor == CurrentFloors*/);
+                    var TABLEs = db.TABLEs.Where(t => t.Name > number *//*&& t.Floor == CurrentFloors*//*);
 
                     foreach (TABLE tab in TABLEs)
                     {
                         --tab.Name;
                     }
 
-                }
+                }*/
 
                 db.SaveChanges();
             }

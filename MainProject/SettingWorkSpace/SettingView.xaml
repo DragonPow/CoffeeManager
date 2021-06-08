@@ -19,7 +19,7 @@
                         Height="50"
                         Width="170"
                         Name="btn_Save_change"
-                        Click="btn_Save_change_Click"
+                      
                         Content="Lưu thay đổi"
                         Foreground="{StaticResource MainColor}"
                         Background="White"
