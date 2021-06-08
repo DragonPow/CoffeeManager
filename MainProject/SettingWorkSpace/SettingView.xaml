@@ -3,77 +3,21 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:MainProject.SettingWorkSpace" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      mc:Ignorable="d" 
+      xmlns:local="clr-namespace:MainProject.SettingWorkSpace" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+      xmlns:viewmodel="clr-namespace:MainProject.ViewModel"
+      mc:Ignorable="d"
+      d:DataContext="{d:DesignInstance Type=viewmodel:SettingViewModel}"
       Background="White"
       d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid Background = "Transparent">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="7*" />
-        </Grid.ColumnDefinitions>
-        <Grid  Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="9*" />
-            </Grid.RowDefinitions>
-            <Border BorderBrush="Gray"
-                    BorderThickness="1"
-                    Grid.RowSpan="3" />
-            <Grid x:Name="Setting"
-                  Grid.Column="0"
-                  Background="{StaticResource MainColor}">
-                <Border BorderBrush="Gray"
-                        BorderThickness="1" />
-                <TextBlock Text="Cài đặt"
-                           FontWeight="DemiBold"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           FontSize="18"
-                           Margin="10,0,0,0"
-                           Foreground="White">
-                </TextBlock>
-            </Grid>
-            <ScrollViewer Grid.Row="1"
-                          VerticalScrollBarVisibility="Auto">
-                <StackPanel>
-                    <Button Background="{x:Null}" 
-                            Name="btn_Overview"
-                            VerticalAlignment="Top"
-                            Click="btn_Overview_Click"
-                            Content="Thông tin quán"
-                            Foreground="Black"
-                            BorderBrush="#FF666666" 
-                            HorizontalContentAlignment="Left" 
-                            VerticalContentAlignment="Center"
-                            />
-                    <Button Background="{x:Null}" 
-                            Name="btn_InfoAccount"
-                            VerticalAlignment="Top"
-                            Content="Thông tin tài khoản"
-                            Foreground="Black"
-                            BorderBrush="#FF666666" 
-                            HorizontalContentAlignment="Left" 
-                            VerticalContentAlignment="Center"
-                            />
-                    <Button x:Name="btn_Ruler"
-                            Background="{x:Null}" 
-                            VerticalAlignment="Top"
-                            Content="Quy định"
-                            Foreground="Black"
-                            BorderBrush="#FF666666" 
-                            HorizontalContentAlignment="Left" 
-                            VerticalContentAlignment="Center"/>
-                </StackPanel>
-            </ScrollViewer>
-        </Grid>
-        <DockPanel Grid.Column="1">
+        <DockPanel >
             <Grid DockPanel.Dock="Bottom"
                   Height="100">
-                <Button Grid.Column="1"
+                <Button
                         Height="50"
-                        Width="150"
+                        Width="170"
                         Name="btn_Save_change"
                         Click="btn_Save_change_Click"
                         Content="Lưu thay đổi"
@@ -81,7 +25,30 @@
                         Background="White"
                         BorderBrush="{StaticResource MainColor}"
                         FontSize="20"
-                        Margin="10" IsEnabled="False"/>
+                        BorderThickness="2"
+                        Margin="10">
+                    <Button.Style>
+                        <Style TargetType="Button"
+                                BasedOn="{StaticResource MaterialDesignOutlinedButton}">
+                            <Setter Property="Content" Value="Sửa thông tin"/>
+                            <Setter Property="Foreground" Value="Red"/>
+                            <Setter Property="BorderBrush" Value="Gray"/>
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Setter Property="Command" Value="{Binding Change_Data_Store}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Mode_btn}"
+                                             Value="edit">
+                                    <Setter Property="Content" Value="Lưu thay đổi"/>
+                                    <Setter Property="Foreground" Value="Green"/>
+                                    <Setter Property="BorderBrush" Value="Red"/>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                    <Setter Property="Command" Value="{Binding Save_Data_Store}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
             </Grid>
             <StackPanel x:Name="Option_setting">
                 <Grid Margin="0 10">
@@ -93,7 +60,7 @@
                                 Padding="10"
                                 HorizontalAlignment="Center"
                                 FontWeight="Bold"
-                                VerticalAlignment="Center" />
+                                VerticalAlignment="Center"/>
                 </Grid>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -105,140 +72,110 @@
                         <Grid Margin="0 2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="5.5*"/>
-                                <ColumnDefinition Width="1.5*"/>
+                                <ColumnDefinition Width="7*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBox Grid.Column="0"
+                            <TextBlock Grid.Column="0"
                                  Text="Tên quán"
                                  Foreground="Black" 
                                  VerticalAlignment="Center"
                                  Background="{x:Null}" 
-                                 BorderBrush="{x:Null}"
                                  HorizontalAlignment="Left"
                                  FontWeight="Bold" 
-                                 FontSize="16"/>
+                                 FontSize="16" />
                             <TextBox Grid.Column="1"
                                  Name="txb_Name"
-                                 Text="Coffee store"
+                                 materialDesign:HintAssist.Hint="Nhập tên quán"
+                                 Text="{Binding NameStore}"
                                  VerticalAlignment="Center"
                                  Background="{x:Null}"
                                  BorderBrush="{x:Null}"
-                                 FontSize="16" IsEnabled="False" DataContextChanged="txb_Name_DataContextChanged"/>
-                            <Button Grid.Column="2"
-                                Name="btn_SaveName"
-                                Click="btn_SaveName_Click"
-                                Background="Transparent"
-                                Content="Sửa"
-                                Foreground="Red" 
-                                VerticalAlignment="Top" 
-                                BorderBrush="{x:Null}"/>
+                                 FontSize="16">
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox"
+                                           BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Mode_btn}"
+                                                         Value="edit">
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
                         </Grid>
                         <Grid Margin="0 2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="5.5*"/>
-                                <ColumnDefinition Width="1.5*"/>
+                                <ColumnDefinition Width="7*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBox Grid.Column="0"
-                                 Text="Số tầng"
-                                 Foreground="Black" 
-                                 VerticalAlignment="Center"
-                                 Background="{x:Null}" 
-                                 BorderBrush="{x:Null}"
-                                 HorizontalAlignment="Left"
-                                 FontWeight="Bold" 
-                                 FontSize="16"/>
-                            <TextBox Grid.Column="1"
-                                 Name="txb_NumberFloor"
-                                 Text="2"
-                                 VerticalAlignment="Center"
-                                 Background="{x:Null}"
-                                 BorderBrush="{x:Null}"
-                                 FontSize="16" 
-                                 IsEnabled="False" 
-                                 DataContextChanged="txb_NumberFloor_DataContextChanged"/>
-                            <Button Grid.Column="2"
-                                Name="btn_NumberFloor"
-                                Click="btn_NumberFloor_Click"
-                                Background="Transparent"
-                                Content="Sửa"
-                                Foreground="Red" 
-                                VerticalAlignment="Top" 
-                                BorderBrush="{x:Null}"/>
-                        </Grid>
-                        <Grid Margin="0 2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="5.5*"/>
-                                <ColumnDefinition Width="1.5*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBox Grid.Column="0"
+                            <TextBlock Grid.Column="0"
                                 Text="Số điện thoại"
                                 Foreground="Black" 
                                 VerticalAlignment="Center"
                                 Background="{x:Null}" 
-                                BorderBrush="{x:Null}"
                                 HorizontalAlignment="Left" 
                                 FontWeight="Bold" 
-                                FontSize="16" 
+                                FontSize="16"
                                 />
                             <TextBox Grid.Column="1"
-                                Text="0123456789" 
+                                Text="{Binding NumberPhone}" 
+                                materialDesign:HintAssist.Hint="Nhập số điện thoại"
                                 Name="txb_numberPhone"
                                 VerticalAlignment="Center"
                                 Background="{x:Null}"
                                 BorderBrush="{x:Null}"
-                                FontSize="16" IsEnabled="False" DataContextChanged="txb_numberPhone_DataContextChanged"/>
-                            <Button Grid.Column="2"
-                                Click="btn_SavePhone_Click"
-                                Name="btn_SavePhone"
-                                Background="Transparent"
-                                Content="Sửa"
-                                Foreground="Red" 
-                                VerticalAlignment="Center" 
-                                BorderBrush="{x:Null}"/>
+                                FontSize="16" >
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox"
+                                           BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Mode_btn}"
+                                                         Value="edit">
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                                
                         </Grid>
                         <Grid Margin="0 2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="5.5*"/>
-                                <ColumnDefinition Width="1.5*"/>
+                                <ColumnDefinition Width="7*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBox Grid.Column="0"
+                            <TextBlock Grid.Column="0"
                                 Text="Địa chỉ"
                                 Foreground="Black" 
                                 VerticalAlignment="Center"
                                 Background="{x:Null}" 
-                                BorderBrush="{x:Null}"
                                 HorizontalAlignment="Left" 
                                 FontWeight="Bold" 
                                 FontSize="16" 
                                 />
                             <TextBox Grid.Column="1"
                                  Name="txb_address"
-                                 Text="Thủ Đức, HCM" 
+                                 materialDesign:HintAssist.Hint="Nhập địa điểm"
+                                 Text="{Binding Address}" 
                                  VerticalAlignment="Center"
                                  Background="{x:Null}"
                                  BorderBrush="{x:Null}"
-                                 FontSize="16" IsEnabled="False" DataContextChanged="txb_address_DataContextChanged"/>
-                            <Button Grid.Column="2"
-                                Click="btn_SaveAddress_Click"
-                                Name="btn_SaveAddress"
-                                Background="Transparent"
-                                Content="Sửa"
-                                Foreground="Red" 
-                                VerticalAlignment="Center" 
-                                BorderBrush="{x:Null}"/>
-                        </Grid>
-                        <Grid Margin="0 15">
-                            <materialDesign:PackIcon Kind="AlertCircle"
-                                             Width="25"
-                                             Height="25"
-                                             Foreground="Gray" />
-                            <TextBlock Text="Chỉ chủ quán mới được thay đổi những thông tin này."
-                                   FontStyle="Italic"
-                                   Margin="30,0"
-                                   TextWrapping="WrapWithOverflow" />
+                                 FontSize="16" >
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox"
+                                           BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Mode_btn}"
+                                                         Value="edit">
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
                         </Grid>
                     </StackPanel>
                 </Grid>
