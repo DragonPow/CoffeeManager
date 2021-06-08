@@ -24,8 +24,8 @@ namespace MainProject.Model
         public long Name { get; set; }
         public long ID_Status { get; set; }
     
+        public virtual STATUS_TABLE STATUS_TABLE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<BILL> BILLs { get; set; }
-        public virtual STATUS_TABLE STATUS_TABLE { get; set; }
     }
 }

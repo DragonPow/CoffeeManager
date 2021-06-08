@@ -37,6 +37,7 @@
         <ListView.ContextMenu>
             <ContextMenu>
                 <MenuItem Header="Chi tiết sản phẩm" Command="{Binding OpenViewDetailProduct_Command}"/>
+                <MenuItem Header="Chỉnh sửa sản phẩm" Command="{Binding LoadViewUpdateProduct_Command}"/>
                 <MenuItem Header="Xóa sản phẩm" Command="{Binding DeleteProduct_Command}"/>
             </ContextMenu>
         </ListView.ContextMenu>

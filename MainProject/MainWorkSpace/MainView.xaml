@@ -16,10 +16,10 @@
              d:DesignWidth="1150">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="7*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <Table:TableDetailView DataContext="{Binding Tableviewmodel}" Grid.Column="1" Margin="5,0,0,0" />
+        <Table:TableDetailView DataContext="{Binding Tableviewmodel}" Grid.Column="1" />
 
         <DockPanel>
             <materialDesign:ColorZone DockPanel.Dock="Top"
@@ -53,7 +53,7 @@
                                   Opacity=".56" />
                             </Button>
                             <TextBox
-                                Text="{Binding SearchProduct,UpdateSourceTrigger=PropertyChanged}"
+                                Text="{Binding SearchProduct,UpdateSourceTrigger=PropertyChanged, FallbackValue='Tìm kiếm'}"
                             Grid.Column="1"
                             Margin="8 0 0 0"
                             materialDesign:HintAssist.Hint="Search"
@@ -63,6 +63,7 @@
                             VerticalAlignment="Center" />
                         </Grid>
                     </materialDesign:ColorZone>
+                    <TextBlock Text="Chỉnh sửa" FontSize="14" FontWeight="DemiBold" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
                     <materialDesign:PopupBox
                           Grid.Column="2"
                           PlacementMode="BottomAndAlignRightEdges">
@@ -90,7 +91,7 @@
                             Padding="0"
                             Height="40"
                             Margin="5"
-                                Command="{Binding DataContext.AddEditCategory_Command, ElementName=Main_View}">
+                                Command="{Binding DataContext.OpenViewAddCategory_Command, ElementName=Main_View}">
                                 <DockPanel>
                                     <TextBlock DockPanel.Dock="Left" Text="Thêm danh mục" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{StaticResource MainColor}" Margin="10,0,0,0"></TextBlock>
                                     <materialDesign:PackIcon Kind="PlusCircle" DockPanel.Dock="Right" Height="Auto" Width="auto" HorizontalAlignment="Right" Margin="7" Foreground="{StaticResource MainColor}"/>
@@ -105,7 +106,7 @@
                             Padding="0"
                             Height="40"
                             Margin="5"
-                            Command="{Binding OpenViewEditCategory_Command}">
+                            Command="{Binding DataContext.OpenViewEditCategory_Command, ElementName=Main_View}">
                                 <DockPanel>
                                     <TextBlock DockPanel.Dock="Left" Text="Sửa danh mục   " FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{StaticResource MainColor}" Margin="10,0,0,0"></TextBlock>
                                     <materialDesign:PackIcon Kind="PlusCircle" DockPanel.Dock="Right" Height="Auto" Width="auto" HorizontalAlignment="Right" Margin="7" Foreground="{StaticResource MainColor}"/>
@@ -125,15 +126,12 @@
                          materialDesign:ColorZoneAssist.Mode="PrimaryMid" >
                 <TabControl.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel >
-                            <TextBlock Text="" FontSize="18" 
-                                   FontWeight="Bold" 
+
+                        <TextBlock Text="{Binding Type}" FontSize="14" 
                                    Foreground="White" 
-                                   HorizontalAlignment="Center"/>
-                            <TextBlock Text="{Binding Type}" FontSize="14" 
-                                   Foreground="White"                      
-                                   HorizontalAlignment="Center"/>
-                        </StackPanel>
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
                     </DataTemplate>
                 </TabControl.ItemTemplate>
 
@@ -143,7 +141,7 @@
                         <Setter Property="MinWidth"
                             Value="120" />
                         <Setter Property="Height"
-                            Value="Auto" />
+                            Value="70" />
                         <Setter Property="Width"
                                 Value="Auto" />
                     </Style>

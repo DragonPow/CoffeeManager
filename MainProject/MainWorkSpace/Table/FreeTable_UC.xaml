@@ -8,12 +8,9 @@
              mc:Ignorable="d"
              MinWidth="100"
              MinHeight="100"
+             d:DataContext="{d:DesignInstance Type=model:TABLE}"
              d:DesignHeight="100"
              d:DesignWidth="100">
-    <UserControl.Resources>
-        <model:STATUS_TABLE x:Key="StatusTable" />
-        <SolidColorBrush x:Key="textColor">#ffff</SolidColorBrush>
-    </UserControl.Resources>
     <Grid>
         <!--Number table-->
         <TextBlock Text="{Binding Name, FallbackValue='1'}"

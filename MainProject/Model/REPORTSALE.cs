@@ -24,6 +24,7 @@ namespace MainProject.Model
         public long Month { get; set; }
         public long Year { get; set; }
         public long TotalAmout { get; set; }
+        public long TotalRevenue { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<DETAILREPORTSALE> DETAILREPORTSALES { get; set; }

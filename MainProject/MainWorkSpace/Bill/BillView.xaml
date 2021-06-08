@@ -8,6 +8,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:viewmodel="clr-namespace:MainProject.ViewModel"
         xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:rules="clr-namespace:MainProject.ValidationRules"
         mc:Ignorable="d"
         MinWidth="600"
         MaxWidth="800"
@@ -21,10 +22,11 @@
                    FontSize="50"
                    FontWeight="Bold"
                    HorizontalAlignment="Center"
-                   Margin="0 30" />
+                   Margin="0 30"
+                   Foreground="#363434" />
 
         <!--Information of store-->
-        <Border BorderBrush="Black"
+        <Border BorderBrush="#363434"
                 BorderThickness="2"
                 Background="LightGray"
                 Margin="30 10">
@@ -119,29 +121,35 @@
                        HorizontalAlignment="Right"
                        Margin="0 25 0 0"
                        FontSize="25" />
-            
+
             <!--Tien khach dua-->
             <TextBlock Text="Tiền khách đưa"
                        Grid.Row="2"
                        HorizontalAlignment="Right"
                        FontSize="18"
-                       Margin="0 20 0 0" />
+                       Margin="0 20 0 0"
+                       Foreground="#363434" />
             <StackPanel Orientation="Horizontal"
                         Grid.Row="2"
                         Grid.Column="1"
                         Margin="0 20 0 0"
                         HorizontalAlignment="Right">
-                <TextBox Text="{Binding GiveMoney, FallbackValue='0,000', StringFormat='{}{0:N0}'}"
-                         Style="{StaticResource MaterialDesignTextBox}"
+                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          HorizontalContentAlignment="Right"
                          VerticalContentAlignment="Center"
-                         
-                         Width="100"
-                         FontSize="18"
-                         />
-                <TextBlock Text=" đ" 
+                         Width="150"
+                         Padding="10 0"
+                         Name="txtMoneyCustomer"
+                         FontSize="18">
+                    <TextBox.Text>
+                        <Binding Path="GiveMoney"
+                                 UpdateSourceTrigger="PropertyChanged">
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <TextBlock Text=" đ"
                            FontSize="17"
-                           VerticalAlignment="Center"/>
+                           VerticalAlignment="Center" />
             </StackPanel>
 
             <!--Tien thoi lai-->
@@ -150,15 +158,29 @@
                        VerticalAlignment="Center"
                        FontSize="17"
                        HorizontalAlignment="Right"
-                       Margin="0 7 0 0" />
-            <TextBlock Text="{Binding Refund, FallbackValue='0,000 đ', 
-                                StringFormat='{}{0:N0} đ'}"
-                       Grid.Row="3"
-                       Grid.Column="1"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Right"
                        Margin="0 7 0 0"
-                       FontSize="17" />
+                       Foreground="#363434" />
+            <TextBox Grid.Row="3"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     BorderBrush="Transparent"
+                     IsReadOnly="True"
+                     Padding="0"
+                     Grid.Column="1"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Right"
+                     Margin="0 7 0 0"
+                     Width="Auto"
+                     FontSize="17"
+                     Validation.Error="Validation_Error">
+                <TextBox.Text>
+                    <Binding Path="Refund"
+                             StringFormat="{}{0:N0} đ"
+                             Mode="OneWay"
+                             ValidatesOnDataErrors="True"
+                             UpdateSourceTrigger="PropertyChanged">
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
         </Grid>
 
         <TextBlock Text="Cảm ơn quý khách"
@@ -177,9 +199,10 @@
                 MinWidth="200"
                 FontSize="20"
                 HorizontalAlignment="Center"
-                Background="Blue"
+                Background="{StaticResource MainColor}"
                 Command="{Binding PaymentCommand}"
                 CommandParameter="{Binding ElementName=MainWindow}"
-                Margin="0 0 0 20" />
+                Margin="0 10 0 30"
+                Height="40" />
     </StackPanel>
 </Window>

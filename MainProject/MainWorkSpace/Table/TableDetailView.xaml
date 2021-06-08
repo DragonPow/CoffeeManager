@@ -90,7 +90,7 @@
                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                 Width="Auto" Height="Auto"
                 materialDesign:ButtonAssist.CornerRadius="2"
-                Foreground="White" Background="{StaticResource MainColor}"
+                Foreground="White" Background="#31CA62"
                 BorderThickness="0" Grid.Column="1"/>
         </Grid>
     </Grid>

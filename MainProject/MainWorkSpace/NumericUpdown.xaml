@@ -27,7 +27,7 @@
                                  BorderBrush="#f1f8e9" 
                                  Height="Auto" Width="Auto"
                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                 Foreground="{StaticResource MainColor}" Kind="Minus"  />
+                                 Foreground="#31CA62" Kind="Minus"  />
         </Button>
 
         <TextBlock Grid.Column="1" 
@@ -41,7 +41,7 @@
                                  Background="#f1f8e9"
                                  BorderBrush="#f1f8e9"
                                  Height="Auto" Width="Auto" 
-                                 Kind="Plus" Foreground="{StaticResource MainColor}" 
+                                 Kind="Plus" Foreground="#31CA62" 
                                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
         </Button>
     </Grid>

@@ -9,8 +9,8 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=local:DetailStatisticViewModel,IsDesignTimeCreatable=True}"
-        Title="DetailStatisticWindow" Height="450" Width="800"
-        ResizeMode="NoResize"
+        Title="DetailStatisticWindow" Height="600" Width="1000"
+        ResizeMode="CanResize" WindowStyle="None"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="labelStyle" TargetType="Label">
@@ -47,9 +47,14 @@
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"/>
         </Grid>
-        <DockPanel DockPanel.Dock="Top">
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
             <DockPanel
-            DockPanel.Dock="Left" Background="GhostWhite" Width="300"
+            Grid.Column="0" Background="GhostWhite" Width="Auto"
             Margin="5,5">
 
                 <Label 
@@ -75,8 +80,8 @@
                 >
                     <DataGrid.Columns>
                         <DataGridTemplateColumn 
-                        Header="Tên Món" HeaderStyle="{StaticResource headerStyle}"
-                        Width="Auto" IsReadOnly="True" CanUserResize="True">
+                        Header="Tên Món" HeaderStyle="{StaticResource headerStyle}" materialDesign:HintAssist.Hint="áđâsd"
+                        Width="*" IsReadOnly="True" CanUserResize="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock  Text="{Binding Path=Title, Mode=OneWay}" Foreground="#DD000000"></TextBlock>
@@ -97,16 +102,18 @@
                         IsReadOnly="True" CanUserResize="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Path=Revenue, Converter={StaticResource moneyConverter}, Mode=OneWay}" TextAlignment="Center"/>
+                                    <TextBlock 
+                                        ToolTip="Tỉ lệ doanh thu"
+                                        Text="{Binding Path=Revenue, Converter={StaticResource moneyConverter}, Mode=OneWay}" TextAlignment="Center"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn 
                         Header="Tỉ Lệ (%)" HeaderStyle="{StaticResource headerStyle}"
-                        Width="*" IsReadOnly="True" CanUserResize="True">
+                        IsReadOnly="True" CanUserResize="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Path=Amount, Mode=OneWay}" TextAlignment="Center"/>
+                                    <TextBlock Text="{Binding Path=Label, Mode=OneWay}" TextAlignment="Center"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -114,11 +121,15 @@
                 </DataGrid>
 
             </DockPanel>
+
+            <GridSplitter Grid.Column="1" Background="Gray" Margin="0,10" FlowDirection="RightToLeft" VerticalAlignment="Stretch"
+                          HorizontalAlignment="Stretch"/>
+
             <DockPanel
-                DockPanel.Dock="Left">
+                Grid.Column="2">
                 <Label 
                     DockPanel.Dock="Top"
-                    ToolTip="Biểu đồ tỉ lệ doanh thu (thu gọn top 50 doanh thu)" HorizontalAlignment="Center"
+                    ToolTip="Biểu đồ tỉ lệ doanh thu (rút gọn Top 7)" HorizontalAlignment="Center"
                     Style="{StaticResource labelStyle}" Content="Biểu Đồ Tỉ Lệ Doanh Thu"/>
                 <charting:PieChart 
                     DockPanel.Dock="Top"
@@ -127,6 +138,6 @@
                     >
                 </charting:PieChart>
             </DockPanel>
-        </DockPanel>
+        </Grid>
     </DockPanel>
 </Window>

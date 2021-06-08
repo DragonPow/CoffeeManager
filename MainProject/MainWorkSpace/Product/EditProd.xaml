@@ -1,17 +1,17 @@
-﻿<UserControl x:Class="MainProject.MainWorkSpace.Product.CreateProd"
+﻿<UserControl x:Class="MainProject.MainWorkSpace.Product.EditProd"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Product"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:model="clr-namespace:MainProject.Model"
              xmlns:main="clr-namespace:MainProject.MainWorkSpace"
              xmlns:viewmodel="clr-namespace:MainProject.ViewModel"
              xmlns:rules="clr-namespace:MainProject.ValidationRules"
              mc:Ignorable="d"
-             Tag="Create product"
-             Name="UserControl"
+             x:Name="Edit_Pro"
+             Tag="EditPro"
              d:DataContext="{d:DesignInstance Type=viewmodel:ProductViewModel}"
              Height="650"
              Width="500">
@@ -24,7 +24,7 @@
             <Border BorderBrush="Gray"
                     BorderThickness="1" />
             <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                       Text="Thêm sản phẩm"
+                       Text="Chỉnh sửa sản phẩm"
                        FontSize="22"
                        Foreground="White"
                        HorizontalAlignment="Center"
@@ -32,7 +32,7 @@
             <Button Background="Transparent"
                     BorderBrush="Transparent"
                     Margin="10"
-                    Command="{Binding ExitAddProductView_Command}"
+                    Command="{Binding ExitUpdateProduct_Command}"
                     HorizontalAlignment="Right">
                 <materialDesign:PackIcon Kind="Close"
                                          Width="25"
@@ -57,7 +57,7 @@
                         Command="{Binding AddUpdateImageProductCommand}">
                     <Grid Height="160" Width="200">
                         <Image Stretch="Fill"
-                                   Source="{Binding Newproduct.Image}" />
+                                   Source="{Binding Currentproduct.Image, UpdateSourceTrigger=PropertyChanged}" />
                     </Grid>
                 </Button>
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
@@ -67,7 +67,7 @@
                          MaxWidth="500"
                          Validation.Error="Validation_Error">
                     <TextBox.Text>
-                        <Binding Path="Newproduct.Name"
+                        <Binding Path="Currentproduct.Name"
                                  ValidatesOnDataErrors="True"
                                  UpdateSourceTrigger="PropertyChanged"
                                  NotifyOnValidationError="True">
@@ -80,7 +80,7 @@
                 <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                           materialDesign:HintAssist.Hint="Danh mục"
                           ItemsSource="{Binding Source={StaticResource MainVM}, Path=ListType}"
-                          SelectedItem="{Binding Type_in_Combobox_AddProduct,  UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}"
+                          SelectedItem="{Binding Type_in_Combobox_AddProduct}"
                           DisplayMemberPath="Type"
                           FontSize="16"
                           MaxWidth="500"
@@ -93,7 +93,7 @@
                          Margin="70,5"
                          Validation.Error="Validation_Error">
                     <TextBox.Text>
-                        <Binding Path="Newproduct.Price"
+                        <Binding Path="Currentproduct.Price"
                                  StringFormat="{}{0:N0}"
                                  NotifyOnValidationError="True">
                             <Binding.ValidationRules>
@@ -112,7 +112,7 @@
                          Margin="70,5"
                          Validation.Error="Validation_Error">
                     <TextBox.Text>
-                        <Binding Path="Newproduct.Decription"
+                        <Binding Path="Currentproduct.Decription"
                                  ValidatesOnDataErrors="True"
                                  UpdateSourceTrigger="PropertyChanged"
                                  NotifyOnValidationError="True">
@@ -124,32 +124,17 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <Grid Margin="70,30"
+                <Grid Margin="100,30"
                       MaxWidth="500">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Button Height="50"
-                            Style="{StaticResource MaterialDesignOutlinedButton}"
-                            ToolTip="MaterialDesignOutlinedButton"
-                            Content="Hủy"
-                            Command="{Binding CancelAddProduct_Command}"
-                            Foreground="{StaticResource MainColor}"
-                            BorderBrush="{StaticResource MainColor}"
-                            FontSize="20"
-                            Margin="10" />
                     <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
                             Grid.Column="1"
                             Height="50"
-                            Command="{Binding AddProduct_Command_Command}"
-                            CommandParameter="{Binding IsValid, ElementName=UserControl}"
+                            Command="{Binding UpdateProduct_Command}"
                             HorizontalAlignment="Stretch"
                             Background="{StaticResource MainColor}"
                             BorderBrush="{StaticResource MainColor}"
                             Foreground="White"
-                            Margin="10"
-                            Content="Thêm"
+                            Content="Lưu"
                             FontSize="20">
                     </Button>
 

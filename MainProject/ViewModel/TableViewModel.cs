@@ -10,6 +10,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Data.Entity;
 
 namespace MainProject.ViewModel
 {
@@ -69,8 +70,7 @@ namespace MainProject.ViewModel
 
             using (var db = new mainEntities())
             {
-                var listtab = db.TABLEs.ToList();
-
+                var listtab = db.TABLEs.Include(p=>p.STATUS_TABLE).ToList();
                 if (listtab == null) return;
 
                 List<TABLECUSTOM> Tablecustoms = new List<TABLECUSTOM>();
@@ -79,11 +79,6 @@ namespace MainProject.ViewModel
                 {
                     Tablecustoms.Add(new TABLECUSTOM() { Total = 0, table = t, ListPro = null}) ;
                 }
-
-                //Testing color of table
-                //Tablecustoms[0].table.CurrentStatus = "Already";
-                //Tablecustoms[1].table.CurrentStatus = "Fix";
-                //Tablecustoms[2].table.CurrentStatus = "Normal";
 
                 ListTable = new ObservableCollection<TABLECUSTOM>(Tablecustoms);
                /* ListFloor = new ObservableCollection<int>(); */
@@ -197,7 +192,7 @@ namespace MainProject.ViewModel
                         Isbringtohome = false;
                     }
                     else
-                         if (!Isbringtohome) TableName = "Chọn bàn >";
+                         if (!Isbringtohome) TableName = "Chọn bàn";
                 }
             }
       
@@ -328,6 +323,7 @@ namespace MainProject.ViewModel
         public void OpenChooseTable( )
         {
             SelectTableView v = new SelectTableView();
+            v.DataContext = this;
             WindowService.Instance.OpenWindow(this, v);
         }
 
@@ -483,16 +479,18 @@ namespace MainProject.ViewModel
 
         public void Insert()
         {
-            TABLE tab = new TABLE() { ID_Status = 1, Name = ListTable.Count + 1 };
-            ListTable.Add(new TABLECUSTOM() { table = tab });
+            TABLE tab;
 
             using (var db = new mainEntities())
-            {             
+            {
+                int number = db.TABLEs.Count();
+                tab = new TABLE() { ID_Status = 1, Name = number == 0 ? 1 : db.TABLEs.Max(t => t.Name)+ 1 };
+
                 db.TABLEs.Add(tab);
                 db.SaveChanges();
             }
-            
 
+            ListTable.Add(new TABLECUSTOM() { table = tab });
         }
 
         ICommand UpdateStatusTableCommand

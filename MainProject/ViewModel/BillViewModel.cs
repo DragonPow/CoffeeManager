@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ using System.Windows.Input;
 
 namespace MainProject.MainWorkSpace.Bill
 {
-    public class BillViewModel : BaseViewModel
+    public class BillViewModel : BaseViewModel, IDataErrorInfo
     {
         #region Fields
 
@@ -34,6 +35,7 @@ namespace MainProject.MainWorkSpace.Bill
 
 
         #endregion
+        public string Error { get => null; }
 
 
         #region Properties
@@ -84,6 +86,7 @@ namespace MainProject.MainWorkSpace.Bill
                 if (_Total != value)
                 {
                     _Total = value;
+                    OnPropertyChanged("Refund");
                     OnPropertyChanged();
                 }
             }
@@ -139,22 +142,31 @@ namespace MainProject.MainWorkSpace.Bill
                 if (_GiveMoney != value)
                 {
                     _GiveMoney = value;
+                    OnPropertyChanged("Refund");
                     OnPropertyChanged();
-                    Refund = value - Total;
+                   
                 }
             }
         }
 
         public long Refund
         {
-            get { return _Refund; }
-            set
+            get => GiveMoney - Total;
+        }
+        public string this[string name]
+        {
+            get
             {
-                if (_Refund != value)
+                string result = null;
+
+                if (name == "Refund")
                 {
-                    _Refund = value;
-                    OnPropertyChanged();
+                    if (Refund < 0)
+                    {
+                        result = "Yêu cầu đưa thêm tiền";
+                    }
                 }
+                return result;
             }
         }
 
@@ -176,6 +188,7 @@ namespace MainProject.MainWorkSpace.Bill
                 return _PaymentCommand;
             }
         }
+
 
 
 
@@ -220,11 +233,7 @@ namespace MainProject.MainWorkSpace.Bill
 
         private void Payment(BillView view)
         {
-            if (GiveMoney == null || GiveMoney < Total)
-            {
-                WindowService.Instance.OpenMessageBox("Tiền khách đưa không đủ!", "Lỗi", System.Windows.MessageBoxImage.Error);
-                return;
-            }
+            if (!view.IsValid) return;
 
             CurrentBill.ID_Table = CurrentTable.table.ID;
             CurrentBill.TotalPrice = Total;

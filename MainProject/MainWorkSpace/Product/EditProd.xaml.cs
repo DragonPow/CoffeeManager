@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -14,25 +14,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MainProject.MainWorkSpace.Bill
+namespace MainProject.MainWorkSpace.Product
 {
     /// <summary>
-    /// Interaction logic for BillView.xaml
+    /// Interaction logic for EditProd.xaml
     /// </summary>
-    public partial class BillView : Window, INotifyPropertyChanged
+    public partial class EditProd : UserControl
     {
-        public BillView()
+        public EditProd()
         {
             InitializeComponent();
-            txtMoneyCustomer.PreviewTextInput += TxtMoneyCustomer_PreviewTextInput;
         }
-
-        private void TxtMoneyCustomer_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            if (e.Text.Any(c => !char.IsDigit(c))) e.Handled = true;
-            else e.Handled = false;
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public int ErrorCount { get; set; }
