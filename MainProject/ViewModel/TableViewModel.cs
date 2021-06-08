@@ -10,6 +10,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Data.Entity;
 
 namespace MainProject.ViewModel
 {
@@ -69,8 +70,7 @@ namespace MainProject.ViewModel
 
             using (var db = new mainEntities())
             {
-                var listtab = db.TABLEs.ToList();
-
+                var listtab = db.TABLEs.Include(p=>p.STATUS_TABLE).ToList();
                 if (listtab == null) return;
 
                 List<TABLECUSTOM> Tablecustoms = new List<TABLECUSTOM>();
@@ -79,11 +79,6 @@ namespace MainProject.ViewModel
                 {
                     Tablecustoms.Add(new TABLECUSTOM() { Total = 0, table = t, ListPro = null}) ;
                 }
-
-                //Testing color of table
-                //Tablecustoms[0].table.CurrentStatus = "Already";
-                //Tablecustoms[1].table.CurrentStatus = "Fix";
-                //Tablecustoms[2].table.CurrentStatus = "Normal";
 
                 ListTable = new ObservableCollection<TABLECUSTOM>(Tablecustoms);
                /* ListFloor = new ObservableCollection<int>(); */
