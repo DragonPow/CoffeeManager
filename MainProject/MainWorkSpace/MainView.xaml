@@ -126,15 +126,12 @@
                          materialDesign:ColorZoneAssist.Mode="PrimaryMid" >
                 <TabControl.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel >
-                            <TextBlock Text="" FontSize="18" 
-                                   FontWeight="Bold" 
+
+                        <TextBlock Text="{Binding Type}" FontSize="14" 
                                    Foreground="White" 
-                                   HorizontalAlignment="Center"/>
-                            <TextBlock Text="{Binding Type}" FontSize="14" 
-                                   Foreground="White"                      
-                                   HorizontalAlignment="Center"/>
-                        </StackPanel>
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
                     </DataTemplate>
                 </TabControl.ItemTemplate>
 
@@ -144,7 +141,7 @@
                         <Setter Property="MinWidth"
                             Value="120" />
                         <Setter Property="Height"
-                            Value="Auto" />
+                            Value="70" />
                         <Setter Property="Width"
                                 Value="Auto" />
                     </Style>

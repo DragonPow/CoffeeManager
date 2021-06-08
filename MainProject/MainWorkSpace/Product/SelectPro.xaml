@@ -8,7 +8,7 @@
              xmlns:main="clr-namespace:MainProject.MainWorkSpace"
              mc:Ignorable="d"
              Background="White"
-             d:DataContext="{d:DesignInstance Type=ViewModel:ProductViewModel}"
+             d:DataContext="{d:DesignInstance Type=main:MainViewModel}"
              d:DesignHeight="100"
              Width="450">
 
@@ -27,7 +27,8 @@
                   VerticalAlignment="Center"
                   IsChecked="{Binding IsChecked, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                   Margin="10"
-                  Command="{Binding DataContext.ClickCheckboxSelectedPro_Command, ElementName=Edit_Type}" />
+                  Command="{Binding DataContext.ClickCheckboxSelectedPro_Command, ElementName=Edit_Type}"
+                  CommandParameter="{Binding}"/>
         <Image Source="{Binding Image}"
                Grid.Column="1"
                Stretch="Fill"
