@@ -68,21 +68,9 @@ namespace MainProject.ViewModel
          /*   CurrentFloors = 1;*/
             TotalCurrentTable = 0;
 
-            using (var db = new mainEntities())
-            {
-                var listtab = db.TABLEs.Include(p=>p.STATUS_TABLE).ToList();
-                if (listtab == null) return;
-
-                List<TABLECUSTOM> Tablecustoms = new List<TABLECUSTOM>();
-
-                foreach (TABLE t in listtab)
-                {
-                    Tablecustoms.Add(new TABLECUSTOM() { Total = 0, table = t, ListPro = null}) ;
-                }
-
-                ListTable = new ObservableCollection<TABLECUSTOM>(Tablecustoms);
+            LoadTable();
+           
                /* ListFloor = new ObservableCollection<int>(); */
-            }
         }
         #endregion
 
@@ -322,8 +310,9 @@ namespace MainProject.ViewModel
 
         public void OpenChooseTable( )
         {
+            LoadTable();
+
             SelectTableView v = new SelectTableView();
-            v.DataContext = this;
             WindowService.Instance.OpenWindow(this, v);
         }
 
@@ -514,9 +503,27 @@ namespace MainProject.ViewModel
 
         }
 
-     
-                   
-        #endregion
 
+
+
+
+        #endregion
+        void LoadTable()
+        {
+            using (var db = new mainEntities())
+            {
+                var listtab = db.TABLEs.Include(p => p.STATUS_TABLE).ToList();
+                if (listtab == null) return;
+
+                List<TABLECUSTOM> Tablecustoms = new List<TABLECUSTOM>();
+
+                foreach (TABLE t in listtab)
+                {
+                    Tablecustoms.Add(new TABLECUSTOM() { Total = 0, table = t, ListPro = null });
+                }
+
+                ListTable = new ObservableCollection<TABLECUSTOM>(Tablecustoms);
+            }
+        }
     }
 }
