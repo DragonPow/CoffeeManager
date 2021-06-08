@@ -21,7 +21,7 @@
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"/>
             <Button Background="Transparent" BorderBrush="Transparent" Margin="10" HorizontalAlignment="Right"
-                    Command="{Binding CloseEditCategory_Command}">
+                    Command="{Binding CloseViewAddCategory_Command}">
                 <materialDesign:PackIcon Kind="Close" Width="25" Height="25" />
 
             </Button>

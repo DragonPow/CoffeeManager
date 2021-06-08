@@ -51,8 +51,8 @@ namespace MainProject.MainWorkSpace
         public ProductViewModel Productviewmodel { get => _Productviewmodel; set { if (_Productviewmodel != value) { _Productviewmodel = value; OnPropertyChanged(); } } }
         public TYPE_PRODUCT CurrentType { get => _CurrentType; set { if (_CurrentType != value) { _CurrentType = value; OnPropertyChanged();  Productviewmodel.Type = value; } } }
         public TableViewModel Tableviewmodel { get => _Tableviewmodel; set { if (_Tableviewmodel != value) { _Tableviewmodel = value; OnPropertyChanged(); } } }
-        public TYPE_PRODUCT TypeInEditCATEGORYCombobox { get => _TypeInEditCATEGORYCombobox; set { if (_TypeInEditCATEGORYCombobox != value) { _TypeInEditCATEGORYCombobox = value; OnPropertyChanged(); EditTypeInEditCatefory = value.Type; LoadProductBYType_EditType(); } } }
-        public string EditTypeInEditCatefory { get => _EditTypeInEditCatefory; set { if (_EditTypeInEditCatefory != value) { _EditTypeInEditCatefory = value; TypeInEditCATEGORYCombobox.Type = value; OnPropertyChanged(); } } }
+        public TYPE_PRODUCT TypeInEditCATEGORYCombobox { get => _TypeInEditCATEGORYCombobox; set { if (_TypeInEditCATEGORYCombobox != value) { _TypeInEditCATEGORYCombobox = value; OnPropertyChanged(); if (value != null) { EditTypeInEditCatefory = value.Type; LoadProductBYType_EditType(); } } } }
+        public string EditTypeInEditCatefory { get => _EditTypeInEditCatefory; set { if (_EditTypeInEditCatefory != value) { _EditTypeInEditCatefory = value; OnPropertyChanged(); } } }
         public string NameNewTypeProduct { get => _NameNewTypeProduct; set { if (_NameNewTypeProduct != value) { _NameNewTypeProduct = value; OnPropertyChanged(); } } }
         public ObservableCollection<TYPE_PRODUCT> ListType
         {
@@ -168,7 +168,7 @@ namespace MainProject.MainWorkSpace
         {
             WindowService.Instance.OpenWindowWithoutBorderControl(this, new NewType());           
 
-            Productviewmodel.LoadProductByType(CurrentType.Type);
+            Productviewmodel.LoadProductByType(CurrentType);
 
         }
 
@@ -248,12 +248,11 @@ namespace MainProject.MainWorkSpace
 
         public void OpenViewEditCategory()
         {
-
-            /*TypeInEditCATEGORYCombobox = CurrentType;*/
+            ListType[0] = null;
 
             WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditType());
 
-            Productviewmodel.LoadProductByType(CurrentType.Type);
+            Productviewmodel.LoadProductByType(CurrentType);
 
         }
 
@@ -273,17 +272,21 @@ namespace MainProject.MainWorkSpace
 
         public void SaveEditCategory(object a)
         {
+
+            if (TypeInEditCATEGORYCombobox == null) return; 
+
             if (EditTypeInEditCatefory == "")
             {
                 WindowService.Instance.OpenMessageBox("Vui lòng nhập tên danh mục!", "Lỗi", System.Windows.MessageBoxImage.Error);
                 return;
             }
+
+            TypeInEditCATEGORYCombobox.Type = EditTypeInEditCatefory;
+
             using (var db = new mainEntities())
             {
                 var type = db.TYPE_PRODUCT.Where(t => t.ID == TypeInEditCATEGORYCombobox.ID).FirstOrDefault();
-
                 type = TypeInEditCATEGORYCombobox;               
-
 
                 var list = db.PRODUCTs.Where(p => (p.ID_Type == type.ID || p.ID_Type == null)).ToList();
                 if (list == null) return;
@@ -294,10 +297,9 @@ namespace MainProject.MainWorkSpace
                     p.ID_Type = Productviewmodel.ListPoduct.ElementAt(i).ID_Type;
                     ++i;
                 }
-               
-
-                
+                               
                 db.SaveChanges();
+                CloseEditCategory();
             }
 
         }
@@ -319,12 +321,10 @@ namespace MainProject.MainWorkSpace
             if (Productviewmodel.Currentproduct.ID_Type == null)
             {
                 Productviewmodel.Currentproduct.ID_Type = TypeInEditCATEGORYCombobox.ID;
-
             }
             else
             {
                 Productviewmodel.Currentproduct.ID_Type = null;
-
             }
         }
         public ICommand CloseEditCategory_Command
@@ -341,10 +341,12 @@ namespace MainProject.MainWorkSpace
 
 
         public void CloseEditCategory()
-        {
+        {           
             Window window = WindowService.Instance.FindWindowbyTag("Edit category").First();
             window.Close();
-            Productviewmodel.LoadProductByType(CurrentType.Type);
+
+            Productviewmodel.LoadProductByType(CurrentType);
+            ListType[0] = new TYPE_PRODUCT() { Type = "Tất cả", ID = new long() };
         }
 
 

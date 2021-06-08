@@ -80,7 +80,7 @@
                 <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                           materialDesign:HintAssist.Hint="Danh mục"
                           ItemsSource="{Binding Source={StaticResource MainVM}, Path=ListType}"
-                          SelectedItem="{Binding Type_in_Combobox_AddPro}"
+                          SelectedItem="{Binding Type_in_Combobox_AddProduct,  UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}"
                           DisplayMemberPath="Type"
                           FontSize="16"
                           MaxWidth="500"
