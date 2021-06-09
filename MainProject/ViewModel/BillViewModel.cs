@@ -294,7 +294,8 @@ namespace MainProject.MainWorkSpace.Bill
 
             view.Close();
 
-            //Xuất đơn ra PDF  
+            //Xuất đơn ra PDF
+            PrintPDF.Instance.createBill(CurrentBill);
         }
     }
       /*  private void LoadDiscount()
