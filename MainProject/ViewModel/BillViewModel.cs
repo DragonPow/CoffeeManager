@@ -235,6 +235,12 @@ namespace MainProject.MainWorkSpace.Bill
         {
             if (!view.IsValid) return;
 
+            if ( Refund < 0)
+            {
+                WindowService.Instance.OpenMessageBox("Tiền khách đưa không đủ!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                return;
+            }
+
             CurrentBill.ID_Table = CurrentTable.table.ID;
             CurrentBill.TotalPrice = Total;
 

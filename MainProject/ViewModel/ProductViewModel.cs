@@ -172,9 +172,30 @@ namespace MainProject.ViewModel
             {
                 try
                 {
-                    TYPE_PRODUCT type = db.TYPE_PRODUCT.Where(t => (t.Type == Type_in_Combobox_AddProduct.Type)).FirstOrDefault();
+                   
+                    if (Newproduct.Name == null)
+                    {
+                        WindowService.Instance.OpenMessageBox("Vui lòng nhập tên sản phẩm!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                        return;
+                    }
 
-                    if (type == null) Newproduct.TYPE_PRODUCT = null;
+                    if (Type_in_Combobox_AddProduct == null)
+                    {
+                        WindowService.Instance.OpenMessageBox("Vui lòng chọn danh mục!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                        return;
+                    }
+
+                    if (Newproduct.Price == 0)
+                    {
+                        WindowService.Instance.OpenMessageBox("Vui lòng nhập giá sản phẩm!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                        return;
+                    }
+
+                    TYPE_PRODUCT type;
+
+                    type = db.TYPE_PRODUCT.Where(t => (t.Type == Type_in_Combobox_AddProduct.Type)).FirstOrDefault();
+
+                    if (type == null) Newproduct.ID_Type = null;
                     else
                         Newproduct.ID_Type = type.ID;
 
