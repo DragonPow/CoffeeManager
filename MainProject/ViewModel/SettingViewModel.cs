@@ -4,11 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace MainProject.ViewModel
 {
     class SettingViewModel : BaseViewModel, IMainWorkSpace
     {
+        public enum ModeButton
+        {
+            edit = 1,
+            save = 2,
+        }
+
         public string NameWorkSpace => "Thông tin";
         private const PackIconKind _iconDisplay = PackIconKind.AccountOutline;
         public PackIcon IconDisplay
@@ -18,5 +25,109 @@ namespace MainProject.ViewModel
                 return new PackIcon() { Kind = _iconDisplay, Width = 30, Height = 30 };
             }
         }
+
+        #region fields
+
+        private string _nameStore;
+        private string _numberPhone;
+        private string _address;
+
+        ModeButton _mode_btn;
+        ICommand _Change_data_store;
+        ICommand _Save_Data_Store;
+        #endregion
+
+        #region propertities
+        public string NameStore
+        {
+            get => _nameStore;
+            set
+            {
+                if (_nameStore != value)
+                {
+                    _nameStore = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string NumberPhone
+        {
+            get => _numberPhone;
+            set
+            {
+                if (_numberPhone != value)
+                {
+                    _numberPhone = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string Address
+        {
+            get => _address;
+            set
+            {
+                if (_address != value)
+                {
+                    _address = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public ModeButton Mode_btn
+        {
+            get => _mode_btn;
+            set
+            {
+                if (value != _mode_btn)
+                {
+                    _mode_btn = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        #endregion
+
+        #region Commnand
+
+        public ICommand Save_Data_Store
+        {
+            get
+            {
+                if (_Save_Data_Store == null)
+                {
+                    _Save_Data_Store = new RelayingCommand<object>(a =>Save_data_store());
+                }
+                return _Save_Data_Store;
+            }
+        }
+
+        private void Save_data_store()
+        {
+            Mode_btn = ModeButton.save;
+        }
+
+        public ICommand Change_Data_Store
+        {
+            get
+            {
+                if (_Change_data_store == null)
+                {
+                    _Change_data_store = new RelayingCommand<object>(a => Change_data_store());
+                }
+                return _Change_data_store;
+            }
+        }
+
+        private void Change_data_store()
+        {
+            Mode_btn = ModeButton.edit;
+            
+        }
+        #endregion
     }
 }

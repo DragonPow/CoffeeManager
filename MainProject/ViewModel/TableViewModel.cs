@@ -68,21 +68,9 @@ namespace MainProject.ViewModel
          /*   CurrentFloors = 1;*/
             TotalCurrentTable = 0;
 
-            using (var db = new mainEntities())
-            {
-                var listtab = db.TABLEs.Include(p=>p.STATUS_TABLE).ToList();
-                if (listtab == null) return;
-
-                List<TABLECUSTOM> Tablecustoms = new List<TABLECUSTOM>();
-
-                foreach (TABLE t in listtab)
-                {
-                    Tablecustoms.Add(new TABLECUSTOM() { Total = 0, table = t, ListPro = null}) ;
-                }
-
-                ListTable = new ObservableCollection<TABLECUSTOM>(Tablecustoms);
+            LoadTable();
+           
                /* ListFloor = new ObservableCollection<int>(); */
-            }
         }
         #endregion
 
@@ -322,8 +310,9 @@ namespace MainProject.ViewModel
 
         public void OpenChooseTable( )
         {
+            LoadTable();
+
             SelectTableView v = new SelectTableView();
-            v.DataContext = this;
             WindowService.Instance.OpenWindow(this, v);
         }
 
@@ -443,23 +432,27 @@ namespace MainProject.ViewModel
 
                 ListTable.RemoveAt(number);
 
-            for (int i = number; i < ListTable.Count; ++i)
-                --ListTable[i].table.Name;
+            /*for (int i = number; i < ListTable.Count; ++i)
+                --ListTable[i].table.Name;*/
 
             using (var db = new mainEntities())
             {
-                TABLE table = db.TABLEs.Where(d => (d.Name == number /*&& d.Floor == CurrentFloors*/)).FirstOrDefault();
+                long max = db.TABLEs.Max(p => p.ID);
+
+                db.TABLEs.Remove(db.TABLEs.Where( t => t.ID == max).FirstOrDefault());
+
+                /*TABLE table = db.TABLEs.Where(d => (d.Name == number *//*&& d.Floor == CurrentFloors*//*)).FirstOrDefault();
 
                 if (table != null)
                 {
-                    var TABLEs = db.TABLEs.Where(t => t.Name > number /*&& t.Floor == CurrentFloors*/);
+                    var TABLEs = db.TABLEs.Where(t => t.Name > number *//*&& t.Floor == CurrentFloors*//*);
 
                     foreach (TABLE tab in TABLEs)
                     {
                         --tab.Name;
                     }
 
-                }
+                }*/
 
                 db.SaveChanges();
             }
@@ -510,9 +503,27 @@ namespace MainProject.ViewModel
 
         }
 
-     
-                   
-        #endregion
 
+
+
+
+        #endregion
+        void LoadTable()
+        {
+            using (var db = new mainEntities())
+            {
+                var listtab = db.TABLEs.Include(p => p.STATUS_TABLE).ToList();
+                if (listtab == null) return;
+
+                List<TABLECUSTOM> Tablecustoms = new List<TABLECUSTOM>();
+
+                foreach (TABLE t in listtab)
+                {
+                    Tablecustoms.Add(new TABLECUSTOM() { Total = 0, table = t, ListPro = null });
+                }
+
+                ListTable = new ObservableCollection<TABLECUSTOM>(Tablecustoms);
+            }
+        }
     }
 }

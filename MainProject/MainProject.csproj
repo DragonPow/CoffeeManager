@@ -216,7 +216,7 @@
     <Compile Include="SettingWorkSpace\RuleView.xaml.cs">
       <DependentUpon>RuleView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SettingWorkSpace\SettingView.xaml.cs">
+    <Compile Include="SettingWorkSpace\SettingView.cs">
       <DependentUpon>SettingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="StatisticWorkSpace\Converter\ChartLabelConverter.cs" />
