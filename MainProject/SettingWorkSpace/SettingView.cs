@@ -24,7 +24,13 @@ namespace MainProject.SettingWorkSpace
         public SettingView()
         {
             InitializeComponent();
+            txb_numberPhone.PreviewTextInput += Txb_numberPhone_PreviewTextInput;
         }
 
+        private void Txb_numberPhone_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (e.Text.Any(c => !char.IsDigit(c))) e.Handled = true;
+            else e.Handled = false;
+        }
     }
 }
