@@ -312,14 +312,18 @@ namespace MainProject.ViewModel
                 }
             }
 
-            foreach (var p in Tableviewmodel.Currentlistdetailpro)
+            if (Tableviewmodel.Currentlistdetailpro != null)
             {
-                if (p.Pro == Currentproduct)
+                foreach (var p in Tableviewmodel.Currentlistdetailpro)
                 {
-                    Tableviewmodel.Currentlistdetailpro.Remove(p);
-                    return;
+                    if (p.Pro == Currentproduct)
+                    {
+                        Tableviewmodel.Currentlistdetailpro.Remove(p);
+                        return;
+                    }
                 }
-            }
+            }    
+            
 
             ListPoduct.Remove(Currentproduct);           
         }  
