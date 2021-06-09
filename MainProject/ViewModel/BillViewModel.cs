@@ -257,10 +257,14 @@ namespace MainProject.MainWorkSpace.Bill
             CurrentBill = new BILL();
             CurrentTable = Table;
 
-            foreach (var p in CurrentTable.ListPro)
+            using ( var db = new mainEntities())
             {
-                CurrentBill.DETAILBILLs.Add(new DETAILBILL() { Quantity = p.Quantity, ID_Product = p.Pro.ID, PRODUCT = p.Pro });
+                foreach (var p in CurrentTable.ListPro)
+                {
+                    CurrentBill.DETAILBILLs.Add(new DETAILBILL() { Quantity = p.Quantity, ID_Product = p.Pro.ID});
+                }
             }
+            
 
             Discount = 0;
             CurrentBill.CheckoutDay = DateTime.Now;
