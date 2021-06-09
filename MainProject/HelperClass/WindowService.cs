@@ -74,7 +74,21 @@ namespace MainProject {
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             window.DataContext = ViewModel;
             window.Tag = View.Tag;
+            window.WindowStyle = WindowStyle.None;
+            window.ShowDialog();
+        }
+
+        public void OpenWindowFullscreen(object ViewModel, UserControl View)
+        {
+            var window = new Window();
+
+            window.Content = View;
+            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            window.DataContext = ViewModel;
             window.WindowState = WindowState.Maximized;
+            window.Tag = View.Tag;
+            window.Width = SystemParameters.PrimaryScreenWidth;
+            window.Height = SystemParameters.PrimaryScreenHeight;
             window.WindowStyle = WindowStyle.None;
             window.ShowDialog();
         }

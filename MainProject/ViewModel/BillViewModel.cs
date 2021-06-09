@@ -19,7 +19,6 @@ namespace MainProject.MainWorkSpace.Bill
         private int _Discount;
         private long _Total;
         private TABLECUSTOM _Current_table;
-        private bool IsDiscount = false;
         private int _BillCode;
 
         private long _GiveMoney;
@@ -51,7 +50,6 @@ namespace MainProject.MainWorkSpace.Bill
                 {
                     _CurrentBill = value;
                     OnPropertyChanged();
-
                 }
             }
         }
@@ -143,8 +141,7 @@ namespace MainProject.MainWorkSpace.Bill
                 {
                     _GiveMoney = value;
                     OnPropertyChanged("Refund");
-                    OnPropertyChanged();
-                   
+                    OnPropertyChanged();                  
                 }
             }
         }
@@ -170,6 +167,47 @@ namespace MainProject.MainWorkSpace.Bill
             }
         }
 
+        public string StoreName
+        {
+            get
+            {
+                using ( var db = new mainEntities())
+                {
+                    var name = db.PARAMETERs.Where(p => p.NAME == "StoreName").FirstOrDefault();
+                    if (name != null)
+                        return name.Value;
+                }
+                return null;
+            }
+        }
+
+        public string StorePhone
+        {
+            get
+            {
+                using (var db = new mainEntities())
+                {
+                    var name = db.PARAMETERs.Where(p => p.NAME == "StorePhone").FirstOrDefault();
+                    if (name != null)
+                        return name.Value;
+                }
+                return null;
+            }
+        }
+
+        public string StoreAddress
+        {
+            get
+            {
+                using (var db = new mainEntities())
+                {
+                    var name = db.PARAMETERs.Where(p => p.NAME == "StoreAddress").FirstOrDefault();
+                    if (name != null)
+                        return name.Value;
+                }
+                return null;
+            }
+        }
         #endregion
 
 
@@ -234,6 +272,12 @@ namespace MainProject.MainWorkSpace.Bill
         private void Payment(BillView view)
         {
             if (!view.IsValid) return;
+
+            if ( Refund < 0)
+            {
+                WindowService.Instance.OpenMessageBox("Tiền khách đưa không đủ!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                return;
+            }
 
             CurrentBill.ID_Table = CurrentTable.table.ID;
             CurrentBill.TotalPrice = Total;
