@@ -26,7 +26,7 @@
                     BorderBrush="Transparent"
                     Margin="10"
                     HorizontalAlignment="Right"
-                    Command="{Binding ExitDetailProduct}">
+                    Command="{Binding CloseViewChooseTableCommand}">
                 <materialDesign:PackIcon Kind="Close"
                                          Width="25"
                                          Height="25" />

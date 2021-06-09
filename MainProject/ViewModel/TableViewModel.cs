@@ -313,7 +313,7 @@ namespace MainProject.ViewModel
             LoadTable();
 
             SelectTableView v = new SelectTableView();
-            WindowService.Instance.OpenWindow(this, v);
+            WindowService.Instance.OpenWindowFullscreen(this, v);
         }
 
         public ICommand CloseViewChooseTableCommand
