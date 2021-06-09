@@ -12,7 +12,7 @@
              mc:Ignorable="d"
              x:Name="Edit_Pro"
              Tag="EditPro"
-             d:DataContext="{d:DesignInstance Type=viewmodel:ProductViewModel}"
+               d:DataContext="{d:DesignInstance Type=viewmodel:ProductViewModel}"
              Height="520"
              Width="400">
     <UserControl.Resources>
@@ -82,7 +82,7 @@
                 <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                           materialDesign:HintAssist.Hint="Danh mục"
                           ItemsSource="{Binding Source={StaticResource MainVM}, Path=ListType}"
-                          SelectedItem="{Binding Type_in_Combobox_AddProduct}"
+                          SelectedItem="{Binding Currentproduct.TYPE_PRODUCT, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                           DisplayMemberPath="Type"
                           FontSize="13"
                           MaxWidth="500"
