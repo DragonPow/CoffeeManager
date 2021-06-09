@@ -414,7 +414,7 @@ namespace MainProject.ViewModel
 
         public void LoadViewUpdate()
         {
-
+            Type_in_Combobox_AddProduct = Currentproduct.TYPE_PRODUCT;
             WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditProd());
         }
 
