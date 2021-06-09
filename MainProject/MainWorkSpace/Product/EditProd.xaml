@@ -32,7 +32,7 @@
             <Button Background="Transparent"
                     BorderBrush="Transparent"
                     Margin="5"
-                    Command="{Binding ExitUpdateProduct_Command}"
+                    Command="{Binding CancelUpdateProduct_Command}"
                     HorizontalAlignment="Right">
                 <materialDesign:PackIcon Kind="Close"
                                          Width="20"
@@ -82,7 +82,8 @@
                 <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                           materialDesign:HintAssist.Hint="Danh mục"
                           ItemsSource="{Binding Source={StaticResource MainVM}, Path=ListType}"
-                          SelectedItem="{Binding Currentproduct.TYPE_PRODUCT, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                          SelectedItem="{Binding Type_in_Combobox_AddProduct, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"            
+                          SelectedIndex="{Binding IndexTypeInComboboxEditPro}"
                           DisplayMemberPath="Type"
                           FontSize="13"
                           MaxWidth="500"
