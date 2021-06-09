@@ -200,6 +200,7 @@
                 FontSize="20"
                 HorizontalAlignment="Center"
                 Background="{StaticResource MainColor}"
+                BorderBrush="{StaticResource MainColor}"
                 Command="{Binding PaymentCommand}"
                 CommandParameter="{Binding ElementName=MainWindow}"
                 Margin="0 10 0 30"

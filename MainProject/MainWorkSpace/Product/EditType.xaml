@@ -13,8 +13,8 @@
              Tag="Edit category"
              Name="Edit_Type"
              d:DataContext="{d:DesignInstance Type=main:MainViewModel}"
-             Height="700"
-             Width="600">
+             Height="650"
+             Width="500">
 
     <DockPanel>
         <Grid DockPanel.Dock="Top"
@@ -27,9 +27,9 @@
                        Foreground="White"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"/>
-            <Button Background="Transparent" BorderBrush="Transparent" Margin="10" HorizontalAlignment="Right"
+            <Button Background="Transparent" BorderBrush="Transparent" Margin="5" HorizontalAlignment="Right"
                     Command="{Binding CloseEditCategory_Command}">
-                <materialDesign:PackIcon Kind="Close" Width="25" Height="25" />
+                <materialDesign:PackIcon Kind="Close" Width="20" Height="20" />
 
             </Button>
         </Grid>
@@ -41,7 +41,7 @@
                           SelectedItem="{Binding TypeInEditCATEGORYCombobox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}"
                           DisplayMemberPath="Type"
                           IsSynchronizedWithCurrentItem="True"
-                          FontSize="14"
+                          FontSize="13"
                           MaxWidth="500"
                           Height="50"
                           Margin="70,20,70,20" />
@@ -54,7 +54,7 @@
             <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                      materialDesign:HintAssist.Hint="Tên mới"
                      Text="{Binding EditTypeInEditCatefory,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                     FontSize="14"
+                     FontSize="13"
                      Margin="70,10"
                      Height="50"
                      MaxWidth="500" />
@@ -83,7 +83,7 @@
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical"
-                                    Margin="60,20"
+                                    Margin="60,10"
                                     MaxWidth="500"
                                     Height="250"></StackPanel>
                     </ItemsPanelTemplate>
@@ -96,7 +96,7 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
-                        Height="50"
+                        Height="40"
                         Command="{Binding SaveEditCategory_Command}"
                         HorizontalAlignment="Stretch"
                         Background="{StaticResource MainColor}"
@@ -107,7 +107,7 @@
                         Content="Lưu"
                         FontSize="14">
                 </Button>
-                <Button Height="50"
+                <Button Height="40"
                         Style="{StaticResource MaterialDesignOutlinedButton}"
                         ToolTip="MaterialDesignOutlinedButton"
                         Content="Xóa danh mục"

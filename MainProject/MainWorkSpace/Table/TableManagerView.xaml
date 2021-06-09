@@ -10,7 +10,7 @@
              d:DataContext="{d:DesignInstance Type=ViewModel:TableViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">
     <ListView ItemsSource="{Binding ListTable}"
-                  SelectedItem="{Binding CurrentTable, Mode=TwoWay}"
+              SelectedItem="{Binding CurrentTable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
               ScrollViewer.HorizontalScrollBarVisibility="Disabled">
         <ListView.ItemTemplate>
             <DataTemplate>
@@ -24,8 +24,8 @@
         </ListView.ItemsPanel>
         <ListView.ContextMenu>
             <ContextMenu>
-                <MenuItem Header="Khách rời bàn" Command="{Binding}"/>
-                <MenuItem Header="Sửa chữa" Command="{Binding}"/>
+               
+                <MenuItem Header="Sửa chữa" Command="{Binding DataContext.UpdateStatusTableCommand,ElementName=TableManager_View}"/>
             </ContextMenu>
         </ListView.ContextMenu>
     </ListView>

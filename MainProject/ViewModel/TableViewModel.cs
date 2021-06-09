@@ -308,12 +308,12 @@ namespace MainProject.ViewModel
             }
         }
 
-        public void OpenChooseTable( )
+        public void OpenChooseTable()
         {
             LoadTable();
 
             SelectTableView v = new SelectTableView();
-            WindowService.Instance.OpenWindowFullscreen(this, v);
+            WindowService.Instance.OpenWindowWithoutBorderControl(this, v);
         }
 
         public ICommand CloseViewChooseTableCommand

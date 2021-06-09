@@ -10,7 +10,7 @@
              d:DataContext="{d:DesignInstance Type=ViewModel:TableViewModel}"
              xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             d:DesignHeight="520" d:DesignWidth="900" Background="White">
+             Height="650" Width="1050" Background="White">
     <DockPanel>
         <Grid DockPanel.Dock="Top"
               Background="{StaticResource MainColor}">
@@ -31,16 +31,6 @@
                                          Width="25"
                                          Height="25" />
             </Button>
-            <Button BorderBrush="Transparent"
-                    Style="{StaticResource MaterialDesignOutlinedButton}"
-                    ToolTip="MaterialDesignOutlinedButton"
-                    Content="LƯU"
-                    FontSize="20"
-                    Foreground="#E6FFED"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Visibility="Hidden"
-                    Command="{Binding UpdateProduct_Command}" />
         </Grid>
         <local:TableView DataContext="{Binding}"></local:TableView>
     </DockPanel>
