@@ -126,7 +126,7 @@ namespace MainProject.MainWorkSpace
 
         public void AddEditCategory()
         {
-            if (NameNewTypeProduct == null)
+            if (NameNewTypeProduct == null || NameNewTypeProduct =="")
             {
                 WindowService.Instance.OpenMessageBox("Vui lòng nhập tên danh mục!", "Lỗi", System.Windows.MessageBoxImage.Error);
                 return;
@@ -206,7 +206,7 @@ namespace MainProject.MainWorkSpace
 
         public void DeleteTypeEditCategory()
         {
-            if (TypeInEditCATEGORYCombobox == null) return;
+            if (TypeInEditCATEGORYCombobox == null || TypeInEditCATEGORYCombobox.ID == 0) return;
 
             using (var db = new mainEntities())
             {
@@ -227,7 +227,6 @@ namespace MainProject.MainWorkSpace
 
                 TypeInEditCATEGORYCombobox = ListType.ElementAt(0);
                 ListType.RemoveAt(number);
-
 
             }
 
