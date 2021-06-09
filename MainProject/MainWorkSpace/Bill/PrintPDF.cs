@@ -68,7 +68,7 @@ namespace MainProject.MainWorkSpace.Bill
             }
 
             os = new FileStream(dest, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
-            defaultSize = new Rectangle(PageSize.A5.Width, 280 + info.DETAILBILLs.Count * 24 + info.DETAILBILLs.Count(i => i.PRODUCT.Name.Length > 14) * 15);
+            defaultSize = new Rectangle(PageSize.A5.Width, 300 + info.DETAILBILLs.Count * 24 + info.DETAILBILLs.Count(i => i.PRODUCT.Name.Length > 14) * 15);
             doc = new Document(defaultSize);
             doc.SetMargins(0, 0, 0, 0);
 
@@ -105,7 +105,6 @@ namespace MainProject.MainWorkSpace.Bill
         }
         private Paragraph createTitle()
         {
-            int spaceTwoParagraph = 10;
             Paragraph title = new Paragraph();
             title.Add(new Paragraph(_name, new Font(basef, 18, Font.BOLD))
             { Alignment = Element.ALIGN_CENTER, SpacingAfter = 10 });
@@ -207,7 +206,7 @@ namespace MainProject.MainWorkSpace.Bill
             columns[0] = 25;
             columns[1] = 55;
             table.SetWidths(columns);
-            table.AddCell(new PdfPCell(new Phrase("Số bàn: " + info.TABLE.Name, font)) { HorizontalAlignment = PdfPCell.ALIGN_LEFT, Border = PdfPCell.NO_BORDER });
+            table.AddCell(new PdfPCell(new Phrase("Số bàn: " + (info.TABLE != null? info.TABLE.Name.ToString() : "Mang về"), font)) { HorizontalAlignment = PdfPCell.ALIGN_LEFT, Border = PdfPCell.NO_BORDER });
             table.AddCell(new PdfPCell(new Phrase("Ngày mua" + info.CheckoutDay.ToString(" hh:mm:ss, dd/MM/yyyy"), font)) { HorizontalAlignment = PdfPCell.ALIGN_RIGHT, Border = PdfPCell.NO_BORDER });
             table.SpacingAfter = 20;
             return table;
