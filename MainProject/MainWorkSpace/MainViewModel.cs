@@ -249,6 +249,8 @@ namespace MainProject.MainWorkSpace
         {
             ListType[0] = null;
 
+            Productviewmodel.ListPoduct = null;
+
             WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditType());
 
             Productviewmodel.LoadProductByType(CurrentType);
