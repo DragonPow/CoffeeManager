@@ -1,4 +1,5 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using MainProject.Model;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,21 @@ namespace MainProject.ViewModel
                 return new PackIcon() { Kind = _iconDisplay, Width = 30, Height = 30 };
             }
         }
+
+        #region init
+        public SettingViewModel()
+        {
+            using (var context = new mainEntities())
+            {
+                var st = context.PARAMETERs.Where(p => p.NAME == "StoreName").FirstOrDefault();
+                NameStore = st.Value.ToString();
+                st = context.PARAMETERs.Where(p => p.NAME == "StorePhone").FirstOrDefault();
+                NumberPhone = st.Value.ToString(); 
+                st = context.PARAMETERs.Where(p => p.NAME == "StoreAddress").FirstOrDefault();
+                Address = st.Value.ToString();
+            }
+        }
+        #endregion
 
         #region fields
 
@@ -109,6 +125,16 @@ namespace MainProject.ViewModel
         private void Save_data_store()
         {
             Mode_btn = ModeButton.save;
+            using (var context = new mainEntities())
+            {
+                var st = context.PARAMETERs.Where(p => p.NAME == "StoreName").FirstOrDefault();
+                st.Value = NameStore;
+                st = context.PARAMETERs.Where(p => p.NAME == "StorePhone").FirstOrDefault();
+                st.Value = NumberPhone;
+                st = context.PARAMETERs.Where(p => p.NAME == "StoreAddress").FirstOrDefault();
+                st.Value = Address;
+                context.SaveChanges();
+            }
         }
 
         public ICommand Change_Data_Store
