@@ -25,11 +25,9 @@ namespace MainProject.ViewModel
         private ObservableCollection<PRODUCT> _ListProduct;
         private PRODUCT _Currentproduct;
 
-        private TYPE_PRODUCT _Type;
-        private TYPE_PRODUCT _TypeInEditCATEGORYCombobox;
+        private TYPE_PRODUCT _Type;    
         private TYPE_PRODUCT _Type_in_Combobox_AddProduct;
-
-        private string _EditTypeInEditCatefory;
+      
         private string _SearchProduct;
         private string _Type_in_Combobox_AddPro;
         private PRODUCT _Newproduct;
@@ -313,8 +311,18 @@ namespace MainProject.ViewModel
 
                 }
             }
-            ListPoduct.Remove(Currentproduct);
-        }
+
+            foreach (var p in Tableviewmodel.Currentlistdetailpro)
+            {
+                if (p.Pro == Currentproduct)
+                {
+                    Tableviewmodel.Currentlistdetailpro.Remove(p);
+                    return;
+                }
+            }
+
+            ListPoduct.Remove(Currentproduct);           
+        }  
 
         public ICommand SearchByName_Command
         {
