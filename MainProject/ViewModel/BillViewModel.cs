@@ -261,7 +261,7 @@ namespace MainProject.MainWorkSpace.Bill
             {
                 foreach (var p in CurrentTable.ListPro)
                 {
-                    CurrentBill.DETAILBILLs.Add(new DETAILBILL() { Quantity = p.Quantity, ID_Product = p.Pro.ID});
+                    CurrentBill.DETAILBILLs.Add(new DETAILBILL() { Quantity = p.Quantity, UnitPrice = p.Pro.Price, PRODUCT = db.PRODUCTs.FirstOrDefault(i => i.ID == p.Pro.ID) });
                 }
             }
             
@@ -277,17 +277,16 @@ namespace MainProject.MainWorkSpace.Bill
         {
             if (!view.IsValid) return;
 
-            if ( Refund < 0)
-            {
-                WindowService.Instance.OpenMessageBox("Tiền khách đưa không đủ!", "Lỗi", System.Windows.MessageBoxImage.Error);
-                return;
-            }
-
             CurrentBill.ID_Table = CurrentTable.table.ID;
             CurrentBill.TotalPrice = Total;
+            CurrentBill.MoneyCustomer = GiveMoney;
 
             using (var db = new mainEntities())
             {
+                foreach (var i in CurrentBill.DETAILBILLs)
+                {
+                    db.Entry(i.PRODUCT).State = System.Data.Entity.EntityState.Unchanged;
+                }
                 db.BILLs.Add(CurrentBill);
                 db.SaveChanges();
             }
@@ -297,6 +296,9 @@ namespace MainProject.MainWorkSpace.Bill
             IsClose = true;
 
             view.Close();
+
+            //Đổi giá trị bàn thành "Already"
+            CurrentTable.table.CurrentStatus = "Already";
 
             //Xuất đơn ra PDF
             PrintPDF.Instance.createBill(CurrentBill);

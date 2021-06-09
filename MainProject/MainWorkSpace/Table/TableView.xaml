@@ -12,7 +12,7 @@
              xmlns:test="clr-namespace:MainProject"
              d:DesignHeight="480" d:DesignWidth="700">
     <ListView ItemsSource="{Binding ListTable, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                  SelectedItem="{Binding CurrentTable, Mode=TwoWay}"
+              SelectedItem="{Binding CurrentTable, Mode=TwoWay}"
               ScrollViewer.HorizontalScrollBarVisibility="Disabled">
         <ListView.ItemTemplate>
             <DataTemplate>

@@ -74,7 +74,7 @@
                 <TextBlock Grid.Row="1"
                            Grid.Column="1">
                     <Run>Bàn</Run>
-                    <Run Text="{Binding CurrentTable.table.Number, StringFormat=': {0}'}" />
+                    <Run Text="{Binding CurrentTable.table.Name, StringFormat=': {0}'}" />
                 </TextBlock>
                 <TextBlock Grid.Row="2"
                            Grid.ColumnSpan="2">

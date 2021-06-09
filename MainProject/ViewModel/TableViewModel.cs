@@ -310,7 +310,7 @@ namespace MainProject.ViewModel
 
         public void OpenChooseTable()
         {
-            LoadTable();
+            //LoadTable();
 
             SelectTableView v = new SelectTableView();
             WindowService.Instance.OpenWindowWithoutBorderControl(this, v);
@@ -385,7 +385,7 @@ namespace MainProject.ViewModel
             {
                 WindowService.Instance.OpenMessageBox("Chưa có món được chọn!", "Lỗi", System.Windows.MessageBoxImage.Error);
                 return;
-            }                
+            }
 
             CurrentTable.ListPro = Currentlistdetailpro;
             CurrentTable.Total = TotalCurrentTable;

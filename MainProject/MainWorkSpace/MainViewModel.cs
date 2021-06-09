@@ -84,7 +84,6 @@ namespace MainProject.MainWorkSpace
         #region Init
         public MainViewModel()
         {
-
             Tableviewmodel = new TableViewModel();
             Productviewmodel = new ProductViewModel() { Tableviewmodel = Tableviewmodel };
 
@@ -96,7 +95,7 @@ namespace MainProject.MainWorkSpace
 
         public MainViewModel(TableViewModel tabVM)
         {
-
+            Tableviewmodel = tabVM;
             Productviewmodel = new ProductViewModel() { Tableviewmodel = tabVM };
 
             Load_Type();
@@ -388,7 +387,7 @@ namespace MainProject.MainWorkSpace
             }
         }
 
-        void Load_Type()
+        public void Load_Type()
         {
             using (var db = new mainEntities())
             {
@@ -399,6 +398,7 @@ namespace MainProject.MainWorkSpace
                 ListType = new ObservableCollection<TYPE_PRODUCT>(l);
             }
         }
+
     }
 }
 
