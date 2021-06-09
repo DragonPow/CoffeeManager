@@ -355,10 +355,12 @@ namespace MainProject.MainWorkSpace
         public void CloseEditCategory()
         {
             Window window = WindowService.Instance.FindWindowbyTag("Edit category").First();
-            window.Close();
-
+            window.Close();         
+           
             Productviewmodel.LoadProductByType(CurrentType);
             ListType[0] = new TYPE_PRODUCT() { Type = "Tất cả", ID = new long() };
+            TypeInEditCATEGORYCombobox = ListType[0];
+            EditTypeInEditCatefory = null;
         }
 
 
