@@ -407,8 +407,8 @@ namespace MainProject.ViewModel
                 pro.Name = Currentproduct.Name;
                 pro.Price = Currentproduct.Price;
                 pro.Decription = Currentproduct.Decription;
-                if (Type_in_Combobox_AddProduct != null) pro.ID_Type = Type_in_Combobox_AddProduct.ID;
 
+                if (Type_in_Combobox_AddProduct != null)  pro.ID_Type = Type_in_Combobox_AddProduct.ID;
 
                 db.SaveChanges();
             }

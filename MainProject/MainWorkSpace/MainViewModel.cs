@@ -283,13 +283,13 @@ namespace MainProject.MainWorkSpace
 
             using (var db = new mainEntities())
             {
-                for (int i = 1; i < ListType.Count; ++i)
+                for ( int i = 1; i < ListType.Count; ++i)
                 {
                     if (ListType[i].ID == TypeInEditCATEGORYCombobox.ID)
                     {
                         ListType[i].Type = EditTypeInEditCatefory;
-                        break;
-                    }
+                        break; 
+                    }    
                 }
 
                 var type = db.TYPE_PRODUCT.Where(t => t.ID == TypeInEditCATEGORYCombobox.ID).FirstOrDefault();
