@@ -25,7 +25,7 @@
         <ListView.ContextMenu>
             <ContextMenu>
                
-                <MenuItem Header="Sửa chữa" Command="{Binding DataContext.UpdateStatusTableCommand,ElementName=TableManager_View}"/>
+                <MenuItem Header="Sửa chữa" />
             </ContextMenu>
         </ListView.ContextMenu>
     </ListView>

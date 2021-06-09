@@ -57,8 +57,6 @@
                       Foreground="White"
                       Style="{StaticResource MaterialDesignMultiFloatingActionAccentPopupBox}"
                       PlacementMode="TopAndAlignCentres"
-                      ToggleCheckedContentCommand="{Binding FloatingActionDemoCommand}"
-                      ToggleCheckedContentCommandParameter="wowsers"
                       ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionAccentPopupBox"
                       Canvas.Bottom="20"
                       Canvas.Right="20">
