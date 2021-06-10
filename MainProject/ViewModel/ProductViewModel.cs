@@ -30,6 +30,7 @@ namespace MainProject.ViewModel
       
         private string _SearchProduct;
         private string _Type_in_Combobox_AddPro;
+         
         private PRODUCT _Newproduct;
 
         private int _IndexTypeInComboboxEditPro;
@@ -63,7 +64,7 @@ namespace MainProject.ViewModel
 
         public ObservableCollection<PRODUCT> ListPoduct { get => _ListProduct; set { if (value != _ListProduct) { _ListProduct = value; OnPropertyChanged(); } } }
         public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); SearchName(); } } }
-
+        
         public PRODUCT Currentproduct
         {
             get => _Currentproduct;
@@ -173,25 +174,24 @@ namespace MainProject.ViewModel
                    
                     if (Newproduct.Name == null)
                     {
-                        WindowService.Instance.OpenMessageBox("Vui lòng nhập tên sản phẩm!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                        WindowService.Instance.OpenMessageBox("Vui lòng nhập tên sản phẩm!", "Lỗi", MessageBoxImage.Error);
                         return;
                     }
 
                     if (Type_in_Combobox_AddProduct == null)
                     {
-                        WindowService.Instance.OpenMessageBox("Vui lòng chọn danh mục!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                        WindowService.Instance.OpenMessageBox("Vui lòng chọn danh mục!", "Lỗi", MessageBoxImage.Error);
                         return;
                     }
 
                     if (Newproduct.Price == 0)
                     {
-                        WindowService.Instance.OpenMessageBox("Vui lòng nhập giá sản phẩm!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                        WindowService.Instance.OpenMessageBox("Vui lòng nhập giá sản phẩm!", "Lỗi", MessageBoxImage.Error);
                         return;
                     }
 
-                    TYPE_PRODUCT type;
 
-                    type = db.TYPE_PRODUCT.Where(t => (t.Type == Type_in_Combobox_AddProduct.Type)).FirstOrDefault();
+                    TYPE_PRODUCT type = db.TYPE_PRODUCT.Where(t => (t.Type == Type_in_Combobox_AddProduct.Type)).FirstOrDefault();
 
                     if (type == null) Newproduct.ID_Type = null;
                     else
@@ -232,14 +232,14 @@ namespace MainProject.ViewModel
             {
                 if (_CancelAddProduct == null)
                 {
-                    _CancelAddProduct = new RelayingCommand<Object>(a => CancelAddProduct(a));
+                    _CancelAddProduct = new RelayingCommand<Object>(a => CancelAddProduct());
                 }
                 return _CancelAddProduct;
             }
         }
 
 
-        public void CancelAddProduct(object a)
+        public void CancelAddProduct()
         {
             Newproduct = new PRODUCT() { Image = imageToByteArray(Properties.Resources.Empty_Image), TYPE_PRODUCT = new TYPE_PRODUCT() };
         }
@@ -287,7 +287,6 @@ namespace MainProject.ViewModel
                 {
                     PRODUCT product = db.PRODUCTs.Where(p => (p.ID == Currentproduct.ID)).FirstOrDefault();
 
-
                     if (product == null) return;
 
                     try
@@ -319,7 +318,7 @@ namespace MainProject.ViewModel
                     if (p.Pro == Currentproduct)
                     {
                         Tableviewmodel.Currentlistdetailpro.Remove(p);
-                        return;
+                        break;
                     }
                 }
             }    
@@ -383,19 +382,12 @@ namespace MainProject.ViewModel
         }
         public void SearchType()
         {
-            ObservableCollection<PRODUCT> listproduct;
             using (var db = new mainEntities())
             {
                 var listpro = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT.Type == Type.Type));
                 if (listpro == null) return;
-                listproduct = new ObservableCollection<PRODUCT>(listpro.ToList());
+                ListPoduct = new ObservableCollection<PRODUCT>(listpro.ToList());
             }
-
-            foreach (PRODUCT p in listproduct)
-            {
-                ListPoduct.Add(p);
-            }
-
         }
 
         public ICommand LoadViewUpdateProduct_Command
@@ -412,10 +404,6 @@ namespace MainProject.ViewModel
 
         public void LoadViewUpdate()
         {
-            /*if (Currentproduct.ID_Type != 0) Type_in_Combobox_AddProduct = Currentproduct.TYPE_PRODUCT;
-            else Type_in_Combobox_AddProduct = new TYPE_PRODUCT() {Type = "Tất cả", ID = new long()};
-
-*/
 
             if (Currentproduct.ID_Type == 0 || Currentproduct.ID_Type == null) IndexTypeInComboboxEditPro = 0;
             else
@@ -452,12 +440,10 @@ namespace MainProject.ViewModel
                 if (IndexTypeInComboboxEditPro != 0) pro.ID_Type = listtype[IndexTypeInComboboxEditPro - 1];
                 else pro.ID_Type = null;
 
-                /*if ( Type_in_Combobox_AddProduct != null)  pro.ID_Type = Type_in_Combobox_AddProduct.ID;*/
-
                 db.SaveChanges();
             }
 
-            LoadProductByType(Type);
+           /* LoadProductByType(Type);*/
             ExitUpdate();
         }
 
