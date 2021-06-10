@@ -310,8 +310,6 @@ namespace MainProject.ViewModel
 
         public void OpenChooseTable()
         {
-            //LoadTable();
-
             SelectTableView v = new SelectTableView();
             WindowService.Instance.OpenWindowWithoutBorderControl(this, v);
         }
@@ -333,10 +331,6 @@ namespace MainProject.ViewModel
             Window window = WindowService.Instance.FindWindowbyTag("Selected Table").First();
             window.Close();
         }
-
-
-
-      
 
         public ICommand DeleteDetailProCommand
         {
@@ -369,7 +363,7 @@ namespace MainProject.ViewModel
         {
             if (CurrentTable == null && !Isbringtohome)
             {
-                WindowService.Instance.OpenMessageBox("Chưa chọn bàn", "Lỗi", System.Windows.MessageBoxImage.Error);
+                WindowService.Instance.OpenMessageBox("Chưa chọn bàn", "Lỗi",MessageBoxImage.Error);
                 return;
             }
 
@@ -383,7 +377,7 @@ namespace MainProject.ViewModel
 
             if (Currentlistdetailpro == null || Currentlistdetailpro.Count == 0 )
             {
-                WindowService.Instance.OpenMessageBox("Chưa có món được chọn!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                WindowService.Instance.OpenMessageBox("Chưa có món được chọn!", "Lỗi", MessageBoxImage.Error);
                 return;
             }
 
@@ -424,13 +418,13 @@ namespace MainProject.ViewModel
         
             int number = ListTable.Count - 1;
 
-            if ( ListTable.ElementAt(number).Total != 0)
+            if ( ListTable[number].Total != 0)
             {
-                WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn " + number +" trước khi xóa!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn " + number +" trước khi xóa!", "Lỗi",MessageBoxImage.Error);
                 return;
             }   
 
-                ListTable.RemoveAt(number);
+             ListTable.RemoveAt(number);
 
             /*for (int i = number; i < ListTable.Count; ++i)
                 --ListTable[i].table.Name;*/
@@ -515,14 +509,10 @@ namespace MainProject.ViewModel
                 var listtab = db.TABLEs.Include(p => p.STATUS_TABLE).ToList();
                 if (listtab == null) return;
 
-                List<TABLECUSTOM> Tablecustoms = new List<TABLECUSTOM>();
-
                 foreach (TABLE t in listtab)
                 {
-                    Tablecustoms.Add(new TABLECUSTOM() { Total = 0, table = t, ListPro = null });
+                    ListTable.Add(new TABLECUSTOM() { Total = 0, table = t, ListPro = null });
                 }
-
-                ListTable = new ObservableCollection<TABLECUSTOM>(Tablecustoms);
             }
         }
     }
