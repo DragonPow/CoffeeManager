@@ -24,8 +24,8 @@
         </ListView.ItemsPanel>
         <ListView.ContextMenu>
             <ContextMenu>
-               
-                <MenuItem Header="Sửa chữa" />
+                <MenuItem Header="Khách rời bàn" Command="{Binding}"/>
+                <MenuItem Header="Sửa chữa" Command="{Binding}"/>
             </ContextMenu>
         </ListView.ContextMenu>
     </ListView>

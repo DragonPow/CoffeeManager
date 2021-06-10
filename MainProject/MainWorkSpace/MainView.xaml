@@ -16,8 +16,8 @@
              d:DesignWidth="1150">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Table:TableDetailView DataContext="{Binding Tableviewmodel}" Grid.Column="1" />
 
