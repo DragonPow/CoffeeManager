@@ -93,7 +93,7 @@ namespace MainProject.ViewModel
                         CurrentTable = null;
                     }
                     else
-                         if (CurrentTable == null) TableName = "Chọn bàn >";
+                         if (CurrentTable == null) TableName = "Chọn bàn";
                 }
             }
         }
