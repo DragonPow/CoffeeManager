@@ -24,9 +24,9 @@ namespace MainProject.MainWorkSpace.Bill
         PdfWriter writer;
         BaseFont basef;
 
-        private string _name = "Thachj cute";
-        private string _phone = "03822598xx";
-        private string _address = "KTX khu B dai hoc quoc gia";
+        private string _name = "Coffee Store";
+        private string _phone = "038225xxxx";
+        private string _address = "Trường đại học Công nghệ thông tin TP HCM";
         #endregion //End Fields
 
         private static PrintPDF instance;
@@ -68,7 +68,7 @@ namespace MainProject.MainWorkSpace.Bill
             }
 
             os = new FileStream(dest, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
-            defaultSize = new Rectangle(PageSize.A5.Width, 300 + info.DETAILBILLs.Count * 24 + info.DETAILBILLs.Count(i => i.PRODUCT.Name.Length > 14) * 15);
+            defaultSize = new Rectangle(PageSize.A5.Width, 300 + info.DETAILBILLs.Count * 24 + info.DETAILBILLs.Count(i => i.PRODUCT.Name.Length > 16) * 15);
             doc = new Document(defaultSize);
             doc.SetMargins(0, 0, 0, 0);
 
