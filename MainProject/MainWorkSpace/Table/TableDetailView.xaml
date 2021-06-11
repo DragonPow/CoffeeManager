@@ -57,7 +57,7 @@
         </ScrollViewer>
         <Grid  Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <Border BorderBrush="Gray" BorderThickness="0,1,0,1" Grid.ColumnSpan="2"/>
@@ -71,9 +71,10 @@
                 Mang đi
             </CheckBox>
             <StackPanel Grid.Column="1" Orientation="Vertical">
-                <TextBlock Text="Tổng tiền" FontSize="12" 
+                <TextBlock Text="Tổng tiền" FontSize="14" 
+                           FontWeight="Bold"
                            HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left"
-                           Foreground="Black" Margin="8,0"/>
+                           Foreground="Red" Margin="8,0"/>
                 <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}"
                            Text="{Binding TotalCurrentTable, UpdateSourceTrigger=PropertyChanged, FallbackValue='25,000đ', StringFormat='{}{0:N0} đ'}" FontSize="22" FontWeight="DemiBold" FontStyle="Italic" 
                            HorizontalAlignment="Right" VerticalAlignment="Bottom" TextAlignment="Center" 
