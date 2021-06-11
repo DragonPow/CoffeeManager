@@ -27,10 +27,11 @@ namespace MainProject.ApplicationWorkSpace
             //LoginView.DataContext = new LoginViewModel();
             //LoginView.ShowDialog();
             TableViewModel table = new TableViewModel();
-
+            ProductViewModel prod = new ProductViewModel();
             //Add list MainWorkSpace here
-            WorkSpaces.Add(new MainViewModel(table));
+            WorkSpaces.Add(new MainViewModel(table, prod));
             //WorkSpaces.Add(new AccountViewModel());
+            WorkSpaces.Add(prod);
             WorkSpaces.Add(table);
             WorkSpaces.Add(new HistoryViewModel());
             WorkSpaces.Add(new StatisticViewModel());

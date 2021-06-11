@@ -144,7 +144,7 @@
                             Background="{StaticResource MainColor}"
                             BorderBrush="{StaticResource MainColor}"
                             Foreground="White"
-                            Content="Lưu"
+                            Content="Cập nhật"
                             FontSize="20">
                     </Button>
 
