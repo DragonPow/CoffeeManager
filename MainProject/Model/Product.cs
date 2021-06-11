@@ -25,14 +25,14 @@ namespace MainProject.Model
         public string Name { get; set; }
         public string Decription { get; set; }
         public byte[] Image { get; set; }
-        public long Price { get; set; }
+        public decimal Price { get; set; }
         public Nullable<long> ID_Type { get; set; }
-        public byte[] IsProvided { get; set; }
+        public bool IsProvided { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<DETAILBILL> DETAILBILLs { get; set; }
-        public virtual TYPE_PRODUCT TYPE_PRODUCT { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<DETAILREPORTSALE> DETAILREPORTSALES { get; set; }
+        public virtual TYPE_PRODUCT TYPE_PRODUCT { get; set; }
     }
 }
