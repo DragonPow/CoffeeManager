@@ -142,6 +142,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\TableConverter.cs" />
     <Compile Include="DetailPro.cs" />
     <Compile Include="HelperClass\WindowService.cs" />
     <Compile Include="HistoryWorkSpace\Converter\ChangePageConverter.cs" />
@@ -337,9 +338,6 @@
     <Compile Include="ValidationRules\LengthRangeValidationRule.cs" />
     <Compile Include="ValidationRules\NotNullableValidationRule.cs" />
     <Compile Include="ValidationRules\RangeNumberValidationRule.cs" />
-    <Compile Include="TestingView.xaml.cs">
-      <DependentUpon>TestingView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="TestingViewModel.cs" />
     <Compile Include="TestView.xaml.cs">
       <DependentUpon>TestView.xaml</DependentUpon>
@@ -497,10 +495,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="StatisticWorkSpace\StatisticView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TestingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

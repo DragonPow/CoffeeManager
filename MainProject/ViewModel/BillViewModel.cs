@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace MainProject.MainWorkSpace.Bill
@@ -22,7 +23,6 @@ namespace MainProject.MainWorkSpace.Bill
         private int _BillCode;
 
         private long _GiveMoney;
-        private long _Refund;
 
         public bool IsClose = false;
 
@@ -30,7 +30,6 @@ namespace MainProject.MainWorkSpace.Bill
         //StoreInfor : namestore, phone, address
 
         private ICommand _PaymentCommand;
-        private ICommand _CheckDiscountCommand;
 
 
         #endregion
@@ -148,7 +147,12 @@ namespace MainProject.MainWorkSpace.Bill
 
         public long Refund
         {
-            get => GiveMoney - Total;
+            get
+            {
+                if (GiveMoney - Total < 0) return 0;
+                else return GiveMoney - Total;
+            }
+                
         }
         public string this[string name]
         {
@@ -261,11 +265,10 @@ namespace MainProject.MainWorkSpace.Bill
             {
                 foreach (var p in CurrentTable.ListPro)
                 {
-                    CurrentBill.DETAILBILLs.Add(new DETAILBILL() { Quantity = p.Quantity, UnitPrice = p.Pro.Price, PRODUCT = db.PRODUCTs.FirstOrDefault(i => i.ID == p.Pro.ID) });
+                    CurrentBill.DETAILBILLs.Add(new DETAILBILL() { Quantity = p.Quantity, UnitPrice = (long)p.Pro.Price, PRODUCT = db.PRODUCTs.FirstOrDefault(i => i.ID == p.Pro.ID) });
                 }
             }
             
-
             Discount = 0;
             CurrentBill.CheckoutDay = DateTime.Now;
             Total = CurrentTable.Total;
@@ -276,6 +279,12 @@ namespace MainProject.MainWorkSpace.Bill
         private void Payment(BillView view)
         {
             if (!view.IsValid) return;
+
+            if (GiveMoney - Total < 0)
+            {
+                WindowService.Instance.OpenMessageBox("Tiền đưa không đủ!", "Lỗi", MessageBoxImage.Error);
+                return;
+            }
 
             CurrentBill.ID_Table = CurrentTable.table.ID;
             CurrentBill.TotalPrice = Total;

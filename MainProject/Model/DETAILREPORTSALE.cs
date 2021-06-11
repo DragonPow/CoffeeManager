@@ -20,7 +20,7 @@ namespace MainProject.Model
         public long Amount { get; set; }
         public long Revenue { get; set; }
     
-        public virtual PRODUCT PRODUCT { get; set; }
         public virtual REPORTSALE REPORTSALE { get; set; }
+        public virtual PRODUCT PRODUCT { get; set; }
     }
 }

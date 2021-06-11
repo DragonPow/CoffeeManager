@@ -90,6 +90,7 @@ namespace MainProject.ViewModel
                     if ( value == true)
                     {
                         TableName = "Mang về";
+                        CurrentTable.table.CurrentStatus = "Normal";
                         CurrentTable = null;
                     }
                     else
@@ -171,16 +172,18 @@ namespace MainProject.ViewModel
             set
             {
                 if (value != _CurrentTable)
-                {
-                    _CurrentTable = value;
-                    OnPropertyChanged();
+                {               
                     if (value != null && value.table != null)
                     {
                         TableName = "Bàn: " + value.table.Name.ToString();
+                        value.table.CurrentStatus = "Already";
+                        if (_CurrentTable != null) _CurrentTable.table.CurrentStatus = "Normal";
                         Isbringtohome = false;
                     }
                     else
                          if (!Isbringtohome) TableName = "Chọn bàn";
+                    _CurrentTable = value;
+                    OnPropertyChanged();
                 }
             }
       
@@ -271,7 +274,7 @@ namespace MainProject.ViewModel
             if (CurrentDetailPro == null || CurrentDetailPro.Quantity < 1) return;
 
             CurrentDetailPro.Quantity--;
-            TotalCurrentTable -=  CurrentDetailPro.Pro.Price;
+            TotalCurrentTable -= (long) CurrentDetailPro.Pro.Price;
 
             if (CurrentDetailPro.Quantity == 0) Currentlistdetailpro.Remove(CurrentDetailPro);
         }
@@ -496,9 +499,6 @@ namespace MainProject.ViewModel
         {
 
         }
-
-
-
 
 
         #endregion

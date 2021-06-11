@@ -63,6 +63,7 @@
           <Property Name="Image" Type="blob" />
           <Property Name="Price" Type="decimal" Precision="53" Scale="0" Nullable="false" />
           <Property Name="ID_Type" Type="integer" />
+          <Property Name="IsProvided" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="REPORTREVENUE">
           <Key>
@@ -253,18 +254,9 @@
         <EntityContainer Name="mainEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="DETAILBILLs" EntityType="mainModel.DETAILBILL" />
           <EntitySet Name="PARAMETERs" EntityType="mainModel.PARAMETER" />
-          <EntitySet Name="PRODUCTs" EntityType="mainModel.PRODUCT" />
           <EntitySet Name="REPORTREVENUEs" EntityType="mainModel.REPORTREVENUE" />
           <EntitySet Name="STATUS_TABLE" EntityType="mainModel.STATUS_TABLE" />
           <EntitySet Name="TYPE_PRODUCT" EntityType="mainModel.TYPE_PRODUCT" />
-          <AssociationSet Name="FK_DETAILBILL_0_0" Association="mainModel.FK_DETAILBILL_0_0">
-            <End Role="PRODUCT" EntitySet="PRODUCTs" />
-            <End Role="DETAILBILL" EntitySet="DETAILBILLs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PRODUCT_0_0" Association="mainModel.FK_PRODUCT_0_0">
-            <End Role="TYPE_PRODUCT" EntitySet="TYPE_PRODUCT" />
-            <End Role="PRODUCT" EntitySet="PRODUCTs" />
-          </AssociationSet>
           <EntitySet Name="TABLEs" EntityType="mainModel.TABLE" />
           <AssociationSet Name="FK_TABLE_0_0" Association="mainModel.FK_TABLE_0_0">
             <End Role="STATUS_TABLE" EntitySet="STATUS_TABLE" />
@@ -277,10 +269,6 @@
           </AssociationSet>
           <EntitySet Name="DETAILREPORTSALES" EntityType="mainModel.DETAILREPORTSALE" />
           <EntitySet Name="REPORTSALES" EntityType="mainModel.REPORTSALE" />
-          <AssociationSet Name="FK_DETAILREPORTSALES_0_0" Association="mainModel.FK_DETAILREPORTSALES_0_0">
-            <End Role="PRODUCT" EntitySet="PRODUCTs" />
-            <End Role="DETAILREPORTSALE" EntitySet="DETAILREPORTSALES" />
-          </AssociationSet>
           <AssociationSet Name="FK_DETAILREPORTSALES_1_0" Association="mainModel.FK_DETAILREPORTSALES_1_0">
             <End Role="REPORTSALE" EntitySet="REPORTSALES" />
             <End Role="DETAILREPORTSALE" EntitySet="DETAILREPORTSALES" />
@@ -294,6 +282,19 @@
             <End Role="BILL" EntitySet="BILLs" />
             <End Role="DETAILBILL" EntitySet="DETAILBILLs" />
           </AssociationSet>
+          <EntitySet Name="PRODUCTs" EntityType="mainModel.PRODUCT" />
+          <AssociationSet Name="FK_DETAILBILL_0_0" Association="mainModel.FK_DETAILBILL_0_0">
+            <End Role="PRODUCT" EntitySet="PRODUCTs" />
+            <End Role="DETAILBILL" EntitySet="DETAILBILLs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DETAILREPORTSALES_0_0" Association="mainModel.FK_DETAILREPORTSALES_0_0">
+            <End Role="PRODUCT" EntitySet="PRODUCTs" />
+            <End Role="DETAILREPORTSALE" EntitySet="DETAILREPORTSALES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_0_0" Association="mainModel.FK_PRODUCT_0_0">
+            <End Role="TYPE_PRODUCT" EntitySet="TYPE_PRODUCT" />
+            <End Role="PRODUCT" EntitySet="PRODUCTs" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="DETAILBILL">
           <Key>
@@ -304,8 +305,8 @@
           <Property Name="ID_Bill" Type="Int64" Nullable="false" />
           <Property Name="Quantity" Type="Int64" Nullable="false" />
           <Property Name="UnitPrice" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="PRODUCT" Relationship="mainModel.FK_DETAILBILL_0_0" FromRole="DETAILBILL" ToRole="PRODUCT" />
           <NavigationProperty Name="BILL" Relationship="mainModel.FK_DETAILBILL_1_0" FromRole="DETAILBILL" ToRole="BILL" />
+          <NavigationProperty Name="PRODUCT" Relationship="mainModel.FK_DETAILBILL_0_0" FromRole="DETAILBILL" ToRole="PRODUCT" />
         </EntityType>
         <EntityType Name="PARAMETER">
           <Key>
@@ -313,20 +314,6 @@
           </Key>
           <Property Name="NAME" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="Value" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="PRODUCT">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="Decription" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="Image" Type="Binary" MaxLength="2147483647" FixedLength="false" />
-          <Property Name="Price" Type="Int64" Nullable="false" />
-          <Property Name="ID_Type" Type="Int64" />
-          <NavigationProperty Name="DETAILBILLs" Relationship="mainModel.FK_DETAILBILL_0_0" FromRole="PRODUCT" ToRole="DETAILBILL" />
-          <NavigationProperty Name="TYPE_PRODUCT" Relationship="mainModel.FK_PRODUCT_0_0" FromRole="PRODUCT" ToRole="TYPE_PRODUCT" />
-          <NavigationProperty Name="DETAILREPORTSALES" Relationship="mainModel.FK_DETAILREPORTSALES_0_0" FromRole="PRODUCT" ToRole="DETAILREPORTSALE" />
         </EntityType>
         <EntityType Name="REPORTREVENUE">
           <Key>
@@ -354,30 +341,6 @@
           <Property Name="Type" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PRODUCTs" Relationship="mainModel.FK_PRODUCT_0_0" FromRole="TYPE_PRODUCT" ToRole="PRODUCT" />
         </EntityType>
-        <Association Name="FK_DETAILBILL_0_0">
-          <End Type="mainModel.PRODUCT" Role="PRODUCT" Multiplicity="1" />
-          <End Type="mainModel.DETAILBILL" Role="DETAILBILL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PRODUCT">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DETAILBILL">
-              <PropertyRef Name="ID_Product" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PRODUCT_0_0">
-          <End Type="mainModel.TYPE_PRODUCT" Role="TYPE_PRODUCT" Multiplicity="0..1" />
-          <End Type="mainModel.PRODUCT" Role="PRODUCT" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TYPE_PRODUCT">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PRODUCT">
-              <PropertyRef Name="ID_Type" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="TABLE">
           <Key>
             <PropertyRef Name="ID" />
@@ -433,8 +396,8 @@
           <Property Name="Rate" Type="Int64" Nullable="false" />
           <Property Name="Amount" Type="Int64" Nullable="false" />
           <Property Name="Revenue" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="PRODUCT" Relationship="mainModel.FK_DETAILREPORTSALES_0_0" FromRole="DETAILREPORTSALE" ToRole="PRODUCT" />
           <NavigationProperty Name="REPORTSALE" Relationship="mainModel.FK_DETAILREPORTSALES_1_0" FromRole="DETAILREPORTSALE" ToRole="REPORTSALE" />
+          <NavigationProperty Name="PRODUCT" Relationship="mainModel.FK_DETAILREPORTSALES_0_0" FromRole="DETAILREPORTSALE" ToRole="PRODUCT" />
         </EntityType>
         <EntityType Name="REPORTSALE">
           <Key>
@@ -447,18 +410,6 @@
           <Property Name="TotalRevenue" Type="Int64" Nullable="false" />
           <NavigationProperty Name="DETAILREPORTSALES" Relationship="mainModel.FK_DETAILREPORTSALES_1_0" FromRole="REPORTSALE" ToRole="DETAILREPORTSALE" />
         </EntityType>
-        <Association Name="FK_DETAILREPORTSALES_0_0">
-          <End Type="mainModel.PRODUCT" Role="PRODUCT" Multiplicity="1" />
-          <End Type="mainModel.DETAILREPORTSALE" Role="DETAILREPORTSALE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PRODUCT">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DETAILREPORTSALE">
-              <PropertyRef Name="ID_Product" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DETAILREPORTSALES_1_0">
           <End Type="mainModel.REPORTSALE" Role="REPORTSALE" Multiplicity="1" />
           <End Type="mainModel.DETAILREPORTSALE" Role="DETAILREPORTSALE" Multiplicity="*" />
@@ -507,6 +458,57 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PRODUCT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Decription" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="Binary" MaxLength="2147483647" FixedLength="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
+          <Property Name="ID_Type" Type="Int64" />
+          <Property Name="IsProvided" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="DETAILBILLs" Relationship="mainModel.FK_DETAILBILL_0_0" FromRole="PRODUCT" ToRole="DETAILBILL" />
+          <NavigationProperty Name="DETAILREPORTSALES" Relationship="mainModel.FK_DETAILREPORTSALES_0_0" FromRole="PRODUCT" ToRole="DETAILREPORTSALE" />
+          <NavigationProperty Name="TYPE_PRODUCT" Relationship="mainModel.FK_PRODUCT_0_0" FromRole="PRODUCT" ToRole="TYPE_PRODUCT" />
+        </EntityType>
+        <Association Name="FK_DETAILBILL_0_0">
+          <End Type="mainModel.PRODUCT" Role="PRODUCT" Multiplicity="1" />
+          <End Type="mainModel.DETAILBILL" Role="DETAILBILL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DETAILBILL">
+              <PropertyRef Name="ID_Product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DETAILREPORTSALES_0_0">
+          <End Type="mainModel.PRODUCT" Role="PRODUCT" Multiplicity="1" />
+          <End Type="mainModel.DETAILREPORTSALE" Role="DETAILREPORTSALE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DETAILREPORTSALE">
+              <PropertyRef Name="ID_Product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_0_0">
+          <End Type="mainModel.TYPE_PRODUCT" Role="TYPE_PRODUCT" Multiplicity="0..1" />
+          <End Type="mainModel.PRODUCT" Role="PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TYPE_PRODUCT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="ID_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -528,18 +530,6 @@
               <MappingFragment StoreEntitySet="PARAMETER">
                 <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="NAME" ColumnName="NAME" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PRODUCTs">
-            <EntityTypeMapping TypeName="mainModel.PRODUCT">
-              <MappingFragment StoreEntitySet="PRODUCT">
-                <ScalarProperty Name="ID_Type" ColumnName="ID_Type" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="Decription" ColumnName="Decription" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -617,6 +607,19 @@
                 <ScalarProperty Name="ID_Table" ColumnName="ID_Table" />
                 <ScalarProperty Name="CheckoutDay" ColumnName="TIMECHECKOUT" />
                 <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCTs">
+            <EntityTypeMapping TypeName="mainModel.PRODUCT">
+              <MappingFragment StoreEntitySet="PRODUCT">
+                <ScalarProperty Name="IsProvided" ColumnName="IsProvided" />
+                <ScalarProperty Name="ID_Type" ColumnName="ID_Type" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Decription" ColumnName="Decription" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
