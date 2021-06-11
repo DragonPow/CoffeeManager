@@ -156,14 +156,29 @@
       <DependentUpon>BillView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWorkSpace\Bill\PrintPDF.cs" />
+    <Compile Include="MainWorkSpace\Product\EditMenu.xaml.cs">
+      <DependentUpon>EditMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWorkSpace\Product\EditNameType.xaml.cs">
+      <DependentUpon>EditNameType.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWorkSpace\Product\EditProd.xaml.cs">
       <DependentUpon>EditProd.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWorkSpace\Product\EditProdInType.xaml.cs">
+      <DependentUpon>EditProdInType.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWorkSpace\Product\EditType.xaml.cs">
       <DependentUpon>EditType.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWorkSpace\Product\NewType.xaml.cs">
       <DependentUpon>NewType.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWorkSpace\Product\ProdManager.xaml.cs">
+      <DependentUpon>ProdManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWorkSpace\Product\ProdManagerView.xaml.cs">
+      <DependentUpon>ProdManagerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWorkSpace\Product\SelectPro.xaml.cs">
       <DependentUpon>SelectPro.xaml</DependentUpon>
@@ -377,7 +392,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MainWorkSpace\Product\EditMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWorkSpace\Product\EditNameType.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWorkSpace\Product\EditProd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWorkSpace\Product\EditProdInType.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -394,6 +421,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWorkSpace\Product\ProdDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWorkSpace\Product\ProdManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWorkSpace\Product\ProdManagerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

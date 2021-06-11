@@ -13,14 +13,24 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
+using MaterialDesignThemes.Wpf;
 
 
 
 
 namespace MainProject.ViewModel
 {
-    class ProductViewModel : BaseViewModel
+    class ProductViewModel : BaseViewModel, IMainWorkSpace
     {
+        public string NameWorkSpace => "Quản lý thực đơn";
+        private const PackIconKind _iconDisplay = PackIconKind.FoodForkDrink;
+        public PackIcon IconDisplay
+        {
+            get
+            {
+                return new PackIcon() { Kind = _iconDisplay, Width = 30, Height = 30 };
+            }
+        }
         #region Field
         private ObservableCollection<PRODUCT> _ListProduct;
         private PRODUCT _Currentproduct;

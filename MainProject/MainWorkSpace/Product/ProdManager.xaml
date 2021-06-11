@@ -1,17 +1,17 @@
-﻿<UserControl x:Class="MainProject.MainWorkSpace.MainView"
+﻿<UserControl x:Class="MainProject.MainWorkSpace.Product.ProdManager"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:MainProject.MainWorkSpace"
-             xmlns:Prod="clr-namespace:MainProject.MainWorkSpace.Product"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MainProject.MainWorkSpace.Product"
+           
              xmlns:Table="clr-namespace:MainProject.MainWorkSpace.Table"
              xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
+             xmlns:main="clr-namespace:MainProject.MainWorkSpace"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              Background="White"
-             x:Name="Main_View"
-             d:DataContext="{d:DesignInstance Type=local:MainViewModel}"
+             d:DataContext="{d:DesignInstance Type=main:MainViewModel}"
              d:DesignHeight="630"
              d:DesignWidth="1150">
     <Grid>
@@ -19,8 +19,7 @@
             <ColumnDefinition Width="11*"/>
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
-        <Table:TableDetailView DataContext="{Binding Tableviewmodel}" Grid.Column="1" />
-
+        <local:EditMenu Grid.Column="1" DataContext="{Binding}"/>
         <DockPanel>
             <materialDesign:ColorZone DockPanel.Dock="Top"
                                       DataContext="{Binding Productviewmodel}"
@@ -44,7 +43,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
-                                
+
                             </Grid.ColumnDefinitions>
                             <Button VerticalAlignment="Center" Grid.Column="1"
                                 Style="{DynamicResource MaterialDesignToolButton}"
@@ -64,7 +63,6 @@
                             VerticalAlignment="Center" />
                         </Grid>
                     </materialDesign:ColorZone>
-                    
                 </Grid>
             </materialDesign:ColorZone>
             <TabControl TabStripPlacement="Bottom"
@@ -97,11 +95,11 @@
                 </TabControl.ItemContainerStyle>
                 <TabControl.ContentTemplate>
                     <DataTemplate>
-                       
+
                     </DataTemplate>
                 </TabControl.ContentTemplate>
             </TabControl>
-            <Prod:ProdView DataContext="{Binding Productviewmodel}"/>
+            <local:ProdManagerView DataContext="{Binding Productviewmodel}"/>
         </DockPanel>
     </Grid>
 </UserControl>
