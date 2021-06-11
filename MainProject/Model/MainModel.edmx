@@ -63,6 +63,7 @@
           <Property Name="Image" Type="blob" />
           <Property Name="Price" Type="decimal" Precision="53" Scale="0" Nullable="false" />
           <Property Name="ID_Type" Type="integer" />
+          <Property Name="IsProvided" Type="blob" Nullable="false" />
         </EntityType>
         <EntityType Name="REPORTREVENUE">
           <Key>
@@ -327,6 +328,7 @@
           <NavigationProperty Name="DETAILBILLs" Relationship="mainModel.FK_DETAILBILL_0_0" FromRole="PRODUCT" ToRole="DETAILBILL" />
           <NavigationProperty Name="TYPE_PRODUCT" Relationship="mainModel.FK_PRODUCT_0_0" FromRole="PRODUCT" ToRole="TYPE_PRODUCT" />
           <NavigationProperty Name="DETAILREPORTSALES" Relationship="mainModel.FK_DETAILREPORTSALES_0_0" FromRole="PRODUCT" ToRole="DETAILREPORTSALE" />
+          <Property Name="IsProvided" Type="Binary" Nullable="false" MaxLength="2147483647" FixedLength="false" />
         </EntityType>
         <EntityType Name="REPORTREVENUE">
           <Key>
@@ -534,6 +536,7 @@
           <EntitySetMapping Name="PRODUCTs">
             <EntityTypeMapping TypeName="mainModel.PRODUCT">
               <MappingFragment StoreEntitySet="PRODUCT">
+                <ScalarProperty Name="IsProvided" ColumnName="IsProvided" />
                 <ScalarProperty Name="ID_Type" ColumnName="ID_Type" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
