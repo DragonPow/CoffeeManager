@@ -12,12 +12,9 @@
              mc:Ignorable="d"
              Tag="Edit category"
              Name="Edit_Type"
-             
+             d:DataContext="{d:DesignInstance Type=main:MainViewModel}"
              Height="600"
              Width="500">
-    <UserControl.DataContext>
-        <main:MainViewModel/>
-    </UserControl.DataContext>
     <DockPanel>
         <Grid DockPanel.Dock="Top"
               Background="{StaticResource MainColor}">
@@ -37,13 +34,20 @@
         </Grid>
         <StackPanel DockPanel.Dock="Bottom"
                     Background="White">
+            <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                       Text="Danh sách danh mục"
+                       FontSize="18"
+                       Foreground="#363434"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Margin="20"/>
             <ListView  Grid.Row="1"
                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                        ItemsSource="{Binding ListType}"
                        SelectedItem="{Binding CurrentType}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Type}"/>
+                        <local:TypeItem/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.ItemsPanel>
@@ -51,7 +55,7 @@
                         <StackPanel Orientation="Vertical"
                                     Margin="60,10"
                                     MaxWidth="500"
-                                    Height="370"></StackPanel>
+                                    Height="450"></StackPanel>
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
             </ListView>

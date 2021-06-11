@@ -184,6 +184,9 @@
     <Compile Include="MainWorkSpace\Product\SelectPro.xaml.cs">
       <DependentUpon>SelectPro.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainWorkSpace\Product\TypeItem.xaml.cs">
+      <DependentUpon>TypeItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWorkSpace\Table\TableManagerView.xaml.cs">
       <DependentUpon>TableManagerView.xaml</DependentUpon>
     </Compile>
@@ -439,6 +442,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWorkSpace\Product\SelectPro.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWorkSpace\Product\TypeItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
