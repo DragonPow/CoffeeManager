@@ -67,7 +67,7 @@
                        Margin="0,10"/>
             <ListView  Grid.Row="1"
                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                       ItemsSource="{Binding Productviewmodel.ListPoduct}">
+                       ItemsSource="{Binding Listpro}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <local:SelectPro DataContext="{Binding}"
