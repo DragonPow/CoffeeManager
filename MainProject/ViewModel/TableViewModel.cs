@@ -274,7 +274,7 @@ namespace MainProject.ViewModel
             if (CurrentDetailPro == null || CurrentDetailPro.Quantity < 1) return;
 
             CurrentDetailPro.Quantity--;
-            TotalCurrentTable -=  CurrentDetailPro.Pro.Price;
+            TotalCurrentTable -= (long) CurrentDetailPro.Pro.Price;
 
             if (CurrentDetailPro.Quantity == 0) Currentlistdetailpro.Remove(CurrentDetailPro);
         }

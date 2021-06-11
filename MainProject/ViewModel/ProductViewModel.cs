@@ -297,7 +297,7 @@ namespace MainProject.ViewModel
                             db.DETAILREPORTSALES.RemoveRange(list);
                         }
 
-                        db.PRODUCTs.Remove(product);
+                        product.IsProvided = false;
 
                         db.SaveChanges();
                         transaction.Commit();
@@ -432,6 +432,20 @@ namespace MainProject.ViewModel
             {
                 var pro = db.PRODUCTs.Where(p => (p.ID == Currentproduct.ID)).FirstOrDefault();
 
+                if (db.DETAILBILLs.Where(d => d.ID_Product == Currentproduct.ID ).FirstOrDefault() != null)
+                {
+                    WindowService.Instance.OpenMessageBox("Món đã từng được thanh toán, vui lòng không thay đổi tên,giá!", "Lỗi", MessageBoxImage.Error);
+                    
+                    Currentproduct.Image = pro.Image;
+                    Currentproduct.Name = pro.Name;
+                    Currentproduct.Price = pro.Price;
+                    Currentproduct.Decription = pro.Decription;
+                    Currentproduct.ID_Type = pro.ID_Type;
+
+                    return;
+                }
+                
+
                 pro.Image = Currentproduct.Image;
                 pro.Name = Currentproduct.Name;
                 pro.Price = Currentproduct.Price;
@@ -443,7 +457,6 @@ namespace MainProject.ViewModel
                 db.SaveChanges();
             }
 
-           /* LoadProductByType(Type);*/
             ExitUpdate();
         }
 
@@ -458,8 +471,6 @@ namespace MainProject.ViewModel
                 return _ExitUpdateProduct;
             }
         }
-
-
         public void ExitUpdate()
         {
             var window = WindowService.Instance.FindWindowbyTag("EditPro").First();
@@ -614,11 +625,11 @@ namespace MainProject.ViewModel
 
                 if (Type == null || Type.Type.Contains("Tất cả"))
                 {
-                    ListPoduct = new ObservableCollection<PRODUCT>(db.PRODUCTs.ToList());
+                    ListPoduct = new ObservableCollection<PRODUCT>(db.PRODUCTs.Where(p => p.IsProvided).ToList());
                 }
                 else
                 {
-                    var p = db.PRODUCTs.Where(pro => (pro.TYPE_PRODUCT.Type == Type.Type));
+                    var p = db.PRODUCTs.Where(pro => (pro.TYPE_PRODUCT.Type == Type.Type && pro.IsProvided));
                     if (p.ToList().Count == 0) ListPoduct = new ObservableCollection<PRODUCT>();
                     else ListPoduct = new ObservableCollection<PRODUCT>(p.ToList());
                 }

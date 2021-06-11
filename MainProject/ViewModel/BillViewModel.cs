@@ -265,7 +265,7 @@ namespace MainProject.MainWorkSpace.Bill
             {
                 foreach (var p in CurrentTable.ListPro)
                 {
-                    CurrentBill.DETAILBILLs.Add(new DETAILBILL() { Quantity = p.Quantity, UnitPrice = p.Pro.Price, PRODUCT = db.PRODUCTs.FirstOrDefault(i => i.ID == p.Pro.ID) });
+                    CurrentBill.DETAILBILLs.Add(new DETAILBILL() { Quantity = p.Quantity, UnitPrice = (long)p.Pro.Price, PRODUCT = db.PRODUCTs.FirstOrDefault(i => i.ID == p.Pro.ID) });
                 }
             }
             

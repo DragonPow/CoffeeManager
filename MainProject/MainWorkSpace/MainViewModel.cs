@@ -386,13 +386,13 @@ namespace MainProject.MainWorkSpace
                 if (TypeInEditCATEGORYCombobox == null) return;
                 if (TypeInEditCATEGORYCombobox.Type == "Tất cả")
                 {
-                    var list = db.PRODUCTs.ToList();
+                    var list = db.PRODUCTs.Where( p=> p.IsProvided).ToList();
                     list.ForEach(p => p.IsChecked = true);
                     Listpro = new ObservableCollection<PRODUCT>(list);
                     return;
                 }
 
-                var l = db.PRODUCTs.Where(p => p.ID_Type == null || p.ID_Type == TypeInEditCATEGORYCombobox.ID).ToList();
+                var l = db.PRODUCTs.Where(p => p.ID_Type == null || p.ID_Type == TypeInEditCATEGORYCombobox.ID && p.IsProvided).ToList();
 
                 if (l == null) return;
 
