@@ -516,14 +516,14 @@ namespace MainProject.ViewModel
             {
                 if (_ExitDetailProduct == null)
                 {
-                    _ExitDetailProduct = new RelayingCommand<Object>(a => ExitDetail(a));
+                    _ExitDetailProduct = new RelayingCommand<Object>(a => ExitDetail());
                 }
                 return _ExitDetailProduct;
             }
         }
 
 
-        public void ExitDetail(object a)
+        public void ExitDetail()
         {
             var window = WindowService.Instance.FindWindowbyTag("DetailPro").First();
             window.Close();
@@ -580,6 +580,11 @@ namespace MainProject.ViewModel
 
         public void AddDetailProToTable()
         {
+            if (Tableviewmodel.CurrentTable == null)
+            {
+                WindowService.Instance.OpenMessageBox("Vui lòng chọn bàn trước!", "Lỗi", MessageBoxImage.Error);
+                return;
+            }
             if (!ListPoduct.Contains(Currentproduct)) return;
 
             Tableviewmodel.TotalCurrentTable += (long)Currentproduct.Price;
@@ -652,7 +657,7 @@ namespace MainProject.ViewModel
         {
             using (MemoryStream ms = new MemoryStream(byteArrayIn))
             {
-                return System.Drawing.Image.FromStream(ms);
+                return Image.FromStream(ms);
             }
         }
 
