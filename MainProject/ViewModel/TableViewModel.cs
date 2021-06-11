@@ -65,12 +65,11 @@ namespace MainProject.ViewModel
 
         public TableViewModel()
         {
-         /*   CurrentFloors = 1;*/
             TotalCurrentTable = 0;
 
             LoadTable();
            
-               /* ListFloor = new ObservableCollection<int>(); */
+              
         }
         #endregion
 
@@ -90,7 +89,7 @@ namespace MainProject.ViewModel
                     if ( value == true)
                     {
                         TableName = "Mang về";
-                        CurrentTable.table.CurrentStatus = "Normal";
+                        if (CurrentTable != null)  CurrentTable.table.CurrentStatus = "Normal";
                         CurrentTable = null;
                     }
                     else
@@ -172,17 +171,20 @@ namespace MainProject.ViewModel
             set
             {
                 if (value != _CurrentTable)
-                {               
-                    if (value != null && value.table != null)
-                    {
+                {
+                    if (value != null)
+                    {                      
                         TableName = "Bàn: " + value.table.Name.ToString();
                         value.table.CurrentStatus = "Already";
                         if (_CurrentTable != null) _CurrentTable.table.CurrentStatus = "Normal";
-                        Isbringtohome = false;
+                        _CurrentTable = value;
+                        Isbringtohome = false;                        
                     }
                     else
-                         if (!Isbringtohome) TableName = "Chọn bàn";
-                    _CurrentTable = value;
+                    {
+                        if (!Isbringtohome) TableName = "Chọn bàn";
+                        _CurrentTable = value;
+                    }
                     OnPropertyChanged();
                 }
             }
