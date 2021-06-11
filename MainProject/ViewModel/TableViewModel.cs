@@ -90,6 +90,7 @@ namespace MainProject.ViewModel
                     if ( value == true)
                     {
                         TableName = "Mang về";
+                        CurrentTable.table.CurrentStatus = "Normal";
                         CurrentTable = null;
                     }
                     else
