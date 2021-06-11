@@ -22,6 +22,7 @@ namespace MainProject.MainWorkSpace
         private ProductViewModel _Productviewmodel;
         private TableViewModel _Tableviewmodel;
         private ObservableCollection<TYPE_PRODUCT> _ListType;
+        private ObservableCollection<PRODUCT> _Listpro;
         private TYPE_PRODUCT _CurrentType;
         private TYPE_PRODUCT _Type_In_Edit_CATEGORY;
         private string _SearchProduct;
@@ -62,6 +63,20 @@ namespace MainProject.MainWorkSpace
                 if (_ListType != value)
                 {
                     _ListType = value;
+                    OnPropertyChanged();
+
+                }
+            }
+        }
+
+        public ObservableCollection<PRODUCT> Listpro
+        {
+            get => _Listpro;
+            set
+            {
+                if (_Listpro != value)
+                {
+                    _Listpro = value;
                     OnPropertyChanged();
 
                 }
@@ -248,11 +263,9 @@ namespace MainProject.MainWorkSpace
         {
             ListType[0] = null;
 
-            Productviewmodel.ListPoduct = null;
-
             WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditType());
 
-            Productviewmodel.LoadProductByType(CurrentType);
+            /*Productviewmodel.LoadProductByType(CurrentType);*/
 
         }
 
@@ -277,19 +290,19 @@ namespace MainProject.MainWorkSpace
 
             if (EditTypeInEditCatefory == "")
             {
-                WindowService.Instance.OpenMessageBox("Vui lòng nhập tên danh mục!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                WindowService.Instance.OpenMessageBox("Vui lòng nhập tên danh mục!", "Lỗi", MessageBoxImage.Error);
                 return;
             }
 
             using (var db = new mainEntities())
-            {
-                for ( int i = 1; i < ListType.Count; ++i)
+            {              
+                for (int i = 1; i < ListType.Count; ++i)
                 {
                     if (ListType[i].ID == TypeInEditCATEGORYCombobox.ID)
                     {
                         ListType[i].Type = EditTypeInEditCatefory;
-                        break; 
-                    }    
+                        break;
+                    }
                 }
 
                 var type = db.TYPE_PRODUCT.Where(t => t.ID == TypeInEditCATEGORYCombobox.ID).FirstOrDefault();
@@ -301,12 +314,10 @@ namespace MainProject.MainWorkSpace
                 int j = 0;
                 foreach (var p in list)
                 {
-                    p.ID_Type = Productviewmodel.ListPoduct[j].ID_Type;
+                    p.ID_Type = Listpro[j].ID_Type;
                     ++j;
                 }
-
-                TypeInEditCATEGORYCombobox = ListType[0];
-
+             
                 db.SaveChanges();
                 CloseEditCategory();
             }
@@ -357,10 +368,12 @@ namespace MainProject.MainWorkSpace
             Window window = WindowService.Instance.FindWindowbyTag("Edit category").First();
             window.Close();         
            
-            Productviewmodel.LoadProductByType(CurrentType);
+            if (CurrentType == TypeInEditCATEGORYCombobox) Productviewmodel.LoadProductByType(CurrentType);
             ListType[0] = new TYPE_PRODUCT() { Type = "Tất cả", ID = new long() };
+
             TypeInEditCATEGORYCombobox = ListType[0];
             EditTypeInEditCatefory = null;
+            Listpro = null;
         }
 
 
@@ -375,7 +388,7 @@ namespace MainProject.MainWorkSpace
                 {
                     var list = db.PRODUCTs.ToList();
                     list.ForEach(p => p.IsChecked = true);
-                    Productviewmodel.ListPoduct = new ObservableCollection<PRODUCT>(list);
+                    Listpro = new ObservableCollection<PRODUCT>(list);
                     return;
                 }
 
@@ -383,7 +396,7 @@ namespace MainProject.MainWorkSpace
 
                 if (l == null) return;
 
-                Productviewmodel.ListPoduct = new ObservableCollection<PRODUCT>(l);
+                Listpro = new ObservableCollection<PRODUCT>(l);
             }
         }
 
