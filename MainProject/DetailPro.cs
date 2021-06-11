@@ -42,7 +42,7 @@ namespace MainProject
             }
         }
 
-        public long Total { get => Pro.Price * Quantity; }
+        public long Total { get => (long)(Pro.Price * Quantity); }
         
         public DetailPro(PRODUCT pro, int quan = 1)
         {
