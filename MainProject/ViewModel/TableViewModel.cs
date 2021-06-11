@@ -171,16 +171,18 @@ namespace MainProject.ViewModel
             set
             {
                 if (value != _CurrentTable)
-                {
-                    _CurrentTable = value;
-                    OnPropertyChanged();
+                {               
                     if (value != null && value.table != null)
                     {
                         TableName = "Bàn: " + value.table.Name.ToString();
+                        value.table.CurrentStatus = "Already";
+                        if (_CurrentTable != null) _CurrentTable.table.CurrentStatus = "Normal";
                         Isbringtohome = false;
                     }
                     else
                          if (!Isbringtohome) TableName = "Chọn bàn";
+                    _CurrentTable = value;
+                    OnPropertyChanged();
                 }
             }
       
@@ -496,9 +498,6 @@ namespace MainProject.ViewModel
         {
 
         }
-
-
-
 
 
         #endregion
