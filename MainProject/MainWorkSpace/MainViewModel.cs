@@ -119,6 +119,19 @@ namespace MainProject.MainWorkSpace
 
         }
 
+        public MainViewModel(TableViewModel tabVM, ProductViewModel proVM)
+        {
+            Tableviewmodel = tabVM;
+
+            proVM.Tableviewmodel = tabVM;
+            Productviewmodel = proVM;
+
+            Load_Type();
+
+            CurrentType = ListType.ElementAt(0);
+
+        }
+
         #endregion
 
         #region Command
