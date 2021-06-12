@@ -11,6 +11,7 @@ using System.Windows;
 using MainProject.MainWorkSpace;
 using MainProject.ViewModel;
 using MainProject.MainWorkSpace.Product;
+using System.IO;
 
 namespace MainProject
 {
@@ -26,11 +27,40 @@ namespace MainProject
             base.OnStartup(e);
 
             ////Testing Startup
-            //WindowService.Instance.OpenWindow(new HistoryViewModel(), new HistoryWorkSpace.HistoryView());
-            //TestingView view = new TestingView();
-            //MainProject.ViewModel.HistoryViewModel viewModel = new MainProject.ViewModel.HistoryViewModel();
-            ////End testing Startup
-            ///
+            //Console.WriteLine(File.Exists(PrintPDF.dir_font));
+            //using (var db = new mainEntities())
+            //{
+            //    PrintPDF.Instance.createBill(new BILL()
+            //    {
+            //        CheckoutDay = DateTime.Now,
+            //        MoneyCustomer = 10000,
+            //        TotalPrice = 5000,
+            //        TABLE = db.TABLEs.Where(i=>i.ID == 2).FirstOrDefault(),
+            //        DETAILBILLs = new System.Collections.ObjectModel.ObservableCollection<DETAILBILL>()
+            //    {
+            //        new DETAILBILL()
+            //        {
+            //            UnitPrice = 2000,
+            //            Quantity = 1,
+            //            PRODUCT = db.PRODUCTs.Where(i => i.ID == 1).FirstOrDefault()
+            //        },
+            //        new DETAILBILL()
+            //        {
+            //            UnitPrice = 1000,
+            //            Quantity = 3,
+            //            PRODUCT = db.PRODUCTs.Where(i => i.ID == 2).FirstOrDefault()
+            //        },
+            //        new DETAILBILL()
+            //        {
+            //            UnitPrice = 5000,
+            //            Quantity = 1,
+            //            PRODUCT = db.PRODUCTs.Where(i => i.ID == 3).FirstOrDefault()
+            //        }
+            //    }
+            //    });
+            //}
+            //End testing Startup
+
 
             //Main Startup
             ApplicationView view = new ApplicationView();
@@ -39,8 +69,7 @@ namespace MainProject
 
             LoadInitApp();
             view.DataContext = viewModel;
-            view.Show();
-            //view.ShowDialog();
+            view.ShowDialog();
         }
 
         private void LoadInitApp()

@@ -477,7 +477,7 @@ namespace MainProject.ViewModel
             using (var db = new mainEntities())
             {
                 int number = db.TABLEs.Count();
-                tab = new TABLE() { ID_Status = 1, Name = number == 0 ? 1 : db.TABLEs.Max(t => t.Name)+ 1 };
+                tab = new TABLE() { STATUS_TABLE = db.STATUS_TABLE.Where(i=>i.Status == "Normal").FirstOrDefault(), Name = number == 0 ? 1 : db.TABLEs.Max(t => t.Name)+ 1 };
 
                 db.TABLEs.Add(tab);
                 db.SaveChanges();
