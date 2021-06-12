@@ -9,11 +9,8 @@
              xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
              mc:Ignorable="d" 
              Tag="Edit Name type"
-             
+             d:DataContext="{d:DesignInstance Type=ViewModel:ManageProductviewModel}"
              Height="200" Width="400" Background="White">
-    <UserControl.DataContext>
-        <ViewModel:ManageProductviewModel/>
-    </UserControl.DataContext>
     <StackPanel>
         <Grid 
               Background="{StaticResource MainColor}">
