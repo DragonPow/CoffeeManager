@@ -8,7 +8,9 @@
              xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
              xmlns:main="clr-namespace:MainProject.MainWorkSpace"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:iex="clr-namespace:Microsoft.Expression.Interactivity.Input;assembly=Microsoft.Expression.Interactions" 
+            mc:Ignorable="d"
              Background="White"
               d:DataContext="{d:DesignInstance Type=ViewModel:ManageProductviewModel}"
              d:DesignHeight="630"
@@ -43,14 +45,10 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
 
+
+
                             </Grid.ColumnDefinitions>
-                            <Button VerticalAlignment="Center" Grid.Column="1"
-                                Style="{DynamicResource MaterialDesignToolButton}"
-                                    Command="{Binding SearchByName_Command}">
-                                <materialDesign:PackIcon
-                                  Kind="Search"
-                                  Opacity=".56" />
-                            </Button>
+
                             <TextBox
                                 Text="{Binding SearchProduct,UpdateSourceTrigger=PropertyChanged, FallbackValue='Tìm kiếm'}"
                             Grid.Column="0"
@@ -59,9 +57,39 @@
                             materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                             BorderThickness="0"
                             MinWidth="200"
-                            VerticalAlignment="Center" />
+                            VerticalAlignment="Center" >
+                                <i:Interaction.Triggers>
+                                    <iex:KeyTrigger Key="Enter">
+                                        <i:InvokeCommandAction Command="{Binding SearchByName_Command}" />
+                                    </iex:KeyTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+
                         </Grid>
                     </materialDesign:ColorZone>
+                    <Button VerticalAlignment="Center" Grid.Column="1"
+                                    HorizontalAlignment="Left"
+                                    Margin="10,0"
+                                    Command="{Binding SearchByName_Command}"
+                                    BorderBrush="#0E0E2F"
+                                    Background="White"
+                                    BorderThickness="1"
+                                    Width="Auto"
+                                    Height="auto"
+                                    Padding="0">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                      Kind="Search"
+                                      Opacity="0.7"
+                                        Margin="5,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Foreground="#0E0E2F"/>
+                            <TextBlock  Foreground="#0E0E2F" VerticalAlignment="Center" Text="Tìm kiếm" Padding="2,2,10,5"></TextBlock>
+                        </StackPanel>
+
+
+
+                    </Button>
                 </Grid>
             </materialDesign:ColorZone>
             <TabControl TabStripPlacement="Bottom"

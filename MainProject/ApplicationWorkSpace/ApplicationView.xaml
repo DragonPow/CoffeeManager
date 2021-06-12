@@ -50,7 +50,7 @@
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal"
-                                Width="Auto">
+                                Width="220" >
                         <ContentPresenter Content="{Binding IconDisplay}"
                                           Margin="10,0" />
                         <TextBlock Text="{Binding NameWorkSpace}"
@@ -64,7 +64,7 @@
                 <Style TargetType="TabItem"
                        BasedOn="{StaticResource MaterialDesignNavigationRailTabItem}">
                     <Setter Property="Width"
-                            Value="Auto" />
+                            Value="220" />
                     <Setter Property="HorizontalAlignment"
                             Value="Left" />
                     <Setter Property="Height"
