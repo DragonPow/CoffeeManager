@@ -307,7 +307,7 @@ namespace MainProject.MainWorkSpace.Bill
             view.Close();
 
             //Đổi giá trị bàn thành "Already"
-            CurrentTable.table.CurrentStatus = "Already";
+           /* CurrentTable.table.CurrentStatus = "Already";*/
 
             //Xuất đơn ra PDF
             PrintPDF.Instance.createBill(CurrentBill);
