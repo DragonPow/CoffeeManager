@@ -12,10 +12,9 @@
              mc:Ignorable="d"
              Tag="Edit pro in category"
              Name="EditProd_Type"
-             d:DataContext="{d:DesignInstance Type=main:MainViewModel}"
+             d:DataContext="{d:DesignInstance Type=ViewModel:ManageProductviewModel}"
              Height="600"
              Width="500">
-
     <DockPanel>
         <Grid DockPanel.Dock="Top"
               Background="{StaticResource MainColor}">
@@ -44,7 +43,7 @@
                        Margin="20"/>
             <ListView  Grid.Row="1"
                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                       SelectedItem="{Binding Productviewmodel.Currentproduct}"
+                       SelectedItem="{Binding MainVM.Productviewmodel.Currentproduct}"
                        ItemsSource="{Binding Listpro}">
                 <ListView.ItemTemplate>
                     <DataTemplate>

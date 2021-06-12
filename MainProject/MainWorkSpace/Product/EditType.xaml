@@ -6,10 +6,11 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Product"
              xmlns:main="clr-namespace:MainProject.MainWorkSpace"
+             xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
              mc:Ignorable="d"
              Tag="Edit category"
              Name="Edit_Type"
-             d:DataContext="{d:DesignInstance Type=main:MainViewModel}"
+             d:DataContext="{d:DesignInstance Type=ViewModel:ManageProductviewModel}"
              Height="600"
              Width="500">
     <DockPanel>
@@ -40,8 +41,8 @@
                        Margin="20"/>
             <ListView  Grid.Row="1"
                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                       ItemsSource="{Binding ListType}"
-                       SelectedItem="{Binding CurrentTypeInProManager}" Height="495">
+                       ItemsSource="{Binding MainVM.ListType}"
+                       SelectedItem="{Binding CurrentTypeInProManager}" Height="450">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <local:TypeListItem DataContext="{Binding}"/>
