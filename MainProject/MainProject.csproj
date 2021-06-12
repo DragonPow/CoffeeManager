@@ -235,6 +235,7 @@
     <Compile Include="SettingWorkSpace\SettingView.cs">
       <DependentUpon>SettingView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="StatisticWorkSpace\Converter\AmountConverter.cs" />
     <Compile Include="StatisticWorkSpace\Converter\ChartLabelConverter.cs" />
     <Compile Include="StatisticWorkSpace\Converter\ChartValueConverter.cs" />
     <Compile Include="StatisticWorkSpace\Converter\DetailPieChartConverter.cs" />

@@ -19,7 +19,7 @@ namespace MainProject.StatisticWorkSpace.Converter
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is List<StatisticModel> list)
+            if (value is System.Collections.ObjectModel.ObservableCollection<StatisticModel> list)
             {
                 var rs = new SeriesCollection();
 

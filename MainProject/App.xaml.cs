@@ -66,7 +66,8 @@ namespace MainProject
             ApplicationView view = new ApplicationView();
             ApplicationViewModel viewModel = new ApplicationViewModel();
             //End main Startup
-
+            /*StatisticWorkSpace.DatabaseController_Statistic db = new StatisticWorkSpace.DatabaseController_Statistic();
+            db.createTemplateData();*/
             LoadInitApp();
             view.DataContext = viewModel;
             view.ShowDialog();
