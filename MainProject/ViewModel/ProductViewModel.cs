@@ -13,7 +13,6 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
-using MaterialDesignThemes.Wpf;
 
 
 
@@ -53,6 +52,7 @@ namespace MainProject.ViewModel
         private ICommand _CancelAddProduct;
         private ICommand _ExitAddProview;
 
+        
         private ICommand _ExitDetailProduct;
         private ICommand _OpenViewDetailProduct;
         private ICommand _AddDetailProToTableCommand;

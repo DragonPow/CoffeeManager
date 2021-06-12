@@ -36,23 +36,24 @@ namespace MainProject.MainWorkSpace
 
         private const PackIconKind _iconDisplay = PackIconKind.Home;
 
-        private ICommand _OpenViewEditCategory;     
-       
-        private ICommand _DeleteTypeEditCategory;
-
+        private ICommand _OpenViewEditCategory;
         private ICommand _CloseEditCategory;
 
-        private ICommand _AddEditCategory;
-
+        private ICommand _DeleteTypeEditCategory;
+    
         private ICommand _ClickCheckboxSelectedPro;
 
+        //Command cho thêm danh mục
         private ICommand _OpenViewAddCategory;
+        private ICommand _AddEditCategory;
         private ICommand _CloseViewAddCategory;
 
+        //Command cho chỉnh sửa tên danh mục
         private ICommand _LoadViewEditNameType;
         private ICommand _UpdateNameType;
         private ICommand _CloseViewEditNameType;
 
+        //Command cho chỉnh sửa danh mục
         private ICommand _LoadViewEditProInType;
         private ICommand _SaveEditCategory;
         private ICommand _CloseViewEditProInType;
@@ -430,7 +431,7 @@ namespace MainProject.MainWorkSpace
         {
            using ( var db = new  mainEntities())
             {
-                var type = db.TYPE_PRODUCT.Where(t => t.ID == Type_In_Edit_Pro.ID).FirstOrDefault();
+                var type = db.TYPE_PRODUCT.Where(t => t.ID == CurrentTypeInProManager.ID).FirstOrDefault();
                 type.Type = NewNameEditType;
                 db.SaveChanges();
             }
