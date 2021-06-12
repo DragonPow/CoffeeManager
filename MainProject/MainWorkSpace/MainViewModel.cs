@@ -18,15 +18,19 @@ namespace MainProject.MainWorkSpace
     {
         #region Feld
         public string NameWorkSpace => "Home";
+        private const PackIconKind _iconDisplay = PackIconKind.Home;
 
         private ProductViewModel _Productviewmodel;
         private TableViewModel _Tableviewmodel;
 
-        private ObservableCollection<TYPE_PRODUCT> _ListType;
-        private ObservableCollection<PRODUCT> _Listpro;
-        private TYPE_PRODUCT _CurrentTypeInHome;
-        private TYPE_PRODUCT _Type_In_Edit_Pro;
         private string _SearchProduct;
+        private ObservableCollection<TYPE_PRODUCT> _ListType;
+        private TYPE_PRODUCT _CurrentTypeInHome;
+
+        /*private ObservableCollection<PRODUCT> _Listpro;
+       
+        private TYPE_PRODUCT _Type_In_Edit_Pro;
+        
         private string _NameNewTypeProduct;
         private string _NewNameEditType;
 
@@ -34,7 +38,7 @@ namespace MainProject.MainWorkSpace
         private string _EditTypeInEditCatefory;
 
 
-        private const PackIconKind _iconDisplay = PackIconKind.Home;
+        
 
         private ICommand _OpenViewEditCategory;
         private ICommand _CloseEditCategory;
@@ -57,7 +61,7 @@ namespace MainProject.MainWorkSpace
         private ICommand _LoadViewEditProInType;
         private ICommand _SaveEditCategory;
         private ICommand _CloseViewEditProInType;
-
+*/
 
         #endregion
 
@@ -66,11 +70,11 @@ namespace MainProject.MainWorkSpace
         public ProductViewModel Productviewmodel { get => _Productviewmodel; set { if (_Productviewmodel != value) { _Productviewmodel = value; OnPropertyChanged(); } } }
         public TYPE_PRODUCT CurrentTypeInHome { get => _CurrentTypeInHome; set { if (_CurrentTypeInHome != value) { _CurrentTypeInHome = value; OnPropertyChanged(); Productviewmodel.Type = value; } } }
         public TableViewModel Tableviewmodel { get => _Tableviewmodel; set { if (_Tableviewmodel != value) { _Tableviewmodel = value; OnPropertyChanged(); } } }
-        public TYPE_PRODUCT CurrentTypeInProManager { get => _CurrentTypeInProManager; set { if (_CurrentTypeInProManager != value) { _CurrentTypeInProManager = value; OnPropertyChanged(); if (value != null) { /*EditTypeInEditCatefory = value.Type; */ } } } }
+        /*public TYPE_PRODUCT CurrentTypeInProManager { get => _CurrentTypeInProManager; set { if (_CurrentTypeInProManager != value) { _CurrentTypeInProManager = value; OnPropertyChanged(); if (value != null) { *//*EditTypeInEditCatefory = value.Type; *//* } } } }
         public string EditTypeInEditCatefory { get => _EditTypeInEditCatefory; set { if (_EditTypeInEditCatefory != value) { _EditTypeInEditCatefory = value; OnPropertyChanged(); } } }
         public string NameNewTypeProduct { get => _NameNewTypeProduct; set { if (_NameNewTypeProduct != value) { _NameNewTypeProduct = value; OnPropertyChanged(); } } }
         public string NewNameEditType { get => _NewNameEditType; set { if (_NewNameEditType != value) { _NewNameEditType = value; OnPropertyChanged(); } } }
-
+*/
         public ObservableCollection<TYPE_PRODUCT> ListType
         {
             get => _ListType;
@@ -84,7 +88,7 @@ namespace MainProject.MainWorkSpace
             }
         }
 
-        public ObservableCollection<PRODUCT> Listpro
+      /*  public ObservableCollection<PRODUCT> Listpro
         {
             get => _Listpro;
             set
@@ -96,7 +100,7 @@ namespace MainProject.MainWorkSpace
 
                 }
             }
-        }
+        }*/
 
         public PackIcon IconDisplay
         {
@@ -106,8 +110,8 @@ namespace MainProject.MainWorkSpace
             }
         }
 
-        public TYPE_PRODUCT Type_In_Edit_Pro { get => _Type_In_Edit_Pro; set { if (_Type_In_Edit_Pro != value) { _Type_In_Edit_Pro = value; OnPropertyChanged(); CurrentTypeInProManager = value; } } }
-
+/*        public TYPE_PRODUCT Type_In_Edit_Pro { get => _Type_In_Edit_Pro; set { if (_Type_In_Edit_Pro != value) { _Type_In_Edit_Pro = value; OnPropertyChanged(); CurrentTypeInProManager = value; } } }
+*/
 
         #endregion
 
@@ -149,9 +153,9 @@ namespace MainProject.MainWorkSpace
 
         #endregion
 
-        #region Command
+     /*   #region Command*/
 
-
+/*
 
         public ICommand AddEditCategory_Command
         {
@@ -316,17 +320,17 @@ namespace MainProject.MainWorkSpace
 
             using (var db = new mainEntities())
             {              
-                /*for (int i = 1; i < ListType.Count; ++i)
+                *//*for (int i = 1; i < ListType.Count; ++i)
                 {
                     if (ListType[i].ID == CurrentTypeInProManager.ID)
                     {
                         ListType[i].Type = EditTypeInEditCatefory;
                         break;
                     }
-                }*/
+                }*//*
 
                 var type = db.TYPE_PRODUCT.Where(t => t.ID == CurrentTypeInProManager.ID).FirstOrDefault();
-                /*type.Type = EditTypeInEditCatefory;*/
+                *//*type.Type = EditTypeInEditCatefory;*//*
 
                 var list = db.PRODUCTs.Where(p => (p.ID_Type == type.ID || p.ID_Type == null)).ToList();
                 if (list == null) return;
@@ -498,7 +502,7 @@ namespace MainProject.MainWorkSpace
             if (CurrentTypeInHome == CurrentTypeInProManager) Productviewmodel.LoadProductByType(CurrentTypeInHome);
             ListType[0] = new TYPE_PRODUCT() { Type = "Tất cả", ID = new long() };
 
-            /*CurrentTypeInProManager = ListType[0];*/
+            *//*CurrentTypeInProManager = ListType[0];*//*
             Listpro = null;
         }
 
@@ -523,7 +527,7 @@ namespace MainProject.MainWorkSpace
 
                 Listpro = new ObservableCollection<PRODUCT>(l);
             }
-        }
+        }*/
 
         public void Load_Type()
         {
@@ -539,4 +543,5 @@ namespace MainProject.MainWorkSpace
 
     }
 }
+
 
