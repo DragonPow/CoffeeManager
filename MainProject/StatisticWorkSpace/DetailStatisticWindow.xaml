@@ -13,6 +13,7 @@
         ResizeMode="CanResize" WindowStyle="None"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
+        <CollectionViewSource x:Key="gridSource" Source="{Binding ListModel}"/>
         <Style x:Key="labelStyle" TargetType="Label">
             <Setter Property="Margin" Value="5,5,5,5"/>
             <Setter Property="FontSize" Value="16"/>
@@ -23,6 +24,10 @@
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
+        <ToolTip x:Key="toolTip_Name" Content="Tên món ăn"/>
+        <ToolTip x:Key="toolTip_Amount" Content="Số lượng món bán ra trong tháng"/>
+        <ToolTip x:Key="toolTip_Revenue" Content="Doanh thu trong tháng"/>
+        <ToolTip x:Key="toolTip_Ratio" Content="Tỉ lệ phần trăm doanh thu trong tháng"/>
         <conver:MoneyConverter x:Key="moneyConverter" Currency="đ"/>
         <conver:DetailPieChartConverter x:Key="chartConverter"/>
     </Window.Resources>
@@ -41,7 +46,7 @@
                 <materialDesign:PackIcon Kind="ArrowLeft" Width="32" Height="32"/>
             </Button>
             <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                       Text="THỐNG KÊ CHI TIÉT" 
+                       Text="BÁO CÁO BÁN HÀNG THEO SẢN PHẨM" 
                        FontSize="26" 
                        Foreground="White"
                        HorizontalAlignment="Center"
@@ -63,42 +68,53 @@
 
                 <Grid
                 DockPanel.Dock="Bottom">
-                    <Label HorizontalAlignment="Left" Margin="0" Style="{StaticResource labelStyle}">Tổng doanh thu</Label>
+                    <Label HorizontalAlignment="Left" Margin="0" Style="{StaticResource labelStyle}" Foreground="Red">Tổng doanh thu</Label>
                     <TextBlock 
                     HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="14" Margin="5"
-                           Text="{Binding Path=TotalRevenue, Converter={StaticResource moneyConverter}, Mode=OneWay}" FontWeight="Bold"/>
+                           Text="{Binding Path=TotalRevenue, Converter={StaticResource moneyConverter}, Mode=OneWay}" FontWeight="Bold" Foreground="Red"/>
                 </Grid>
                 <DataGrid
-                DockPanel.Dock="Top" x:Name="datagridView" Background="White"
-                SelectionMode="Single" CanUserSortColumns="True" Margin="2,0"
-                CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False"
-                HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="LightGray" GridLinesVisibility="All"
-                BorderThickness="1" BorderBrush="Gray"
-                RowBackground="GhostWhite" AlternatingRowBackground="White"
-                materialDesign:DataGridAssist.CornerRadius="2" AutoGenerateColumns="False" IsReadOnly="True"
-                ItemsSource="{Binding Path=ListModel, Mode=OneWay}" 
-                >
+                    DockPanel.Dock="Top" x:Name="datagridView" Background="White"
+                    SelectionMode="Single" CanUserSortColumns="True" Margin="2,0"
+                    CanUserAddRows="False" CanUserDeleteRows="False" 
+                    CanUserReorderColumns="False" CanUserResizeRows="False"
+                    HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="LightGray" GridLinesVisibility="All"
+                    BorderThickness="1" BorderBrush="Gray"
+                    RowBackground="GhostWhite" AlternatingRowBackground="White"
+                    materialDesign:DataGridAssist.CornerRadius="2" AutoGenerateColumns="False"
+                    ItemsSource="{Binding Source={StaticResource gridSource}}" 
+                    >
                     <DataGrid.Columns>
                         <DataGridTemplateColumn 
-                        Header="Tên Món" HeaderStyle="{StaticResource headerStyle}" materialDesign:HintAssist.Hint="áđâsd"
+                        Header="Tên sản phẩm"
                         Width="*" IsReadOnly="True" CanUserResize="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock  Text="{Binding Path=Title, Mode=OneWay}" Foreground="#DD000000"></TextBlock>
+                                    <TextBlock  Text="{Binding Path=Title, Mode=OneWay}"></TextBlock>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
+                                    <Setter Property="ToolTip" Value="{StaticResource toolTip_Name}"/>
+                                </Style>
+                            </DataGridTemplateColumn.HeaderStyle>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn 
-                        Header="Bán Ra" HeaderStyle="{StaticResource headerStyle}"
+                        Header="Bán ra" CanUserSort="True" SortMemberPath="Amount"
                         IsReadOnly="True" CanUserResize="True">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Path=Amount, Mode=OneWay}" TextAlignment="Center"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=Amount, Mode=OneWay}" TextAlignment="Center"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
+                                    <Setter Property="ToolTip" Value="{StaticResource toolTip_Amount}"/>
+                                </Style>
+                            </DataGridTemplateColumn.HeaderStyle>
+                        </DataGridTemplateColumn>
                         <DataGridTemplateColumn 
-                        Header="Doanh Thu" HeaderStyle="{StaticResource headerStyle}"
+                        Header="Doanh thu" CanUserSort="True" SortMemberPath="Revenue"
                         IsReadOnly="True" CanUserResize="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -107,15 +123,25 @@
                                         Text="{Binding Path=Revenue, Converter={StaticResource moneyConverter}, Mode=OneWay}" TextAlignment="Center"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
+                                    <Setter Property="ToolTip" Value="{StaticResource toolTip_Revenue}"/>
+                                </Style>
+                            </DataGridTemplateColumn.HeaderStyle>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn 
-                        Header="Tỉ Lệ (%)" HeaderStyle="{StaticResource headerStyle}"
+                        Header="Tỉ lệ (%)"
                         IsReadOnly="True" CanUserResize="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Path=Label, Mode=OneWay}" TextAlignment="Center"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
+                                    <Setter Property="ToolTip" Value="{StaticResource toolTip_Ratio}"/>
+                                </Style>
+                            </DataGridTemplateColumn.HeaderStyle>
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>

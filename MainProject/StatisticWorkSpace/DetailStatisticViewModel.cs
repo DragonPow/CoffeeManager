@@ -10,7 +10,7 @@ namespace MainProject.StatisticWorkSpace
     {
         string dateTimeRangeTitle;
         public string DateTimeRangeTitle => dateTimeRangeTitle;
-        public string TitleDataGrid => String.Format("Báo cáo bán hàng {0}", DateTimeRangeTitle);
+        public string TitleDataGrid => String.Format("Báo Cáo Bán Hàng {0}", DateTimeRangeTitle);
         public override void SetTimeRange(DateTime minDate, DateTime maxDate)
         {
             List<StatisticModel> data;
@@ -22,7 +22,7 @@ namespace MainProject.StatisticWorkSpace
 
             ListModel.Clear();
             data.Sort((m1, m2) => (m1.Revenue < m2.Revenue) ? 1 : -1);
-            listModel = data;
+            listModel = new System.Collections.ObjectModel.ObservableCollection<StatisticModel>(data);
             OnPropertyChanged(nameof(ListModel));
         }
 

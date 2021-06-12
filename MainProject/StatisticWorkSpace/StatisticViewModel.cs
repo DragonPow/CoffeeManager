@@ -11,7 +11,7 @@ namespace MainProject.StatisticWorkSpace
 {
     class StatisticViewModel : BaseViewModel, IMainWorkSpace
     {
-        public string NameWorkSpace => "Thu ngân";
+        public string NameWorkSpace => "Thống kê";
         private const PackIconKind _iconDisplay = PackIconKind.Finance;
         public PackIcon IconDisplay
         {
@@ -21,8 +21,8 @@ namespace MainProject.StatisticWorkSpace
             }
         }
 
-        protected List<StatisticModel> listModel;
-        public List<StatisticModel> ListModel { get => listModel; }
+        protected ObservableCollection<StatisticModel> listModel;
+        public ObservableCollection<StatisticModel> ListModel { get => listModel; }
         public void SetListModel(List<StatisticModel> list)
         {
             ListModel.Clear();
@@ -32,7 +32,7 @@ namespace MainProject.StatisticWorkSpace
                 model.Title = CreateTitle(model);
             }
             list.Sort((m1, m2) => DateTime.Compare(m1.TimeMin, m2.TimeMin));
-            listModel = list;
+            listModel = new ObservableCollection<StatisticModel>(list);
             OnPropertyChanged(nameof(ListModel));
         }
 
@@ -131,7 +131,7 @@ namespace MainProject.StatisticWorkSpace
                     rs = GetDayOfWeek(model.TimeMin.DayOfWeek);
                     break;
                 case StatisticMode.DayOfMonth:
-                    rs = model.TimeMin.ToString("dd/MM");
+                    rs = model.TimeMin.Day.ToString();
                     break;
                 case StatisticMode.WeekOfMonth:
                     rs = String.Format("{0} - {1}"
@@ -208,13 +208,13 @@ namespace MainProject.StatisticWorkSpace
         
         public StatisticViewModel()
         {
-            listModel = new List<StatisticModel>
+            listModel = new ObservableCollection<StatisticModel>
             {
-                /*new StatisticModel(){ Title = "Title1", Label = "Label1", Revenue = 10000},
-                new StatisticModel(){ Title = "Title2", Label = "Label2", Revenue = 20000},
-                new StatisticModel(){ Title = "Title3", Label = "Label3", Revenue = 15000},
-                new StatisticModel(){ Title = "Title4", Label = "Label4", Revenue = 100000},
-                new StatisticModel(){ Title = "Title5", Label = "Label5", Revenue = 130000}*/
+                new StatisticModel(){ Title = "Title1", Label = "Label1", Revenue = 10000, Amount=1},
+                new StatisticModel(){ Title = "Title2", Label = "Label2", Revenue = 20000, Amount=1},
+                new StatisticModel(){ Title = "Title3", Label = "Label3", Revenue = 15000, Amount=1},
+                new StatisticModel(){ Title = "Title4", Label = "Label4", Revenue = 100000, Amount=1},
+                new StatisticModel(){ Title = "Title5", Label = "Label5", Revenue = 130000, Amount=1}
             };
             foreach (var model in ListModel) { model.Label = CreateLabel(model); model.Title = CreateTitle(model); }
             SelectedOptionProduct = OPTION_ALL_PRODUCT;
