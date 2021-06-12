@@ -27,6 +27,7 @@ namespace MainProject.MainWorkSpace
         private TYPE_PRODUCT _Type_In_Edit_CATEGORY;
         private string _SearchProduct;
         private string _NameNewTypeProduct;
+        private string _NewNameEditType;
 
         private TYPE_PRODUCT _TypeInEditCATEGORYCombobox;
         private string _EditTypeInEditCatefory;
@@ -34,15 +35,24 @@ namespace MainProject.MainWorkSpace
 
         private const PackIconKind _iconDisplay = PackIconKind.Home;
 
-        private ICommand _OpenViewEditCategory;
-        private ICommand _AddEditCategory;
+        private ICommand _OpenViewEditCategory;     
         private ICommand _SaveEditCategory;
         private ICommand _DeleteTypeEditCategory;
         private ICommand _CloseEditCategory;
+
+        private ICommand _AddEditCategory;
+
         private ICommand _ClickCheckboxSelectedPro;
+
         private ICommand _OpenViewAddCategory;
         private ICommand _CloseViewAddCategory;
 
+        private ICommand _LoadViewEditNameType;
+        private ICommand _UpdateNameType;
+        private ICommand _CloseViewEditNameType;
+
+        private ICommand _LoadViewEditProInType;
+        private ICommand _CloseViewEditProInType;
 
 
         #endregion
@@ -52,9 +62,11 @@ namespace MainProject.MainWorkSpace
         public ProductViewModel Productviewmodel { get => _Productviewmodel; set { if (_Productviewmodel != value) { _Productviewmodel = value; OnPropertyChanged(); } } }
         public TYPE_PRODUCT CurrentType { get => _CurrentType; set { if (_CurrentType != value) { _CurrentType = value; OnPropertyChanged(); Productviewmodel.Type = value; } } }
         public TableViewModel Tableviewmodel { get => _Tableviewmodel; set { if (_Tableviewmodel != value) { _Tableviewmodel = value; OnPropertyChanged(); } } }
-        public TYPE_PRODUCT TypeInEditCATEGORYCombobox { get => _TypeInEditCATEGORYCombobox; set { if (_TypeInEditCATEGORYCombobox != value) { _TypeInEditCATEGORYCombobox = value; OnPropertyChanged(); if (value != null) { EditTypeInEditCatefory = value.Type; LoadProductBYType_EditType(); } } } }
+        public TYPE_PRODUCT TypeInEditCATEGORYCombobox { get => _TypeInEditCATEGORYCombobox; set { if (_TypeInEditCATEGORYCombobox != value) { _TypeInEditCATEGORYCombobox = value; OnPropertyChanged(); if (value != null) { /*EditTypeInEditCatefory = value.Type; */ } } } }
         public string EditTypeInEditCatefory { get => _EditTypeInEditCatefory; set { if (_EditTypeInEditCatefory != value) { _EditTypeInEditCatefory = value; OnPropertyChanged(); } } }
         public string NameNewTypeProduct { get => _NameNewTypeProduct; set { if (_NameNewTypeProduct != value) { _NameNewTypeProduct = value; OnPropertyChanged(); } } }
+        public string NewNameEditType { get => _NewNameEditType; set { if (_NewNameEditType != value) { _NewNameEditType = value; OnPropertyChanged(); } } }
+
         public ObservableCollection<TYPE_PRODUCT> ListType
         {
             get => _ListType;
@@ -277,9 +289,6 @@ namespace MainProject.MainWorkSpace
             ListType[0] = null;
 
             WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditType());
-
-            /*Productviewmodel.LoadProductByType(CurrentType);*/
-
         }
 
         public ICommand SaveEditCategory_Command
@@ -299,27 +308,21 @@ namespace MainProject.MainWorkSpace
         public void SaveEditCategory(object a)
         {
 
-            if (TypeInEditCATEGORYCombobox == null) return;
-
-            if (EditTypeInEditCatefory == "")
-            {
-                WindowService.Instance.OpenMessageBox("Vui lòng nhập tên danh mục!", "Lỗi", MessageBoxImage.Error);
-                return;
-            }
+            if (TypeInEditCATEGORYCombobox == null) return;         
 
             using (var db = new mainEntities())
             {              
-                for (int i = 1; i < ListType.Count; ++i)
+                /*for (int i = 1; i < ListType.Count; ++i)
                 {
                     if (ListType[i].ID == TypeInEditCATEGORYCombobox.ID)
                     {
                         ListType[i].Type = EditTypeInEditCatefory;
                         break;
                     }
-                }
+                }*/
 
                 var type = db.TYPE_PRODUCT.Where(t => t.ID == TypeInEditCATEGORYCombobox.ID).FirstOrDefault();
-                type.Type = EditTypeInEditCatefory;
+                /*type.Type = EditTypeInEditCatefory;*/
 
                 var list = db.PRODUCTs.Where(p => (p.ID_Type == type.ID || p.ID_Type == null)).ToList();
                 if (list == null) return;
@@ -332,7 +335,7 @@ namespace MainProject.MainWorkSpace
                 }
              
                 db.SaveChanges();
-                CloseEditCategory();
+                CloseViewEditProInType();
             }
 
         }
@@ -389,6 +392,111 @@ namespace MainProject.MainWorkSpace
             Listpro = null;
         }
 
+        public ICommand LoadViewEditNameType_Command
+        {
+            get
+            {
+                if (_LoadViewEditNameType == null)
+                {
+                    _LoadViewEditNameType = new RelayingCommand<Object>(a => LoadViewEditNameType());
+                }
+                return _LoadViewEditNameType;
+            }
+        }
+
+
+        public void LoadViewEditNameType()
+        {
+            WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditNameType());          
+        }
+
+        public ICommand UpdateNameType_Command
+        {
+            get
+            {
+                if (_UpdateNameType == null)
+                {
+                    _UpdateNameType = new RelayingCommand<Object>(a => UpdateNameType());
+                }
+                return _UpdateNameType;
+            }
+        }
+
+
+        public void UpdateNameType()
+        {
+           using ( var db = new  mainEntities())
+            {
+                var type = db.TYPE_PRODUCT.Where(t => t.ID == CurrentType.ID).FirstOrDefault();
+                type.Type = NewNameEditType;
+                db.SaveChanges();
+            }
+
+            CloseViewEditNameType();
+        }
+
+        public ICommand CloseViewEditNameType_Command
+        {
+            get
+            {
+                if (_CloseViewEditNameType == null)
+                {
+                    _CloseViewEditNameType = new RelayingCommand<Object>(a => CloseViewEditNameType());
+                }
+                return _CloseViewEditNameType;
+            }
+        }
+
+
+        public void CloseViewEditNameType()
+        {
+            Window window = WindowService.Instance.FindWindowbyTag("Edit Name type").First();
+            window.Close();
+        }
+
+        public ICommand LoadViewEditProInType_Command
+        {
+            get
+            {
+                if (_LoadViewEditProInType == null)
+                {
+                    _LoadViewEditProInType = new RelayingCommand<Object>(a => LoadViewEditProInType());
+                }
+                return _LoadViewEditProInType;
+            }
+        }
+
+
+        public void LoadViewEditProInType()
+        {           
+            LoadProductBYType_EditType();
+            WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditProdInType());        
+        }
+
+        public ICommand CloseViewEditProInType_Command
+        {
+            get
+            {
+                if (_CloseViewEditProInType == null)
+                {
+                    _CloseViewEditProInType = new RelayingCommand<Object>(a => CloseViewEditProInType());
+                }
+                return _CloseViewEditProInType;
+            }
+        }
+
+
+        public void CloseViewEditProInType()
+        {
+            Window window = WindowService.Instance.FindWindowbyTag("Edit pro in category").First();
+            window.Close();
+
+            if (CurrentType == TypeInEditCATEGORYCombobox) Productviewmodel.LoadProductByType(CurrentType);
+            ListType[0] = new TYPE_PRODUCT() { Type = "Tất cả", ID = new long() };
+
+            TypeInEditCATEGORYCombobox = ListType[0];
+            Listpro = null;
+        }
 
         #endregion
 

@@ -4,11 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Product"
              xmlns:main="clr-namespace:MainProject.MainWorkSpace"
-             xmlns:model="clr-namespace:MainProject.Model"
-             xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
              mc:Ignorable="d"
              Tag="Edit category"
              Name="Edit_Type"
@@ -47,7 +44,7 @@
             <ListView  Grid.Row="1"
                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                        ItemsSource="{Binding ListType}"
-                       SelectedItem="{Binding CurrentType}">
+                       SelectedItem="{Binding TypeInEditCATEGORYCombobox}" Height="495">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <local:TypeListItem DataContext="{Binding}"/>
@@ -63,8 +60,8 @@
                 </ListView.ItemsPanel>
                 <ListView.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Đổi tên danh mục" Command="{Binding}"/>
-                        <MenuItem Header="Chỉnh sửa danh sách sản phẩm" Command="{Binding}"/>
+                        <MenuItem Header="Đổi tên danh mục" Command="{Binding LoadViewEditNameType_Command}"/>
+                        <MenuItem Header="Chỉnh sửa danh sách sản phẩm" Command="{Binding LoadViewEditProInType_Command}"/>
                         <MenuItem Header="Xóa danh mục" Command="{Binding DeleteTypeEditCategory_Command}"/>
                     </ContextMenu>
                 </ListView.ContextMenu>
