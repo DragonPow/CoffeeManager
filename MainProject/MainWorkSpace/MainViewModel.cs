@@ -289,7 +289,10 @@ namespace MainProject.MainWorkSpace
         {
             ListType[0] = null;
 
-            WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditType());
+            EditType view = new EditType();
+            view.DataContext = this;
+
+            WindowService.Instance.OpenWindowWithoutBorderControl(this, view);
         }
 
         public ICommand SaveEditCategory_Command
