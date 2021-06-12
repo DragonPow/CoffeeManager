@@ -25,7 +25,7 @@
         <DataTemplate DataType="{x:Type ViewModel:HistoryViewModel}">
             <HistoryWorkSpace:HistoryView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type ViewModel:ProductViewModel}">
+        <DataTemplate DataType="{x:Type ViewModel:ManageProductviewModel}">
             <ProductManagerWorkSpace:ProdManager />
         </DataTemplate>
         <!--<DataTemplate DataType="{x:Type VoucherWorkSpace:VoucherViewModel}">
