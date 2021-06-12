@@ -67,7 +67,7 @@
             <TabControl TabStripPlacement="Bottom"
                         DockPanel.Dock="Bottom"
                         ItemsSource="{Binding ListType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                        SelectedItem="{Binding CurrentType}"
+                        SelectedItem="{Binding CurrentTypeInHome}"
                         Style="{StaticResource MaterialDesignNavigatilRailTabControl}"
                          materialDesign:ColorZoneAssist.Mode="PrimaryMid" >
                 <TabControl.ItemTemplate>

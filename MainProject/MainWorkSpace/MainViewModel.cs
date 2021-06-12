@@ -80,7 +80,6 @@ namespace MainProject.MainWorkSpace
                 {
                     _ListType = value;
                     OnPropertyChanged();
-
                 }
             }
         }
@@ -261,16 +260,14 @@ namespace MainProject.MainWorkSpace
                         p.TYPE_PRODUCT = null;
                     }
                 }
-
                 db.TYPE_PRODUCT.Remove(db.TYPE_PRODUCT.Where(t => t.ID == CurrentTypeInProManager.ID).FirstOrDefault());
 
                 db.SaveChanges();
 
                 int number = ListType.IndexOf(CurrentTypeInProManager);
-
-                CurrentTypeInProManager = ListType.ElementAt(0);
                 ListType.RemoveAt(number);
 
+                CurrentTypeInProManager = ListType[0];          
             }
 
 
@@ -472,7 +469,7 @@ namespace MainProject.MainWorkSpace
 
 
         public void LoadViewEditProInType()
-        {           
+        {
             LoadProductBYType_EditType();
             WindowService.Instance.OpenWindowWithoutBorderControl(this, new EditProdInType());        
         }
@@ -498,7 +495,7 @@ namespace MainProject.MainWorkSpace
             if (CurrentTypeInHome == CurrentTypeInProManager) Productviewmodel.LoadProductByType(CurrentTypeInHome);
             ListType[0] = new TYPE_PRODUCT() { Type = "Tất cả", ID = new long() };
 
-            CurrentTypeInProManager = ListType[0];
+            /*CurrentTypeInProManager = ListType[0];*/
             Listpro = null;
         }
 
