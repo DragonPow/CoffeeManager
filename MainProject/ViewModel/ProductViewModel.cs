@@ -221,7 +221,6 @@ namespace MainProject.ViewModel
                     }
                     throw;
                 }
-
             }
 
             Exitaddproview();
