@@ -4,22 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Product"
-           
              xmlns:Table="clr-namespace:MainProject.MainWorkSpace.Table"
              xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
              xmlns:main="clr-namespace:MainProject.MainWorkSpace"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              Background="White"
-             d:DataContext="{d:DesignInstance Type=main:MainViewModel}"
+              d:DataContext="{d:DesignInstance ViewModel:ManageProductviewModel}"
              d:DesignHeight="630"
              d:DesignWidth="1150">
-    <Grid>
+    <Grid DataContext="{Binding MainVM}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="11*"/>
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
-        <local:EditMenu Grid.Column="1" DataContext="{Binding}"/>
+        <local:EditMenu Grid.Column="1" Margin="5,0,0,0" DataContext="{Binding}"/>
         <DockPanel>
             <materialDesign:ColorZone DockPanel.Dock="Top"
                                       DataContext="{Binding Productviewmodel}"
@@ -47,7 +46,7 @@
                             </Grid.ColumnDefinitions>
                             <Button VerticalAlignment="Center" Grid.Column="1"
                                 Style="{DynamicResource MaterialDesignToolButton}"
-                                    Command="{Binding SearchProduct}">
+                                    Command="{Binding SearchByName_Command}">
                                 <materialDesign:PackIcon
                                   Kind="Search"
                                   Opacity=".56" />
