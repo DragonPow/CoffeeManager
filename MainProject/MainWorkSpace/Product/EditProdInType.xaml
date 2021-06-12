@@ -10,7 +10,7 @@
              xmlns:model="clr-namespace:MainProject.Model"
              xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
              mc:Ignorable="d"
-             Tag="Edit category"
+             Tag="Edit pro in category"
              Name="EditProd_Type"
              d:DataContext="{d:DesignInstance Type=main:MainViewModel}"
              Height="600"
@@ -28,7 +28,7 @@
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"/>
             <Button Background="Transparent" BorderBrush="Transparent" Margin="5" HorizontalAlignment="Right"
-                    Command="{Binding CloseEditCategory_Command}">
+                    Command="{Binding CloseViewEditProInType_Command}">
                 <materialDesign:PackIcon Kind="Close" Width="20" Height="20" />
 
             </Button>
@@ -44,10 +44,12 @@
                        Margin="20"/>
             <ListView  Grid.Row="1"
                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                       ItemsSource="{Binding Productviewmodel.ListPoduct}">
+                       SelectedItem="{Binding Productviewmodel.Currentproduct}"
+                       ItemsSource="{Binding Listpro}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <local:SelectPro DataContext="{Binding}"
+                        <local:SelectPro DataContext="{Binding }"
+                                        
                                          Tag="{Binding DataContext, ElementName=Edit_Type}">
                         </local:SelectPro>
                     </DataTemplate>

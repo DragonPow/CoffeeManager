@@ -6,6 +6,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Product"
              mc:Ignorable="d" 
+             Tag="Edit Name type"
              Height="200" Width="400" Background="White">
     <StackPanel>
         <Grid 
@@ -19,14 +20,14 @@
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"/>
             <Button Background="Transparent" BorderBrush="Transparent" Margin="5" HorizontalAlignment="Right"
-                    Command="{Binding CloseViewAddCategory_Command}">
+                    Command="{Binding CloseViewEditNameType}">
                 <materialDesign:PackIcon Kind="Close" Width="20" Height="20" />
 
             </Button>
         </Grid>
         <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                      materialDesign:HintAssist.Hint="Tên mới"
-                     Text="{Binding NameNewTypeProduct,UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding NewNameEditType,UpdateSourceTrigger=PropertyChanged}"
                      FontSize="14"
                      Margin="50,30"
                      Height="40"
@@ -34,7 +35,7 @@
                      MaxWidth="500" />
         <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
                         Height="40"
-                        Command="{Binding AddEditCategory_Command}"
+                        Command="{Binding UpdateNameType}"
                         HorizontalAlignment="Stretch"
                         Background="{StaticResource MainColor}"
                         BorderBrush="#31CA62"
