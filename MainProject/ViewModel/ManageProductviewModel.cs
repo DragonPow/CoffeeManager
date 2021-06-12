@@ -29,8 +29,6 @@ namespace MainProject.ViewModel
 
         private MainViewModel _MainVM;
         private ObservableCollection<PRODUCT> _Listpro;
-        private TYPE_PRODUCT _CurrentTypeInHome;
-        private TYPE_PRODUCT _Type_In_Edit_Pro;
         private string _NameNewTypeProduct;
         private string _NewNameEditType;
 
@@ -376,6 +374,15 @@ namespace MainProject.ViewModel
             {
                 var type = db.TYPE_PRODUCT.Where(t => t.ID == CurrentTypeInProManager.ID).FirstOrDefault();
                 type.Type = NewNameEditType;
+
+                for ( int i = 1; i < MainVM.ListType.Count; ++i)
+                {
+                    if (MainVM.ListType[i].ID == CurrentTypeInProManager.ID)
+                    {
+                        MainVM.ListType[i].Type = NewNameEditType;
+                        break;
+                    }    
+                }    
                 db.SaveChanges();
             }
 
