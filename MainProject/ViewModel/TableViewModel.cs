@@ -366,18 +366,15 @@ namespace MainProject.ViewModel
         }
         public void Pay()
         {
-            if (CurrentTable == null && !Isbringtohome)
-            {
-                WindowService.Instance.OpenMessageBox("Chưa chọn bàn", "Lỗi",MessageBoxImage.Error);
-                return;
-            }
-
             if ( Isbringtohome)
             {
-                using (var db = new mainEntities())
-                {
                     CurrentTable = new TABLECUSTOM() { table = new TABLE()};
-                }
+            }
+
+            if (CurrentTable == null && !Isbringtohome)
+            {
+                WindowService.Instance.OpenMessageBox("Chưa chọn bàn", "Lỗi", MessageBoxImage.Error);
+                return;
             }
 
             if (Currentlistdetailpro == null || Currentlistdetailpro.Count == 0 )
