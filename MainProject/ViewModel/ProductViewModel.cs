@@ -146,7 +146,7 @@ namespace MainProject.ViewModel
         public void Loadaddproview()
         {
 
-            Newproduct = new PRODUCT() { Image = imageToByteArray(Properties.Resources.Empty_Image), TYPE_PRODUCT = new TYPE_PRODUCT() };
+            Newproduct = new PRODUCT() { Image = imageToByteArray(Properties.Resources.Empty_Image), TYPE_PRODUCT = new TYPE_PRODUCT(), IsProvided = true};
 
             WindowService.Instance.OpenWindowWithoutBorderControl(this, new CreateProd());
         }
@@ -431,7 +431,7 @@ namespace MainProject.ViewModel
             {
                 var pro = db.PRODUCTs.Where(p => (p.ID == Currentproduct.ID)).FirstOrDefault();
 
-                if (db.DETAILBILLs.Where(d => d.ID_Product == Currentproduct.ID ).FirstOrDefault() != null)
+                if ((Currentproduct.Name != pro.Name || Currentproduct.Price != pro.Price) && db.DETAILBILLs.Where(d => d.ID_Product == Currentproduct.ID ).FirstOrDefault() != null )
                 {
                     WindowService.Instance.OpenMessageBox("Món đã từng được thanh toán, vui lòng không thay đổi tên,giá!", "Lỗi", MessageBoxImage.Error);
                     
