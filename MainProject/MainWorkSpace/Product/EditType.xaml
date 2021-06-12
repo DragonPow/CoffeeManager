@@ -12,9 +12,6 @@
              d:DataContext="{d:DesignInstance Type=main:MainViewModel}"
              Height="600"
              Width="500">
-    <UserControl.DataContext>
-        <main:MainViewModel/>
-    </UserControl.DataContext>
     <DockPanel>
         <Grid DockPanel.Dock="Top"
               Background="{StaticResource MainColor}">
@@ -53,14 +50,14 @@
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical"
-                                    Margin="60,10"
+                                    Margin="60,0"
                                     MaxWidth="500"
                                     Height="450"></StackPanel>
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
                 <ListView.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Đổi tên danh mục" Command="{Binding LoadViewEditNameType_Command}"/>
+                        <MenuItem Header="Đổi tên danh mục" Command="{Binding LoadViewEditNameType_Command}" />
                         <MenuItem Header="Chỉnh sửa danh sách sản phẩm" Command="{Binding LoadViewEditProInType_Command}"/>
                         <MenuItem Header="Xóa danh mục" Command="{Binding DeleteTypeEditCategory_Command}"/>
                     </ContextMenu>
