@@ -27,7 +27,7 @@
                   VerticalAlignment="Center"
                   IsChecked="{Binding IsChecked, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                   Margin="10"
-                  Command="{Binding DataContext.ClickCheckboxSelectedPro_Command, ElementName=Edit_Type}"
+                  Command="{Binding DataContext.ClickCheckboxSelectedPro_Command, ElementName=EditProd_Type}"
                   CommandParameter="{Binding}"/>
         <Image Source="{Binding Image}"
                Grid.Column="1"

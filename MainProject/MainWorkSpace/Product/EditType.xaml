@@ -44,7 +44,7 @@
             <ListView  Grid.Row="1"
                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                        ItemsSource="{Binding ListType}"
-                       SelectedItem="{Binding TypeInEditCATEGORYCombobox}" Height="495">
+                       SelectedItem="{Binding CurrentTypeInProManager}" Height="495">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <local:TypeListItem DataContext="{Binding}"/>
