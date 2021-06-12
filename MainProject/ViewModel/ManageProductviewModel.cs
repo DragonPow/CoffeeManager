@@ -446,7 +446,7 @@ namespace MainProject.ViewModel
             window.Close();
 
             if (MainVM.CurrentTypeInHome == CurrentTypeInProManager) MainVM.Productviewmodel.LoadProductByType(MainVM.CurrentTypeInHome);
-            MainVM.ListType[0] = new TYPE_PRODUCT() { Type = "Tất cả", ID = new long() };
+         /*   MainVM.ListType[0] = new TYPE_PRODUCT() { Type = "Tất cả", ID = new long() };*/
 
             /*CurrentTypeInProManager = ListType[0];*/
             Listpro = null;
