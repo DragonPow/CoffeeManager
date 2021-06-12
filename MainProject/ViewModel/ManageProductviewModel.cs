@@ -20,11 +20,14 @@ namespace MainProject.ViewModel
             }
         }
 
-        MainViewModel mainVM;
+        private MainViewModel _MainVM;
+
+        public MainViewModel MainVM { get => _MainVM; set { if (_MainVM  != value) { _MainVM = value; OnPropertyChanged(); } } }
+
 
         public ManageProductviewModel(MainViewModel mainvm)
         {
-            mainVM = mainvm;
+            MainVM = mainvm;
         }
         public ManageProductviewModel()
         {
