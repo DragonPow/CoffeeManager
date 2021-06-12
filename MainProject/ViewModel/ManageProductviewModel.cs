@@ -228,7 +228,7 @@ namespace MainProject.ViewModel
 
         public void OpenViewEditCategory()
         {
-            MainVM.ListType[0] = null;
+            MainVM.ListType.RemoveAt(0);
 
             EditType view = new EditType();
             view.DataContext = this;
@@ -330,7 +330,7 @@ namespace MainProject.ViewModel
             window.Close();
 
             if (MainVM.CurrentTypeInHome == CurrentTypeInProManager) MainVM.Productviewmodel.LoadProductByType(MainVM.CurrentTypeInHome);
-            MainVM.ListType[0] = new TYPE_PRODUCT() { Type = "Tất cả", ID = new long() };
+            MainVM.ListType.Insert(0, new TYPE_PRODUCT() { Type = "Tất cả", ID = new long() });
 
             CurrentTypeInProManager = MainVM.ListType[0];
             EditTypeInEditCatefory = null;
