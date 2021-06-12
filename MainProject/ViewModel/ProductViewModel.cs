@@ -237,8 +237,6 @@ namespace MainProject.ViewModel
                 return _CancelAddProduct;
             }
         }
-
-
         public void CancelAddProduct()
         {
             Newproduct = new PRODUCT() { Image = imageToByteArray(Properties.Resources.Empty_Image), TYPE_PRODUCT = new TYPE_PRODUCT() };

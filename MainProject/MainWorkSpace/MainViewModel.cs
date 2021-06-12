@@ -25,20 +25,21 @@ namespace MainProject.MainWorkSpace
         private ObservableCollection<TYPE_PRODUCT> _ListType;
         private ObservableCollection<PRODUCT> _Listpro;
         private TYPE_PRODUCT _CurrentTypeInHome;
-        private TYPE_PRODUCT _CurrentTypeInProManager;
+        private TYPE_PRODUCT _Type_In_Edit_Pro;
         private string _SearchProduct;
         private string _NameNewTypeProduct;
         private string _NewNameEditType;
 
-        private TYPE_PRODUCT _TypeInEditCATEGORYCombobox;
+        private TYPE_PRODUCT _CurrentTypeInProManager;
         private string _EditTypeInEditCatefory;
 
 
         private const PackIconKind _iconDisplay = PackIconKind.Home;
 
         private ICommand _OpenViewEditCategory;     
-        private ICommand _SaveEditCategory;
+       
         private ICommand _DeleteTypeEditCategory;
+
         private ICommand _CloseEditCategory;
 
         private ICommand _AddEditCategory;
@@ -53,6 +54,7 @@ namespace MainProject.MainWorkSpace
         private ICommand _CloseViewEditNameType;
 
         private ICommand _LoadViewEditProInType;
+        private ICommand _SaveEditCategory;
         private ICommand _CloseViewEditProInType;
 
 
@@ -63,7 +65,7 @@ namespace MainProject.MainWorkSpace
         public ProductViewModel Productviewmodel { get => _Productviewmodel; set { if (_Productviewmodel != value) { _Productviewmodel = value; OnPropertyChanged(); } } }
         public TYPE_PRODUCT CurrentTypeInHome { get => _CurrentTypeInHome; set { if (_CurrentTypeInHome != value) { _CurrentTypeInHome = value; OnPropertyChanged(); Productviewmodel.Type = value; } } }
         public TableViewModel Tableviewmodel { get => _Tableviewmodel; set { if (_Tableviewmodel != value) { _Tableviewmodel = value; OnPropertyChanged(); } } }
-        public TYPE_PRODUCT TypeInEditCATEGORYCombobox { get => _TypeInEditCATEGORYCombobox; set { if (_TypeInEditCATEGORYCombobox != value) { _TypeInEditCATEGORYCombobox = value; OnPropertyChanged(); if (value != null) { /*EditTypeInEditCatefory = value.Type; */ } } } }
+        public TYPE_PRODUCT CurrentTypeInProManager { get => _CurrentTypeInProManager; set { if (_CurrentTypeInProManager != value) { _CurrentTypeInProManager = value; OnPropertyChanged(); if (value != null) { /*EditTypeInEditCatefory = value.Type; */ } } } }
         public string EditTypeInEditCatefory { get => _EditTypeInEditCatefory; set { if (_EditTypeInEditCatefory != value) { _EditTypeInEditCatefory = value; OnPropertyChanged(); } } }
         public string NameNewTypeProduct { get => _NameNewTypeProduct; set { if (_NameNewTypeProduct != value) { _NameNewTypeProduct = value; OnPropertyChanged(); } } }
         public string NewNameEditType { get => _NewNameEditType; set { if (_NewNameEditType != value) { _NewNameEditType = value; OnPropertyChanged(); } } }
@@ -104,7 +106,7 @@ namespace MainProject.MainWorkSpace
             }
         }
 
-        public TYPE_PRODUCT CurrentTypeInProManager { get => _CurrentTypeInProManager; set { if (_CurrentTypeInProManager != value) { _CurrentTypeInProManager = value; OnPropertyChanged(); TypeInEditCATEGORYCombobox = value; } } }
+        public TYPE_PRODUCT Type_In_Edit_Pro { get => _Type_In_Edit_Pro; set { if (_Type_In_Edit_Pro != value) { _Type_In_Edit_Pro = value; OnPropertyChanged(); CurrentTypeInProManager = value; } } }
 
 
         #endregion
@@ -246,11 +248,11 @@ namespace MainProject.MainWorkSpace
 
         public void DeleteTypeEditCategory()
         {
-            if (TypeInEditCATEGORYCombobox == null || TypeInEditCATEGORYCombobox.ID == 0) return;
+            if (CurrentTypeInProManager == null || CurrentTypeInProManager.ID == 0) return;
 
             using (var db = new mainEntities())
             {
-                var list = db.PRODUCTs.Where(p => (p.ID_Type == TypeInEditCATEGORYCombobox.ID)).ToList();
+                var list = db.PRODUCTs.Where(p => (p.ID_Type == CurrentTypeInProManager.ID)).ToList();
                 if (list.Count != 0)
                 {
                     foreach (var p in list)
@@ -259,13 +261,13 @@ namespace MainProject.MainWorkSpace
                     }
                 }
 
-                db.TYPE_PRODUCT.Remove(db.TYPE_PRODUCT.Where(t => t.ID == TypeInEditCATEGORYCombobox.ID).FirstOrDefault());
+                db.TYPE_PRODUCT.Remove(db.TYPE_PRODUCT.Where(t => t.ID == CurrentTypeInProManager.ID).FirstOrDefault());
 
                 db.SaveChanges();
 
-                int number = ListType.IndexOf(TypeInEditCATEGORYCombobox);
+                int number = ListType.IndexOf(CurrentTypeInProManager);
 
-                TypeInEditCATEGORYCombobox = ListType.ElementAt(0);
+                CurrentTypeInProManager = ListType.ElementAt(0);
                 ListType.RemoveAt(number);
 
             }
@@ -309,20 +311,20 @@ namespace MainProject.MainWorkSpace
         public void SaveEditCategory(object a)
         {
 
-            if (TypeInEditCATEGORYCombobox == null) return;         
+            if (CurrentTypeInProManager == null) return;         
 
             using (var db = new mainEntities())
             {              
                 /*for (int i = 1; i < ListType.Count; ++i)
                 {
-                    if (ListType[i].ID == TypeInEditCATEGORYCombobox.ID)
+                    if (ListType[i].ID == CurrentTypeInProManager.ID)
                     {
                         ListType[i].Type = EditTypeInEditCatefory;
                         break;
                     }
                 }*/
 
-                var type = db.TYPE_PRODUCT.Where(t => t.ID == TypeInEditCATEGORYCombobox.ID).FirstOrDefault();
+                var type = db.TYPE_PRODUCT.Where(t => t.ID == CurrentTypeInProManager.ID).FirstOrDefault();
                 /*type.Type = EditTypeInEditCatefory;*/
 
                 var list = db.PRODUCTs.Where(p => (p.ID_Type == type.ID || p.ID_Type == null)).ToList();
@@ -360,7 +362,7 @@ namespace MainProject.MainWorkSpace
             if (Productviewmodel.Currentproduct == null) return;
             if (Productviewmodel.Currentproduct.ID_Type == null)
             {
-                Productviewmodel.Currentproduct.ID_Type = TypeInEditCATEGORYCombobox.ID;
+                Productviewmodel.Currentproduct.ID_Type = CurrentTypeInProManager.ID;
             }
             else
             {
@@ -385,10 +387,10 @@ namespace MainProject.MainWorkSpace
             Window window = WindowService.Instance.FindWindowbyTag("Edit category").First();
             window.Close();         
            
-            if (CurrentTypeInHome == TypeInEditCATEGORYCombobox) Productviewmodel.LoadProductByType(CurrentTypeInHome);
+            if (CurrentTypeInHome == CurrentTypeInProManager) Productviewmodel.LoadProductByType(CurrentTypeInHome);
             ListType[0] = new TYPE_PRODUCT() { Type = "Tất cả", ID = new long() };
 
-            TypeInEditCATEGORYCombobox = ListType[0];
+            CurrentTypeInProManager = ListType[0];
             EditTypeInEditCatefory = null;
             Listpro = null;
         }
@@ -428,7 +430,7 @@ namespace MainProject.MainWorkSpace
         {
            using ( var db = new  mainEntities())
             {
-                var type = db.TYPE_PRODUCT.Where(t => t.ID == CurrentTypeInProManager.ID).FirstOrDefault();
+                var type = db.TYPE_PRODUCT.Where(t => t.ID == Type_In_Edit_Pro.ID).FirstOrDefault();
                 type.Type = NewNameEditType;
                 db.SaveChanges();
             }
@@ -492,10 +494,10 @@ namespace MainProject.MainWorkSpace
             Window window = WindowService.Instance.FindWindowbyTag("Edit pro in category").First();
             window.Close();
 
-            if (CurrentTypeInHome == TypeInEditCATEGORYCombobox) Productviewmodel.LoadProductByType(CurrentTypeInHome);
+            if (CurrentTypeInHome == CurrentTypeInProManager) Productviewmodel.LoadProductByType(CurrentTypeInHome);
             ListType[0] = new TYPE_PRODUCT() { Type = "Tất cả", ID = new long() };
 
-            TypeInEditCATEGORYCombobox = ListType[0];
+            CurrentTypeInProManager = ListType[0];
             Listpro = null;
         }
 
@@ -505,8 +507,8 @@ namespace MainProject.MainWorkSpace
         {
             using (var db = new mainEntities())
             {
-                if (TypeInEditCATEGORYCombobox == null) return;
-                if (TypeInEditCATEGORYCombobox.Type == "Tất cả")
+                if (CurrentTypeInProManager == null) return;
+                if (CurrentTypeInProManager.Type == "Tất cả")
                 {
                     var list = db.PRODUCTs.Where( p=> p.IsProvided).ToList();
                     list.ForEach(p => p.IsChecked = true);
@@ -514,7 +516,7 @@ namespace MainProject.MainWorkSpace
                     return;
                 }
 
-                var l = db.PRODUCTs.Where(p => p.ID_Type == null || p.ID_Type == TypeInEditCATEGORYCombobox.ID && p.IsProvided).ToList();
+                var l = db.PRODUCTs.Where(p => p.ID_Type == null || p.ID_Type == CurrentTypeInProManager    .ID && p.IsProvided).ToList();
 
                 if (l == null) return;
 
