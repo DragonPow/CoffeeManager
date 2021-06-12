@@ -27,7 +27,7 @@ namespace MainProject.ViewModel
         private ObservableCollection<BILL> _ListBill;
         private BILL _CurrentBill;
         private int _NumberPage;    
-        public static int Number_Bill_in_Page = 5;      
+        public static int Number_Bill_in_Page = 20;      
 
         private DateTime _BeginTime;
         private DateTime _EndTime;

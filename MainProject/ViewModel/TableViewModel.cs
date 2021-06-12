@@ -31,6 +31,7 @@ namespace MainProject.ViewModel
         private ObservableCollection<int> _ListFloor;
         private int _Currentfloors;
         private TABLECUSTOM _CurrentTable;
+        private TABLECUSTOM _CurrentTableInTabManager;
         private DetailPro _CurrentDetailPro;
         private ObservableCollection<DetailPro> _Currentlistdetailpro;
         private long _TotalCurrentTable;
@@ -50,7 +51,8 @@ namespace MainProject.ViewModel
 
         private ICommand _DeleteTableCommand;
         private ICommand _InsertTableCommand;
-        private ICommand _UpdateStatusTableCommand;      
+        private ICommand _UpdateStatusTableCommand;
+        private ICommand _UpdateStatusNormalTableCommand;
 
         private ICommand _AddFloor;
         private ICommand _DeleteFloor;
@@ -173,7 +175,12 @@ namespace MainProject.ViewModel
                 if (value != _CurrentTable)
                 {
                     if (value != null)
-                    {                      
+                    {     
+                        if ( value.table.CurrentStatus == "Fix")
+                        {
+                            WindowService.Instance.OpenMessageBox("Không thể chọn bàn đang sửa chữa", "Lỗi", MessageBoxImage.Error);
+                            return;
+                        }
                         TableName = "Bàn: " + value.table.Name.ToString();
                         value.table.CurrentStatus = "Already";
                         if (_CurrentTable != null) _CurrentTable.table.CurrentStatus = "Normal";
@@ -189,6 +196,20 @@ namespace MainProject.ViewModel
                 }
             }
       
+        }
+
+        public TABLECUSTOM CurrentTableInTabManager
+        {
+            get => _CurrentTableInTabManager;
+            set
+            {
+                if (value != _CurrentTableInTabManager)
+                {
+                    _CurrentTableInTabManager = value;
+                    OnPropertyChanged();
+                }
+            }
+
         }
 
         public DetailPro CurrentDetailPro
@@ -482,23 +503,57 @@ namespace MainProject.ViewModel
             ListTable.Add(new TABLECUSTOM() { table = tab });
         }
 
-        ICommand UpdateStatusTableCommand
+        public ICommand UpdateStatusFixTableCommand
         {
             get
             {
                 if (_UpdateStatusTableCommand == null)
                 {
-                    _UpdateStatusTableCommand = new RelayingCommand<int>(a => Update(a));
+                    _UpdateStatusTableCommand = new RelayingCommand<Object>(a => UpdateFix());
                 }
                 return _UpdateStatusTableCommand;
             }
         }
 
-        public void Update(int Number)
+        public void UpdateFix()
         {
+            if( CurrentTableInTabManager.Total > 0)
+            {
+                WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn trước khi cập nhật!", "Lỗi", MessageBoxImage.Error);
+                return;
+            }
+            CurrentTableInTabManager.table.CurrentStatus = "Fix";
+            using (var db = new mainEntities())
+            {
+                var t = db.TABLEs.Where(tab => tab.ID == CurrentTableInTabManager.table.ID).FirstOrDefault();
+                t.ID_Status = 2;
+                db.SaveChanges();
+            }
 
         }
 
+        public ICommand UpdateStatusNormalTableCommand
+        {
+            get
+            {
+                if (_UpdateStatusNormalTableCommand == null)
+                {
+                    _UpdateStatusNormalTableCommand = new RelayingCommand<Object>(a => UpdateStatusNormalTable());
+                }
+                return _UpdateStatusNormalTableCommand;
+            }
+        }
+
+        public void UpdateStatusNormalTable()
+        {
+            if (CurrentTableInTabManager.Total > 0)
+            {
+                WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn trước khi cập nhật!", "Lỗi", MessageBoxImage.Error);
+                return;
+            }
+            CurrentTableInTabManager.table.CurrentStatus = "Normal";
+
+        }
 
         #endregion
         void LoadTable()
