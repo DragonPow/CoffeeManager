@@ -8,7 +8,7 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d"
              x:Name="ProductView"
-              d:DataContext="{d:DesignInstance Type=ViewModel:ProductViewModel}"
+             d:DataContext="{d:DesignInstance Type=ViewModel:ProductViewModel}"
              d:DesignHeight="480"
              d:DesignWidth="600">
     <UserControl.DataContext>

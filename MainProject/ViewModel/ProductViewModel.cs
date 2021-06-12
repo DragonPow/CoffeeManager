@@ -20,17 +20,8 @@ using MaterialDesignThemes.Wpf;
 
 namespace MainProject.ViewModel
 {
-    class ProductViewModel : BaseViewModel, IMainWorkSpace
-    {
-        public string NameWorkSpace => "Quản lý thực đơn";
-        private const PackIconKind _iconDisplay = PackIconKind.FoodForkDrink;
-        public PackIcon IconDisplay
-        {
-            get
-            {
-                return new PackIcon() { Kind = _iconDisplay, Width = 30, Height = 30 };
-            }
-        }
+    class ProductViewModel : BaseViewModel
+    {       
         #region Field
         private ObservableCollection<PRODUCT> _ListProduct;
         private PRODUCT _Currentproduct;
@@ -73,7 +64,7 @@ namespace MainProject.ViewModel
         #region Properties
 
         public ObservableCollection<PRODUCT> ListPoduct { get => _ListProduct; set { if (value != _ListProduct) { _ListProduct = value; OnPropertyChanged(); } } }
-        public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); SearchName(); } } }
+        public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); /*SearchName();*/ } } }
         
         public PRODUCT Currentproduct
         {
@@ -351,6 +342,7 @@ namespace MainProject.ViewModel
 
         public void SearchName()
         {
+            if (SearchProduct == null) return;
             using (var db = new mainEntities())
             {
 
@@ -601,7 +593,7 @@ namespace MainProject.ViewModel
 
         public void AddDetailProToTable()
         {
-            if (Tableviewmodel.CurrentTable == null)
+            if (Tableviewmodel.CurrentTable == null && !Tableviewmodel.Isbringtohome)
             {
                 WindowService.Instance.OpenMessageBox("Vui lòng chọn bàn trước!", "Lỗi", MessageBoxImage.Error);
                 return;

@@ -319,6 +319,7 @@
       <DependentUpon>MainModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\HistoryViewModel.cs" />
+    <Compile Include="ViewModel\ManageProductviewModel.cs" />
     <Compile Include="ViewModel\ProductViewModel.cs" />
     <Compile Include="ViewModel\SettingViewModel.cs" />
     <Compile Include="ViewModel\TableViewModel.cs" />
