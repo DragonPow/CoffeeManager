@@ -17,7 +17,7 @@ namespace MainProject.MainWorkSpace
     class MainViewModel : BaseViewModel, IMainWorkSpace
     {
         #region Feld
-        public string NameWorkSpace => "Home";
+        public string NameWorkSpace => "Trang chủ";
         private const PackIconKind _iconDisplay = PackIconKind.Home;
 
         private ProductViewModel _Productviewmodel;

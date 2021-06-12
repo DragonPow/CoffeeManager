@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:iex="clr-namespace:Microsoft.Expression.Interactivity.Input;assembly=Microsoft.Expression.Interactions" 
              xmlns:local="clr-namespace:MainProject.MainWorkSpace"
              xmlns:Prod="clr-namespace:MainProject.MainWorkSpace.Product"
              xmlns:Table="clr-namespace:MainProject.MainWorkSpace.Table"
@@ -44,11 +46,8 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
-                                
-                                
-                                
                             </Grid.ColumnDefinitions>
-                            
+
                             <TextBox
                                 Text="{Binding SearchProduct,UpdateSourceTrigger=PropertyChanged, FallbackValue='Tìm kiếm'}"
                             Grid.Column="0"
@@ -57,7 +56,13 @@
                             materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                             BorderThickness="0"
                             MinWidth="200"
-                            VerticalAlignment="Center" />
+                            VerticalAlignment="Center" >
+                                <i:Interaction.Triggers>
+                                    <iex:KeyTrigger Key="Enter">
+                                        <i:InvokeCommandAction Command="{Binding SearchByName_Command}" />
+                                    </iex:KeyTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
                            
                         </Grid>
                     </materialDesign:ColorZone>
