@@ -10,16 +10,16 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              Background="White"
-              d:DataContext="{d:DesignInstance ViewModel:ManageProductviewModel}"
+              d:DataContext="{d:DesignInstance Type=ViewModel:ManageProductviewModel}"
              d:DesignHeight="630"
              d:DesignWidth="1150">
-    <Grid DataContext="{Binding MainVM}">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="11*"/>
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <local:EditMenu Grid.Column="1" Margin="5,0,0,0" DataContext="{Binding}"/>
-        <DockPanel>
+        <DockPanel DataContext="{Binding MainVM}">
             <materialDesign:ColorZone DockPanel.Dock="Top"
                                       DataContext="{Binding Productviewmodel}"
               Mode="PrimaryMid"
