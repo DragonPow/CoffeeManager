@@ -26,6 +26,7 @@
             <ContextMenu>
                 <MenuItem Header="Khách rời bàn" Command="{Binding UpdateStatusNormalTableCommand}"/>
                 <MenuItem Header="Sửa chữa" Command="{Binding UpdateStatusFixTableCommand}"/>
+                <MenuItem Header="Đã sửa xong" Command="{Binding UpdateStatusNomalTableCommand}"/>
             </ContextMenu>
         </ListView.ContextMenu>
     </ListView>

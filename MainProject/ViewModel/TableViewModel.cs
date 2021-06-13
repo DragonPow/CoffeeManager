@@ -53,6 +53,7 @@ namespace MainProject.ViewModel
         private ICommand _InsertTableCommand;
         private ICommand _UpdateStatusTableCommand;
         private ICommand _UpdateStatusNormalTableCommand;
+        private ICommand _UpdateStatusNomalTable;
 
         private ICommand _AddFloor;
         private ICommand _DeleteFloor;
@@ -552,6 +553,33 @@ namespace MainProject.ViewModel
                 return;
             }
             CurrentTableInTabManager.table.CurrentStatus = "Normal";
+
+        }
+        public ICommand UpdateStatusNomalTableCommand
+        {
+            get
+            {
+                if (_UpdateStatusNomalTable == null)
+                {
+                    _UpdateStatusNomalTable = new RelayingCommand<Object>(a => UpdateStatusNomalTable());
+                }
+                return _UpdateStatusNomalTable;
+            }
+        }
+
+        public void UpdateStatusNomalTable()
+        {
+            if (CurrentTableInTabManager.table.CurrentStatus != "Fix")
+            {              
+                return;
+            }
+            CurrentTableInTabManager.table.CurrentStatus = "Normal";
+            using (var db = new mainEntities())
+            {
+                var t = db.TABLEs.Where(tab => tab.ID == CurrentTableInTabManager.table.ID).FirstOrDefault();
+                t.ID_Status = 1;
+                db.SaveChanges();
+            }
 
         }
 
