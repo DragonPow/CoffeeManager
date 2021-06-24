@@ -84,7 +84,7 @@
                                         Margin="5,0,0,0"
                                         VerticalAlignment="Center"
                                         Foreground="#0E0E2F"/>
-                            <TextBlock  Foreground="#0E0E2F" VerticalAlignment="Center" Text="Tìm kiếm" Padding="2,2,10,5"></TextBlock>
+                            <TextBlock  Foreground="#0E0E2F" VerticalAlignment="Center" Text="Tìm kiếm" Padding="5,8,15,7"></TextBlock>
                         </StackPanel>
 
 
