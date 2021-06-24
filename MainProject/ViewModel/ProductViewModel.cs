@@ -429,7 +429,7 @@ namespace MainProject.ViewModel
         {
             using (var db = new mainEntities())
             {
-                var pro = db.PRODUCTs.Where(p => (p.ID == Currentproduct.ID)).FirstOrDefault();
+                var pro = db.PRODUCTs.Where(p => (p.ID == Currentproduct.ID) && (p.IsProvided)).FirstOrDefault();
 
                 if ((Currentproduct.Name != pro.Name || Currentproduct.Price != pro.Price) && db.DETAILBILLs.Where(d => d.ID_Product == Currentproduct.ID ).FirstOrDefault() != null )
                 {
@@ -449,6 +449,7 @@ namespace MainProject.ViewModel
                 pro.Name = Currentproduct.Name;
                 pro.Price = Currentproduct.Price;
                 pro.Decription = Currentproduct.Decription;
+               
 
                 if (IndexTypeInComboboxEditPro != 0) pro.ID_Type = listtype[IndexTypeInComboboxEditPro - 1];
                 else pro.ID_Type = null;
