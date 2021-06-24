@@ -193,6 +193,7 @@
     <Compile Include="Model\BILL.cs">
       <DependentUpon>MainModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\CustomModel\BILL.cs" />
     <Compile Include="Model\CustomModel\STATUS_TABLE.cs" />
     <Compile Include="Model\CustomModel\TABLE.cs" />
     <Compile Include="Model\CustomModel\TYPE_PRODUCT.cs" />
@@ -525,6 +526,10 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MainModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Resource Include="bin\Debug\Fonts\vuArial.ttf" />
+    <Resource Include="bin\Debug\Fonts\vuArialBold.ttf" />
+    <Resource Include="bin\Debug\Fonts\vuArialBoldItalic.ttf" />
+    <Resource Include="bin\Debug\Fonts\vuArialItalic.ttf" />
     <None Include="db-ver2.db" />
     <Resource Include="Fonts\vuArial.ttf" />
     <Resource Include="Fonts\vuArialBold.ttf" />
