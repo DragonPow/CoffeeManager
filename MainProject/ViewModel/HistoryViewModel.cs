@@ -28,10 +28,10 @@ namespace MainProject.ViewModel
         private ObservableCollection<BILL> _ListBill;
         private BILL _CurrentBill;
         private int _NumberPage;
-        public static int Number_Bill_in_Page = 12;
+        public static int Number_Bill_in_Page = 13;
 
-        private DateTime _BeginTime;
-        private DateTime _EndTime;
+        private DateTime? _BeginTime;
+        private DateTime? _EndTime;
 
         ICommand _Load_Detail_Bill;
         ICommand _Exit_Detail_Bill;
@@ -81,12 +81,16 @@ namespace MainProject.ViewModel
                     }
                     else if (value < 1)
                     {
-                        _NumberPage = 1;
+                        if (NumberAllPage != 0) _NumberPage = 1;
+                        else _NumberPage = 0;
                     }
-                    else _NumberPage = value;
+                    else
+                    {
+                        _NumberPage = value;
+                        LoadBillByNumberPage();
+                    }
 
                     OnPropertyChanged();
-                    //LoadBillByNumberPage();
                 }
             }
         }
@@ -97,7 +101,14 @@ namespace MainProject.ViewModel
         }
         public DateTime BeginTime
         {
-            get => _BeginTime;
+            get
+            {
+                if (_BeginTime.HasValue)
+                {
+                    return _BeginTime.Value;
+                }
+                else return DateTime.Now.Date;
+            }
             set
             {
                 if (value != _BeginTime)
@@ -110,7 +121,14 @@ namespace MainProject.ViewModel
 
         public DateTime EndTime
         {
-            get => _EndTime;
+            get
+            {
+                if (_EndTime.HasValue)
+                {
+                    return _EndTime.Value;
+                }
+                else return DateTime.Now.Date;
+            }
             set
             {
                 if (value != _EndTime)
@@ -169,8 +187,9 @@ namespace MainProject.ViewModel
             if (Number_Bill_in_Page == 0)
             {
                 NumberPage = 0;
+                  return;
             }
-            return;
+          
             if (EndTime == null || BeginTime == null)
             {
                 WindowService.Instance.OpenMessageBox("Phải điền đủ các giá trị", "Thông báo", System.Windows.MessageBoxImage.Warning);
@@ -188,61 +207,24 @@ namespace MainProject.ViewModel
 
                 int d = db.BILLs.Where(b => b.CheckoutDay >= BeginTime && b.CheckoutDay <= newEndTime).Count();
 
-
                 if (d == 0)
                 {
                     NumberAllPage = 0;
+                    NumberPage = 0;
                     ListBill = null;
                     return;
                 }
 
-                var listbill = (from b in db.BILLs.Where(b => b.CheckoutDay >= BeginTime && b.CheckoutDay <= newEndTime)
-                                from t in db.TABLEs
-                                .Where(t => t.ID == b.ID_Table)
-                                .DefaultIfEmpty()
-                                select new
-                                {
-                                    ID = b.ID,
-                                    CheckoutDay = b.CheckoutDay,
-                                    TotalPrice = b.TotalPrice,
-                                    Table = t
-                                }).OrderBy(b => b.ID).Take(Number_Bill_in_Page).ToList();
-
-
                 NumberAllPage = (d / Number_Bill_in_Page) + (d % Number_Bill_in_Page != 0 ? 1 : 0);
-
-
-                ListBill = new ObservableCollection<BILL>();
-
-                foreach (var b in listbill.ToList())
-                {
-                    ListBill.Add(new BILL() { CheckoutDay = b.CheckoutDay, ID = b.ID, TotalPrice = b.TotalPrice, TABLE = b.Table });
-                }
-
-
-            }
-
-            NumberPage = 1;
-        }
-
-        private bool isGreaterthanEqual(DateTime a, DateTime b)
-        {
-            return a.Year >= b.Year && a.Month >= b.Month && a.Day >= b.Day;
-        }
-        public ICommand Exit_Detail_BillCommand
-        {
-            get
-            {
-                if (_Exit_Detail_Bill == null)
-                    _Exit_Detail_Bill = new RelayingCommand<BillView>(v => v.Close());
-                return _Exit_Detail_Bill;
+                if (NumberPage == 1) LoadBillByNumberPage();
+                else NumberPage = 1;
             }
         }
+
         #endregion
 
         void LoadBillByNumberPage()
         {
-            if (NumberPage == 0) return;
             DateTime newEndTime = EndTime.AddDays(1);
             using (var db = new mainEntities())
             {
@@ -257,8 +239,6 @@ namespace MainProject.ViewModel
                                     TotalPrice = b.TotalPrice,
                                     Table = t
                                 }).OrderBy(b => b.ID).Skip((NumberPage - 1) * Number_Bill_in_Page).Take(Number_Bill_in_Page);
-
-
 
                 if (listbill == null || listbill.ToList().Count == 0) return;
 
