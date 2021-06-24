@@ -142,6 +142,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\TableConverter.cs" />
     <Compile Include="DetailPro.cs" />
     <Compile Include="HelperClass\WindowService.cs" />
     <Compile Include="HistoryWorkSpace\Converter\ChangePageConverter.cs" />
@@ -156,8 +157,17 @@
       <DependentUpon>BillView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWorkSpace\Bill\PrintPDF.cs" />
+    <Compile Include="MainWorkSpace\Product\EditMenu.xaml.cs">
+      <DependentUpon>EditMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWorkSpace\Product\EditNameType.xaml.cs">
+      <DependentUpon>EditNameType.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWorkSpace\Product\EditProd.xaml.cs">
       <DependentUpon>EditProd.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWorkSpace\Product\EditProdInType.xaml.cs">
+      <DependentUpon>EditProdInType.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWorkSpace\Product\EditType.xaml.cs">
       <DependentUpon>EditType.xaml</DependentUpon>
@@ -165,8 +175,17 @@
     <Compile Include="MainWorkSpace\Product\NewType.xaml.cs">
       <DependentUpon>NewType.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainWorkSpace\Product\ProdManager.xaml.cs">
+      <DependentUpon>ProdManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWorkSpace\Product\ProdManagerView.xaml.cs">
+      <DependentUpon>ProdManagerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWorkSpace\Product\SelectPro.xaml.cs">
       <DependentUpon>SelectPro.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWorkSpace\Product\TypeListItem.xaml.cs">
+      <DependentUpon>TypeListItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWorkSpace\Table\TableManagerView.xaml.cs">
       <DependentUpon>TableManagerView.xaml</DependentUpon>
@@ -219,6 +238,7 @@
     <Compile Include="SettingWorkSpace\SettingView.cs">
       <DependentUpon>SettingView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="StatisticWorkSpace\Converter\AmountConverter.cs" />
     <Compile Include="StatisticWorkSpace\Converter\ChartLabelConverter.cs" />
     <Compile Include="StatisticWorkSpace\Converter\ChartValueConverter.cs" />
     <Compile Include="StatisticWorkSpace\Converter\DetailPieChartConverter.cs" />
@@ -303,6 +323,7 @@
       <DependentUpon>MainModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\HistoryViewModel.cs" />
+    <Compile Include="ViewModel\ManageProductviewModel.cs" />
     <Compile Include="ViewModel\ProductViewModel.cs" />
     <Compile Include="ViewModel\SettingViewModel.cs" />
     <Compile Include="ViewModel\TableViewModel.cs" />
@@ -322,9 +343,6 @@
     <Compile Include="ValidationRules\LengthRangeValidationRule.cs" />
     <Compile Include="ValidationRules\NotNullableValidationRule.cs" />
     <Compile Include="ValidationRules\RangeNumberValidationRule.cs" />
-    <Compile Include="TestingView.xaml.cs">
-      <DependentUpon>TestingView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="TestingViewModel.cs" />
     <Compile Include="TestView.xaml.cs">
       <DependentUpon>TestView.xaml</DependentUpon>
@@ -377,7 +395,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MainWorkSpace\Product\EditMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWorkSpace\Product\EditNameType.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWorkSpace\Product\EditProd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWorkSpace\Product\EditProdInType.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -397,6 +427,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MainWorkSpace\Product\ProdManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWorkSpace\Product\ProdManagerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWorkSpace\Product\ProdView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -406,6 +444,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWorkSpace\Product\SelectPro.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWorkSpace\Product\TypeListItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -462,10 +504,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="StatisticWorkSpace\StatisticView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TestingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

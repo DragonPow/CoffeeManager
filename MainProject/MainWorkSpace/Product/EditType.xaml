@@ -4,121 +4,66 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Product"
              xmlns:main="clr-namespace:MainProject.MainWorkSpace"
-             xmlns:model="clr-namespace:MainProject.Model"
              xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
              mc:Ignorable="d"
              Tag="Edit category"
              Name="Edit_Type"
-             d:DataContext="{d:DesignInstance Type=main:MainViewModel}"
-             Height="700"
-             Width="600">
-
+             d:DataContext="{d:DesignInstance Type=ViewModel:ManageProductviewModel}"
+             Height="600"
+             Width="500">
     <DockPanel>
         <Grid DockPanel.Dock="Top"
               Background="{StaticResource MainColor}">
             <Border BorderBrush="Gray"
                     BorderThickness="1" />
             <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                       Text="Danh mục"
+                       Text="Chỉnh sửa danh mục"
                        FontSize="20"
                        Foreground="White"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"/>
-            <Button Background="Transparent" BorderBrush="Transparent" Margin="10" HorizontalAlignment="Right"
+            <Button Background="Transparent" BorderBrush="Transparent" Margin="5" HorizontalAlignment="Right"
                     Command="{Binding CloseEditCategory_Command}">
-                <materialDesign:PackIcon Kind="Close" Width="25" Height="25" />
+                <materialDesign:PackIcon Kind="Close" Width="20" Height="20" />
 
             </Button>
         </Grid>
         <StackPanel DockPanel.Dock="Bottom"
                     Background="White">
-            <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
-                          materialDesign:HintAssist.Hint="Danh mục"
-                          ItemsSource="{Binding ListType}" 
-                          SelectedItem="{Binding TypeInEditCATEGORYCombobox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}"
-                          DisplayMemberPath="Type"
-                          IsSynchronizedWithCurrentItem="True"
-                          FontSize="14"
-                          MaxWidth="500"
-                          Height="50"
-                          Margin="70,20,70,20" />
             <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                       Text="Tên danh mục"
-                       FontSize="18"
-                       Foreground="#363434"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center" />
-            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                     materialDesign:HintAssist.Hint="Tên mới"
-                     Text="{Binding EditTypeInEditCatefory,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                     FontSize="14"
-                     Margin="70,10"
-                     Height="50"
-                     MaxWidth="500" />
-            <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                       Text="Danh sách sản phẩm"
+                       Text="Danh sách danh mục"
                        FontSize="18"
                        Foreground="#363434"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Margin="0,10"/>
+                       Margin="20"/>
             <ListView  Grid.Row="1"
                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                       ItemsSource="{Binding Productviewmodel.ListPoduct}">
+                       ItemsSource="{Binding MainVM.ListType}"
+                       SelectedItem="{Binding CurrentTypeInProManager}" Height="450">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <local:SelectPro DataContext="{Binding}"
-                                         Tag="{Binding DataContext, ElementName=Edit_Type}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
-                                    <i:InvokeCommandAction Command="{Binding DataContext.AddDetailProToTableCommand, ElementName=ProductView}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </local:SelectPro>
+                        <local:TypeListItem DataContext="{Binding}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical"
-                                    Margin="60,20"
+                                    Margin="60,0"
                                     MaxWidth="500"
-                                    Height="250"></StackPanel>
+                                    Height="450"></StackPanel>
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Đổi tên danh mục" Command="{Binding LoadViewEditNameType_Command}" />
+                        <MenuItem Header="Chỉnh sửa danh sách sản phẩm" Command="{Binding LoadViewEditProInType_Command}"/>
+                        <MenuItem Header="Xóa danh mục" Command="{Binding DeleteTypeEditCategory_Command}"/>
+                    </ContextMenu>
+                </ListView.ContextMenu>
             </ListView>
-            <Grid Margin="70,20,70,5"
-                  MaxWidth="500">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
-                        Height="50"
-                        Command="{Binding SaveEditCategory_Command}"
-                        HorizontalAlignment="Stretch"
-                        Background="{StaticResource MainColor}"
-                        BorderBrush="{StaticResource MainColor}"
-                        Foreground="White"
-                        Grid.Column="1"
-                        Margin="10"
-                        Content="Lưu"
-                        FontSize="14">
-                </Button>
-                <Button Height="50"
-                        Style="{StaticResource MaterialDesignOutlinedButton}"
-                        ToolTip="MaterialDesignOutlinedButton"
-                        Content="Xóa danh mục"
-                        Foreground="Red"
-                        BorderBrush="Red"
-                        FontSize="14"
-                        Command="{Binding DeleteTypeEditCategory_Command}"
-                        Margin="10" />
-            </Grid>
-
-
         </StackPanel>
 
     </DockPanel>

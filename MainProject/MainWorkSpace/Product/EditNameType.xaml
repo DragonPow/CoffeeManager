@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="MainProject.MainWorkSpace.Product.EditNameType"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:main="clr-namespace:MainProject.MainWorkSpace"
+             xmlns:local="clr-namespace:MainProject.MainWorkSpace.Product"
+             xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
+             mc:Ignorable="d" 
+             Tag="Edit Name type"
+             d:DataContext="{d:DesignInstance Type=ViewModel:ManageProductviewModel}"
+             Height="200" Width="400" Background="White">
+    <StackPanel>
+        <Grid 
+              Background="{StaticResource MainColor}">
+            <Border BorderBrush="Gray"
+                    BorderThickness="1" />
+            <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                       Text="Đổi tên danh mục"
+                       FontSize="20"
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+            <Button Background="Transparent" BorderBrush="Transparent" Margin="5" HorizontalAlignment="Right"
+                    Command="{Binding CloseViewEditNameType_Command}">
+                <materialDesign:PackIcon Kind="Close" Width="20" Height="20" />
+
+            </Button>
+        </Grid>
+        <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     materialDesign:HintAssist.Hint="Tên mới"
+                     Text="{Binding NewNameEditType,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                     FontSize="14"
+                     Margin="50,30"
+                     Height="40"
+                     Padding="15,10"
+                     MaxWidth="500" />
+        <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                        Height="40"
+                        Command="{Binding UpdateNameType_Command}"
+                        HorizontalAlignment="Stretch"
+                        Background="{StaticResource MainColor}"
+                        BorderBrush="#31CA62"
+                        Foreground="White"
+                        Grid.Column="1"
+                        Content="Cập nhật"
+                        Width="200"
+                        FontSize="20"/>
+    </StackPanel>
+</UserControl>

@@ -412,7 +412,7 @@ namespace MainProject.StatisticWorkSpace
                     };
 
                     var listPDs = new List<Tuple<long, String, long>>();
-                    foreach (var pd in products) { listPDs.Add(new Tuple<long, string, long>(pd.ID, pd.Name, pd.Price)); }
+                    foreach (var pd in products) { listPDs.Add(new Tuple<long, string, long>(pd.ID, pd.Name, (long)pd.Price)); }
                     int count = random.Next(listPDs.Count - 1) + 1;
                     for (int i = 0; i < count; i++)
                     {

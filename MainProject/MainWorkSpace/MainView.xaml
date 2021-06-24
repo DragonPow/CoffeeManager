@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:iex="clr-namespace:Microsoft.Expression.Interactivity.Input;assembly=Microsoft.Expression.Interactions" 
              xmlns:local="clr-namespace:MainProject.MainWorkSpace"
              xmlns:Prod="clr-namespace:MainProject.MainWorkSpace.Product"
              xmlns:Table="clr-namespace:MainProject.MainWorkSpace.Table"
@@ -16,8 +18,8 @@
              d:DesignWidth="1150">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="11*"/>
+            <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Table:TableDetailView DataContext="{Binding Tableviewmodel}" Grid.Column="1" />
 
@@ -42,86 +44,57 @@
                     materialDesign:ShadowAssist.ShadowDepth="Depth1" Grid.Column="0">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <Button VerticalAlignment="Center"
-                                Style="{DynamicResource MaterialDesignToolButton}"
-                                    Command="{Binding SearchProduct}">
-                                <materialDesign:PackIcon
-                                  Kind="Search"
-                                  Opacity=".56" />
-                            </Button>
+
                             <TextBox
                                 Text="{Binding SearchProduct,UpdateSourceTrigger=PropertyChanged, FallbackValue='Tìm kiếm'}"
-                            Grid.Column="1"
+                            Grid.Column="0"
                             Margin="8 0 0 0"
-                            materialDesign:HintAssist.Hint="Search"
+                            materialDesign:HintAssist.Hint="Tìm kiếm"
                             materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                             BorderThickness="0"
                             MinWidth="200"
-                            VerticalAlignment="Center" />
+                            VerticalAlignment="Center" >
+                                <i:Interaction.Triggers>
+                                    <iex:KeyTrigger Key="Enter">
+                                        <i:InvokeCommandAction Command="{Binding SearchByName_Command}" />
+                                    </iex:KeyTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                           
                         </Grid>
                     </materialDesign:ColorZone>
-                    <TextBlock Text="Chỉnh sửa" FontSize="14" FontWeight="DemiBold" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
-                    <materialDesign:PopupBox
-                          Grid.Column="2"
-                          PlacementMode="BottomAndAlignRightEdges">
-                        <StackPanel Background="White">
-                            <Button
-                            Style="{StaticResource MaterialDesignOutlinedButton}"
-                            ToolTip="MaterialDesignOutlinedButton"   
-                            Foreground="{StaticResource MainColor}"
-                            BorderBrush="{StaticResource MainColor}"
-                            Padding="0"
-                            Height="40"
-                            Margin="5"
-                                Command="{Binding LoadAddProductView_Command}">
-                                <DockPanel>
-                                    <TextBlock DockPanel.Dock="Left" Text="Thêm sản phẩm" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{StaticResource MainColor}" Margin="10,0,0,0"></TextBlock>
-                                    <materialDesign:PackIcon Kind="PlusCircle" DockPanel.Dock="Right" Height="Auto" Width="auto" HorizontalAlignment="Right" Margin="7"/>
-                                </DockPanel>
-
-                            </Button>
-                            <Button
-                            Style="{StaticResource MaterialDesignOutlinedButton}"
-                            ToolTip="MaterialDesignOutlinedButton"   
-                            Foreground="{StaticResource MainColor}"
-                            BorderBrush="{StaticResource MainColor}"
-                            Padding="0"
-                            Height="40"
-                            Margin="5"
-                                Command="{Binding DataContext.OpenViewAddCategory_Command, ElementName=Main_View}">
-                                <DockPanel>
-                                    <TextBlock DockPanel.Dock="Left" Text="Thêm danh mục" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{StaticResource MainColor}" Margin="10,0,0,0"></TextBlock>
-                                    <materialDesign:PackIcon Kind="PlusCircle" DockPanel.Dock="Right" Height="Auto" Width="auto" HorizontalAlignment="Right" Margin="7" Foreground="{StaticResource MainColor}"/>
-                                </DockPanel>
-
-                            </Button>
-                            <Button
-                            Style="{StaticResource MaterialDesignOutlinedButton}"
-                            ToolTip="MaterialDesignOutlinedButton"   
-                            Foreground="{StaticResource MainColor}"
-                            BorderBrush="{StaticResource MainColor}"
-                            Padding="0"
-                            Height="40"
-                            Margin="5"
-                            Command="{Binding DataContext.OpenViewEditCategory_Command, ElementName=Main_View}">
-                                <DockPanel>
-                                    <TextBlock DockPanel.Dock="Left" Text="Sửa danh mục   " FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{StaticResource MainColor}" Margin="10,0,0,0"></TextBlock>
-                                    <materialDesign:PackIcon Kind="PlusCircle" DockPanel.Dock="Right" Height="Auto" Width="auto" HorizontalAlignment="Right" Margin="7" Foreground="{StaticResource MainColor}"/>
-                                </DockPanel>
-                                
-                            </Button>
-
+                    <Button VerticalAlignment="Center" Grid.Column="1"
+                                    HorizontalAlignment="Left"
+                                    Margin="10,0"
+                                    Command="{Binding SearchByName_Command}"
+                                    BorderBrush="#0E0E2F"
+                                    Background="White"
+                                    BorderThickness="1"
+                                    Width="Auto"
+                                    Height="auto"
+                                    Padding="0">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                      Kind="Search"
+                                      Opacity="0.7"
+                                        Margin="5,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Foreground="#0E0E2F"/>
+                            <TextBlock  Foreground="#0E0E2F" VerticalAlignment="Center" Text="Tìm kiếm" Padding="2,2,10,5"></TextBlock>
                         </StackPanel>
-                    </materialDesign:PopupBox>
+
+
+
+                    </Button>
                 </Grid>
             </materialDesign:ColorZone>
             <TabControl TabStripPlacement="Bottom"
                         DockPanel.Dock="Bottom"
                         ItemsSource="{Binding ListType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                        SelectedItem="{Binding CurrentType}"
+                        SelectedItem="{Binding CurrentTypeInHome}"
                         Style="{StaticResource MaterialDesignNavigatilRailTabControl}"
                          materialDesign:ColorZoneAssist.Mode="PrimaryMid" >
                 <TabControl.ItemTemplate>

@@ -11,8 +11,8 @@
              mc:Ignorable="d"
              Tag="DetailPro"
              d:DataContext="{d:DesignInstance ViewModel:ProductViewModel}"
-             Height="600"
-             Width="500">
+             Height="500"
+             Width="400">
     <DockPanel>
         <Grid DockPanel.Dock="Top"
               Background="{StaticResource MainColor}">
@@ -20,18 +20,18 @@
                     BorderThickness="1" />
             <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}"
                        Text="Chi tiết sản phẩm"
-                       FontSize="26"
+                       FontSize="20"
                        Foreground="White"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center" />
             <Button Background="Transparent"
                     BorderBrush="Transparent"
-                    Margin="10"
+                    Margin="5"
                     HorizontalAlignment="Right"
                     Command="{Binding ExitDetailProduct}">
                 <materialDesign:PackIcon Kind="Close"
-                                         Width="25"
-                                         Height="25" />
+                                         Width="20"
+                                         Height="20" />
             </Button>
             <Button BorderBrush="Transparent"
                     Style="{StaticResource MaterialDesignOutlinedButton}"
@@ -52,10 +52,10 @@
                              VerticalAlignment="Top"
                              BorderBrush="Gray"
                              BorderThickness="2"
-                             Width="200"
-                             Height="160"
-                             Margin="0 40 0 20">
-                        <Image Stretch="UniformToFill"
+                             Width="180"
+                             Height="140"
+                             Margin="0 40 0 30">
+                        <Image Stretch="Fill"
                                Source="{Binding Currentproduct.Image}"></Image>
                     </Border>
 
@@ -64,31 +64,39 @@
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Tên sản phẩm"
                          Text="{Binding Currentproduct.Name}"
-                         FontSize="16"
+                         FontSize="13"
                          Margin="70,5"
                          MaxWidth="500"
+                         Height="40"
+                         Padding="15,10"
                          IsReadOnly="True"/>
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Danh mục"
                          Text="{Binding Currentproduct.TYPE_PRODUCT.Type, UpdateSourceTrigger=PropertyChanged, FallbackValue='Không'}"
-                         FontSize="16"
+                         FontSize="13"
                          Margin="70,5"
                          MaxWidth="500"
+                         Height="40"
+                         Padding="15,10"
                          IsReadOnly="True"/>
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Giá"
                          Text="{Binding Currentproduct.Price, StringFormat='{}{0}đ'}"
-                         FontSize="16"
+                         FontSize="13"
                          Margin="70,5"
                          MaxWidth="500"
+                         Height="40"
+                         Padding="15,10"
                          IsReadOnly="True"/>
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Mô tả"
                          TextWrapping="WrapWithOverflow"
                          Text="{Binding Currentproduct.Decription, TargetNullValue=' '}"
-                         FontSize="16"
+                         FontSize="13"
                          Margin="70,5"
                          MaxWidth="500"
+                         Height="40"
+                         Padding="15,10"
                          IsReadOnly="True"/>
 
 

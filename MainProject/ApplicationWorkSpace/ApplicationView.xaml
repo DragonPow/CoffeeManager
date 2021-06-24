@@ -10,6 +10,7 @@
         xmlns:MainWorkSpace="clr-namespace:MainProject.MainWorkSpace"
         xmlns:HistoryWorkSpace="clr-namespace:MainProject.HistoryWorkSpace"
         xmlns:StatisticWorkSpace="clr-namespace:MainProject.StatisticWorkSpace"
+        xmlns:ProductManagerWorkSpace="clr-namespace:MainProject.MainWorkSpace.Product"
         xmlns:TableManagerWorkSpace="clr-namespace:MainProject.MainWorkSpace.Table"
         xmlns:SettingWorkSpace="clr-namespace:MainProject.SettingWorkSpace"
         d:DataContext="{d:DesignInstance Type=local:ApplicationViewModel}"
@@ -23,6 +24,9 @@
         </DataTemplate>-->
         <DataTemplate DataType="{x:Type ViewModel:HistoryViewModel}">
             <HistoryWorkSpace:HistoryView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type ViewModel:ManageProductviewModel}">
+            <ProductManagerWorkSpace:ProdManager />
         </DataTemplate>
         <!--<DataTemplate DataType="{x:Type VoucherWorkSpace:VoucherViewModel}">
             <VoucherWorkSpace:VoucherPreviewPanel />
@@ -46,7 +50,7 @@
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal"
-                                Width="Auto">
+                                Width="220" >
                         <ContentPresenter Content="{Binding IconDisplay}"
                                           Margin="10,0" />
                         <TextBlock Text="{Binding NameWorkSpace}"
@@ -60,7 +64,7 @@
                 <Style TargetType="TabItem"
                        BasedOn="{StaticResource MaterialDesignNavigationRailTabItem}">
                     <Setter Property="Width"
-                            Value="Auto" />
+                            Value="220" />
                     <Setter Property="HorizontalAlignment"
                             Value="Left" />
                     <Setter Property="Height"

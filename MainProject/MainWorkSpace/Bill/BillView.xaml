@@ -5,8 +5,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:MainProject.MainWorkSpace.Bill"
+        xmlns:converter="clr-namespace:MainProject.Converters"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:viewmodel="clr-namespace:MainProject.ViewModel"
+        xmlns:store="clr-namespace:MainProject"
         xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:rules="clr-namespace:MainProject.ValidationRules"
         mc:Ignorable="d"
@@ -16,9 +17,13 @@
         SizeToContent="WidthAndHeight"
         d:DataContext="{d:DesignInstance Type=local:BillViewModel}"
         x:Name="MainWindow">
+    <Window.Resources>
+        <store:Store x:Key="StoreInstance" />
+        <converter:TableConverter x:Key="TableConver"/>
+    </Window.Resources>
     <StackPanel Orientation="Vertical">
         <!--Bill title-->
-        <TextBlock Text="{Binding StoreName, FallbackValue='Tên cửa hàng', Mode=OneWay}"
+        <TextBlock Text="{Binding StoreName, Source={StaticResource StoreInstance}, FallbackValue='Tên cửa hàng', Mode=OneWay}"
                    FontSize="50"
                    FontWeight="Bold"
                    HorizontalAlignment="Center"
@@ -64,7 +69,7 @@
                 <TextBlock Grid.Row="1"
                            Grid.Column="0">
                     <Run>Số điện thoại</Run>
-                    <Run Text="{Binding StorePhone, StringFormat=': {0}', Mode=OneWay}" />
+                    <Run Text="{Binding StorePhone, Source={StaticResource StoreInstance}, StringFormat=': {0}', Mode=OneWay}" />
                 </TextBlock>
                 <TextBlock Grid.Row="0"
                            Grid.Column="1">
@@ -74,12 +79,14 @@
                 <TextBlock Grid.Row="1"
                            Grid.Column="1">
                     <Run>Bàn</Run>
-                    <Run Text="{Binding CurrentTable.table.Number, StringFormat=': {0}'}" />
+                    <Run Text="{Binding CurrentTable.table.Name, StringFormat=': {0}', Converter={StaticResource TableConver}}" />
                 </TextBlock>
                 <TextBlock Grid.Row="2"
-                           Grid.ColumnSpan="2">
+                           Grid.ColumnSpan="2"
+                           TextWrapping="Wrap"
+                           MaxWidth="500">
                     <Run>Địa chỉ</Run>
-                    <Run Text="{Binding StoreAddress, StringFormat=': {0}', Mode=OneWay}" />
+                    <Run Text="{Binding StoreAddress, Source={StaticResource StoreInstance}, StringFormat=': {0}', Mode=OneWay}" />
                 </TextBlock>
             </Grid>
         </Border>
@@ -116,7 +123,6 @@
                        FontWeight="Bold"
                        Grid.Row="1"
                        Grid.Column="10"
-                       x:Name="testing"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Right"
                        Margin="0 25 0 0"
@@ -200,6 +206,7 @@
                 FontSize="20"
                 HorizontalAlignment="Center"
                 Background="{StaticResource MainColor}"
+                BorderBrush="{StaticResource MainColor}"
                 Command="{Binding PaymentCommand}"
                 CommandParameter="{Binding ElementName=MainWindow}"
                 Margin="0 10 0 30"

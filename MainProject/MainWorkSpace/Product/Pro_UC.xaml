@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Product"
              mc:Ignorable="d"
              Height="120"
-             Width="150">
+             Width="147">
     
     <Border BorderThickness="1"
             BorderBrush="Gray">

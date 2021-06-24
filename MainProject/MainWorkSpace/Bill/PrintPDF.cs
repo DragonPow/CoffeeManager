@@ -24,9 +24,9 @@ namespace MainProject.MainWorkSpace.Bill
         PdfWriter writer;
         BaseFont basef;
 
-        private string _name = "Thachj cute";
-        private string _phone = "03822598xx";
-        private string _address = "KTX khu B dai hoc quoc gia";
+        private string _name = "Coffee Store";
+        private string _phone = "038225xxxx";
+        private string _address = "Trường đại học Công nghệ thông tin TP HCM";
         #endregion //End Fields
 
         private static PrintPDF instance;
@@ -44,7 +44,7 @@ namespace MainProject.MainWorkSpace.Bill
 
         private PrintPDF()
         {
-            basef = BaseFont.CreateFont(dir_font, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+          /*  basef = BaseFont.CreateFont(dir_font, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);*/
             nfi = new CultureInfo("en-US", false).NumberFormat;
             nfi.NumberGroupSeparator = " ";
             //open stream to write on the file
@@ -68,7 +68,7 @@ namespace MainProject.MainWorkSpace.Bill
             }
 
             os = new FileStream(dest, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
-            defaultSize = new Rectangle(PageSize.A5.Width, 280 + info.DETAILBILLs.Count * 24 + info.DETAILBILLs.Count(i => i.PRODUCT.Name.Length > 14) * 15);
+            defaultSize = new Rectangle(PageSize.A5.Width, 300 + info.DETAILBILLs.Count * 24 + info.DETAILBILLs.Count(i => i.PRODUCT.Name.Length > 16) * 15);
             doc = new Document(defaultSize);
             doc.SetMargins(0, 0, 0, 0);
 
@@ -105,7 +105,6 @@ namespace MainProject.MainWorkSpace.Bill
         }
         private Paragraph createTitle()
         {
-            int spaceTwoParagraph = 10;
             Paragraph title = new Paragraph();
             title.Add(new Paragraph(_name, new Font(basef, 18, Font.BOLD))
             { Alignment = Element.ALIGN_CENTER, SpacingAfter = 10 });
@@ -207,7 +206,7 @@ namespace MainProject.MainWorkSpace.Bill
             columns[0] = 25;
             columns[1] = 55;
             table.SetWidths(columns);
-            table.AddCell(new PdfPCell(new Phrase("Số bàn: " + info.TABLE.Name, font)) { HorizontalAlignment = PdfPCell.ALIGN_LEFT, Border = PdfPCell.NO_BORDER });
+            table.AddCell(new PdfPCell(new Phrase("Số bàn: " + (info.TABLE != null? info.TABLE.Name.ToString() : "Mang về"), font)) { HorizontalAlignment = PdfPCell.ALIGN_LEFT, Border = PdfPCell.NO_BORDER });
             table.AddCell(new PdfPCell(new Phrase("Ngày mua" + info.CheckoutDay.ToString(" hh:mm:ss, dd/MM/yyyy"), font)) { HorizontalAlignment = PdfPCell.ALIGN_RIGHT, Border = PdfPCell.NO_BORDER });
             table.SpacingAfter = 20;
             return table;

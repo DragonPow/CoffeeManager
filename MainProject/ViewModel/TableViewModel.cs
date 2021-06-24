@@ -31,6 +31,7 @@ namespace MainProject.ViewModel
         private ObservableCollection<int> _ListFloor;
         private int _Currentfloors;
         private TABLECUSTOM _CurrentTable;
+        private TABLECUSTOM _CurrentTableInTabManager;
         private DetailPro _CurrentDetailPro;
         private ObservableCollection<DetailPro> _Currentlistdetailpro;
         private long _TotalCurrentTable;
@@ -50,7 +51,9 @@ namespace MainProject.ViewModel
 
         private ICommand _DeleteTableCommand;
         private ICommand _InsertTableCommand;
-        private ICommand _UpdateStatusTableCommand;      
+        private ICommand _UpdateStatusTableCommand;
+        private ICommand _UpdateStatusNormalTableCommand;
+        private ICommand _UpdateStatusNomalTable;
 
         private ICommand _AddFloor;
         private ICommand _DeleteFloor;
@@ -65,12 +68,11 @@ namespace MainProject.ViewModel
 
         public TableViewModel()
         {
-         /*   CurrentFloors = 1;*/
             TotalCurrentTable = 0;
 
             LoadTable();
            
-               /* ListFloor = new ObservableCollection<int>(); */
+              
         }
         #endregion
 
@@ -90,10 +92,11 @@ namespace MainProject.ViewModel
                     if ( value == true)
                     {
                         TableName = "Mang về";
+                        if (CurrentTable != null)  CurrentTable.table.CurrentStatus = "Normal";
                         CurrentTable = null;
                     }
                     else
-                         if (CurrentTable == null) TableName = "Chọn bàn >";
+                         if (CurrentTable == null) TableName = "Chọn bàn";
                 }
             }
         }
@@ -172,18 +175,42 @@ namespace MainProject.ViewModel
             {
                 if (value != _CurrentTable)
                 {
-                    _CurrentTable = value;
-                    OnPropertyChanged();
-                    if (value != null && value.table != null)
-                    {
+                    if (value != null)
+                    {     
+                        if ( value.table.CurrentStatus == "Fix")
+                        {
+                            WindowService.Instance.OpenMessageBox("Không thể chọn bàn đang sửa chữa", "Lỗi", MessageBoxImage.Error);
+                            return;
+                        }
                         TableName = "Bàn: " + value.table.Name.ToString();
-                        Isbringtohome = false;
+                        value.table.CurrentStatus = "Already";
+                        if (_CurrentTable != null) _CurrentTable.table.CurrentStatus = "Normal";
+                        _CurrentTable = value;
+                        Isbringtohome = false;                        
                     }
                     else
-                         if (!Isbringtohome) TableName = "Chọn bàn";
+                    {
+                        if (!Isbringtohome) TableName = "Chọn bàn";
+                        _CurrentTable = value;
+                    }
+                    OnPropertyChanged();
                 }
             }
       
+        }
+
+        public TABLECUSTOM CurrentTableInTabManager
+        {
+            get => _CurrentTableInTabManager;
+            set
+            {
+                if (value != _CurrentTableInTabManager)
+                {
+                    _CurrentTableInTabManager = value;
+                    OnPropertyChanged();
+                }
+            }
+
         }
 
         public DetailPro CurrentDetailPro
@@ -271,7 +298,7 @@ namespace MainProject.ViewModel
             if (CurrentDetailPro == null || CurrentDetailPro.Quantity < 1) return;
 
             CurrentDetailPro.Quantity--;
-            TotalCurrentTable -=  CurrentDetailPro.Pro.Price;
+            TotalCurrentTable -= (long) CurrentDetailPro.Pro.Price;
 
             if (CurrentDetailPro.Quantity == 0) Currentlistdetailpro.Remove(CurrentDetailPro);
         }
@@ -308,12 +335,10 @@ namespace MainProject.ViewModel
             }
         }
 
-        public void OpenChooseTable( )
+        public void OpenChooseTable()
         {
-            LoadTable();
-
             SelectTableView v = new SelectTableView();
-            WindowService.Instance.OpenWindowFullscreen(this, v);
+            WindowService.Instance.OpenWindowWithoutBorderControl(this, v);
         }
 
         public ICommand CloseViewChooseTableCommand
@@ -333,10 +358,6 @@ namespace MainProject.ViewModel
             Window window = WindowService.Instance.FindWindowbyTag("Selected Table").First();
             window.Close();
         }
-
-
-
-      
 
         public ICommand DeleteDetailProCommand
         {
@@ -367,25 +388,22 @@ namespace MainProject.ViewModel
         }
         public void Pay()
         {
-            if (CurrentTable == null && !Isbringtohome)
-            {
-                WindowService.Instance.OpenMessageBox("Chưa chọn bàn", "Lỗi", System.Windows.MessageBoxImage.Error);
-                return;
-            }
-
             if ( Isbringtohome)
             {
-                using (var db = new mainEntities())
-                {
                     CurrentTable = new TABLECUSTOM() { table = new TABLE()};
-                }
+            }
+
+            if (CurrentTable == null && !Isbringtohome)
+            {
+                WindowService.Instance.OpenMessageBox("Chưa chọn bàn", "Lỗi", MessageBoxImage.Error);
+                return;
             }
 
             if (Currentlistdetailpro == null || Currentlistdetailpro.Count == 0 )
             {
-                WindowService.Instance.OpenMessageBox("Chưa có món được chọn!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                WindowService.Instance.OpenMessageBox("Chưa có món được chọn!", "Lỗi", MessageBoxImage.Error);
                 return;
-            }                
+            }
 
             CurrentTable.ListPro = Currentlistdetailpro;
             CurrentTable.Total = TotalCurrentTable;
@@ -424,13 +442,13 @@ namespace MainProject.ViewModel
         
             int number = ListTable.Count - 1;
 
-            if ( ListTable.ElementAt(number).Total != 0)
+            if ( ListTable[number].Total != 0)
             {
-                WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn " + number +" trước khi xóa!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn " + number +" trước khi xóa!", "Lỗi",MessageBoxImage.Error);
                 return;
             }   
 
-                ListTable.RemoveAt(number);
+             ListTable.RemoveAt(number);
 
             /*for (int i = number; i < ListTable.Count; ++i)
                 --ListTable[i].table.Name;*/
@@ -486,26 +504,84 @@ namespace MainProject.ViewModel
             ListTable.Add(new TABLECUSTOM() { table = tab });
         }
 
-        ICommand UpdateStatusTableCommand
+        public ICommand UpdateStatusFixTableCommand
         {
             get
             {
                 if (_UpdateStatusTableCommand == null)
                 {
-                    _UpdateStatusTableCommand = new RelayingCommand<int>(a => Update(a));
+                    _UpdateStatusTableCommand = new RelayingCommand<Object>(a => UpdateFix());
                 }
                 return _UpdateStatusTableCommand;
             }
         }
 
-        public void Update(int Number)
+        public void UpdateFix()
         {
+            if( CurrentTableInTabManager.Total > 0)
+            {
+                WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn trước khi cập nhật!", "Lỗi", MessageBoxImage.Error);
+                return;
+            }
+            CurrentTableInTabManager.table.CurrentStatus = "Fix";
+            using (var db = new mainEntities())
+            {
+                var t = db.TABLEs.Where(tab => tab.ID == CurrentTableInTabManager.table.ID).FirstOrDefault();
+                t.ID_Status = 2;
+                db.SaveChanges();
+            }
 
         }
 
+        public ICommand UpdateStatusNormalTableCommand
+        {
+            get
+            {
+                if (_UpdateStatusNormalTableCommand == null)
+                {
+                    _UpdateStatusNormalTableCommand = new RelayingCommand<Object>(a => UpdateStatusNormalTable());
+                }
+                return _UpdateStatusNormalTableCommand;
+            }
+        }
 
+        public void UpdateStatusNormalTable()
+        {
+            if (CurrentTableInTabManager.Total > 0)
+            {
+                WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn trước khi cập nhật!", "Lỗi", MessageBoxImage.Error);
+                return;
+            }
+            CurrentTableInTabManager.table.CurrentStatus = "Normal";
 
+        }
+        public ICommand UpdateStatusNomalTableCommand
+        {
+            get
+            {
+                if (_UpdateStatusNomalTable == null)
+                {
+                    _UpdateStatusNomalTable = new RelayingCommand<Object>(a => UpdateStatusNomalTable());
+                }
+                return _UpdateStatusNomalTable;
+            }
+        }
 
+        public void UpdateStatusNomalTable()
+        {
+            if (CurrentTableInTabManager.table.CurrentStatus != "Fix")
+            {              
+                return;
+            }
+            CurrentTableInTabManager.table.CurrentStatus = "Normal";
+            using (var db = new mainEntities())
+            {
+                var t = db.TABLEs.Where(tab => tab.ID == CurrentTableInTabManager.table.ID).FirstOrDefault();
+                t.ID_Status = 1;
+                db.SaveChanges();
+            }
+
+        }
 
         #endregion
         void LoadTable()
@@ -515,14 +591,10 @@ namespace MainProject.ViewModel
                 var listtab = db.TABLEs.Include(p => p.STATUS_TABLE).ToList();
                 if (listtab == null) return;
 
-                List<TABLECUSTOM> Tablecustoms = new List<TABLECUSTOM>();
-
                 foreach (TABLE t in listtab)
                 {
-                    Tablecustoms.Add(new TABLECUSTOM() { Total = 0, table = t, ListPro = null });
+                    ListTable.Add(new TABLECUSTOM() { Total = 0, table = t, ListPro = null });
                 }
-
-                ListTable = new ObservableCollection<TABLECUSTOM>(Tablecustoms);
             }
         }
     }

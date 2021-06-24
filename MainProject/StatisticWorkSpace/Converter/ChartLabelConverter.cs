@@ -15,7 +15,7 @@ namespace MainProject.StatisticWorkSpace.Converter
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is List<StatisticModel> list)
+            if (value is ObservableCollection<StatisticModel> list)
             {
                 String[] rs = new string[list.Count];
                 for (int i = 0; i < list.Count; i++)

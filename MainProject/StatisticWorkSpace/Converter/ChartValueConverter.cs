@@ -15,7 +15,7 @@ namespace MainProject.StatisticWorkSpace.Converter
         public string PropertyName { get; set; }
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is List<StatisticModel> list)
+            if (value is ObservableCollection<StatisticModel> list)
             {
                 var rs = new ChartValues<long>();
                 if (PropertyName == "Revenue")

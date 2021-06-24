@@ -8,7 +8,7 @@
              xmlns:main="clr-namespace:MainProject.MainWorkSpace"
              mc:Ignorable="d" 
              Tag="NewType"
-             Height="260" Width="500" Background="White">
+             Height="200" Width="400" Background="White">
     <StackPanel>
         <Grid 
               Background="{StaticResource MainColor}">
@@ -16,13 +16,13 @@
                     BorderThickness="1" />
             <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}"
                        Text="Danh mục mới"
-                       FontSize="26"
+                       FontSize="20"
                        Foreground="White"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"/>
-            <Button Background="Transparent" BorderBrush="Transparent" Margin="10" HorizontalAlignment="Right"
+            <Button Background="Transparent" BorderBrush="Transparent" Margin="5" HorizontalAlignment="Right"
                     Command="{Binding CloseViewAddCategory_Command}">
-                <materialDesign:PackIcon Kind="Close" Width="25" Height="25" />
+                <materialDesign:PackIcon Kind="Close" Width="20" Height="20" />
 
             </Button>
         </Grid>
@@ -30,18 +30,19 @@
                      materialDesign:HintAssist.Hint="Tên danh mục"
                      Text="{Binding NameNewTypeProduct,UpdateSourceTrigger=PropertyChanged}"
                      FontSize="14"
-                     Margin="50,40"
-                     Height="50"
+                     Margin="50,30"
+                     Height="40"
+                     Padding="15,10"
                      MaxWidth="500" />
         <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
-                        Height="50"
+                        Height="40"
                         Command="{Binding AddEditCategory_Command}"
                         HorizontalAlignment="Stretch"
                         Background="{StaticResource MainColor}"
                         BorderBrush="#31CA62"
                         Foreground="White"
                         Grid.Column="1"
-                        Content="Tạo danh mục"
+                        Content="Thêm danh mục"
                         Width="200"
                         FontSize="20"/>
     </StackPanel>
