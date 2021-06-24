@@ -56,7 +56,7 @@
                     <DataTemplate>
                         <local:SelectPro DataContext="{Binding }"
                                         
-                                         Tag="{Binding DataContext, ElementName=Edit_Type}">
+                                         Tag="{Binding DataContext, ElementName=EditProd_Type}">
                         </local:SelectPro>
                     </DataTemplate>
                 </ListView.ItemTemplate>
