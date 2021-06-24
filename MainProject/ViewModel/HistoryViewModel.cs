@@ -166,7 +166,11 @@ namespace MainProject.ViewModel
 
         public void Search_Bill()
         {
-            if (Number_Bill_in_Page == 0) return;
+            if (Number_Bill_in_Page == 0)
+            {
+                NumberPage = 0;
+            }
+            return;
             if (EndTime == null || BeginTime == null)
             {
                 WindowService.Instance.OpenMessageBox("Phải điền đủ các giá trị", "Thông báo", System.Windows.MessageBoxImage.Warning);
