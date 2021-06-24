@@ -144,6 +144,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\TableConverter.cs" />
     <Compile Include="DetailPro.cs" />
+    <Compile Include="HelperClass\MessageBoxManager.cs" />
     <Compile Include="HelperClass\WindowService.cs" />
     <Compile Include="HistoryWorkSpace\Converter\ChangePageConverter.cs" />
     <Compile Include="HistoryWorkSpace\Converter\IdexConverter.cs" />
@@ -152,6 +153,9 @@
     </Compile>
     <Compile Include="HistoryWorkSpace\NumericUpDown.xaml.cs">
       <DependentUpon>NumericUpDown.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWorkSpace\Bill\BillView_readonly.xaml.cs">
+      <DependentUpon>BillView_readonly.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWorkSpace\Bill\BillView.xaml.cs">
       <DependentUpon>BillView.xaml</DependentUpon>
@@ -356,6 +360,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWorkSpace\Bill\BillView_readonly.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

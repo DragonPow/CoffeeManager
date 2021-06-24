@@ -1,26 +1,24 @@
-﻿<Window x:Class="MainProject.MainWorkSpace.Bill.BillView"
+﻿<Window x:Class="MainProject.MainWorkSpace.Bill.BillView_readonly"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:local="clr-namespace:MainProject.MainWorkSpace.Bill"
+        xmlns:local="clr-namespace:MainProject.Model"
+        xmlns:detailbill="clr-namespace:MainProject.MainWorkSpace.Bill"
         xmlns:converter="clr-namespace:MainProject.Converters"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:store="clr-namespace:MainProject"
-        xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:rules="clr-namespace:MainProject.ValidationRules"
-        xmlns:sys="clr-namespace:System.Security.Claims;assembly=mscorlib"
         mc:Ignorable="d"
         MinWidth="600"
         MaxWidth="800"
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
-        d:DataContext="{d:DesignInstance Type=local:BillViewModel}"
+        d:DataContext="{d:DesignInstance Type=local:BILL}"
         x:Name="MainWindow">
     <Window.Resources>
         <store:Store x:Key="StoreInstance" />
-        <converter:TableConverter x:Key="TableConver"/>
+        <converter:TableConverter x:Key="TableConver" />
     </Window.Resources>
     <StackPanel Orientation="Vertical">
         <!--Bill title-->
@@ -35,7 +33,7 @@
         <Border BorderBrush="#363434"
                 BorderThickness="2"
                 Background="#F5F5F5F5"
-                Margin="30 10">
+                Margin="60 10">
             <Grid Margin="20 10">
                 <Grid.Resources>
                     <Style TargetType="TextBlock">
@@ -53,8 +51,8 @@
                     </Style>
                 </Grid.Resources>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -67,29 +65,17 @@
                            Grid.Column="0"
                            Grid.ColumnSpan="2">
                     <Run>Thời gian</Run>
-                    <Run Text="{Binding CurrentBill.CheckoutDay, StringFormat=': {0:hh:mm, dd/MM/yyyy}'}" />
-                </TextBlock>
-                <TextBlock Grid.Row="1"
-                           Grid.Column="1">
-                    <Run>Số điện thoại </Run>
-                    <Run Text="{Binding StorePhone, Source={StaticResource StoreInstance}, StringFormat=': {0}', Mode=OneWay}" />
+                    <Run Text="{Binding CheckoutDay, StringFormat=': {0:hh:mm, dd/MM/yyyy}'}" />
                 </TextBlock>
                 <TextBlock Grid.Row="1"
                            Grid.Column="0">
                     <Run>Mã số hóa đơn</Run>
-                    <Run Text="{Binding BillCode, StringFormat=': {0}'}" />
+                    <Run Text="{Binding ID, StringFormat=': {0}'}" />
                 </TextBlock>
                 <TextBlock Grid.Row="2"
                            Grid.Column="0">
                     <Run>Bàn</Run>
-                    <Run Text="{Binding CurrentTable.table.Name, StringFormat=': {0}', Converter={StaticResource TableConver}}" />
-                </TextBlock>
-                <TextBlock Grid.Row="3"
-                           Grid.ColumnSpan="2"
-                           TextWrapping="Wrap"
-                           MaxWidth="500">
-                    <Run>Địa chỉ</Run>
-                    <Run Text="{Binding StoreAddress, Source={StaticResource StoreInstance}, StringFormat=': {0}', Mode=OneWay}" />
+                    <Run Text="{Binding TABLE.Name, StringFormat=': {0}', Converter={StaticResource TableConver}}" />
                 </TextBlock>
             </Grid>
         </Border>
@@ -110,7 +96,7 @@
                     BorderThickness="1"
                     BorderBrush="Black"
                     Margin="-1">
-                <local:Bill_ProductTable DataContext="{Binding CurrentTable}"
+                <detailbill:Bill_ProductTable DataContext="{Binding TABLE}"
                                          x:Name="TableLines" />
             </Border>
             <TextBlock Text="Tổng tiền"
@@ -138,30 +124,14 @@
                        FontSize="18"
                        Margin="0 20 0 0"
                        Foreground="#363434" />
-            <StackPanel Orientation="Horizontal"
-                        Grid.Row="2"
-                        Grid.Column="1"
-                        Margin="0 20 0 0"
-                        HorizontalAlignment="Right">
-                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                         HorizontalContentAlignment="Right"
-                         VerticalContentAlignment="Center"
-                         Width="150"
-                         Padding="10 0"
-                         Name="txtMoneyCustomer"
-                         FontSize="18">
-                    <TextBox.Text>
-                        <Binding Path="GiveMoney"
-                                 FallbackValue="0"
-                                 UpdateSourceTrigger="PropertyChanged"
-                                 TargetNullValue="0">
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
-                <TextBlock Text=" đ"
-                           FontSize="17"
-                           VerticalAlignment="Center" />
-            </StackPanel>
+            <TextBlock Name="txtMoneyCustomer"
+                       FontSize="18"
+                       Grid.Row="2"
+                       Grid.Column="1"
+                       Margin="0 20 0 0"
+                       Text="{Binding MoneyCustomer, StringFormat='{}{0:N0} đ'}"
+                       HorizontalAlignment="Right">
+            </TextBlock>
 
             <!--Tien thoi lai-->
             <TextBlock Text="Tiền thối"
@@ -169,29 +139,15 @@
                        VerticalAlignment="Center"
                        FontSize="17"
                        HorizontalAlignment="Right"
-                       Margin="0 15 0 0"
+                       Margin="0 10 0 0"
                        Foreground="#363434" />
-            <TextBox Grid.Row="3"
-                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                     BorderBrush="Transparent"
-                     IsReadOnly="True"
-                     Padding="0"
-                     Grid.Column="1"
-                     VerticalAlignment="Center"
-                     HorizontalAlignment="Right"
-                     Margin="0 15 0 0"
-                     Width="Auto"
-                     FontSize="17"
-                     Validation.Error="Validation_Error">
-                <TextBox.Text>
-                    <Binding Path="Refund"
-                             StringFormat="{}{0:N0} đ"
-                             Mode="OneWay"
-                             ValidatesOnDataErrors="True"
-                             UpdateSourceTrigger="PropertyChanged">
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
+            <TextBlock Grid.Row="3"
+                       Padding="0"
+                       Grid.Column="1"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Right"
+                       Text="{Binding Path=Refund, ElementName=MainWindow, StringFormat='{}{0:N0} đ', FallbackValue='0 đ'}"
+                       FontSize="17"/>
         </Grid>
 
         <!--<TextBlock Text="Cảm ơn quý khách"
@@ -206,15 +162,5 @@
                    Margin="0 0 0 20" />-->
 
         <!--Button Payment-->
-        <Button Content="THANH TOÁN"
-                MinWidth="200"
-                FontSize="20"
-                HorizontalAlignment="Center"
-                Background="{StaticResource MainColor}"
-                BorderBrush="{StaticResource MainColor}"
-                Command="{Binding PaymentCommand}"
-                CommandParameter="{Binding ElementName=MainWindow}"
-                Margin="0 10 0 30"
-                Height="40" />
     </StackPanel>
 </Window>
