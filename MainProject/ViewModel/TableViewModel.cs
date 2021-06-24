@@ -545,6 +545,12 @@ namespace MainProject.ViewModel
                 return;
             }
             CurrentTableInTabManager.table.CurrentStatus = "Normal";
+            using (var db = new mainEntities())
+            {
+                var t = db.TABLEs.Where(tab => tab.ID == CurrentTableInTabManager.table.ID).FirstOrDefault();
+                t.ID_Status = 1;
+                db.SaveChanges();
+            }
 
         }
         public ICommand UpdateStatus_Leave_TableCommand
