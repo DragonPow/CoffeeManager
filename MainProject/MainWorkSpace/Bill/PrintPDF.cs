@@ -16,7 +16,8 @@ namespace MainProject.MainWorkSpace.Bill
     {
         #region Fields
         static string dest = @".\Bill.pdf"; //Path.Combine(AppManager.GetPreferencesFolder(), "Bill.pdf");
-        public static string dir_font = @".\Fonts\vuArial.ttf";
+        public static string dir_font = @".\vuArial.ttf";
+
         static NumberFormatInfo nfi;
         private Rectangle defaultSize;
         FileStream os;
@@ -44,7 +45,7 @@ namespace MainProject.MainWorkSpace.Bill
 
         private PrintPDF()
         {
-          /*  basef = BaseFont.CreateFont(dir_font, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);*/
+            basef = BaseFont.CreateFont(dir_font, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
             nfi = new CultureInfo("en-US", false).NumberFormat;
             nfi.NumberGroupSeparator = " ";
             //open stream to write on the file

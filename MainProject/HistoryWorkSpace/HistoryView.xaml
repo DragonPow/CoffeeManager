@@ -7,6 +7,7 @@
              xmlns:viewmodel="clr-namespace:MainProject.ViewModel"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
              Background="White"
              d:DesignHeight="450"
@@ -26,11 +27,14 @@
         </Grid.ColumnDefinitions>
         <TextBlock Text="Danh sách hóa đơn"
                    Grid.ColumnSpan="3"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   TextAlignment="Center"
                    FontWeight="Bold"
-                   Margin="0 15"
-                   FontSize="30" />
+                   Padding="0 15"
+                   FontSize="30"
+                   Foreground="White"
+                   Background="{StaticResource MainColor}"/>
         <StackPanel Orientation="Horizontal"
                     Grid.Row="1"
                     Grid.Column="0"
@@ -42,7 +46,8 @@
             <DatePicker FontSize="17"
                         Width="120"
                         Margin="15 0"
-                        SelectedDate="{Binding BeginTime}"
+                        SelectedDateFormat="Short"
+                        SelectedDate="{Binding BeginTime, FallbackValue={x:Static sys:DateTime.Now}}"
                         materialDesign:HintAssist.Hint="Chọn ngày" />
         </StackPanel>
         <StackPanel Orientation="Horizontal"
@@ -56,7 +61,8 @@
             <DatePicker FontSize="17"
                         Width="120"
                         Margin="15 0"
-                        SelectedDate="{Binding EndTime}"
+                        SelectedDateFormat="Short"
+                        SelectedDate="{Binding EndTime, FallbackValue={x:Static sys:DateTime.Now}}"
                         materialDesign:HintAssist.Hint="Chọn ngày" />
         </StackPanel>
         <Button Content="TÌM KIẾM"

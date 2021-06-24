@@ -282,7 +282,7 @@ namespace MainProject.MainWorkSpace.Bill
 
             if (GiveMoney - Total < 0)
             {
-                WindowService.Instance.OpenMessageBox("Tiền đưa không đủ!", "Lỗi", MessageBoxImage.Error);
+                WindowService.Instance.OpenMessageBox("Tiền đưa không đủ!", "Thông báo", MessageBoxImage.Information);
                 return;
             }
 
