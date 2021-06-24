@@ -370,7 +370,7 @@ namespace MainProject.ViewModel
 
         public void UpdateNameType()
         {
-            if (NewNameEditType =="")
+            if (NewNameEditType == null || NewNameEditType =="")
             {
                 WindowService.Instance.OpenMessageBox("Không được để tên danh mục trống!","Lỗi", MessageBoxImage.Error);
                 return;

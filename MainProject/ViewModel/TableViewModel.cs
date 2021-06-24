@@ -177,9 +177,9 @@ namespace MainProject.ViewModel
                 {
                     if (value != null)
                     {     
-                        if ( value.table.CurrentStatus == "Fix")
+                        if ( value.table.CurrentStatus == "Fix" || value.table.CurrentStatus =="Already")
                         {
-                            WindowService.Instance.OpenMessageBox("Không thể chọn bàn đang sửa chữa", "Lỗi", MessageBoxImage.Error);
+                            WindowService.Instance.OpenMessageBox(value.table.CurrentStatus == "Fix"?  "Không thể chọn bàn đang sữa chữa": "Không thể chọn bàn đang có khách", "Lỗi", MessageBoxImage.Error);
                             return;
                         }
                         TableName = "Bàn: " + value.table.Name.ToString();
