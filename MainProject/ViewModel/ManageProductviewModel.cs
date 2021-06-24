@@ -370,6 +370,12 @@ namespace MainProject.ViewModel
 
         public void UpdateNameType()
         {
+            if (NewNameEditType =="")
+            {
+                WindowService.Instance.OpenMessageBox("Không được để tên danh mục trống!","Lỗi", MessageBoxImage.Error);
+                return;
+            }
+
             using (var db = new mainEntities())
             {
                 var type = db.TYPE_PRODUCT.Where(t => t.ID == CurrentTypeInProManager.ID).FirstOrDefault();

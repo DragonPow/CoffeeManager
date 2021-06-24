@@ -24,9 +24,9 @@
         </ListView.ItemsPanel>
         <ListView.ContextMenu>
             <ContextMenu>
-                <MenuItem Header="Khách rời bàn" Command="{Binding UpdateStatusNormalTableCommand}"/>
+                <MenuItem Header="Khách rời bàn" Command="{Binding UpdateStatus_Leave_TableCommand}"/>
                 <MenuItem Header="Sửa chữa" Command="{Binding UpdateStatusFixTableCommand}"/>
-                <MenuItem Header="Đã sửa xong" Command="{Binding UpdateStatusNomalTableCommand}"/>
+                <MenuItem Header="Đã sửa xong" Command="{Binding UpdateStatus_Done_FixTableCommand}"/>
             </ContextMenu>
         </ListView.ContextMenu>
     </ListView>

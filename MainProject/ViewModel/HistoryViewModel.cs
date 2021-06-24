@@ -188,6 +188,7 @@ namespace MainProject.ViewModel
                 if (d == 0)
                 {
                     NumberAllPage = 0;
+                    ListBill = null;
                     return;
                 }
 
