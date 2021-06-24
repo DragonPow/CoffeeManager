@@ -15,18 +15,25 @@
         <DockPanel >
             <Grid DockPanel.Dock="Bottom"
                   Height="100">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="15"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
                 <Button
+                        Grid.Column="2"
                         Height="50"
                         Width="170"
                         Name="btn_Save_change"
                         FontSize="20"
                         BorderThickness="2"
-                        Margin="10">
+                        Margin="10"
+                        HorizontalAlignment="Left">
                     <Button.Style>
                         <Style TargetType="Button"
                                 BasedOn="{StaticResource MaterialDesignOutlinedButton}">
                             <Setter Property="Content" Value="Sửa thông tin"/>
-                            <Setter Property="Foreground" Value="Red"/>
+                            <Setter Property="Foreground" Value="Black"/>
                             <Setter Property="BorderBrush" Value="Gray"/>
                             <Setter Property="IsEnabled" Value="True"/>
                             <Setter Property="Command" Value="{Binding Change_Data_Store}"/>
@@ -42,6 +49,34 @@
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
+                </Button>
+                <Button
+                        Grid.Column="0"
+                        Height="50"
+                        Width="170"
+                        Name="btn_Cancle_change"
+                        FontSize="20"
+                        BorderThickness="2"
+                        Margin="10" 
+                        Content="Hủy chỉnh sửa"
+                        BorderBrush="Black"
+                        Foreground="Red"
+                        Background="Transparent"
+                        Command="{Binding Cancel_Change_Data_Store}"
+                        HorizontalAlignment="Right">
+                    <Button.Style>
+                        <Style TargetType="Button"
+                               BasedOn="{StaticResource MaterialDesignOutlinedButton}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Mode_btn}"
+                                             Value="edit">
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
                 </Button>
 
             </Grid>
@@ -63,13 +98,17 @@
                         <ColumnDefinition Width="8*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="1">
-                        <Grid Margin="0 2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="7*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0"
+                    <Border Grid.Column="1"
+                            BorderBrush="LightGreen"
+                            BorderThickness="4">
+                        <StackPanel Grid.Column="1"
+                                    Margin="10">
+                            <Grid Margin="0 2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="7*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0"
                                  Text="Tên quán"
                                  Foreground="Black" 
                                  VerticalAlignment="Center"
@@ -77,7 +116,7 @@
                                  HorizontalAlignment="Left"
                                  FontWeight="Bold" 
                                  FontSize="16" />
-                            <TextBox Grid.Column="1"
+                                <TextBox Grid.Column="1"
                                  Name="txb_Name"
                                  materialDesign:HintAssist.Hint="Nhập tên quán"
                                  Text="{Binding NameStore}"
@@ -85,26 +124,27 @@
                                  Background="{x:Null}"
                                  BorderBrush="{x:Null}"
                                  FontSize="16">
-                                <TextBox.Style>
-                                    <Style TargetType="TextBox"
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox"
                                            BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
-                                        <Setter Property="IsEnabled" Value="False"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Mode_btn}"
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Setter Property="FontWeight" Value="DemiBold"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Mode_btn}"
                                                          Value="edit">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                        </Grid>
-                        <Grid Margin="0 2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="7*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0"
+                                                    <Setter Property="IsEnabled" Value="True"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                            </Grid>
+                            <Grid Margin="0 2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="7*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0"
                                 Text="Số điện thoại"
                                 Foreground="Black" 
                                 VerticalAlignment="Center"
@@ -113,7 +153,7 @@
                                 FontWeight="Bold" 
                                 FontSize="16"
                                 />
-                            <TextBox Grid.Column="1"
+                                <TextBox Grid.Column="1"
                                 Text="{Binding NumberPhone}" 
                                 materialDesign:HintAssist.Hint="Nhập số điện thoại"
                                 Name="txb_numberPhone"
@@ -121,27 +161,28 @@
                                 Background="{x:Null}"
                                 BorderBrush="{x:Null}"
                                 FontSize="16" >
-                                <TextBox.Style>
-                                    <Style TargetType="TextBox"
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox"
                                            BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
-                                        <Setter Property="IsEnabled" Value="False"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Mode_btn}"
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Setter Property="FontWeight" Value="DemiBold"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Mode_btn}"
                                                          Value="edit">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                                
-                        </Grid>
-                        <Grid Margin="0 2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="7*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0"
+                                                    <Setter Property="IsEnabled" Value="True"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+
+                            </Grid>
+                            <Grid Margin="0 2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="7*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0"
                                 Text="Địa chỉ"
                                 Foreground="Black" 
                                 VerticalAlignment="Center"
@@ -150,29 +191,32 @@
                                 FontWeight="Bold" 
                                 FontSize="16" 
                                 />
-                            <TextBox Grid.Column="1"
+                                <TextBox Grid.Column="1"
                                  Name="txb_address"
                                  materialDesign:HintAssist.Hint="Nhập địa điểm"
                                  Text="{Binding Address}" 
                                  VerticalAlignment="Center"
                                  Background="{x:Null}"
                                  BorderBrush="{x:Null}"
+                                 MaxLength="70"
                                  FontSize="16" >
-                                <TextBox.Style>
-                                    <Style TargetType="TextBox"
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox"
                                            BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
-                                        <Setter Property="IsEnabled" Value="False"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Mode_btn}"
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Setter Property="FontWeight" Value="DemiBold"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Mode_btn}"
                                                          Value="edit">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                        </Grid>
-                    </StackPanel>
+                                                    <Setter Property="IsEnabled" Value="True"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
                 </Grid>
             </StackPanel>
         </DockPanel>
