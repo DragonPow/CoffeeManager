@@ -283,7 +283,7 @@ namespace MainProject.ViewModel
             {
                 using (var transaction = db.Database.BeginTransaction())
                 {
-                    PRODUCT product = db.PRODUCTs.Where(p => (p.ID == Currentproduct.ID)).FirstOrDefault();
+                    PRODUCT product = db.PRODUCTs.Where(p => (p.ID == Currentproduct.ID) && p.IsProvided).FirstOrDefault();
 
                     if (product == null) return;
 
@@ -383,7 +383,7 @@ namespace MainProject.ViewModel
         {
             using (var db = new mainEntities())
             {
-                var listpro = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT.Type == Type.Type));
+                var listpro = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT.Type == Type.Type) && p.IsProvided);
                 if (listpro == null) return;
                 ListPoduct = new ObservableCollection<PRODUCT>(listpro.ToList());
             }
