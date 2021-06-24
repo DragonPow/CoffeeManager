@@ -417,7 +417,6 @@ namespace MainProject.ViewModel
 
             if (Billviewmodel.IsClose)
             {
-                CurrentTable.table.CurrentStatus = "Normal";
                 CurrentTable = null;               
                 Currentlistdetailpro = new ObservableCollection<DetailPro>();
                 TotalCurrentTable = 0;
@@ -564,6 +563,11 @@ namespace MainProject.ViewModel
         {
             if (CurrentTableInTabManager.table.CurrentStatus == "Fix" || CurrentTableInTabManager.table.CurrentStatus == "Normal")
             {              
+                return;
+            }
+            if(CurrentTableInTabManager == CurrentTable && Currentlistdetailpro.Count != 0)
+            {
+                WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn trước khi cập nhật!", "Lỗi", MessageBoxImage.Error);
                 return;
             }
             CurrentTableInTabManager.table.CurrentStatus = "Normal";
