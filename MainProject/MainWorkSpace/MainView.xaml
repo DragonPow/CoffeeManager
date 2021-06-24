@@ -52,7 +52,6 @@
                                 Text="{Binding SearchProduct,UpdateSourceTrigger=PropertyChanged, FallbackValue='Tìm kiếm'}"
                             Grid.Column="0"
                             Margin="8 0 0 0"
-                            materialDesign:HintAssist.Hint="Tìm kiếm"
                             materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                             BorderThickness="0"
                             MinWidth="200"
@@ -80,10 +79,10 @@
                             <materialDesign:PackIcon
                                       Kind="Search"
                                       Opacity="0.7"
-                                        Margin="5,0,0,0"
+                                        Margin="10,0,0,0"
                                         VerticalAlignment="Center"
                                         Foreground="#0E0E2F"/>
-                            <TextBlock  Foreground="#0E0E2F" VerticalAlignment="Center" Text="Tìm kiếm" Padding="2,2,10,5"></TextBlock>
+                            <TextBlock  Foreground="#0E0E2F" VerticalAlignment="Center" Text="Tìm kiếm" Padding="5,8,15,7"></TextBlock>
                         </StackPanel>
 
 
@@ -112,7 +111,7 @@
                     <Style TargetType="TabItem"
                        BasedOn="{StaticResource MaterialDesignNavigationRailTabItem}">
                         <Setter Property="MinWidth"
-                            Value="120" />
+                            Value="100" />
                         <Setter Property="Height"
                             Value="70" />
                         <Setter Property="Width"
