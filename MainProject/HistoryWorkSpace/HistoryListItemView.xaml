@@ -92,7 +92,7 @@
                 <GridViewColumn Width="Auto">
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding TABLE.Name}"
+                            <TextBlock Text="{Binding TABLE.Name, TargetNullValue='Mang về', FallbackValue='Mang về'}"
                                        HorizontalAlignment="Center" />
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>

@@ -10,6 +10,7 @@
         xmlns:store="clr-namespace:MainProject"
         xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:rules="clr-namespace:MainProject.ValidationRules"
+        xmlns:sys="clr-namespace:System.Security.Claims;assembly=mscorlib"
         mc:Ignorable="d"
         MinWidth="600"
         MaxWidth="800"
@@ -33,7 +34,7 @@
         <!--Information of store-->
         <Border BorderBrush="#363434"
                 BorderThickness="2"
-                Background="LightGray"
+                Background="#F5F5F5F5"
                 Margin="30 10">
             <Grid Margin="20 10">
                 <Grid.Resources>
@@ -59,6 +60,7 @@
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0"
@@ -66,22 +68,22 @@
                     <Run>Thời gian</Run>
                     <Run Text="{Binding CurrentBill.CheckoutDay, StringFormat=': {0:hh:mm, dd/MM/yyyy}'}" />
                 </TextBlock>
-                <TextBlock Grid.Row="1"
-                           Grid.Column="0">
+                <TextBlock Grid.Row="0"
+                           Grid.Column="1">
                     <Run>Số điện thoại</Run>
                     <Run Text="{Binding StorePhone, Source={StaticResource StoreInstance}, StringFormat=': {0}', Mode=OneWay}" />
                 </TextBlock>
-                <TextBlock Grid.Row="0"
-                           Grid.Column="1">
+                <TextBlock Grid.Row="1"
+                           Grid.Column="0">
                     <Run>Mã số hóa đơn</Run>
                     <Run Text="{Binding BillCode, StringFormat=': {0}'}" />
                 </TextBlock>
-                <TextBlock Grid.Row="1"
-                           Grid.Column="1">
+                <TextBlock Grid.Row="2"
+                           Grid.Column="0">
                     <Run>Bàn</Run>
                     <Run Text="{Binding CurrentTable.table.Name, StringFormat=': {0}', Converter={StaticResource TableConver}}" />
                 </TextBlock>
-                <TextBlock Grid.Row="2"
+                <TextBlock Grid.Row="3"
                            Grid.ColumnSpan="2"
                            TextWrapping="Wrap"
                            MaxWidth="500">
@@ -150,7 +152,8 @@
                     <TextBox.Text>
                         <Binding Path="GiveMoney"
                                  FallbackValue="0"
-                                 UpdateSourceTrigger="PropertyChanged">
+                                 UpdateSourceTrigger="PropertyChanged"
+                                 TargetNullValue="0">
                         </Binding>
                     </TextBox.Text>
                 </TextBox>

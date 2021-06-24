@@ -193,7 +193,6 @@
     <Compile Include="Model\BILL.cs">
       <DependentUpon>MainModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\CustomModel\BILL.cs" />
     <Compile Include="Model\CustomModel\STATUS_TABLE.cs" />
     <Compile Include="Model\CustomModel\TABLE.cs" />
     <Compile Include="Model\CustomModel\TYPE_PRODUCT.cs" />
