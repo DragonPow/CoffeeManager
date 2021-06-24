@@ -149,6 +149,7 @@
                          FontSize="18">
                     <TextBox.Text>
                         <Binding Path="GiveMoney"
+                                 FallbackValue="0"
                                  UpdateSourceTrigger="PropertyChanged">
                         </Binding>
                     </TextBox.Text>
@@ -164,7 +165,7 @@
                        VerticalAlignment="Center"
                        FontSize="17"
                        HorizontalAlignment="Right"
-                       Margin="0 7 0 0"
+                       Margin="0 15 0 0"
                        Foreground="#363434" />
             <TextBox Grid.Row="3"
                      Style="{StaticResource MaterialDesignOutlinedTextBox}"
@@ -174,7 +175,7 @@
                      Grid.Column="1"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Right"
-                     Margin="0 7 0 0"
+                     Margin="0 15 0 0"
                      Width="Auto"
                      FontSize="17"
                      Validation.Error="Validation_Error">

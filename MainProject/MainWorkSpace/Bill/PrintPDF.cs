@@ -16,7 +16,7 @@ namespace MainProject.MainWorkSpace.Bill
     {
         #region Fields
         static string dest = @".\Bill.pdf"; //Path.Combine(AppManager.GetPreferencesFolder(), "Bill.pdf");
-        public static string dir_font = @".\Fonts\vuArial.ttf";
+        public static string dir_font = @".\vuArial.ttf";
 
         static NumberFormatInfo nfi;
         private Rectangle defaultSize;
