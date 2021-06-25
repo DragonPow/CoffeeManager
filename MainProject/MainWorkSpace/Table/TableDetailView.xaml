@@ -91,6 +91,7 @@
                 Command="{Binding Pay_Command}"
                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                 Width="Auto" Height="Auto"
+                FontSize="18"
                 materialDesign:ButtonAssist.CornerRadius="2"
                 Foreground="White" Background="#31CA62"
                 BorderThickness="0" Grid.Column="1"/>

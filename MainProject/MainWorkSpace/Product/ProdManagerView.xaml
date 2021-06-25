@@ -7,8 +7,8 @@
              xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d"
-             x:Name="ProductView"
-             d:DataContext="{d:DesignInstance Type=ViewModel:ProductViewModel}"
+             x:Name="ProducManagertView"
+            
              d:DesignHeight="480"
              d:DesignWidth="600">
     <UserControl.DataContext>
@@ -25,12 +25,16 @@
         <ListView.ItemTemplate>
             <DataTemplate>
                 <local:Pro_UC DataContext="{Binding}" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                            <i:InvokeCommandAction Command="{Binding DataContext.OpenViewDetailProduct_Command,ElementName=ProducManagertView}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </local:Pro_UC>
             </DataTemplate>
         </ListView.ItemTemplate>
         <ListView.ContextMenu>
             <ContextMenu>
-
                 <MenuItem Header="Chỉnh sửa sản phẩm" Command="{Binding LoadViewUpdateProduct_Command}"/>
                 <MenuItem Header="Xóa sản phẩm" Command="{Binding DeleteProduct_Command}"/>
             </ContextMenu>

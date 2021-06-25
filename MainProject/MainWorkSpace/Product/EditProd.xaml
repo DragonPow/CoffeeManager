@@ -13,7 +13,7 @@
              x:Name="Edit_Pro"
              Tag="EditPro"
                d:DataContext="{d:DesignInstance Type=viewmodel:ProductViewModel}"
-             Height="520"
+             Height="550"
              Width="400">
     <UserControl.Resources>
         <main:MainViewModel x:Key="MainVM"></main:MainViewModel>
@@ -49,7 +49,7 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Top"
                         Grid.Row="1"
-                        Margin="0,30,0,20"
+                        Margin="0,30,0,0"
                         Width="180"
                         Height="140"
                         Padding="0"
@@ -60,6 +60,7 @@
                                    Source="{Binding Currentproduct.Image, UpdateSourceTrigger=PropertyChanged}" />
                     </Grid>
                 </Button>
+                <TextBlock Text="Nhấp vào để chọn ảnh mới." TextAlignment="Center" Margin="0,5,0,20"></TextBlock>
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          materialDesign:HintAssist.Hint="Tên sản phẩm"
                          FontSize="13"
