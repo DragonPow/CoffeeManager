@@ -31,25 +31,35 @@ namespace MainProject.HistoryWorkSpace
 
         private void ListViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            //BillView_readonly view = new BillView_readonly();
-            //BILL overviewbill = ((ViewModel.HistoryViewModel)DataContext).CurrentBill;
-            //BILL bill;
-            //using (mainEntities db = new mainEntities())
-            //{
-            //    bill = db.BILLs.Where(b => b.ID == overviewbill.ID).Include("DETAILBILLs").First();
-            //    foreach (DETAILBILL detail in bill.DETAILBILLs)
-            //    {
-            //        var pro = (from p in db.PRODUCTs.Where(i => i.ID == detail.ID_Product).DefaultIfEmpty()
-            //                  select new
-            //                  {
-            //                      Name = p.Name
-            //                  }).FirstOrDefault();
-            //        detail.PRODUCT = new PRODUCT();
-            //        detail.PRODUCT.Name = pro.Name;
-            //    }
-            //}
-            //view.DataContext = bill;
-            //view.Show();
+            BILL overviewbill = ((ViewModel.HistoryViewModel)DataContext).CurrentBill;
+            BillView_readonly view = new BillView_readonly(overviewbill.ID, overviewbill.CheckoutDay, overviewbill.TotalPrice, overviewbill.MoneyCustomer);
+            TABLECUSTOM table = new TABLECUSTOM();
+            using (mainEntities db = new mainEntities())
+            {
+                table.table = overviewbill.TABLE;
+                var listpro = (from detail in db.DETAILBILLs.Where(i => i.ID_Bill == overviewbill.ID).DefaultIfEmpty()
+                               from pro in db.PRODUCTs.Where(p => p.ID == detail.ID_Product).DefaultIfEmpty()
+                               select new
+                               {
+                                   Name = pro.Name,
+                                   Quantity = detail.Quantity,
+                                   UnitPrice = detail.UnitPrice
+                               }).ToList();
+                foreach (var i in listpro)
+                {
+                    table.ListPro.Add(new DetailPro()
+                    {
+                        Pro = new PRODUCT()
+                        {
+                            Name = i.Name,
+                            Price = i.UnitPrice,
+                        },
+                        Quantity = (int)i.Quantity
+                    });
+                }
+            }
+            view.DataContext = table;
+            view.Show();
         }
     }
 }

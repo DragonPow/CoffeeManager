@@ -237,6 +237,7 @@ namespace MainProject.ViewModel
                                     ID = b.ID,
                                     CheckoutDay = b.CheckoutDay,
                                     TotalPrice = b.TotalPrice,
+                                    MoneyCustomer = b.MoneyCustomer,
                                     Table = t
                                 }).OrderBy(b => b.ID).Skip((NumberPage - 1) * Number_Bill_in_Page).Take(Number_Bill_in_Page);
 
@@ -246,7 +247,13 @@ namespace MainProject.ViewModel
 
                 foreach (var b in listbill.ToList())
                 {
-                    ListBill.Add(new BILL() { CheckoutDay = b.CheckoutDay, ID = b.ID, TotalPrice = b.TotalPrice, TABLE = b.Table });
+                    ListBill.Add(new BILL() { 
+                        CheckoutDay = b.CheckoutDay, 
+                        ID = b.ID, 
+                        TotalPrice = b.TotalPrice,
+                        MoneyCustomer = b.MoneyCustomer,
+                        TABLE = b.Table 
+                    });
                 }
             }
         }

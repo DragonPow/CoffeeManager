@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MainProject.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -21,22 +22,22 @@ namespace MainProject.MainWorkSpace.Bill
     /// </summary>
     public partial class BillView_readonly : Window, INotifyPropertyChanged
     {
+        public long TotalPrice { get; set; }
+        public long MoneyCustomer { get; set; }
+        public long Refund { get => MoneyCustomer - TotalPrice; }
+        public DateTime TimeCheckout { get; set; }
+        public long BillID { get; set; }
         public BillView_readonly()
         {
             InitializeComponent();
         }
-
-        public long Refund
+        public BillView_readonly(long billID, DateTime timeCheckout, long totalprice, long moneyCustomer)
         {
-            get
-            {
-                if (DataContext != null)
-                {
-                    Model.BILL b = (Model.BILL)DataContext;
-                    return b.MoneyCustomer - b.TotalPrice;
-                }
-                return 0;
-            }
+            InitializeComponent();
+            this.BillID = billID;
+            this.TimeCheckout = timeCheckout;
+            this.TotalPrice = totalprice;
+            this.MoneyCustomer = moneyCustomer;
         }
         public event PropertyChangedEventHandler PropertyChanged;
     }

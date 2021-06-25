@@ -14,7 +14,7 @@
         MaxWidth="800"
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
-        d:DataContext="{d:DesignInstance Type=local:BILL}"
+        d:DataContext="{d:DesignInstance Type=local:TABLECUSTOM}"
         x:Name="MainWindow">
     <Window.Resources>
         <store:Store x:Key="StoreInstance" />
@@ -65,17 +65,17 @@
                            Grid.Column="0"
                            Grid.ColumnSpan="2">
                     <Run>Thời gian</Run>
-                    <Run Text="{Binding CheckoutDay, StringFormat=': {0:hh:mm, dd/MM/yyyy}'}" />
+                    <Run Text="{Binding Path=TimeCheckout, ElementName=MainWindow, StringFormat=': {0:hh:mm, dd/MM/yyyy}'}" />
                 </TextBlock>
                 <TextBlock Grid.Row="1"
                            Grid.Column="0">
                     <Run>Mã số hóa đơn</Run>
-                    <Run Text="{Binding ID, StringFormat=': {0}'}" />
+                    <Run Text="{Binding Path=BillID, ElementName=MainWindow, StringFormat=': {0}'}" />
                 </TextBlock>
                 <TextBlock Grid.Row="2"
                            Grid.Column="0">
                     <Run>Bàn</Run>
-                    <Run Text="{Binding TABLE.Name, StringFormat=': {0}', Converter={StaticResource TableConver}}" />
+                    <Run Text="{Binding table.Name, StringFormat=': {0}', Converter={StaticResource TableConver}}" />
                 </TextBlock>
             </Grid>
         </Border>
@@ -83,7 +83,7 @@
         <!--Information of table checkout-->
         <Grid Margin="40 30">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
@@ -96,7 +96,7 @@
                     BorderThickness="1"
                     BorderBrush="Black"
                     Margin="-1">
-                <detailbill:Bill_ProductTable DataContext="{Binding TABLE}"
+                <detailbill:Bill_ProductTable DataContext="{Binding}"
                                          x:Name="TableLines" />
             </Border>
             <TextBlock Text="Tổng tiền"
@@ -107,7 +107,7 @@
                        Margin="0 25 0 0"
                        HorizontalAlignment="Right" />
             <!--Thiếu converer-->
-            <TextBlock Text="{Binding Total, FallbackValue='0,000 đ', 
+            <TextBlock Text="{Binding Path=TotalPrice, ElementName=MainWindow, FallbackValue='0,000 đ', 
                                 StringFormat='{}{0:N0} đ', NotifyOnTargetUpdated=True}"
                        FontWeight="Bold"
                        Grid.Row="1"
@@ -129,7 +129,7 @@
                        Grid.Row="2"
                        Grid.Column="1"
                        Margin="0 20 0 0"
-                       Text="{Binding MoneyCustomer, StringFormat='{}{0:N0} đ'}"
+                       Text="{Binding Path=MoneyCustomer, ElementName=MainWindow, StringFormat='{}{0:N0} đ'}"
                        HorizontalAlignment="Right">
             </TextBlock>
 

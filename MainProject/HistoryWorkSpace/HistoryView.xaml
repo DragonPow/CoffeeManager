@@ -64,7 +64,7 @@
                         materialDesign:HintAssist.Hint="Chọn ngày">
             </DatePicker>
         </StackPanel>
-        <Button Content="TÌM KIẾM"
+        <Button Content="Xem danh sách"
                 x:Name="btnFind"
                 Command="{Binding Search_BillCommand }"
                 Grid.Row="1"
@@ -72,7 +72,7 @@
                 Background="{StaticResource MainColor}"
                 Foreground="White"
                 FontSize="15"
-                Width="120"
+                Width="150"
                 Margin="0 30 0 20">
 
             <behaviors:Interaction.Triggers>

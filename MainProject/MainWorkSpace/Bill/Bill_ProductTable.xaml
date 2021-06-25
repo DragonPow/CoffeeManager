@@ -80,6 +80,22 @@
                                 <ColumnDefinition Width="150" />
                                 <ColumnDefinition Width="150" />
                             </Grid.ColumnDefinitions>
+                            <Border BorderBrush="Gray"
+                                    BorderThickness="1"
+                                    Grid.Column="0"
+                                    Margin="-0.5"/>
+                            <Border BorderBrush="Gray"
+                                    BorderThickness="1"
+                                    Grid.Column="1"
+                                    Margin="-0.5" />
+                            <Border BorderBrush="Gray"
+                                    BorderThickness="1"
+                                    Grid.Column="2"
+                                    Margin="-0.5" />
+                            <Border BorderBrush="Gray"
+                                    BorderThickness="1"
+                                    Grid.Column="3"
+                                    Margin="-0.5" />
                             <TextBlock Text="{Binding Pro.Name}"
                                        Grid.Column="0"
                                        HorizontalAlignment="Left"
