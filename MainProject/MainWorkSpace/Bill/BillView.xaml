@@ -67,7 +67,7 @@
                            Grid.Column="0"
                            Grid.ColumnSpan="2">
                     <Run>Thời gian</Run>
-                    <Run Text="{Binding CurrentBill.CheckoutDay, StringFormat=': {0:hh:mm, dd/MM/yyyy}'}" />
+                    <Run Text="{Binding CurrentBill.CheckoutDay, StringFormat=': {0:HH:mm, dd/MM/yyyy}'}" />
                 </TextBlock>
                 <TextBlock Grid.Row="1"
                            Grid.Column="1">

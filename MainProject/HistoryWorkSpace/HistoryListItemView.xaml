@@ -81,7 +81,7 @@
                 <GridViewColumn Width="120">
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding CheckoutDay, StringFormat=' {0:hh:mm}'}"
+                            <TextBlock Text="{Binding CheckoutDay, StringFormat=' {0:HH:mm}'}"
                                        HorizontalAlignment="Center" />
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
