@@ -8,7 +8,7 @@ namespace MainProject.StatisticWorkSpace
 {
     class StatisticModel
     {
-        public DateTime TimeMin;
+        public DateTime TimeMin { get; set; }
         public DateTime TimeMax;
         public long Revenue { get; set; }
         public int Amount { get; set; }

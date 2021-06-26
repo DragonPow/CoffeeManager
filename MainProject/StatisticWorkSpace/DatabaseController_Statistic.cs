@@ -136,6 +136,7 @@ namespace MainProject.StatisticWorkSpace
                     if (data != null)
                     {
                         var rs = new List<StatisticModel>();
+                        long total = 0;
                         foreach (var detail in data.DETAILREPORTSALES.Select(dt => new
                         {
                             ProductName = dt.PRODUCT.Name,
@@ -154,6 +155,12 @@ namespace MainProject.StatisticWorkSpace
                                 Label = detail.Rate.ToString()
                             };
                             rs.Add(model);
+                            total += model.Revenue;
+                        }
+
+                        foreach (StatisticModel model in rs)
+                        {
+                            model.Label = String.Format("{0:P}", model.Revenue * 1f / total);
                         }
                         return rs;
                     }
@@ -418,7 +425,7 @@ namespace MainProject.StatisticWorkSpace
 
                         var listPDs = new List<Tuple<long, String, long>>();
                         foreach (var pd in products) { listPDs.Add(new Tuple<long, string, long>(pd.ID, pd.Name, (long)pd.Price)); }
-                        int count = random.Next(listPDs.Count - 1) + 1;
+                        int count = random.Next(5) + 1;
                         for (int i = 0; i < count; i++)
                         {
                             int temp = random.Next(listPDs.Count);
@@ -430,6 +437,7 @@ namespace MainProject.StatisticWorkSpace
                             };
                             total += dt.Quantity * dt.UnitPrice;
                             bill.DETAILBILLs.Add(dt);
+                            bill.MoneyCustomer = total + random.Next(5) * 10000;
                             listPDs.RemoveAt(temp);
                         }
                         bill.TotalPrice = total;

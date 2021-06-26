@@ -29,6 +29,7 @@ namespace MainProject.StatisticWorkSpace
         public String getDateTimeRangeString(DateTime minDate, DateTime maxDate)
         {
             String rs = String.Format("{0} - {1}", minDate.ToString("dd/MM/yyy"), maxDate.ToString("dd/MM/yyy"));
+            rs = String.Format("tháng {0}", minDate.ToString("MM/yyyy"));
             if (maxDate.Year == minDate.Year)
             {
                 if (maxDate.Month == minDate.Month)

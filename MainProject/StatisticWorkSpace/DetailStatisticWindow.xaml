@@ -40,10 +40,10 @@
                     BorderBrush="#9393A1"/>
             <Button 
                     x:Name="btnBack"
-                    HorizontalAlignment="Left"
+                    HorizontalAlignment="Right"
                     Background="Transparent"
                     BorderBrush="Transparent">
-                <materialDesign:PackIcon Kind="ArrowLeft" Width="32" Height="32"/>
+                <materialDesign:PackIcon Kind="ExitToApp" Width="32" Height="32" RenderTransformOrigin="27.363,-0.087"/>
             </Button>
             <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}"
                        Text="BÁO CÁO BÁN HÀNG THEO SẢN PHẨM" 

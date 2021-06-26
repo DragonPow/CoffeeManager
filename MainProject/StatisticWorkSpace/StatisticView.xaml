@@ -33,84 +33,97 @@
         <conver:ChartValueConverter x:Key="chartValueConverter_bill" PropertyName="Amount"/>
         <conver:ChartLabelConverter x:Key="chartLabelConverterAxisX" Axis="X"/>
     </UserControl.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="5*"/>
-        </Grid.ColumnDefinitions>
-        <StackPanel
-            Grid.Column="0"
-            Background="DarkGray" x:Name="stackPanelSetting"
+    <DockPanel>
+        <TextBlock Text="Thống kê doanh thu"
+                   Grid.ColumnSpan="3"
+                   Height="45"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Center"
+                   TextAlignment="Center"
+                   FontWeight="Bold"
+                   FontSize="30"
+                   Foreground="White"
+                   DockPanel.Dock="Top"
+                   Background="{StaticResource MainColor}" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="3"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel
+            Grid.Column="0" materialDesign:ColorZoneAssist.Mode="PrimaryLight"
+            Background="#FFE6F9EC" x:Name="stackPanelSetting"
             >
-            <Label
+                <Label
                 Style="{StaticResource labelStyle}"
                 >
-                THỐNG KÊ THEO THÁNG
-            </Label>
-            <ComboBox Visibility="Collapsed"
+                    THỐNG KÊ THEO THÁNG
+                </Label>
+                <ComboBox Visibility="Collapsed"
                 x:Name="cbxStatisticMode"
                 SelectedIndex="0"
                 SelectionChanged="cbxStatisticMode_SelectionChanged"
                 Margin="5,0,5,0" ItemsSource="{Binding Path=ListStatisticModes}" materialDesign:HintAssist.Hint="Nhấp để chọn"
                 >
-            </ComboBox>
-            <Label
+                </ComboBox>
+                <Label
                 Style="{StaticResource labelStyle}"
                 >
-                Chọn tháng:
-            </Label>
-            <DatePicker
+                    Chọn tháng:
+                </Label>
+                <DatePicker
                 x:Name="txtDatePicker" Margin="5,0" materialDesign:HintAssist.Hint="Nhấp để chọn"
                 BorderBrush="#0E0E2F">
-            </DatePicker>
+                </DatePicker>
 
-            <Label Visibility="Collapsed"
+                <Label Visibility="Collapsed"
                 Style="{StaticResource labelStyle}"
                 >
-                Sản phẩm:
-            </Label>
-            <ComboBox Visibility="Collapsed"
+                    Sản phẩm:
+                </Label>
+                <ComboBox Visibility="Collapsed"
                 SelectedIndex="0" materialDesign:HintAssist.Hint="Nhấp để chọn"
                 Margin="5,0,5,0" ItemsSource="{Binding Path=ListOptionForProduct, Mode=OneWay}" 
                 SelectedValue="{Binding Path=SelectedOptionProduct, Mode=OneWayToSource}"
                 >
-            </ComboBox>
+                </ComboBox>
 
-            <Button
+                <Button
                 x:Name="btnSubmit" materialDesign:ButtonAssist.CornerRadius="10"
                 Margin="15,35,15,0" VerticalContentAlignment="Center" VerticalAlignment="Bottom"
                 Background="{StaticResource MainColor}"
                 BorderBrush="{StaticResource MainColor}">
-                Thống Kê
-            </Button>
+                    Thống Kê
+                </Button>
 
-        </StackPanel>
-        <DockPanel
+            </StackPanel>
+            <DockPanel
             Grid.Column="1" Background="GhostWhite"
             Margin="5,5">
-            <Grid
+                <Grid
                 DockPanel.Dock="Top">
-                <Label  
+                    <Label  
                     HorizontalAlignment="Left" VerticalAlignment="Center"
                     Style="{StaticResource labelStyle}">
-                    Kết quả thống kê
-                </Label>
-                <Button
+                        Kết quả thống kê
+                    </Label>
+                    <Button
                     Content="Chi tiết>>" FontSize="11" HorizontalAlignment="Right"
                     Click="ShowDetail_Click"
                     VerticalAlignment="Center" Height="20" Padding="4,2,4,4" Background="GhostWhite" Foreground="#DD000000" 
                     />
-            </Grid>
-            
-            <Grid
+                </Grid>
+
+                <Grid
                 DockPanel.Dock="Bottom">
-                <Label HorizontalAlignment="Left" Margin="0" FontSize="17" Style="{StaticResource labelStyle}" Foreground="Red">Tổng doanh thu</Label>
-                <TextBlock 
+                    <Label HorizontalAlignment="Left" Margin="0" FontSize="17" Style="{StaticResource labelStyle}" Foreground="Red">Tổng doanh thu</Label>
+                    <TextBlock 
                     HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="20" Margin="5"
                            Text="{Binding Path=TotalRevenue, Mode=OneWay, Converter={StaticResource moneyConverter}}" FontWeight="Bold" Foreground="Red"/>
-            </Grid>
-            <DataGrid
+                </Grid>
+                <DataGrid
                 DockPanel.Dock="Top" x:Name="datagridView" Background="White"
                 SelectionMode="Single" CanUserSortColumns="True" Margin="2,0,2,10"
                 CanUserReorderColumns="False" CanUserResizeRows="False"
@@ -121,113 +134,116 @@
                 materialDesign:DataGridAssist.CornerRadius="2" AutoGenerateColumns="False"
                 ItemsSource="{Binding Source={StaticResource gridSource}}"
                 >
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn 
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn 
                         Header="Thời gian" CanUserSort="True" SortMemberPath="TimeMin"
                         Width="Auto" CanUserResize="True">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock  Text="{Binding Path=Title, Mode=OneWay}" Foreground="#DD000000"></TextBlock>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        <DataGridTemplateColumn.HeaderStyle>
-                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
-                                <Setter Property="ToolTip" Value="{StaticResource toolTip_Time}"/>
-                            </Style>
-                        </DataGridTemplateColumn.HeaderStyle>
-                    </DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock  Text="{Binding Path=Title, Mode=OneWay}" Foreground="#DD000000"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
+                                    <Setter Property="ToolTip" Value="{StaticResource toolTip_Time}"/>
+                                </Style>
+                            </DataGridTemplateColumn.HeaderStyle>
+                        </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn 
+                        <DataGridTemplateColumn 
                         Header="Lượt bán" CanUserSort="True" SortMemberPath="Amount"
                         Width="auto" CanUserResize="True">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Path=Amount, Mode=OneWay}" TextAlignment="Center"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        <DataGridTemplateColumn.HeaderStyle>
-                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
-                                <Setter Property="ToolTip" Value="{StaticResource toolTip_Amount}"/>
-                            </Style>
-                        </DataGridTemplateColumn.HeaderStyle>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn 
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=Amount, Mode=OneWay}" TextAlignment="Center"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
+                                    <Setter Property="ToolTip" Value="{StaticResource toolTip_Amount}"/>
+                                </Style>
+                            </DataGridTemplateColumn.HeaderStyle>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn 
                         Header="Doanh thu" CanUserSort="True" SortMemberPath="Revenue"
                         Width="*" CanUserResize="True">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Path=Revenue, Mode=OneWay, 
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=Revenue, Mode=OneWay, 
                                     Converter={StaticResource moneyConverter}}" TextAlignment="Center"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        <DataGridTemplateColumn.HeaderStyle>
-                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
-                                <Setter Property="ToolTip" Value="{StaticResource toolTip_Revenue}"/>
-                            </Style>
-                        </DataGridTemplateColumn.HeaderStyle>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
+                                    <Setter Property="ToolTip" Value="{StaticResource toolTip_Revenue}"/>
+                                </Style>
+                            </DataGridTemplateColumn.HeaderStyle>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
 
-        </DockPanel>
-        <Grid
-            Grid.Column="2" Background="GhostWhite"
+            </DockPanel>
+            <GridSplitter Grid.Column="2" HorizontalAlignment="Stretch" Background="DarkGray" Margin="0,5"/>
+            <Grid
+            Grid.Column="3" Background="GhostWhite"
             Margin="0,5,5,5">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="3"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <DockPanel Grid.Row="0" >
-                <Label DockPanel.Dock="Top" Style="{StaticResource labelStyle}">Biểu đồ doanh thu</Label>
-                <charting:CartesianChart 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="3"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <DockPanel Grid.Row="0" >
+                    <Label DockPanel.Dock="Top" Style="{StaticResource labelStyle}">Biểu đồ doanh thu</Label>
+                    <charting:CartesianChart 
                     Background="White" Margin="2,0,2,5"
                     DockPanel.Dock="Bottom" x:Name="chartRevenue" FontSize="14" >
-                    <charting:CartesianChart.Series >
-                        <charting:ColumnSeries 
+                        <charting:CartesianChart.Series >
+                            <charting:ColumnSeries 
                             Fill="Blue"
                             Title="Doanh thu" Values="{Binding Path=ListModel, Mode=OneWay, Converter={StaticResource chartValueConverter}}"/>
 
-                    </charting:CartesianChart.Series>
-                    <charting:CartesianChart.AxisX>
-                        <charting:Axis
+                        </charting:CartesianChart.Series>
+                        <charting:CartesianChart.AxisX>
+                            <charting:Axis
                             x:Name="chartRevenueAxisX" ShowLabels="True" Title="Ngày" Separator="{StaticResource axisXSeparator}"
                             Labels="{Binding Path=ListModel, Mode=OneWay, Converter={StaticResource chartLabelConverterAxisX}}">
-                        </charting:Axis>
-                    </charting:CartesianChart.AxisX>
-                    <charting:CartesianChart.AxisY>
-                        <charting:Axis 
+                            </charting:Axis>
+                        </charting:CartesianChart.AxisX>
+                        <charting:CartesianChart.AxisY>
+                            <charting:Axis 
                             Title="Doanh thu"
                             x:Name="chartRevenueAxisY" LabelFormatter="{Binding Path=formaterLabelAxisY}"/>
-                    </charting:CartesianChart.AxisY>
-                </charting:CartesianChart>
-            </DockPanel>
-            <GridSplitter Grid.Row="1" Background="Gray" HorizontalAlignment="Stretch" Margin="5,0"></GridSplitter>
-            <DockPanel Grid.Row="2">
-                <Label DockPanel.Dock="Top"  Style="{StaticResource labelStyle}">Biểu đồ lượt bán</Label>
-                <charting:CartesianChart 
+                        </charting:CartesianChart.AxisY>
+                    </charting:CartesianChart>
+                </DockPanel>
+                <GridSplitter Grid.Row="1" Background="Gray" HorizontalAlignment="Stretch" Margin="5,0"></GridSplitter>
+                <DockPanel Grid.Row="2">
+                    <Label DockPanel.Dock="Top"  Style="{StaticResource labelStyle}">Biểu đồ lượt bán</Label>
+                    <charting:CartesianChart 
                     Background="White" Margin="2,0,2,0"
                     DockPanel.Dock="Top" x:Name="chartBill" >
-                    <charting:CartesianChart.Series >
-                        <charting:ColumnSeries 
+                        <charting:CartesianChart.Series >
+                            <charting:ColumnSeries 
                             Fill="YellowGreen" 
                             Title="Lượt bán"
                             Values="{Binding Path=ListModel, Mode=OneWay, Converter={StaticResource chartValueConverter_bill}}"/>
 
-                    </charting:CartesianChart.Series>
-                    <charting:CartesianChart.AxisX>
-                        <charting:Axis
+                        </charting:CartesianChart.Series>
+                        <charting:CartesianChart.AxisX>
+                            <charting:Axis
                             x:Name="chartBillAxisX" ShowLabels="True" Title="Ngày" Separator="{StaticResource axisXSeparator2}"
                             Labels="{Binding Path=ListModel, Mode=OneWay, Converter={StaticResource chartLabelConverterAxisX}}"/>
-                    </charting:CartesianChart.AxisX>
-                    <charting:CartesianChart.AxisY>
-                        <charting:Axis 
+                        </charting:CartesianChart.AxisX>
+                        <charting:CartesianChart.AxisY>
+                            <charting:Axis 
                             x:Name="chartBillAxisY" 
                             Title="Lượt bán" LabelFormatter="{Binding Path=formaterLabelAxisY}"/>
-                    </charting:CartesianChart.AxisY>
-                </charting:CartesianChart>
-            </DockPanel>
-            
+                        </charting:CartesianChart.AxisY>
+                    </charting:CartesianChart>
+                </DockPanel>
+
+            </Grid>
         </Grid>
-    </Grid>
+    </DockPanel>
+    
 </UserControl>
