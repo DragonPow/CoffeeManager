@@ -14,8 +14,7 @@
 
     <Grid Background="Transparent">
         <DockPanel>
-            <Grid DockPanel.Dock="Bottom"
-                  Height="100">
+            <Grid DockPanel.Dock="Bottom" Margin="0,0,0,30">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="15" />
@@ -37,9 +36,9 @@
                             <Setter Property="Content"
                                     Value="Sửa thông tin" />
                             <Setter Property="Foreground"
-                                    Value="Black" />
+                                    Value="{StaticResource PrimaryHueMidBrush}" />
                             <Setter Property="BorderBrush"
-                                    Value="Gray" />
+                                    Value="{StaticResource PrimaryHueMidBrush}" />
                             <Setter Property="IsEnabled"
                                     Value="True" />
                             <Setter Property="Command"
@@ -50,7 +49,7 @@
                                     <Setter Property="Content"
                                             Value="Cập nhật" />
                                     <Setter Property="Foreground"
-                                            Value="Green" />
+                                            Value="{StaticResource MainColor}" />
                                     <Setter Property="BorderBrush"
                                             Value="#31CA62" />
                                     <Setter Property="IsEnabled"
@@ -97,16 +96,17 @@
             </Grid>
             <StackPanel x:Name="Option_setting"
                         DockPanel.Dock="Top">
-                <Grid>
-                    <TextBlock Text="Tổng quan"
-                               Foreground="White"
-                               FontSize="30"
-                               Padding="10"
-                               FontWeight="Bold"
-                               VerticalAlignment="Center"
-                               TextAlignment="Center"
-                               Background="{StaticResource MainColor}" />
-                </Grid>
+                <TextBlock Text="Thông tin cửa hàng"
+                   Grid.ColumnSpan="3"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   TextAlignment="Center"
+                   FontWeight="Bold"
+                   Padding="0 15"
+                   FontSize="30"
+                   Foreground="White"
+                   DockPanel.Dock="Top"
+                   Background="{StaticResource MainColor}" />
                 <Grid Margin="0 40">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -124,7 +124,7 @@
                                     <ColumnDefinition Width="7*" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0"
-                                           Text="Tên quán"
+                                           Text="Tên cửa hàng"
                                            Foreground="Black"
                                            VerticalAlignment="Center"
                                            Background="{x:Null}"
@@ -133,12 +133,14 @@
                                            FontSize="16" />
                                 <TextBox Grid.Column="1"
                                          Name="txb_Name"
-                                         materialDesign:HintAssist.Hint="Nhập tên quán"
+                                         materialDesign:HintAssist.Hint="Nhập tên cửa hàng"
                                          Text="{Binding NameStore}"
                                          VerticalAlignment="Center"
                                          Background="{x:Null}"
                                          BorderBrush="{x:Null}"
-                                         FontSize="16">
+                                         FontSize="18"
+                                         FontWeight="Bold"  
+                                         Foreground="{StaticResource PrimaryHueMidBrush}">
                                     <TextBox.Style>
                                         <Style TargetType="TextBox"
                                                BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
