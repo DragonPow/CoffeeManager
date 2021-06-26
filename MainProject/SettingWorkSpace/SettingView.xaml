@@ -34,15 +34,16 @@
                                 BasedOn="{StaticResource MaterialDesignOutlinedButton}">
                             <Setter Property="Content" Value="Sửa thông tin"/>
                             <Setter Property="Foreground" Value="Black"/>
-                            <Setter Property="BorderBrush" Value="Gray"/>
+                            <Setter Property="BorderBrush" Value="red"/>
                             <Setter Property="IsEnabled" Value="True"/>
                             <Setter Property="Command" Value="{Binding Change_Data_Store}"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Mode_btn}"
                                              Value="edit">
                                     <Setter Property="Content" Value="Lưu thay đổi"/>
-                                    <Setter Property="Foreground" Value="Green"/>
-                                    <Setter Property="BorderBrush" Value="Red"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="BorderBrush" Value="#31CA62"/>
+                                    <Setter Property="Background" Value="{StaticResource MainColor}"/>
                                     <Setter Property="IsEnabled" Value="True"/>
                                     <Setter Property="Command" Value="{Binding Save_Data_Store}"/>
                                 </DataTrigger>
@@ -59,7 +60,7 @@
                         BorderThickness="2"
                         Margin="10" 
                         Content="Hủy chỉnh sửa"
-                        BorderBrush="Black"
+                        BorderBrush="Red"
                         Foreground="Red"
                         Background="Transparent"
                         Command="{Binding Cancel_Change_Data_Store}"
