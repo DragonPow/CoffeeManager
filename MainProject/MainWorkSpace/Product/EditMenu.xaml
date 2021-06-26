@@ -17,7 +17,7 @@
         <StackPanel Background="White"
                     VerticalAlignment="Top">
             <Grid Height="50"
-              Background="{StaticResource MainColor}">
+              Background="{StaticResource  MainColor}">
                 <Border BorderBrush="Gray"
                     BorderThickness="1" />
                 <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}"
@@ -75,9 +75,8 @@
             </Button>
 
         </StackPanel>
-        <Grid Background="{StaticResource MainColor}"
-              Height="70"
-              VerticalAlignment="Bottom"/>
+        
+    
     </Grid>
    
 </UserControl>
