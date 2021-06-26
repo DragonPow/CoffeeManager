@@ -57,15 +57,16 @@
         </ScrollViewer>
         <Grid  Grid.Row="2">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <Border BorderBrush="Gray" BorderThickness="0,1,0,1" Grid.ColumnSpan="2"/>
             <CheckBox
                 Height="25"
+                Width="80"
                 Style="{StaticResource MaterialDesignFilterChipAccentCheckBox}"
                 IsChecked="{Binding Isbringtohome}"
-                VerticalAlignment="Center" Margin="10,0"
+                VerticalAlignment="Center" Margin="5,0"
                 Background="{StaticResource MainColor}"
                 Foreground="Green">
                 Mang đi
@@ -90,6 +91,7 @@
                 Command="{Binding Pay_Command}"
                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                 Width="Auto" Height="Auto"
+                FontSize="18"
                 materialDesign:ButtonAssist.CornerRadius="2"
                 Foreground="White" Background="#31CA62"
                 BorderThickness="0" Grid.Column="1"/>

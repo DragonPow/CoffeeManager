@@ -144,6 +144,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\TableConverter.cs" />
     <Compile Include="DetailPro.cs" />
+    <Compile Include="HelperClass\MessageBoxManager.cs" />
     <Compile Include="HelperClass\WindowService.cs" />
     <Compile Include="HistoryWorkSpace\Converter\ChangePageConverter.cs" />
     <Compile Include="HistoryWorkSpace\Converter\IdexConverter.cs" />
@@ -152,6 +153,9 @@
     </Compile>
     <Compile Include="HistoryWorkSpace\NumericUpDown.xaml.cs">
       <DependentUpon>NumericUpDown.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWorkSpace\Bill\BillView_readonly.xaml.cs">
+      <DependentUpon>BillView_readonly.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWorkSpace\Bill\BillView.xaml.cs">
       <DependentUpon>BillView.xaml</DependentUpon>
@@ -356,6 +360,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWorkSpace\Bill\BillView_readonly.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -611,7 +619,7 @@
   </Target>
   <Import Project="packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.113.3\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.113.3\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
   <PropertyGroup>
-    <PostBuildEvent>
+    <PostBuildEvent>xcopy /y $(ProjectDir)Fonts  $(ProjectDir)$(OutDir)
     if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
     xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
     if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
@@ -619,4 +627,8 @@
   </PropertyGroup>
   <Import Project="packages\EntityFramework.6.4.0\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.4.0\build\EntityFramework.targets')" />
   <Import Project="packages\Fody.6.4.0\build\Fody.targets" Condition="Exists('packages\Fody.6.4.0\build\Fody.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
 </Project>

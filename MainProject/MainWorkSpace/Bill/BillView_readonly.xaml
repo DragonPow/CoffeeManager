@@ -1,0 +1,166 @@
+﻿<Window x:Class="MainProject.MainWorkSpace.Bill.BillView_readonly"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:local="clr-namespace:MainProject.Model"
+        xmlns:detailbill="clr-namespace:MainProject.MainWorkSpace.Bill"
+        xmlns:converter="clr-namespace:MainProject.Converters"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:store="clr-namespace:MainProject"
+        mc:Ignorable="d"
+        MinWidth="600"
+        MaxWidth="800"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight"
+        d:DataContext="{d:DesignInstance Type=local:TABLECUSTOM}"
+        x:Name="MainWindow">
+    <Window.Resources>
+        <store:Store x:Key="StoreInstance" />
+        <converter:TableConverter x:Key="TableConver" />
+    </Window.Resources>
+    <StackPanel Orientation="Vertical">
+        <!--Bill title-->
+        <TextBlock Text="{Binding StoreName, Source={StaticResource StoreInstance}, FallbackValue='Tên cửa hàng', Mode=OneWay}"
+                   FontSize="50"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="0 30"
+                   Foreground="#363434" />
+
+        <!--Information of store-->
+        <Border BorderBrush="#363434"
+                BorderThickness="2"
+                Background="#F5F5F5F5"
+                Margin="60 10">
+            <Grid Margin="20 10">
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize"
+                                Value="20" />
+                        <Setter Property="Foreground"
+                                Value="Black" />
+                        <Style.Triggers>
+                            <Trigger Property="Grid.Column"
+                                     Value="1">
+                                <Setter Property="HorizontalAlignment"
+                                        Value="Right" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="2">
+                    <Run>Thời gian</Run>
+                    <Run Text="{Binding Path=TimeCheckout, ElementName=MainWindow, StringFormat=': {0:HH:mm, dd/MM/yyyy}'}" />
+                </TextBlock>
+                <TextBlock Grid.Row="1"
+                           Grid.Column="0">
+                    <Run>Mã số hóa đơn</Run>
+                    <Run Text="{Binding Path=BillID, ElementName=MainWindow, StringFormat=': {0}'}" />
+                </TextBlock>
+                <TextBlock Grid.Row="2"
+                           Grid.Column="0">
+                    <Run>Bàn</Run>
+                    <Run Text="{Binding table.Name, StringFormat=': {0}', Converter={StaticResource TableConver}}" />
+                </TextBlock>
+            </Grid>
+        </Border>
+
+        <!--Information of table checkout-->
+        <Grid Margin="40 30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Border Grid.ColumnSpan="2"
+                    BorderThickness="1"
+                    BorderBrush="Black"
+                    Margin="-1">
+                <detailbill:Bill_ProductTable DataContext="{Binding}"
+                                         x:Name="TableLines" />
+            </Border>
+            <TextBlock Text="Tổng tiền"
+                       Grid.Row="1"
+                       VerticalAlignment="Center"
+                       FontWeight="Bold"
+                       FontSize="25"
+                       Margin="0 25 0 0"
+                       HorizontalAlignment="Right" />
+            <!--Thiếu converer-->
+            <TextBlock Text="{Binding Path=TotalPrice, ElementName=MainWindow, FallbackValue='0,000 đ', 
+                                StringFormat='{}{0:N0} đ', NotifyOnTargetUpdated=True}"
+                       FontWeight="Bold"
+                       Grid.Row="1"
+                       Grid.Column="10"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       Margin="0 25 0 0"
+                       FontSize="25" />
+
+            <!--Tien khach dua-->
+            <TextBlock Text="Tiền khách đưa"
+                       Grid.Row="2"
+                       HorizontalAlignment="Right"
+                       FontSize="18"
+                       Margin="0 20 0 0"
+                       Foreground="#363434" />
+            <TextBlock Name="txtMoneyCustomer"
+                       FontSize="18"
+                       Grid.Row="2"
+                       Grid.Column="1"
+                       Margin="0 20 0 0"
+                       Text="{Binding Path=MoneyCustomer, ElementName=MainWindow, StringFormat='{}{0:N0} đ'}"
+                       HorizontalAlignment="Right">
+            </TextBlock>
+
+            <!--Tien thoi lai-->
+            <TextBlock Text="Tiền thối"
+                       Grid.Row="3"
+                       VerticalAlignment="Center"
+                       FontSize="17"
+                       HorizontalAlignment="Right"
+                       Margin="0 10 0 0"
+                       Foreground="#363434" />
+            <TextBlock Grid.Row="3"
+                       Padding="0"
+                       Grid.Column="1"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Right"
+                       Text="{Binding Path=Refund, ElementName=MainWindow, StringFormat='{}{0:N0} đ', FallbackValue='0 đ'}"
+                       FontSize="17"/>
+        </Grid>
+
+        <!--<TextBlock Text="Cảm ơn quý khách"
+                   FontStyle="Italic"
+                   HorizontalAlignment="Center"
+                   FontSize="18"
+                   Margin="0 10 0 0" />
+        <TextBlock Text="Chúc quý khách ngon miệng"
+                   FontStyle="Italic"
+                   HorizontalAlignment="Center"
+                   FontSize="18"
+                   Margin="0 0 0 20" />-->
+
+        <!--Button Payment-->
+    </StackPanel>
+</Window>

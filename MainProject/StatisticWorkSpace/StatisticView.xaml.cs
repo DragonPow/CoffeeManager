@@ -34,6 +34,7 @@ namespace MainProject.StatisticWorkSpace
             menuItem.Header = "Xem chi tiết";
             menuItem.Click += ShowDetail_Click;
             this.ContextMenuRowDataGrid.Items.Add(menuItem);
+            this.Language = System.Windows.Markup.XmlLanguage.GetLanguage(System.Globalization.CultureInfo.GetCultureInfo("vi").IetfLanguageTag);
         }
 
         private void DatagridView_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
@@ -106,36 +107,53 @@ namespace MainProject.StatisticWorkSpace
 
         private void StatisticView_Initialized(object sender, EventArgs e)
         {
-            DateTime today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 1);
+            setDefaultDate();
             cbxStatisticMode.SelectedIndex = 1;
             cbxStatisticMode_SelectionChanged(cbxStatisticMode, null);
+        }
+
+        public void setDefaultDate()
+        {
+            DateTime today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 1);
+
             txtDatePicker.DisplayDateEnd = new DateTime(today.Year, today.Month, 1).AddDays(-1);
-            txtDatePicker.SelectedDate = new DateTime(txtDatePicker.DisplayDate.Year, txtDatePicker.DisplayDate.Month, 1);
+            txtDatePicker.SelectedDate = today.AddMonths(-1);
         }
 
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            if (txtDatePicker.SelectedDate != null)
+            if (txtDatePicker.SelectedDate == null)
             {
-                DateTime selectedDate = (DateTime)txtDatePicker.SelectedDate;
-                StatisticViewModel viewModel = DataContext as StatisticViewModel;
-                if(viewModel != null)
-                {
-                    // Task in main thread 
-                    var button = sender as Button;
-                    button.Content = "Đổi thời gian";
-                    foreach (Control child in (button.Parent as Panel).Children)
-                    {
-                        if (!(child == button)){ child.IsEnabled = false; }
-                    }
-                    button.Click -= BtnSubmit_Click;
-                    button.Click += BtnEdit_Click1;
-
-                    // Calculate from another thread
-                    Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Input,
-                        new Action<StatisticViewModel, DateTime, int>(CalculateFromDB), viewModel, selectedDate, cbxStatisticMode.SelectedIndex);
-                }
+                MessageBox.Show("Tháng có định dạng không chính xác. Vui lòng chọn lại", "Tháng không hợp lệ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                setDefaultDate();
+                return;
             }
+            DateTime selectedDate = (DateTime)txtDatePicker.SelectedDate;
+            if (selectedDate.Year == DateTime.Now.Year && selectedDate.Month >= DateTime.Now.Month)
+            {
+                MessageBox.Show("Không thể thống kê vào thời gian ở tương lai. Vui lòng chọn lại", "Tháng không hợp lệ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                setDefaultDate();
+                return;
+            }
+
+            StatisticViewModel viewModel = DataContext as StatisticViewModel;
+            if (viewModel != null)
+            {
+                // Task in main thread 
+                var button = sender as Button;
+                button.Content = "Đổi thời gian";
+                foreach (Control child in (button.Parent as Panel).Children)
+                {
+                    if (!(child == button)) { child.IsEnabled = false; }
+                }
+                button.Click -= BtnSubmit_Click;
+                button.Click += BtnEdit_Click1;
+
+                // Calculate from another thread
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Input,
+                    new Action<StatisticViewModel, DateTime, int>(CalculateFromDB), viewModel, selectedDate, cbxStatisticMode.SelectedIndex);
+            }
+
         }
 
         private void CalculateFromDB(StatisticViewModel viewModel, DateTime selectedDate, int selectedMode)

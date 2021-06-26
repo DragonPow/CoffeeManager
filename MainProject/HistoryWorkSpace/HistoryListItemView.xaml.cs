@@ -1,5 +1,9 @@
-﻿using System;
+﻿using MainProject.MainWorkSpace.Bill;
+using MainProject.Model;
+using MainProject.ViewModel;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,9 +29,37 @@ namespace MainProject.HistoryWorkSpace
             InitializeComponent();
         }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ListViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
+            BILL overviewbill = ((ViewModel.HistoryViewModel)DataContext).CurrentBill;
+            BillView_readonly view = new BillView_readonly(overviewbill.ID, overviewbill.CheckoutDay, overviewbill.TotalPrice, overviewbill.MoneyCustomer);
+            TABLECUSTOM table = new TABLECUSTOM();
+            using (mainEntities db = new mainEntities())
+            {
+                table.table = overviewbill.TABLE;
+                var listpro = (from detail in db.DETAILBILLs.Where(i => i.ID_Bill == overviewbill.ID).DefaultIfEmpty()
+                               from pro in db.PRODUCTs.Where(p => p.ID == detail.ID_Product).DefaultIfEmpty()
+                               select new
+                               {
+                                   Name = pro.Name,
+                                   Quantity = detail.Quantity,
+                                   UnitPrice = detail.UnitPrice
+                               }).ToList();
+                foreach (var i in listpro)
+                {
+                    table.ListPro.Add(new DetailPro()
+                    {
+                        Pro = new PRODUCT()
+                        {
+                            Name = i.Name,
+                            Price = i.UnitPrice,
+                        },
+                        Quantity = (int)i.Quantity
+                    });
+                }
+            }
+            view.DataContext = table;
+            view.Show();
         }
     }
 }

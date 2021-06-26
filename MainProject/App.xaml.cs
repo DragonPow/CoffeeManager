@@ -12,6 +12,7 @@ using MainProject.MainWorkSpace;
 using MainProject.ViewModel;
 using MainProject.MainWorkSpace.Product;
 using System.IO;
+using MainProject.HelperClass;
 
 namespace MainProject
 {
@@ -25,6 +26,10 @@ namespace MainProject
             AppDomain.CurrentDomain.SetData("DataDirectory", "../../");
 
             base.OnStartup(e);
+
+            MessageBoxManager.Yes = "Đồng ý";
+            MessageBoxManager.No = "Hủy";
+            MessageBoxManager.Register();
 
             ////Testing Startup
             //Console.WriteLine(File.Exists(PrintPDF.dir_font));

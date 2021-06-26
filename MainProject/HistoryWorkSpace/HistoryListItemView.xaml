@@ -20,6 +20,8 @@
                    BasedOn="{StaticResource MaterialDesignGridViewItem}">
                 <Setter Property="HorizontalContentAlignment"
                         Value="Stretch" />
+                <EventSetter Event="MouseDoubleClick"
+                             Handler="ListViewItem_MouseDoubleClick" />
             </Style>
         </ListView.ItemContainerStyle>
         <ListView.View>
@@ -79,7 +81,7 @@
                 <GridViewColumn Width="120">
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding CheckoutDay, StringFormat=' {0:hh:mm}'}"
+                            <TextBlock Text="{Binding CheckoutDay, StringFormat=' {0:HH:mm}'}"
                                        HorizontalAlignment="Center" />
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
@@ -92,7 +94,7 @@
                 <GridViewColumn Width="Auto">
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding TABLE.Name}"
+                            <TextBlock Text="{Binding TABLE.Name, TargetNullValue='Mang về', FallbackValue='Mang về'}"
                                        HorizontalAlignment="Center" />
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>

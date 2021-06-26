@@ -193,7 +193,7 @@ namespace MainProject.ViewModel
 
             using (var db = new mainEntities())
             {
-                var list = db.PRODUCTs.Where(p => (p.ID_Type == CurrentTypeInProManager.ID)).ToList();
+                var list = db.PRODUCTs.Where(p => (p.ID_Type == CurrentTypeInProManager.ID) && p.IsProvided ).ToList();
                 if (list.Count != 0)
                 {
                     foreach (var p in list)
@@ -269,7 +269,7 @@ namespace MainProject.ViewModel
                 var type = db.TYPE_PRODUCT.Where(t => t.ID == CurrentTypeInProManager.ID).FirstOrDefault();
                 /*type.Type = EditTypeInEditCatefory;*/
 
-                var list = db.PRODUCTs.Where(p => (p.ID_Type == type.ID || p.ID_Type == null)).ToList();
+                var list = db.PRODUCTs.Where(p => (p.ID_Type == type.ID || p.ID_Type == null) && p.IsProvided).ToList();
                 if (list == null) return;
 
                 int j = 0;
@@ -370,6 +370,12 @@ namespace MainProject.ViewModel
 
         public void UpdateNameType()
         {
+            if (NewNameEditType == null || NewNameEditType =="")
+            {
+                WindowService.Instance.OpenMessageBox("Không được để tên danh mục trống!","Lỗi", MessageBoxImage.Error);
+                return;
+            }
+
             using (var db = new mainEntities())
             {
                 var type = db.TYPE_PRODUCT.Where(t => t.ID == CurrentTypeInProManager.ID).FirstOrDefault();
@@ -466,7 +472,7 @@ namespace MainProject.ViewModel
                     return;
                 }
 
-                var l = db.PRODUCTs.Where(p => p.ID_Type == null || p.ID_Type == CurrentTypeInProManager.ID && p.IsProvided).ToList();
+                var l = db.PRODUCTs.Where(p => (p.ID_Type == null || p.ID_Type == CurrentTypeInProManager.ID) && p.IsProvided).ToList();
 
                 if (l == null) return;
 

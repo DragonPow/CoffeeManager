@@ -10,6 +10,7 @@
         xmlns:store="clr-namespace:MainProject"
         xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:rules="clr-namespace:MainProject.ValidationRules"
+        xmlns:sys="clr-namespace:System.Security.Claims;assembly=mscorlib"
         mc:Ignorable="d"
         MinWidth="600"
         MaxWidth="800"
@@ -33,7 +34,7 @@
         <!--Information of store-->
         <Border BorderBrush="#363434"
                 BorderThickness="2"
-                Background="LightGray"
+                Background="#F5F5F5F5"
                 Margin="30 10">
             <Grid Margin="20 10">
                 <Grid.Resources>
@@ -52,36 +53,38 @@
                     </Style>
                 </Grid.Resources>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0"
-                           Grid.Column="0">
+                           Grid.Column="0"
+                           Grid.ColumnSpan="2">
                     <Run>Thời gian</Run>
-                    <Run Text="{Binding CurrentBill.CheckoutDay, StringFormat=': {0:hh:mm, dd/MM/yyyy}'}" />
+                    <Run Text="{Binding CurrentBill.CheckoutDay, StringFormat=': {0:HH:mm, dd/MM/yyyy}'}" />
+                </TextBlock>
+                <TextBlock Grid.Row="1"
+                           Grid.Column="1">
+                    <Run>Số điện thoại </Run>
+                    <Run Text="{Binding StorePhone, Source={StaticResource StoreInstance}, StringFormat=': {0}', Mode=OneWay}" />
                 </TextBlock>
                 <TextBlock Grid.Row="1"
                            Grid.Column="0">
-                    <Run>Số điện thoại</Run>
-                    <Run Text="{Binding StorePhone, Source={StaticResource StoreInstance}, StringFormat=': {0}', Mode=OneWay}" />
-                </TextBlock>
-                <TextBlock Grid.Row="0"
-                           Grid.Column="1">
                     <Run>Mã số hóa đơn</Run>
                     <Run Text="{Binding BillCode, StringFormat=': {0}'}" />
                 </TextBlock>
-                <TextBlock Grid.Row="1"
-                           Grid.Column="1">
+                <TextBlock Grid.Row="2"
+                           Grid.Column="0">
                     <Run>Bàn</Run>
                     <Run Text="{Binding CurrentTable.table.Name, StringFormat=': {0}', Converter={StaticResource TableConver}}" />
                 </TextBlock>
-                <TextBlock Grid.Row="2"
+                <TextBlock Grid.Row="3"
                            Grid.ColumnSpan="2"
                            TextWrapping="Wrap"
                            MaxWidth="500">
@@ -92,7 +95,7 @@
         </Border>
 
         <!--Information of table checkout-->
-        <Grid Margin="40 20">
+        <Grid Margin="40 30">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
@@ -149,7 +152,9 @@
                          FontSize="18">
                     <TextBox.Text>
                         <Binding Path="GiveMoney"
-                                 UpdateSourceTrigger="PropertyChanged">
+                                 FallbackValue="0"
+                                 UpdateSourceTrigger="PropertyChanged"
+                                 TargetNullValue="0">
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
@@ -164,7 +169,7 @@
                        VerticalAlignment="Center"
                        FontSize="17"
                        HorizontalAlignment="Right"
-                       Margin="0 7 0 0"
+                       Margin="0 15 0 0"
                        Foreground="#363434" />
             <TextBox Grid.Row="3"
                      Style="{StaticResource MaterialDesignOutlinedTextBox}"
@@ -174,7 +179,7 @@
                      Grid.Column="1"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Right"
-                     Margin="0 7 0 0"
+                     Margin="0 15 0 0"
                      Width="Auto"
                      FontSize="17"
                      Validation.Error="Validation_Error">
@@ -189,7 +194,7 @@
             </TextBox>
         </Grid>
 
-        <TextBlock Text="Cảm ơn quý khách"
+        <!--<TextBlock Text="Cảm ơn quý khách"
                    FontStyle="Italic"
                    HorizontalAlignment="Center"
                    FontSize="18"
@@ -198,7 +203,7 @@
                    FontStyle="Italic"
                    HorizontalAlignment="Center"
                    FontSize="18"
-                   Margin="0 0 0 20" />
+                   Margin="0 0 0 20" />-->
 
         <!--Button Payment-->
         <Button Content="THANH TOÁN"

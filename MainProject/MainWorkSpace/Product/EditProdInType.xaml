@@ -13,7 +13,7 @@
              Tag="Edit pro in category"
              Name="EditProd_Type"
              d:DataContext="{d:DesignInstance Type=ViewModel:ManageProductviewModel}"
-             Height="600"
+             Height="630"
              Width="500">
     <DockPanel>
         <Grid DockPanel.Dock="Top"
@@ -40,7 +40,14 @@
                        Foreground="#363434"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Margin="20"/>
+                       Margin="0,20,0,0"/>
+            <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                       Text="{Binding CurrentTypeInProManager.Type}"
+                       FontSize="20"
+                       Foreground="Red"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Margin="0,5,0,20"/>
             <ListView  Grid.Row="1"
                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                        SelectedItem="{Binding MainVM.Productviewmodel.Currentproduct}"
@@ -49,7 +56,7 @@
                     <DataTemplate>
                         <local:SelectPro DataContext="{Binding }"
                                         
-                                         Tag="{Binding DataContext, ElementName=Edit_Type}">
+                                         Tag="{Binding DataContext, ElementName=EditProd_Type}">
                         </local:SelectPro>
                     </DataTemplate>
                 </ListView.ItemTemplate>

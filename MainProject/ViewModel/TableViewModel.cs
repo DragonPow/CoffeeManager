@@ -177,9 +177,9 @@ namespace MainProject.ViewModel
                 {
                     if (value != null)
                     {     
-                        if ( value.table.CurrentStatus == "Fix")
+                        if ( value.table.CurrentStatus == "Fix" || value.table.CurrentStatus =="Already")
                         {
-                            WindowService.Instance.OpenMessageBox("Không thể chọn bàn đang sửa chữa", "Lỗi", MessageBoxImage.Error);
+                            WindowService.Instance.OpenMessageBox(value.table.CurrentStatus == "Fix"?  "Không thể chọn bàn đang sữa chữa": "Không thể chọn bàn đang có khách", "Lỗi", MessageBoxImage.Error);
                             return;
                         }
                         TableName = "Bàn: " + value.table.Name.ToString();
@@ -417,7 +417,7 @@ namespace MainProject.ViewModel
 
             if (Billviewmodel.IsClose)
             {
-                CurrentTable = null;
+                CurrentTable = null;               
                 Currentlistdetailpro = new ObservableCollection<DetailPro>();
                 TotalCurrentTable = 0;
             }
@@ -442,7 +442,7 @@ namespace MainProject.ViewModel
         
             int number = ListTable.Count - 1;
 
-            if ( ListTable[number].Total != 0)
+            if ( ListTable[number] == CurrentTable && Currentlistdetailpro.Count != 0)
             {
                 WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn " + number +" trước khi xóa!", "Lỗi",MessageBoxImage.Error);
                 return;
@@ -450,27 +450,11 @@ namespace MainProject.ViewModel
 
              ListTable.RemoveAt(number);
 
-            /*for (int i = number; i < ListTable.Count; ++i)
-                --ListTable[i].table.Name;*/
-
             using (var db = new mainEntities())
             {
                 long max = db.TABLEs.Max(p => p.ID);
 
                 db.TABLEs.Remove(db.TABLEs.Where( t => t.ID == max).FirstOrDefault());
-
-                /*TABLE table = db.TABLEs.Where(d => (d.Name == number *//*&& d.Floor == CurrentFloors*//*)).FirstOrDefault();
-
-                if (table != null)
-                {
-                    var TABLEs = db.TABLEs.Where(t => t.Name > number *//*&& t.Floor == CurrentFloors*//*);
-
-                    foreach (TABLE tab in TABLEs)
-                    {
-                        --tab.Name;
-                    }
-
-                }*/
 
                 db.SaveChanges();
             }
@@ -518,9 +502,13 @@ namespace MainProject.ViewModel
 
         public void UpdateFix()
         {
-            if( CurrentTableInTabManager.Total > 0)
+            if(CurrentTableInTabManager == CurrentTable && Currentlistdetailpro.Count != 0)
             {
                 WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn trước khi cập nhật!", "Lỗi", MessageBoxImage.Error);
+                return;
+            }
+            if (CurrentTableInTabManager.table.CurrentStatus == "Fix")
+            {
                 return;
             }
             CurrentTableInTabManager.table.CurrentStatus = "Fix";
@@ -533,7 +521,7 @@ namespace MainProject.ViewModel
 
         }
 
-        public ICommand UpdateStatusNormalTableCommand
+        public ICommand UpdateStatus_Done_FixTableCommand
         {
             get
             {
@@ -547,30 +535,45 @@ namespace MainProject.ViewModel
 
         public void UpdateStatusNormalTable()
         {
-            if (CurrentTableInTabManager.Total > 0)
+            if (CurrentTableInTabManager.table.CurrentStatus == "Nomal")
+            {
+                return;
+            }
+            if (CurrentTableInTabManager == CurrentTable && Currentlistdetailpro.Count != 0)
             {
                 WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn trước khi cập nhật!", "Lỗi", MessageBoxImage.Error);
                 return;
             }
             CurrentTableInTabManager.table.CurrentStatus = "Normal";
+            using (var db = new mainEntities())
+            {
+                var t = db.TABLEs.Where(tab => tab.ID == CurrentTableInTabManager.table.ID).FirstOrDefault();
+                t.ID_Status = 1;
+                db.SaveChanges();
+            }
 
         }
-        public ICommand UpdateStatusNomalTableCommand
+        public ICommand UpdateStatus_Leave_TableCommand
         {
             get
             {
                 if (_UpdateStatusNomalTable == null)
                 {
-                    _UpdateStatusNomalTable = new RelayingCommand<Object>(a => UpdateStatusNomalTable());
+                    _UpdateStatusNomalTable = new RelayingCommand<Object>(a => UpdateStatus_Leave_Table());
                 }
                 return _UpdateStatusNomalTable;
             }
         }
 
-        public void UpdateStatusNomalTable()
+        public void UpdateStatus_Leave_Table()
         {
-            if (CurrentTableInTabManager.table.CurrentStatus != "Fix")
+            if (CurrentTableInTabManager.table.CurrentStatus == "Fix" || CurrentTableInTabManager.table.CurrentStatus == "Normal")
             {              
+                return;
+            }
+            if(CurrentTableInTabManager == CurrentTable && Currentlistdetailpro.Count != 0)
+            {
+                WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn trước khi cập nhật!", "Lỗi", MessageBoxImage.Error);
                 return;
             }
             CurrentTableInTabManager.table.CurrentStatus = "Normal";

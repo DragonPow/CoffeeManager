@@ -11,7 +11,18 @@ namespace MainProject.Model
     public class TABLECUSTOM : BaseViewModel
     {
         private ObservableCollection<DetailPro> _listPro;
-        public TABLE table { get; set; }
+        private TABLE _table;
+        public TABLE table
+        {
+            get => _table; set
+            {
+                _table = value;
+                if (table != null)
+                {
+                    table.PropertyChanged += Table_PropertyChanged;
+                }
+            }
+        }
         public long Total { get; set; }
 
         public virtual ObservableCollection<DetailPro> ListPro
@@ -33,12 +44,26 @@ namespace MainProject.Model
             }
         }
 
+        public bool IsOnService { get => _listPro != null && _listPro.Count > 0; }
+        public bool IsOnRepair { get => table.CurrentStatus.Equals("Fix"); }
+        public bool IsNotOnRepair { get => !IsOnRepair; }
+
         #region Init
 
         public TABLECUSTOM ()
             {
                 Total = 0;
             }
+
+        private void Table_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Status")
+            {
+                OnPropertyChanged(nameof(IsOnRepair));
+                OnPropertyChanged(nameof(IsNotOnRepair));
+                OnPropertyChanged(nameof(IsOnService));
+            }
+        }
 
         #endregion
     }
