@@ -11,6 +11,7 @@
         xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:rules="clr-namespace:MainProject.ValidationRules"
         xmlns:sys="clr-namespace:System.Security.Claims;assembly=mscorlib"
+        Title="Thanh toán hóa đơn"
         mc:Ignorable="d"
         MinWidth="600"
         MaxWidth="800"
