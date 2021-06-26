@@ -31,8 +31,9 @@
                         HorizontalAlignment="Left">
                     <Button.Style>
                         <Style TargetType="Button"
-                   <Setter Property="Command" Value="{Binding Save_Data_Store}"/>
                                BasedOn="{StaticResource MaterialDesignOutlinedButton}">
+                            <Setter Property="Command"
+                                    Value="{Binding Save_Data_Store}" />
                             <Setter Property="Content"
                                     Value="Sửa thông tin" />
                             <Setter Property="Foreground"
