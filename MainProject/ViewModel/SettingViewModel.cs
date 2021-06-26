@@ -30,12 +30,17 @@ namespace MainProject.ViewModel
         #region init
         public SettingViewModel()
         {
+            SetData();
+        }
+
+        public void SetData()
+        {
             using (var context = new mainEntities())
             {
                 var st = context.PARAMETERs.Where(p => p.NAME == "StoreName").FirstOrDefault();
                 NameStore = st.Value.ToString();
                 st = context.PARAMETERs.Where(p => p.NAME == "StorePhone").FirstOrDefault();
-                NumberPhone = st.Value.ToString(); 
+                NumberPhone = st.Value.ToString();
                 st = context.PARAMETERs.Where(p => p.NAME == "StoreAddress").FirstOrDefault();
                 Address = st.Value.ToString();
             }
@@ -51,6 +56,7 @@ namespace MainProject.ViewModel
         ModeButton _mode_btn;
         ICommand _Change_data_store;
         ICommand _Save_Data_Store;
+        ICommand _Cancel_Change_Data_Store;
         #endregion
 
         #region propertities
@@ -114,11 +120,19 @@ namespace MainProject.ViewModel
         {
             get
             {
-                if (_Save_Data_Store == null)
+                if (NameStore != null && NumberPhone != null && Address != null)
                 {
-                    _Save_Data_Store = new RelayingCommand<object>(a =>Save_data_store());
+                    if (_Save_Data_Store == null)
+                    {
+                        _Save_Data_Store = new RelayingCommand<object>(a => Save_data_store());
+                    }
+                    return _Save_Data_Store;
                 }
-                return _Save_Data_Store;
+                else
+                {
+                    WindowService.Instance.OpenMessageBox("Vui lòng nhập đầu đủ thông tin!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                    return null;
+                }    
             }
         }
 
@@ -152,7 +166,21 @@ namespace MainProject.ViewModel
         private void Change_data_store()
         {
             Mode_btn = ModeButton.edit;
-            
+        }
+
+        public ICommand Cancel_Change_Data_Store
+        {
+            get
+            {
+                if (_Cancel_Change_Data_Store == null)
+                {
+                    _Cancel_Change_Data_Store = new RelayingCommand<object>(a => {
+                        SetData();
+                        Mode_btn = ModeButton.save;
+                    });
+                }
+                return _Cancel_Change_Data_Store;
+            }
         }
         #endregion
     }
