@@ -19,7 +19,7 @@ using System.Windows.Input;
 
 namespace MainProject.ViewModel
 {
-    class ProductViewModel : BaseViewModel
+   public  class ProductViewModel : BaseViewModel
     {       
         #region Field
         private ObservableCollection<PRODUCT> _ListProduct;
@@ -191,6 +191,12 @@ namespace MainProject.ViewModel
                         return;
                     }
 
+                    var pro = db.PRODUCTs.Where(p => (p.Name == Newproduct.Name && p.Price == Newproduct.Price && p.IsProvided));
+                    if( pro != null)
+                    {
+                        WindowService.Instance.OpenMessageBox("Món đã tồn tại, vui lòng đổi lại tên hoặc giá!", "Lỗi", MessageBoxImage.Error);
+                        return;
+                    }
 
                     TYPE_PRODUCT type = db.TYPE_PRODUCT.Where(t => (t.Type == Type_in_Combobox_AddProduct.Type)).FirstOrDefault();
 
