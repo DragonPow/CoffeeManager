@@ -70,6 +70,7 @@
                 Grid.Row="1"
                 Grid.Column="2"
                 Background="{StaticResource MainColor}"
+                BorderBrush="{StaticResource MainColor}"
                 Foreground="White"
                 FontSize="15"
                 Width="150"

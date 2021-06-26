@@ -15,28 +15,17 @@
              d:DesignWidth="900"
              Background="White">
     <DockPanel>
-        <Grid Height="45"
-              DockPanel.Dock="Top"
-              VerticalAlignment="Top" 
-              Background="{DynamicResource MainColor}">
-            <Border BorderThickness="1" 
-                    BorderBrush="#9393A1"/>
-            <!--<Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
-                    HorizontalAlignment="Left"
-                    Background="Transparent"
-                    BorderBrush="Transparent">
-                <materialDesign:PackIcon Kind="ArrowLeft"
-                                         Height="{Binding Height, RelativeSource={RelativeSource AncestorLevel=1}}"
-                                         Width="{Binding Width, RelativeSource={RelativeSource AncestorLevel=1}}"/>
-            </Button>-->
-            <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                       Text="Quản lý bàn" 
-                       FontSize="26" 
-                       Foreground="White"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-
-        </Grid>
+        <TextBlock Text="Quản lý bàn"
+                   Grid.ColumnSpan="3"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   TextAlignment="Center"
+                   FontWeight="Bold"
+                   Padding="0 15"
+                   FontSize="30"
+                   Foreground="White"
+                   DockPanel.Dock="Top"
+                   Background="{StaticResource MainColor}" />
         <!--Floors here-->
         <Grid DockPanel.Dock="Bottom">
             <Canvas x:Name="InfoCanvas"

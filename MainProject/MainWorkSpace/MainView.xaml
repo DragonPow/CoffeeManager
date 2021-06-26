@@ -26,8 +26,9 @@
         <DockPanel>
             <materialDesign:ColorZone DockPanel.Dock="Top"
                                       DataContext="{Binding Productviewmodel}"
-              Mode="PrimaryMid"
-              Padding="5">
+                                      Mode="PrimaryLight"
+                                      Padding="5">
+                
                 <Grid materialDesign:RippleAssist.IsCentered="True">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -69,8 +70,8 @@
                                     HorizontalAlignment="Left"
                                     Margin="10,0"
                                     Command="{Binding SearchByName_Command}"
-                                    BorderBrush="#0E0E2F"
-                                    Background="White"
+                                    BorderBrush="{StaticResource MainColor}"
+                                    Background="{StaticResource MainColor}"
                                     BorderThickness="1"
                                     Width="Auto"
                                     Height="auto"
@@ -81,8 +82,8 @@
                                       Opacity="0.7"
                                         Margin="10,0,0,0"
                                         VerticalAlignment="Center"
-                                        Foreground="#0E0E2F"/>
-                            <TextBlock  Foreground="#0E0E2F" VerticalAlignment="Center" Text="Tìm kiếm" Padding="5,8,15,7"></TextBlock>
+                                        Foreground="White"/>
+                            <TextBlock  Foreground="White" VerticalAlignment="Center" Text="Tìm kiếm" Padding="5,8,15,7"></TextBlock>
                         </StackPanel>
 
 
@@ -95,12 +96,12 @@
                         ItemsSource="{Binding ListType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                         SelectedItem="{Binding CurrentTypeInHome}"
                         Style="{StaticResource MaterialDesignNavigatilRailTabControl}"
-                         materialDesign:ColorZoneAssist.Mode="PrimaryMid" >
+                         materialDesign:ColorZoneAssist.Mode="PrimaryLight" >
                 <TabControl.ItemTemplate>
                     <DataTemplate>
 
                         <TextBlock Text="{Binding Type}" FontSize="14" 
-                                   Foreground="White" 
+                                   Foreground="{StaticResource PrimaryHueMidBrush}" 
                                    FontWeight="Bold"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"/>

@@ -13,29 +13,28 @@
 
     <Grid Background = "Transparent">
         <DockPanel >
-            <Grid DockPanel.Dock="Bottom"
-                  Height="100">
+            <Grid DockPanel.Dock="Bottom" >
                 <Button
                         Height="50"
                         Width="170"
                         Name="btn_Save_change"
                         FontSize="20"
                         BorderThickness="2"
-                        Margin="10">
+                        Margin="0,30">
                     <Button.Style>
                         <Style TargetType="Button"
                                 BasedOn="{StaticResource MaterialDesignOutlinedButton}">
                             <Setter Property="Content" Value="Sửa thông tin"/>
                             <Setter Property="Foreground" Value="Red"/>
-                            <Setter Property="BorderBrush" Value="Gray"/>
+                            <Setter Property="BorderBrush" Value="Red"/>
                             <Setter Property="IsEnabled" Value="True"/>
                             <Setter Property="Command" Value="{Binding Change_Data_Store}"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Mode_btn}"
                                              Value="edit">
                                     <Setter Property="Content" Value="Lưu thay đổi"/>
-                                    <Setter Property="Foreground" Value="Green"/>
-                                    <Setter Property="BorderBrush" Value="Red"/>
+                                    <Setter Property="Foreground" Value="{StaticResource MainColor}"/>
+                                    <Setter Property="BorderBrush" Value="{StaticResource MainColor}"/>
                                     <Setter Property="IsEnabled" Value="True"/>
                                     <Setter Property="Command" Value="{Binding Save_Data_Store}"/>
                                 </DataTrigger>
@@ -46,17 +45,16 @@
 
             </Grid>
             <StackPanel x:Name="Option_setting">
-                <Grid Margin="0 10">
-                    <TextBlock Text="Tổng quan"
-                                Height="auto"
-                                Width="auto"
-                                Foreground="Black"
-                                FontSize="30"
-                                Padding="10"
-                                HorizontalAlignment="Center"
-                                FontWeight="Bold"
-                                VerticalAlignment="Center"/>
-                </Grid>
+                <TextBlock Text="Thông tin cửa hàng"
+                   Grid.ColumnSpan="3"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   TextAlignment="Center"
+                   FontWeight="Bold"
+                   Padding="0 15"
+                   FontSize="30"
+                   Foreground="White"
+                   Background="{StaticResource MainColor}" />
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -64,13 +62,13 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="1">
-                        <Grid Margin="0 2">
+                        <Grid Margin="0 20">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*"/>
                                 <ColumnDefinition Width="7*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0"
-                                 Text="Tên quán"
+                                 Text="Tên cửa hàng"
                                  Foreground="Black" 
                                  VerticalAlignment="Center"
                                  Background="{x:Null}" 
@@ -81,10 +79,13 @@
                                  Name="txb_Name"
                                  materialDesign:HintAssist.Hint="Nhập tên quán"
                                  Text="{Binding NameStore}"
+                                     FontWeight="Bold" 
                                  VerticalAlignment="Center"
                                  Background="{x:Null}"
                                  BorderBrush="{x:Null}"
-                                 FontSize="16">
+                                 FontSize="20"
+                                     Padding="10"
+                                     Foreground="{StaticResource PrimaryHueMidBrush}">
                                 <TextBox.Style>
                                     <Style TargetType="TextBox"
                                            BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
