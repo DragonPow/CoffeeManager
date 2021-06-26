@@ -384,10 +384,11 @@ namespace MainProject.StatisticWorkSpace
         public void createTemplateData()
         {
             DateTime start = DateTime.Now;
-            DateTime minDate = new DateTime(2021, 4, 1, 6, 0, 0);
-            DateTime maxDate = new DateTime(2021, 6, 3, 23, 59, 59);
+            DateTime minDate = new DateTime(2019, 1, 1, 6, 0, 0);
+            DateTime maxDate = new DateTime(2021, 6, 30, 23, 59, 59);
             TimeSpan step = new TimeSpan(1, 0, 0, 0, 0);
 
+            List<BILL> listBill = new List<BILL>();
             Random random = new Random();
             using (mainEntities db = new mainEntities())
             {
@@ -404,32 +405,42 @@ namespace MainProject.StatisticWorkSpace
                 var transaction = db.Database.BeginTransaction();
                 for (DateTime date = minDate; date < maxDate; date += step)
                 {
-                    long total = 0;
-                    var bill = new BILL
+                    int countBill = random.Next(30) + 1;
+                    List<BILL> listBillInDay = new List<BILL>(countBill);
+                    for (int k = 0; k < countBill; k++)
                     {
-                        CheckoutDay = date, 
-                        ID_Table = tables[random.Next(tables.Length)].ID
-                    };
-
-                    var listPDs = new List<Tuple<long, String, long>>();
-                    foreach (var pd in products) { listPDs.Add(new Tuple<long, string, long>(pd.ID, pd.Name, (long)pd.Price)); }
-                    int count = random.Next(listPDs.Count - 1) + 1;
-                    for (int i = 0; i < count; i++)
-                    {
-                        int temp = random.Next(listPDs.Count);
-                        var dt = new DETAILBILL
+                        long total = 0;
+                        var bill = new BILL
                         {
-                            ID_Product = listPDs[temp].Item1,
-                            Quantity = random.Next(4) + 1,
-                            UnitPrice = listPDs[temp].Item3
+                            CheckoutDay = date.AddMinutes(random.Next(1000) + 240),
+                            ID_Table = tables[random.Next(tables.Length)].ID
                         };
-                        total += dt.Quantity * dt.UnitPrice;
-                        bill.DETAILBILLs.Add(dt);
-                        listPDs.RemoveAt(temp);
+
+                        var listPDs = new List<Tuple<long, String, long>>();
+                        foreach (var pd in products) { listPDs.Add(new Tuple<long, string, long>(pd.ID, pd.Name, (long)pd.Price)); }
+                        int count = random.Next(listPDs.Count - 1) + 1;
+                        for (int i = 0; i < count; i++)
+                        {
+                            int temp = random.Next(listPDs.Count);
+                            var dt = new DETAILBILL
+                            {
+                                ID_Product = listPDs[temp].Item1,
+                                Quantity = random.Next(4) + 1,
+                                UnitPrice = listPDs[temp].Item3
+                            };
+                            total += dt.Quantity * dt.UnitPrice;
+                            bill.DETAILBILLs.Add(dt);
+                            listPDs.RemoveAt(temp);
+                        }
+                        bill.TotalPrice = total;
+                        listBillInDay.Add(bill);
                     }
-                    bill.TotalPrice = total;
-                    db.BILLs.Add(bill);
+                    listBillInDay.Sort((b1, b2) => b1.CheckoutDay.CompareTo(b2.CheckoutDay));
+                    listBill.AddRange(listBillInDay);
                 }
+
+                db.BILLs.AddRange(listBill);
+
                 try
                 {
                     Console.WriteLine("Begin save to database");
