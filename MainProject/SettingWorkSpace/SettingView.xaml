@@ -31,6 +31,7 @@
                         HorizontalAlignment="Left">
                     <Button.Style>
                         <Style TargetType="Button"
+                   <Setter Property="Command" Value="{Binding Save_Data_Store}"/>
                                BasedOn="{StaticResource MaterialDesignOutlinedButton}">
                             <Setter Property="Content"
                                     Value="Sửa thông tin" />
@@ -46,11 +47,11 @@
                                 <DataTrigger Binding="{Binding Mode_btn}"
                                              Value="edit">
                                     <Setter Property="Content"
-                                            Value="Lưu thay đổi" />
+                                            Value="Cập nhật" />
                                     <Setter Property="Foreground"
                                             Value="Green" />
                                     <Setter Property="BorderBrush"
-                                            Value="Green" />
+                                            Value="#31CA62" />
                                     <Setter Property="IsEnabled"
                                             Value="True" />
                                     <Setter Property="Command"
