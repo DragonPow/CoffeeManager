@@ -44,8 +44,18 @@ namespace MainProject.Model
             }
         }
         public bool IsOnService { get => table.CurrentStatus.Equals("Already"); }
-        public bool IsOnRepair { get => table.CurrentStatus.Equals("Fix"); }
-        public bool IsNotOnRepair { get => !IsOnRepair; }
+        public System.Windows.Visibility IsOnRepair { 
+            get { 
+                if (table.CurrentStatus.Equals("Fix"))  return System.Windows.Visibility.Visible;
+                else return System.Windows.Visibility.Collapsed;
+            } }
+        public System.Windows.Visibility IsNotOnRepair {
+            get
+            {
+                if (!table.CurrentStatus.Equals("Fix")) return System.Windows.Visibility.Visible;
+                else return System.Windows.Visibility.Collapsed;
+            }
+        }
 
         #region Init
 
