@@ -18,6 +18,7 @@ namespace MainProject.Model
                 {
                     _currentStatus = value;
                     OnPropertyChanged();
+                    OnPropertyChanged("Status");
                 }
             }
         }

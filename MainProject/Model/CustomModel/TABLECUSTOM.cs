@@ -43,8 +43,7 @@ namespace MainProject.Model
                 }
             }
         }
-
-        public bool IsOnService { get => _listPro != null && _listPro.Count > 0; }
+        public bool IsOnService { get => table.CurrentStatus.Equals("Already"); }
         public bool IsOnRepair { get => table.CurrentStatus.Equals("Fix"); }
         public bool IsNotOnRepair { get => !IsOnRepair; }
 

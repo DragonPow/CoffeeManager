@@ -98,7 +98,8 @@ namespace MainProject.StatisticWorkSpace
                     calendar.SelectionMode = CalendarSelectionMode.SingleRange;
                     datePicker.SelectedDate = date;
                     DateTime minDate, maxDate;
-                    selectWeek(date, out minDate, out maxDate);
+                    selectMonth(date, out minDate, out maxDate);
+                    Console.WriteLine(minDate.ToShortDateString() + " - " + maxDate.ToShortDateString());
                     calendar.SelectedDates.AddRange(minDate, maxDate);
                 }
             }
@@ -107,9 +108,9 @@ namespace MainProject.StatisticWorkSpace
 
         private void StatisticView_Initialized(object sender, EventArgs e)
         {
-            setDefaultDate();
             cbxStatisticMode.SelectedIndex = 1;
             cbxStatisticMode_SelectionChanged(cbxStatisticMode, null);
+            setDefaultDate();
         }
 
         public void setDefaultDate()
@@ -131,7 +132,7 @@ namespace MainProject.StatisticWorkSpace
             DateTime selectedDate = (DateTime)txtDatePicker.SelectedDate;
             if (selectedDate.Year == DateTime.Now.Year && selectedDate.Month >= DateTime.Now.Month)
             {
-                MessageBox.Show("Không thể thống kê vào thời gian ở tương lai. Vui lòng chọn lại", "Tháng không hợp lệ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Chỉ có thể thống kê sau khi đã kết thúc tháng. Vui lòng chọn lại", "Tháng không hợp lệ", MessageBoxButton.OK, MessageBoxImage.Warning);
                 setDefaultDate();
                 return;
             }
