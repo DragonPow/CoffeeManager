@@ -118,7 +118,7 @@
 
                 <Grid
                 DockPanel.Dock="Bottom">
-                    <Label HorizontalAlignment="Left" Margin="0" FontSize="17" Style="{StaticResource labelStyle}" Foreground="Red">Tổng doanh thu</Label>
+                    <Label HorizontalAlignment="Left" Margin="0" FontSize="20" Style="{StaticResource labelStyle}" Foreground="Red">Tổng doanh thu</Label>
                     <TextBlock 
                     HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="20" Margin="5"
                            Text="{Binding Path=TotalRevenue, Mode=OneWay, Converter={StaticResource moneyConverter}}" FontWeight="Bold" Foreground="Red"/>
