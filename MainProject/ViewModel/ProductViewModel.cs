@@ -191,10 +191,10 @@ namespace MainProject.ViewModel
                         return;
                     }
 
-                    var pro = db.PRODUCTs.Where(p => (p.Name == Newproduct.Name && p.Price == Newproduct.Price && p.IsProvided));
-                    if( pro != null)
+                    PRODUCT pro = db.PRODUCTs.Where(p => (p.Name == Newproduct.Name && p.IsProvided)).FirstOrDefault();
+                    if (pro != null)
                     {
-                        WindowService.Instance.OpenMessageBox("Món đã tồn tại, vui lòng đổi lại tên hoặc giá!", "Lỗi", MessageBoxImage.Error);
+                        WindowService.Instance.OpenMessageBox("Tên món đã tồn tại, vui lòng đổi lại tên!", "Lỗi", MessageBoxImage.Error);
                         return;
                     }
 
