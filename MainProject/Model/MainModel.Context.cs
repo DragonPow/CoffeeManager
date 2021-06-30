@@ -13,7 +13,7 @@ namespace MainProject.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class mainEntities : DbContext
+    public partial class mainEntities : DbContext, IContext
     {
         public mainEntities()
             : base("name=mainEntities")
@@ -36,5 +36,10 @@ namespace MainProject.Model
         public virtual DbSet<REPORTSALE> REPORTSALES { get; set; }
         public virtual DbSet<BILL> BILLs { get; set; }
         public virtual DbSet<PRODUCT> PRODUCTs { get; set; }
+
+        public virtual void SetUnchanged(object entity)
+        {
+            Entry(entity).State = EntityState.Unchanged;
+        }
     }
 }

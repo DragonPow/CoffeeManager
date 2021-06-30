@@ -17,13 +17,13 @@
         Title="Coffee Manager">
     <Window.Resources>
         <DataTemplate DataType="{x:Type MainWorkSpace:MainViewModel}">
-            <MainWorkSpace:MainView />
+            <MainWorkSpace:MainView x:Name="MainWorkSpace"/>
         </DataTemplate>
         <!--<DataTemplate DataType="{x:Type AccountWorkSpace:AccountViewModel}">
             <AccountWorkSpace:AccountView />
         </DataTemplate>-->
         <DataTemplate DataType="{x:Type ViewModel:HistoryViewModel}">
-            <HistoryWorkSpace:HistoryView />
+            <HistoryWorkSpace:HistoryView x:Name="HistoryWorkSpace"/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type ViewModel:ManageProductviewModel}">
             <ProductManagerWorkSpace:ProdManager />
@@ -50,7 +50,7 @@
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal"
-                                Width="220" >
+                                Width="220">
                         <ContentPresenter Content="{Binding IconDisplay}"
                                           Margin="10,0" />
                         <TextBlock Text="{Binding NameWorkSpace}"

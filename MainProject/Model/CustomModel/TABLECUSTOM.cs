@@ -23,13 +23,21 @@ namespace MainProject.Model
                 }
             }
         }
-        public long Total { get; set; }
+        public long Total
+        {
+            get
+            {
+                if (_listPro == null) return 0;
+                return _listPro.Sum(i => (long)i.Pro.Price * i.Quantity);
+            } 
+        }
 
         public virtual ObservableCollection<DetailPro> ListPro
         {
             get
             {
-                if (_listPro == null) {
+                if (_listPro == null)
+                {
                     _listPro = new ObservableCollection<DetailPro>();
                 }
                 return _listPro;
@@ -44,12 +52,16 @@ namespace MainProject.Model
             }
         }
         public bool IsOnService { get => table.CurrentStatus.Equals("Already"); }
-        public System.Windows.Visibility IsOnRepair { 
-            get { 
-                if (table.CurrentStatus.Equals("Fix"))  return System.Windows.Visibility.Visible;
+        public System.Windows.Visibility IsOnRepair
+        {
+            get
+            {
+                if (table.CurrentStatus.Equals("Fix")) return System.Windows.Visibility.Visible;
                 else return System.Windows.Visibility.Collapsed;
-            } }
-        public System.Windows.Visibility IsNotOnRepair {
+            }
+        }
+        public System.Windows.Visibility IsNotOnRepair
+        {
             get
             {
                 if (!table.CurrentStatus.Equals("Fix")) return System.Windows.Visibility.Visible;
@@ -59,10 +71,9 @@ namespace MainProject.Model
 
         #region Init
 
-        public TABLECUSTOM ()
-            {
-                Total = 0;
-            }
+        public TABLECUSTOM()
+        {
+        }
 
         private void Table_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {

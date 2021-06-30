@@ -14,7 +14,7 @@ using System.Data.Entity;
 
 namespace MainProject.ViewModel
 {
-   public  class TableViewModel : BaseViewModel, IMainWorkSpace
+    public class TableViewModel : BaseViewModel, IMainWorkSpace
     {
         public string NameWorkSpace => "Quản lý bàn";
         private const PackIconKind _iconDisplay = PackIconKind.TableChair;
@@ -25,6 +25,7 @@ namespace MainProject.ViewModel
                 return new PackIcon() { Kind = _iconDisplay, Width = 30, Height = 30 };
             }
         }
+        public IContext Context = new mainEntities();
 
         #region Field
         private ObservableCollection<TABLECUSTOM> _ListTable;
@@ -41,7 +42,7 @@ namespace MainProject.ViewModel
 
         private ICommand _plusQuantityDetailProCommand;
         private ICommand _minusQuantityDetailProCommand;
-        private ICommand _ClickQuantityDetailProCommand;        
+        private ICommand _ClickQuantityDetailProCommand;
         private ICommand _DeleteDetailPro;
 
         private ICommand _OpenViewChooseTable;
@@ -71,8 +72,6 @@ namespace MainProject.ViewModel
             TotalCurrentTable = 0;
 
             LoadTable();
-           
-              
         }
         #endregion
 
@@ -89,10 +88,10 @@ namespace MainProject.ViewModel
                 {
                     _Isbringtohome = value;
                     OnPropertyChanged();
-                    if ( value == true)
+                    if (value == true)
                     {
                         TableName = "Mang về";
-                        if (CurrentTable != null)  CurrentTable.table.CurrentStatus = "Normal";
+                        if (CurrentTable != null) CurrentTable.table.CurrentStatus = "Normal";
                         CurrentTable = null;
                     }
                     else
@@ -108,23 +107,23 @@ namespace MainProject.ViewModel
                 if (_Billviewmodel != value)
                 {
                     _Billviewmodel = value;
-                    OnPropertyChanged();              
+                    OnPropertyChanged();
                 }
             }
         }
         public long TotalCurrentTable { get => _TotalCurrentTable; set { if (_TotalCurrentTable != value) { _TotalCurrentTable = value; OnPropertyChanged(); } } }
-        public ObservableCollection<DetailPro> Currentlistdetailpro 
-        { 
-            get => _Currentlistdetailpro; 
-            set 
-            { 
-                if (_Currentlistdetailpro != value) 
-                { 
-                    _Currentlistdetailpro = value; 
+        public ObservableCollection<DetailPro> Currentlistdetailpro
+        {
+            get => _Currentlistdetailpro;
+            set
+            {
+                if (_Currentlistdetailpro != value)
+                {
+                    _Currentlistdetailpro = value;
                     OnPropertyChanged();
-                   
-                } 
-            } 
+
+                }
+            }
         }
         public ObservableCollection<int> ListFloor
         {
@@ -138,36 +137,36 @@ namespace MainProject.ViewModel
             }
         }
 
-      /*  public int CurrentFloors
-        {
-            get => _Currentfloors;
-            set
-            {
-                if (value != _Currentfloors)
-                {
-                    _Currentfloors = value;
-                    OnPropertyChanged();
+        /*  public int CurrentFloors
+          {
+              get => _Currentfloors;
+              set
+              {
+                  if (value != _Currentfloors)
+                  {
+                      _Currentfloors = value;
+                      OnPropertyChanged();
 
-                    using (var db = new mainEntities())
-                    {
-                        var listtab = db.TABLEs.Where(t => (t.Floor == CurrentFloors)).ToList();
+                      using (var db = new mainEntities())
+                      {
+                          var listtab = db.TABLEs.Where(t => (t.Floor == CurrentFloors)).ToList();
 
-                        if (listtab == null) return;
+                          if (listtab == null) return;
 
-                        List<TABLECUSTOM> Tablecustoms = new List<TABLECUSTOM>();
+                          List<TABLECUSTOM> Tablecustoms = new List<TABLECUSTOM>();
 
-                        foreach (TABLE t in listtab)
-                        {
-                            Tablecustoms.Add(new TABLECUSTOM() { Total = 0, table = t, ListPro = null });
-                        }
+                          foreach (TABLE t in listtab)
+                          {
+                              Tablecustoms.Add(new TABLECUSTOM() { Total = 0, table = t, ListPro = null });
+                          }
 
-                        ListTable = new ObservableCollection<TABLECUSTOM>(Tablecustoms);
+                          ListTable = new ObservableCollection<TABLECUSTOM>(Tablecustoms);
 
-                    }
+                      }
 
-                }
-            }
-        }*/
+                  }
+              }
+          }*/
         public TABLECUSTOM CurrentTable
         {
             get => _CurrentTable;
@@ -176,17 +175,17 @@ namespace MainProject.ViewModel
                 if (value != _CurrentTable)
                 {
                     if (value != null)
-                    {     
-                        if ( value.table.CurrentStatus == "Fix" || value.table.CurrentStatus =="Already")
+                    {
+                        if (value.table.CurrentStatus == "Fix" || value.table.CurrentStatus == "Already")
                         {
-                            WindowService.Instance.OpenMessageBox(value.table.CurrentStatus == "Fix"?  "Không thể chọn bàn đang sữa chữa": "Không thể chọn bàn đang có khách", "Lỗi", MessageBoxImage.Error);
+                            WindowService.Instance.OpenMessageBox(value.table.CurrentStatus == "Fix" ? "Không thể chọn bàn đang sữa chữa" : "Không thể chọn bàn đang có khách", "Lỗi", MessageBoxImage.Error);
                             return;
                         }
                         TableName = "Bàn: " + value.table.Name.ToString();
                         value.table.CurrentStatus = "Already";
                         if (_CurrentTable != null) _CurrentTable.table.CurrentStatus = "Normal";
                         _CurrentTable = value;
-                        Isbringtohome = false;                        
+                        Isbringtohome = false;
                     }
                     else
                     {
@@ -196,7 +195,7 @@ namespace MainProject.ViewModel
                     OnPropertyChanged();
                 }
             }
-      
+
         }
 
         public TABLECUSTOM CurrentTableInTabManager
@@ -245,10 +244,10 @@ namespace MainProject.ViewModel
             }
         }
 
-       
-            public string TableName
-            {
-            get => _TableName;            
+
+        public string TableName
+        {
+            get => _TableName;
             set
             {
                 if (_TableName != value)
@@ -276,7 +275,7 @@ namespace MainProject.ViewModel
         {
             CurrentDetailPro = pro;
             CurrentDetailPro.Quantity++;
-            TotalCurrentTable += (long) CurrentDetailPro.Pro.Price;
+            TotalCurrentTable += (long)CurrentDetailPro.Pro.Price;
 
         }
         public ICommand MinusDetailProQuantityCommand
@@ -298,7 +297,7 @@ namespace MainProject.ViewModel
             if (CurrentDetailPro == null || CurrentDetailPro.Quantity < 1) return;
 
             CurrentDetailPro.Quantity--;
-            TotalCurrentTable -= (long) CurrentDetailPro.Pro.Price;
+            TotalCurrentTable -= (long)CurrentDetailPro.Pro.Price;
 
             if (CurrentDetailPro.Quantity == 0) Currentlistdetailpro.Remove(CurrentDetailPro);
         }
@@ -372,7 +371,7 @@ namespace MainProject.ViewModel
         }
         public void RemoveDetail()
         {
-            TotalCurrentTable -=  CurrentDetailPro.Quantity + (int)CurrentDetailPro.Pro.Price;
+            TotalCurrentTable -= CurrentDetailPro.Quantity + (int)CurrentDetailPro.Pro.Price;
             Currentlistdetailpro.Remove(CurrentDetailPro);
         }
 
@@ -388,9 +387,9 @@ namespace MainProject.ViewModel
         }
         public void Pay()
         {
-            if ( Isbringtohome)
+            if (Isbringtohome)
             {
-                    CurrentTable = new TABLECUSTOM() { table = new TABLE()};
+                CurrentTable = new TABLECUSTOM() { table = new TABLE() };
             }
 
             if (CurrentTable == null && !Isbringtohome)
@@ -399,17 +398,17 @@ namespace MainProject.ViewModel
                 return;
             }
 
-            if (Currentlistdetailpro == null || Currentlistdetailpro.Count == 0 )
+            if (Currentlistdetailpro == null || Currentlistdetailpro.Count == 0)
             {
                 WindowService.Instance.OpenMessageBox("Chưa có món được chọn!", "Lỗi", MessageBoxImage.Error);
                 return;
             }
 
             CurrentTable.ListPro = Currentlistdetailpro;
-            CurrentTable.Total = TotalCurrentTable;
+            //CurrentTable.Total = TotalCurrentTable;
 
             Billviewmodel = new BillViewModel(CurrentTable);
-            
+
             BillView billView = new BillView();
             billView.DataContext = Billviewmodel;
 
@@ -417,11 +416,10 @@ namespace MainProject.ViewModel
 
             if (Billviewmodel.IsClose)
             {
-                CurrentTable = null;               
+                CurrentTable = null;
                 Currentlistdetailpro = new ObservableCollection<DetailPro>();
                 TotalCurrentTable = 0;
             }
-
         }
 
 
@@ -439,24 +437,24 @@ namespace MainProject.ViewModel
 
         private void Delete()
         {
-        
+
             int number = ListTable.Count - 1;
 
-            if ( ListTable[number] == CurrentTable && Currentlistdetailpro.Count != 0)
+            if (ListTable[number] == CurrentTable && Currentlistdetailpro.Count != 0)
             {
-                WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn " + number +" trước khi xóa!", "Lỗi",MessageBoxImage.Error);
+                WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn " + number + " trước khi xóa!", "Lỗi", MessageBoxImage.Error);
                 return;
-            }   
+            }
 
-             ListTable.RemoveAt(number);
+            ListTable.RemoveAt(number);
 
-            using (var db = new mainEntities())
+
             {
-                long max = db.TABLEs.Max(p => p.ID);
+                long max = Context.TABLEs.Max(p => p.ID);
 
-                db.TABLEs.Remove(db.TABLEs.Where( t => t.ID == max).FirstOrDefault());
+                Context.TABLEs.Remove(Context.TABLEs.Where(t => t.ID == max).FirstOrDefault());
 
-                db.SaveChanges();
+                Context.SaveChanges();
             }
         }
 
@@ -476,13 +474,13 @@ namespace MainProject.ViewModel
         {
             TABLE tab;
 
-            using (var db = new mainEntities())
-            {
-                int number = db.TABLEs.Count();
-                tab = new TABLE() { STATUS_TABLE = db.STATUS_TABLE.Where(i=>i.Status == "Normal").FirstOrDefault(), Name = number == 0 ? 1 : db.TABLEs.Max(t => t.Name)+ 1 };
 
-                db.TABLEs.Add(tab);
-                db.SaveChanges();
+            {
+                int number = Context.TABLEs.Count();
+                tab = new TABLE() { STATUS_TABLE = Context.STATUS_TABLE.Where(i => i.Status == "Normal").FirstOrDefault(), Name = number == 0 ? 1 : Context.TABLEs.Max(t => t.Name) + 1 };
+
+                Context.TABLEs.Add(tab);
+                Context.SaveChanges();
             }
 
             ListTable.Add(new TABLECUSTOM() { table = tab });
@@ -502,7 +500,7 @@ namespace MainProject.ViewModel
 
         public void UpdateFix()
         {
-            if(CurrentTableInTabManager == CurrentTable && Currentlistdetailpro.Count != 0)
+            if (CurrentTableInTabManager == CurrentTable && Currentlistdetailpro.Count != 0)
             {
                 WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn trước khi cập nhật!", "Lỗi", MessageBoxImage.Error);
                 return;
@@ -512,11 +510,11 @@ namespace MainProject.ViewModel
                 return;
             }
             CurrentTableInTabManager.table.CurrentStatus = "Fix";
-            using (var db = new mainEntities())
+
             {
-                var t = db.TABLEs.Where(tab => tab.ID == CurrentTableInTabManager.table.ID).FirstOrDefault();
+                var t = Context.TABLEs.Where(tab => tab.ID == CurrentTableInTabManager.table.ID).FirstOrDefault();
                 t.ID_Status = 2;
-                db.SaveChanges();
+                Context.SaveChanges();
             }
 
         }
@@ -545,11 +543,11 @@ namespace MainProject.ViewModel
                 return;
             }
             CurrentTableInTabManager.table.CurrentStatus = "Normal";
-            using (var db = new mainEntities())
+
             {
-                var t = db.TABLEs.Where(tab => tab.ID == CurrentTableInTabManager.table.ID).FirstOrDefault();
+                var t = Context.TABLEs.Where(tab => tab.ID == CurrentTableInTabManager.table.ID).FirstOrDefault();
                 t.ID_Status = 1;
-                db.SaveChanges();
+                Context.SaveChanges();
             }
 
         }
@@ -568,20 +566,20 @@ namespace MainProject.ViewModel
         public void UpdateStatus_Leave_Table()
         {
             if (CurrentTableInTabManager.table.CurrentStatus == "Fix" || CurrentTableInTabManager.table.CurrentStatus == "Normal")
-            {              
+            {
                 return;
             }
-            if(CurrentTableInTabManager == CurrentTable && Currentlistdetailpro.Count != 0)
+            if (CurrentTableInTabManager == CurrentTable && Currentlistdetailpro.Count != 0)
             {
                 WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn trước khi cập nhật!", "Lỗi", MessageBoxImage.Error);
                 return;
             }
             CurrentTableInTabManager.table.CurrentStatus = "Normal";
-            using (var db = new mainEntities())
+
             {
-                var t = db.TABLEs.Where(tab => tab.ID == CurrentTableInTabManager.table.ID).FirstOrDefault();
+                var t = Context.TABLEs.Where(tab => tab.ID == CurrentTableInTabManager.table.ID).FirstOrDefault();
                 t.ID_Status = 1;
-                db.SaveChanges();
+                Context.SaveChanges();
             }
 
         }
@@ -589,14 +587,14 @@ namespace MainProject.ViewModel
         #endregion
         void LoadTable()
         {
-            using (var db = new mainEntities())
+
             {
-                var listtab = db.TABLEs.Include(p => p.STATUS_TABLE).ToList();
+                var listtab = Context.TABLEs.Include(p => p.STATUS_TABLE).ToList();
                 if (listtab == null) return;
 
                 foreach (TABLE t in listtab)
                 {
-                    ListTable.Add(new TABLECUSTOM() { Total = 0, table = t, ListPro = null });
+                    ListTable.Add(new TABLECUSTOM() { table = t, ListPro = null });
                 }
             }
         }

@@ -1,51 +1,67 @@
 ﻿<UserControl x:Class="MainProject.MainWorkSpace.Table.TableDetailView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Table"
              xmlns:Item="clr-namespace:MainProject.MainWorkSpace.Product"
              xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              Name="UserControl"
-             BorderBrush="Gray" BorderThickness="2"
+             BorderBrush="Gray"
+             BorderThickness="2"
              d:DataContext="{d:DesignInstance Type=ViewModel:TableViewModel}"
-             d:DesignHeight="550" d:DesignWidth="300" Background="#FEFDEB">
+             d:DesignHeight="550"
+             d:DesignWidth="300"
+             Background="#FEFDEB">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="43*"/>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="4*"/>
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="43*" />
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="4*" />
         </Grid.RowDefinitions>
         <!--Button "Chon ban"-->
-        <Button Command="{Binding OpenViewChooseTableCommand}" FontSize="18" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-            <StackPanel Orientation="Horizontal" >
-                <Label Padding="0" Foreground="#BD8722" Content="{Binding TableName,FallbackValue='Chọn bàn'}" VerticalAlignment="Center"/>
-                <materialDesign:PackIcon VerticalAlignment="Center" Kind="ChevronRight"
-                                         Height="Auto" Width="Auto" Foreground="#BD8722" RenderTransformOrigin="0.323,0.538"/>
+        <Button Command="{Binding OpenViewChooseTableCommand}"
+                FontSize="18"
+                HorizontalAlignment="Left"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                x:Name="TableName">
+            <StackPanel Orientation="Horizontal">
+                <Label Padding="0"
+                       Foreground="#BD8722"
+                       Content="{Binding TableName,FallbackValue='Chọn bàn'}"
+                       VerticalAlignment="Center" />
+                <materialDesign:PackIcon VerticalAlignment="Center"
+                                         Kind="ChevronRight"
+                                         Height="Auto"
+                                         Width="Auto"
+                                         Foreground="#BD8722"
+                                         RenderTransformOrigin="0.323,0.538" />
             </StackPanel>
         </Button>
-        
+
         <!--Container list product-->
-        <ScrollViewer Grid.Row="1" 
-                      materialDesign:ScrollBarAssist.ThumbHeight="50" 
-                      materialDesign:ScrollBarAssist.ThumbWidth="5" 
+        <ScrollViewer Grid.Row="1"
+                      materialDesign:ScrollBarAssist.ThumbHeight="50"
+                      materialDesign:ScrollBarAssist.ThumbWidth="5"
                       materialDesign:ScrollBarAssist.ThumbCornerRadius="10"
                       HorizontalScrollBarVisibility="Auto">
             <!--The Panel contains list product-->
             <ListView ItemsSource="{Binding Currentlistdetailpro, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                      >
+                      x:Name="lstProduct">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Item:Item_UC DataContext="{Binding}"
-                                      Tag="{Binding DataContext, ElementName=UserControl}"/>
+                                      Tag="{Binding DataContext, ElementName=UserControl}" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Stretch" />
                     </Style>
                 </ListView.ItemContainerStyle>
                 <ListView.ItemsPanel>
@@ -57,44 +73,63 @@
         </ScrollViewer>
         <Grid  Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
-            <Border BorderBrush="Gray" BorderThickness="0,1,0,1" Grid.ColumnSpan="2"/>
-            <CheckBox
-                Height="25"
-                Width="80"
-                Style="{StaticResource MaterialDesignFilterChipAccentCheckBox}"
-                IsChecked="{Binding Isbringtohome}"
-                VerticalAlignment="Center" Margin="5,0"
-                Background="{StaticResource MainColor}"
-                Foreground="Green">
+            <Border BorderBrush="Gray"
+                    BorderThickness="0,1,0,1"
+                    Grid.ColumnSpan="2" />
+            <CheckBox Height="25"
+                      x:Name="cbxGetOut"
+                      Width="80"
+                      Style="{StaticResource MaterialDesignFilterChipAccentCheckBox}"
+                      IsChecked="{Binding Isbringtohome}"
+                      VerticalAlignment="Center"
+                      Margin="5,0"
+                      Background="{StaticResource MainColor}"
+                      Foreground="Green">
                 Mang đi
             </CheckBox>
-            <StackPanel Grid.Column="1" Orientation="Vertical">
-                <TextBlock Text="Tổng tiền" FontSize="14" 
+            <StackPanel Grid.Column="1"
+                        Orientation="Vertical">
+                <TextBlock Text="Tổng tiền"
+                           FontSize="14"
                            FontWeight="Bold"
-                           HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left"
-                           Foreground="Red" Margin="8,0"/>
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           TextAlignment="Left"
+                           Foreground="Red"
+                           Margin="8,0" />
                 <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                           Text="{Binding TotalCurrentTable, UpdateSourceTrigger=PropertyChanged, FallbackValue='25,000đ', StringFormat='{}{0:N0} đ'}" FontSize="22" FontWeight="DemiBold" FontStyle="Italic" 
-                           HorizontalAlignment="Right" VerticalAlignment="Bottom" TextAlignment="Center" 
-                           Foreground="#BD8722" Margin="0 -5 10 0"/>
+                           Text="{Binding TotalCurrentTable, UpdateSourceTrigger=PropertyChanged, FallbackValue='25,000đ', StringFormat='{}{0:N0} đ'}"
+                           FontSize="22"
+                           FontWeight="DemiBold"
+                           FontStyle="Italic"
+                           x:Name="txtTotalMoney"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Bottom"
+                           TextAlignment="Center"
+                           Foreground="#BD8722"
+                           Margin="0 -5 10 0" />
             </StackPanel>
         </Grid>
-        <Grid Grid.Row="3" >
-            <Button
-                Style="{StaticResource MaterialDesignRaisedButton}"
-                ToolTip="MaterialDesignRaisedButton with Round Corners"
-                Content="Thanh toán"
-                Margin="2"
-                Command="{Binding Pay_Command}"
-                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                Width="Auto" Height="Auto"
-                FontSize="18"
-                materialDesign:ButtonAssist.CornerRadius="2"
-                Foreground="White" Background="#31CA62"
-                BorderThickness="0" Grid.Column="1"/>
+        <Grid Grid.Row="3">
+            <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                    ToolTip="MaterialDesignRaisedButton with Round Corners"
+                    Content="Thanh toán"
+                    Margin="2"
+                    Command="{Binding Pay_Command}"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Width="Auto"
+                    Height="Auto"
+                    FontSize="18"
+                    materialDesign:ButtonAssist.CornerRadius="2"
+                    Foreground="White"
+                    Background="#31CA62"
+                    BorderThickness="0"
+                    Grid.Column="1" 
+                    x:Name="btnPayment"/>
         </Grid>
     </Grid>
 </UserControl>

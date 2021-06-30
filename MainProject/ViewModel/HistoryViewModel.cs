@@ -12,10 +12,11 @@ using System.Windows.Input;
 
 namespace MainProject.ViewModel
 {
-    class HistoryViewModel : BaseViewModel, IMainWorkSpace
+    public class HistoryViewModel : BaseViewModel, IMainWorkSpace
     {
         public string NameWorkSpace => "Lịch sử";
         private const PackIconKind _iconDisplay = PackIconKind.ClipboardTextSearchOutline;
+        public IContext db = new mainEntities();
         public PackIcon IconDisplay
         {
             get
@@ -177,7 +178,21 @@ namespace MainProject.ViewModel
             get
             {
                 if (_Search_Bill == null)
-                    _Search_Bill = new RelayingCommand<object>(a => Search_Bill());
+                    _Search_Bill = new RelayingCommand<object>(a => 
+                    {
+                        try
+                        {
+                            Search_Bill();
+                        }
+                        catch (ArgumentNullException e1)
+                        {
+                            WindowService.Instance.OpenMessageBox("Phải điền đủ các giá trị", "Thông báo", System.Windows.MessageBoxImage.Warning);
+                        }
+                        catch (ArgumentException e2)
+                        {
+                            WindowService.Instance.OpenMessageBox("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                        }
+                    });
                 return _Search_Bill;
             }
         }
@@ -187,24 +202,21 @@ namespace MainProject.ViewModel
             if (Number_Bill_in_Page == 0)
             {
                 NumberPage = 0;
-                  return;
+                return;
             }
-          
+            
             if (EndTime == null || BeginTime == null)
             {
-                WindowService.Instance.OpenMessageBox("Phải điền đủ các giá trị", "Thông báo", System.Windows.MessageBoxImage.Warning);
-                return;
+                throw new ArgumentNullException("BeginTime or EndTime is null");
             }
 
             if (EndTime.Date < BeginTime.Date)
             {
-                WindowService.Instance.OpenMessageBox("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc!", "Lỗi", System.Windows.MessageBoxImage.Error);
-                return;
+                throw new ArgumentException("BeginTime is greater than EndTime");
             }
             DateTime newEndTime = EndTime.AddDays(1);
-            using (var db = new mainEntities())
+            //using (var db = myContext)
             {
-
                 int d = db.BILLs.Where(b => b.CheckoutDay >= BeginTime && b.CheckoutDay <= newEndTime).Count();
 
                 if (d == 0)
@@ -226,7 +238,7 @@ namespace MainProject.ViewModel
         void LoadBillByNumberPage()
         {
             DateTime newEndTime = EndTime.AddDays(1);
-            using (var db = new mainEntities())
+            //using (var db = myContext)
             {
                 var listbill = (from b in db.BILLs.Where(b => b.CheckoutDay >= BeginTime && b.CheckoutDay <= newEndTime)
                                 from t in db.TABLEs

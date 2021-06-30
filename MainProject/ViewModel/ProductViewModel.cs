@@ -1,5 +1,4 @@
-﻿
-using MainProject.MainWorkSpace.Product;
+﻿using MainProject.MainWorkSpace.Product;
 using MainProject.Model;
 using System;
 using System.Collections.Generic;

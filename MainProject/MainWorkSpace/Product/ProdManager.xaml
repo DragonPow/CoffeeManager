@@ -1,26 +1,28 @@
 ﻿<UserControl x:Class="MainProject.MainWorkSpace.Product.ProdManager"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:MainProject.MainWorkSpace.Product"
              xmlns:Table="clr-namespace:MainProject.MainWorkSpace.Table"
              xmlns:ViewModel="clr-namespace:MainProject.ViewModel"
              xmlns:main="clr-namespace:MainProject.MainWorkSpace"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-             xmlns:iex="clr-namespace:Microsoft.Expression.Interactivity.Input;assembly=Microsoft.Expression.Interactions" 
-            mc:Ignorable="d"
+             xmlns:iex="clr-namespace:Microsoft.Expression.Interactivity.Input;assembly=Microsoft.Expression.Interactions"
+             mc:Ignorable="d"
              Background="White"
-              d:DataContext="{d:DesignInstance Type=ViewModel:ManageProductviewModel}"
+             d:DataContext="{d:DesignInstance Type=ViewModel:ManageProductviewModel}"
              d:DesignHeight="630"
              d:DesignWidth="1150">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="11*"/>
-            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="11*" />
+            <ColumnDefinition Width="4*" />
         </Grid.ColumnDefinitions>
-        <local:EditMenu Grid.Column="1" Margin="5,0,0,0" DataContext="{Binding}"/>
+        <local:EditMenu Grid.Column="1"
+                        Margin="5,0,0,0"
+                        DataContext="{Binding}"/>
         <DockPanel DataContext="{Binding MainVM}">
             <materialDesign:ColorZone DockPanel.Dock="Top"
                                       DataContext="{Binding Productviewmodel}"
@@ -29,32 +31,31 @@
 
                 <Grid materialDesign:RippleAssist.IsCentered="True">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
                     </Grid.ColumnDefinitions>
 
-                    <materialDesign:ColorZone
-                    Mode="Standard"
-                    Margin="50,0,0,0"
-                    Padding="8 4"
-                    CornerRadius="2"
-                    Panel.ZIndex="1"
-                    materialDesign:ShadowAssist.ShadowDepth="Depth1" Grid.Column="0">
+                    <materialDesign:ColorZone Mode="Standard"
+                                              Margin="50,0,0,0"
+                                              Padding="8 4"
+                                              CornerRadius="2"
+                                              Panel.ZIndex="1"
+                                              materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                              Grid.Column="0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <TextBox
-                                Text="{Binding SearchProduct,UpdateSourceTrigger=PropertyChanged, FallbackValue='Tìm kiếm'}"
-                            Grid.Column="0"
-                            Margin="8 0 0 0"
-                            materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                            BorderThickness="0"
-                            MinWidth="200"
-                            VerticalAlignment="Center" >
+                            <TextBox Text="{Binding SearchProduct,UpdateSourceTrigger=PropertyChanged, FallbackValue='Tìm kiếm'}"
+                                     Grid.Column="0"
+                                     Margin="8 0 0 0"
+                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                     BorderThickness="0"
+                                     MinWidth="200"
+                                     VerticalAlignment="Center">
                                 <i:Interaction.Triggers>
                                     <iex:KeyTrigger Key="Enter">
                                         <i:InvokeCommandAction Command="{Binding SearchByName_Command}" />
@@ -64,24 +65,27 @@
 
                         </Grid>
                     </materialDesign:ColorZone>
-                    <Button VerticalAlignment="Center" Grid.Column="1"
-                                    HorizontalAlignment="Left"
-                                    Margin="10,0"
-                                    Command="{Binding SearchByName_Command}"
-                                    BorderBrush="{StaticResource MainColor}"
-                                    Background="{StaticResource MainColor}"
-                                    BorderThickness="1"
-                                    Width="Auto"
-                                    Height="auto"
-                                    Padding="0">
+                    <Button VerticalAlignment="Center"
+                            Grid.Column="1"
+                            HorizontalAlignment="Left"
+                            Margin="10,0"
+                            Command="{Binding SearchByName_Command}"
+                            BorderBrush="{StaticResource MainColor}"
+                            Background="{StaticResource MainColor}"
+                            BorderThickness="1"
+                            Width="Auto"
+                            Height="auto"
+                            Padding="0">
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon
-                                      Kind="Search"
-                                      Opacity="0.7"
-                                        Margin="10,0,0,0"
+                            <materialDesign:PackIcon Kind="Search"
+                                                     Opacity="0.7"
+                                                     Margin="10,0,0,0"
+                                                     VerticalAlignment="Center"
+                                                     Foreground="White" />
+                            <TextBlock  Foreground="White"
                                         VerticalAlignment="Center"
-                                        Foreground="White"/>
-                            <TextBlock  Foreground="White" VerticalAlignment="Center" Text="Tìm kiếm" Padding="5,8,15,7"></TextBlock>
+                                        Text="Tìm kiếm"
+                                        Padding="5,8,15,7"></TextBlock>
                         </StackPanel>
 
 
@@ -94,25 +98,26 @@
                         ItemsSource="{Binding ListType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                         SelectedItem="{Binding CurrentTypeInHome}"
                         Style="{StaticResource MaterialDesignNavigatilRailTabControl}"
-                         materialDesign:ColorZoneAssist.Mode="PrimaryLight" >
+                        materialDesign:ColorZoneAssist.Mode="PrimaryLight">
                 <TabControl.ItemTemplate>
                     <DataTemplate>
 
-                        <TextBlock Text="{Binding Type}" FontSize="14" 
-                                   Foreground="{StaticResource PrimaryHueMidBrush}" 
+                        <TextBlock Text="{Binding Type}"
+                                   FontSize="14"
+                                   Foreground="{StaticResource PrimaryHueMidBrush}"
                                    FontWeight="Bold"
                                    HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"/>
+                                   VerticalAlignment="Center" />
                     </DataTemplate>
                 </TabControl.ItemTemplate>
 
                 <TabControl.ItemContainerStyle>
                     <Style TargetType="TabItem"
-                       BasedOn="{StaticResource MaterialDesignNavigationRailTabItem}">
+                           BasedOn="{StaticResource MaterialDesignNavigationRailTabItem}">
                         <Setter Property="MinWidth"
-                            Value="120" />
+                                Value="120" />
                         <Setter Property="Height"
-                            Value="70" />
+                                Value="70" />
                         <Setter Property="Width"
                                 Value="Auto" />
                     </Style>
@@ -123,7 +128,8 @@
                     </DataTemplate>
                 </TabControl.ContentTemplate>
             </TabControl>
-            <local:ProdManagerView DataContext="{Binding Productviewmodel}"/>
+            <local:ProdManagerView DataContext="{Binding Productviewmodel}"
+                                   x:Name="lstProduct" />
         </DockPanel>
     </Grid>
 </UserControl>

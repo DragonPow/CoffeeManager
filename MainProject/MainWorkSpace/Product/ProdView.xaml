@@ -9,15 +9,16 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d"
              x:Name="ProductView"
-              d:DataContext="{d:DesignInstance Type=ViewModel:ProductViewModel}"
+             d:DataContext="{d:DesignInstance Type=ViewModel:ProductViewModel}"
              d:DesignHeight="480"
              d:DesignWidth="600">
     <UserControl.DataContext>
-        <ViewModel:ProductViewModel/>
+        <ViewModel:ProductViewModel />
     </UserControl.DataContext>
     <ListView ItemsSource="{Binding ListPoduct}"
-                  SelectedItem="{Binding Currentproduct,Mode=TwoWay}"
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+              x:Name="ListProduct"
+              SelectedItem="{Binding Currentproduct,Mode=TwoWay}"
+              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
         <ListView.ItemsPanel>
             <ItemsPanelTemplate>
                 <WrapPanel Orientation="Horizontal"></WrapPanel>
@@ -25,10 +26,10 @@
         </ListView.ItemsPanel>
         <ListView.ItemTemplate>
             <DataTemplate>
-                <local:Pro_UC DataContext="{Binding}" >
+                <local:Pro_UC DataContext="{Binding}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
-                            <i:InvokeCommandAction Command="{Binding DataContext.AddDetailProToTableCommand, ElementName=ProductView}"/>
+                            <i:InvokeCommandAction Command="{Binding DataContext.AddDetailProToTableCommand, ElementName=ProductView}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </local:Pro_UC>
@@ -36,7 +37,8 @@
         </ListView.ItemTemplate>
         <ListView.ContextMenu>
             <ContextMenu>
-                <MenuItem Header="Chi tiết sản phẩm" Command="{Binding OpenViewDetailProduct_Command}"/>
+                <MenuItem Header="Chi tiết sản phẩm"
+                          Command="{Binding OpenViewDetailProduct_Command}" />
             </ContextMenu>
         </ListView.ContextMenu>
     </ListView>

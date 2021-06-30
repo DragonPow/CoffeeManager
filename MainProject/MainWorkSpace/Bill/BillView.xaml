@@ -14,6 +14,7 @@
         Title="Thanh toán hóa đơn"
         mc:Ignorable="d"
         MinWidth="600"
+        Tag="BillView"
         MaxWidth="800"
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
@@ -78,7 +79,7 @@
                 <TextBlock Grid.Row="1"
                            Grid.Column="0">
                     <Run>Mã số hóa đơn</Run>
-                    <Run Text="{Binding BillCode, StringFormat=': {0}'}" />
+                    <Run Text="{Binding BillCode, Mode=OneTime, StringFormat=': {0}'}" />
                 </TextBlock>
                 <TextBlock Grid.Row="2"
                            Grid.Column="0">
@@ -214,7 +215,6 @@
                 Background="{StaticResource MainColor}"
                 BorderBrush="{StaticResource MainColor}"
                 Command="{Binding PaymentCommand}"
-                CommandParameter="{Binding ElementName=MainWindow}"
                 Margin="0 10 0 30"
                 Height="40" />
     </StackPanel>
