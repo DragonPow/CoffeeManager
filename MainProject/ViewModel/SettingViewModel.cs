@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace MainProject.ViewModel
 {
-    class SettingViewModel : BaseViewModel, IMainWorkSpace
+    public class SettingViewModel : BaseViewModel, IMainWorkSpace
     {
         public enum ModeButton
         {
@@ -19,6 +19,7 @@ namespace MainProject.ViewModel
 
         public string NameWorkSpace => "Thông tin";
         private const PackIconKind _iconDisplay = PackIconKind.AccountOutline;
+        public  mainEntities context = new mainEntities();
         public PackIcon IconDisplay
         {
             get
@@ -27,7 +28,7 @@ namespace MainProject.ViewModel
             }
         }
 
-        #region init
+        #region init 
         public SettingViewModel()
         {
             SetData();
@@ -139,7 +140,7 @@ namespace MainProject.ViewModel
         private void Save_data_store()
         {
             Mode_btn = ModeButton.save;
-            using (var context = new mainEntities())
+           /* using (var context = new mainEntities())*/
             {
                 var st = context.PARAMETERs.Where(p => p.NAME == "StoreName").FirstOrDefault();
                 st.Value = NameStore;
