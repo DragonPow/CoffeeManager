@@ -18,8 +18,9 @@ namespace NUnitTestProject
             SettingViewModel viewmodel;
 
             Mock<mainEntities> mockContext;
+            Mock<DbSet<PARAMETER>> mockSetparameter;
 
-            List<PARAMETER> parameter;
+           List<PARAMETER> parameter;
 
             [SetUp]
             public void Setup()
@@ -37,7 +38,7 @@ namespace NUnitTestProject
                 var DataParameter = parameter.AsQueryable();
 
                 //CONFIG PARAMETER
-                var mockSetparameter = new Mock<DbSet<PARAMETER>>();
+                mockSetparameter = new Mock<DbSet<PARAMETER>>();
                 mockSetparameter.As<IQueryable<PARAMETER>>().Setup(m => m.Provider).Returns(DataParameter.Provider);
                 mockSetparameter.As<IQueryable<PARAMETER>>().Setup(m => m.Expression).Returns(DataParameter.Expression);
                 mockSetparameter.As<IQueryable<PARAMETER>>().Setup(m => m.ElementType).Returns(DataParameter.ElementType);
@@ -47,14 +48,21 @@ namespace NUnitTestProject
                 mockContext = new Mock<mainEntities>();
                 mockContext.Setup(m => m.PARAMETERs).Returns(mockSetparameter.Object);
                 mockContext.Setup(m => m.SetUnchanged(It.IsAny<object>()));
+
                 viewmodel.context = mockContext.Object;
             }
 
-            [TestCase()] 
+            [TestCase("", "031458715","tp Hồ Chí Minh" )]
+            [TestCase("Ice Coffee", "", "tp Hồ Chí Minh")]
+            [TestCase("Ice Coffee", "031458715", "")]
+            [TestCase("Ice Coffee", "031458715", "tp Hồ Chí Minh")]
 
             public void TestSaveDataStore(string name, string phonenumber, string address )
             {
+                viewmodel.Save_data_store();
 
+                mockSetparameter.Verify(m => m.Attach(It.IsAny<PARAMETER>()), Times.Once);
+                mockContext.Verify(m => m.SaveChanges(), Times.Once);
             }
 
 

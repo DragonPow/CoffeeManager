@@ -36,7 +36,7 @@ namespace MainProject.ViewModel
 
         public void SetData()
         {
-            using (var context = new mainEntities())
+            /*using (var context = new mainEntities())*/
             {
                 var st = context.PARAMETERs.Where(p => p.NAME == "StoreName").FirstOrDefault();
                 NameStore = st.Value.ToString();
@@ -137,7 +137,7 @@ namespace MainProject.ViewModel
             }
         }
 
-        private void Save_data_store()
+        public void Save_data_store()
         {
             Mode_btn = ModeButton.save;
            /* using (var context = new mainEntities())*/
