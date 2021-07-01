@@ -318,24 +318,26 @@ namespace MainProject.ViewModel
                 PRODUCT product = Context.PRODUCTs.Where(p => (p.ID == Currentproduct.ID) && p.IsProvided).FirstOrDefault();
 
                 if (product == null) return;
-
-                try
+                using (var transaction = db.Database.BeginTransaction())
                 {
-                    var list = Context.DETAILREPORTSALES.Where(r => r.ID_Product == product.ID);
-                    if (list != null)
+                    try
                     {
-                        Context.DETAILREPORTSALES.RemoveRange(list);
+                        var list = Context.DETAILREPORTSALES.Where(r => r.ID_Product == product.ID);
+                        if (list != null)
+                        {
+                            Context.DETAILREPORTSALES.RemoveRange(list);
+                        }
+
+                        product.IsProvided = false;
+
+                        Context.SaveChanges();
+                        transaction.Commit();
                     }
-
-                    product.IsProvided = false;
-
-                    Context.SaveChanges();
-                    transaction.Commit();
-                }
-                catch (Exception exp)
-                {
-                    transaction.Rollback();
-                    Console.WriteLine("Error occurred.");
+                    catch (Exception exp)
+                    {
+                        transaction.Rollback();
+                        Console.WriteLine("Error occurred.");
+                    }
                 }
             }
 
