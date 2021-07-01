@@ -11,7 +11,8 @@ using MainProject.MainWorkSpace.Bill;
 
 namespace NUnitTestProject
 {
-    public class Tests
+    [TestFixture]
+    public class PaymentTest
     {
         TABLECUSTOM table;
         //TableViewModel tableVM;
@@ -66,7 +67,7 @@ namespace NUnitTestProject
         [TestCase(0, 1)]
         [TestCase(1, 0)]
         [TestCase(0, 0)]
-        public void TestTotalPrice(int quantity1, int quantity2)
+        public void TestTotalPrice_of_Bill(int quantity1, int quantity2)
         {
             table.ListPro.Add(createDetailProduct(listProduct[0], quantity1));
             table.ListPro.Add(createDetailProduct(listProduct[1], quantity2));
@@ -86,7 +87,7 @@ namespace NUnitTestProject
         [TestCase(10000, 2)]
         [TestCase(10000, 0)]
         [TestCase(0, 1)]
-        public void TestPriceProduct(int price, int quantity)
+        public void TestTotalPrice_of_Product(int price, int quantity)
         {
             DetailPro product = new DetailPro();
             product.Pro = new PRODUCT();

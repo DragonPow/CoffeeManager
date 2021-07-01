@@ -18,18 +18,20 @@ using System.Windows.Input;
 
 namespace MainProject.ViewModel
 {
-   public  class ProductViewModel : BaseViewModel
-    {       
+    public class ProductViewModel : BaseViewModel
+    {
+        public mainEntities Context = new mainEntities();
+
         #region Field
         private ObservableCollection<PRODUCT> _ListProduct;
         private PRODUCT _Currentproduct;
 
-        private TYPE_PRODUCT _Type;    
+        private TYPE_PRODUCT _Type;
         private TYPE_PRODUCT _Type_in_Combobox_AddProduct;
-      
+
         private string _SearchProduct;
         private string _Type_in_Combobox_AddPro;
-         
+
         private PRODUCT _Newproduct;
 
         private int _IndexTypeInComboboxEditPro;
@@ -51,7 +53,7 @@ namespace MainProject.ViewModel
         private ICommand _CancelAddProduct;
         private ICommand _ExitAddProview;
 
-        
+
         private ICommand _ExitDetailProduct;
         private ICommand _OpenViewDetailProduct;
         private ICommand _AddDetailProToTableCommand;
@@ -64,7 +66,7 @@ namespace MainProject.ViewModel
 
         public ObservableCollection<PRODUCT> ListPoduct { get => _ListProduct; set { if (value != _ListProduct) { _ListProduct = value; OnPropertyChanged(); } } }
         public string SearchProduct { get => _SearchProduct; set { if (_SearchProduct != value) { _SearchProduct = value; OnPropertyChanged(); /*SearchName();*/ } } }
-        
+
         public PRODUCT Currentproduct
         {
             get => _Currentproduct;
@@ -73,11 +75,7 @@ namespace MainProject.ViewModel
                 if (_Currentproduct != value)
                 {
                     _Currentproduct = value;
-
-                    using (var db = new mainEntities())
-                    {
-                        if (value != null) _Currentproduct.TYPE_PRODUCT = db.TYPE_PRODUCT.Where(t => t.ID == value.ID_Type).FirstOrDefault(); ;
-                    }
+                    if (value != null) _Currentproduct.TYPE_PRODUCT = Context.TYPE_PRODUCT.Where(t => t.ID == value.ID_Type).FirstOrDefault(); ;
                     OnPropertyChanged();
                 }
             }
@@ -100,20 +98,17 @@ namespace MainProject.ViewModel
         {
             get
             {
-                using ( var db = new mainEntities())
+                var t = Context.TYPE_PRODUCT.Select(p => p.ID).ToList();
+                if (t == null) return null;
+                else
                 {
-                    var t = db.TYPE_PRODUCT.Select(p=> p.ID).ToList();
-                    if (t == null) return null;
-                    else
-                    {
-                        return t;
-                    }
+                    return t;
                 }
             }
         }
         public string Type_in_Combobox_AddPro { get => _Type_in_Combobox_AddPro; set { if (_Type_in_Combobox_AddPro != value) { _Type_in_Combobox_AddPro = value; OnPropertyChanged(); } } }
         public int IndexTypeInComboboxEditPro { get => _IndexTypeInComboboxEditPro; set { if (_IndexTypeInComboboxEditPro != value) { _IndexTypeInComboboxEditPro = value; OnPropertyChanged(); } } }
-        public TYPE_PRODUCT Type_in_Combobox_AddProduct { get => _Type_in_Combobox_AddProduct; set { if (_Type_in_Combobox_AddProduct != value ) { _Type_in_Combobox_AddProduct = value; OnPropertyChanged(); } } }
+        public TYPE_PRODUCT Type_in_Combobox_AddProduct { get => _Type_in_Combobox_AddProduct; set { if (_Type_in_Combobox_AddProduct != value) { _Type_in_Combobox_AddProduct = value; OnPropertyChanged(); } } }
         public TYPE_PRODUCT Type { get => _Type; set { if (_Type != value) { _Type = value; OnPropertyChanged(); LoadProductByType(value); } } }
         public TableViewModel Tableviewmodel { get => _Tableviewmodel; set { if (_Tableviewmodel != value) { _Tableviewmodel = value; OnPropertyChanged(); } } }
         #endregion
@@ -145,7 +140,7 @@ namespace MainProject.ViewModel
         public void Loadaddproview()
         {
 
-            Newproduct = new PRODUCT() { Image = imageToByteArray(Properties.Resources.Empty_Image), TYPE_PRODUCT = new TYPE_PRODUCT(), IsProvided = true};
+            Newproduct = new PRODUCT() { Image = imageToByteArray(Properties.Resources.Empty_Image), TYPE_PRODUCT = new TYPE_PRODUCT(), IsProvided = true };
 
             WindowService.Instance.OpenWindowWithoutBorderControl(this, new CreateProd());
         }
@@ -156,79 +151,106 @@ namespace MainProject.ViewModel
             {
                 if (_AddProduct == null)
                 {
-                    _AddProduct = new RelayingCommand<bool>(isValid => Add(isValid));
+                    _AddProduct = new RelayingCommand<bool>(isValid => 
+                    {
+                        if (!isValid) return;
+                        try
+                        {
+                            Add();
+                            Exitaddproview();
+                        }
+                        catch (ArgumentException e)
+                        {
+                            switch (e.ParamName)
+                            {
+                                case "NameNull":
+                                    WindowService.Instance.OpenMessageBox("Vui lòng nhập tên sản phẩm!", "Thông báo", MessageBoxImage.Information);
+                                    break;
+                                case "NameDuplicate":
+                                    WindowService.Instance.OpenMessageBox("Tên món đã tồn tại, vui lòng đổi lại tên!", "Lỗi", MessageBoxImage.Error);
+                                    break;
+                                case "PriceNegative":
+                                    WindowService.Instance.OpenMessageBox("Giá sản phẩm phải là số dương!", "Thông báo", MessageBoxImage.Information);
+                                    break;
+                                case "Price0":
+                                    WindowService.Instance.OpenMessageBox("Vui lòng nhập giá sản phẩm!", "Thông báo", MessageBoxImage.Information);
+                                    break;
+                                //case "TypeNull":
+                                //    WindowService.Instance.OpenMessageBox("Vui lòng chọn danh mục!", "Thông báo", MessageBoxImage.Information);
+                                //    break;
+                            }
+                        }
+                    });
                 }
                 return _AddProduct;
             }
         }
 
 
-        public void Add(bool isValid)
+        public void Add()
         {
-            if (!isValid) return;
-
-            using (var db = new mainEntities())
+            try
             {
-                try
+
+                if (string.IsNullOrWhiteSpace(Newproduct.Name))
                 {
-                   
-                    if (Newproduct.Name == null)
-                    {
-                        WindowService.Instance.OpenMessageBox("Vui lòng nhập tên sản phẩm!", "Lỗi", MessageBoxImage.Error);
-                        return;
-                    }
+                    throw new ArgumentException("Name is empty", "NameNull");
+                }
 
-                    if (Type_in_Combobox_AddProduct == null)
-                    {
-                        WindowService.Instance.OpenMessageBox("Vui lòng chọn danh mục!", "Lỗi", MessageBoxImage.Error);
-                        return;
-                    }
 
-                    if (Newproduct.Price == 0)
-                    {
-                        WindowService.Instance.OpenMessageBox("Vui lòng nhập giá sản phẩm!", "Lỗi", MessageBoxImage.Error);
-                        return;
-                    }
+                if (Newproduct.Price == 0)
+                {
+                    throw new ArgumentException("Price is zero", "Price0");
+                }
+                if (Newproduct.Price < 0)
+                {
+                    throw new ArgumentException("Price is negative", "PriceNegative");
+                }
 
-                    PRODUCT pro = db.PRODUCTs.Where(p => (p.Name == Newproduct.Name && p.IsProvided)).FirstOrDefault();
-                    if (pro != null)
-                    {
-                        WindowService.Instance.OpenMessageBox("Tên món đã tồn tại, vui lòng đổi lại tên!", "Lỗi", MessageBoxImage.Error);
-                        return;
-                    }
+                //Find if name is duplicate
+                PRODUCT pro = Context.PRODUCTs.Where(p => (p.Name == Newproduct.Name && p.IsProvided)).FirstOrDefault();
+                if (pro != null)
+                {
+                    throw new ArgumentException("Name of price is exsisted", "NameDuplicate");
+                }
 
-                    TYPE_PRODUCT type = db.TYPE_PRODUCT.Where(t => (t.Type == Type_in_Combobox_AddProduct.Type)).FirstOrDefault();
+                if (Type_in_Combobox_AddProduct == null)
+                {
+                    //throw new ArgumentException("Type of product is null", "TypeNull");
+                    //return;
+
+                    Newproduct.ID_Type = null;
+                }
+                else
+                {
+                    TYPE_PRODUCT type = Context.TYPE_PRODUCT.Where(t => (t.Type == Type_in_Combobox_AddProduct.Type)).FirstOrDefault();
 
                     if (type == null) Newproduct.ID_Type = null;
-                    else
-                        Newproduct.ID_Type = type.ID;
+                    else Newproduct.ID_Type = type.ID;
 
                     Newproduct.TYPE_PRODUCT = null;
-
-                    db.PRODUCTs.Add(Newproduct);
-
-                    ListPoduct.Add(Newproduct);
-
-                    db.SaveChanges();
-
                 }
-                catch (DbEntityValidationException e)
-                {
-                    foreach (var eve in e.EntityValidationErrors)
-                    {
-                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                        foreach (var ve in eve.ValidationErrors)
-                        {
-                            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                                ve.PropertyName, ve.ErrorMessage);
-                        }
-                    }
-                    throw;
-                }
+
+                Context.PRODUCTs.Add(Newproduct);
+
+                Context.SaveChanges();
+                if (ListPoduct == null) ListPoduct = new ObservableCollection<PRODUCT>();
+                ListPoduct.Add(Newproduct);
             }
-
-            Exitaddproview();
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                return;
+            }
         }
 
         public ICommand CancelAddProduct_Command
@@ -283,34 +305,29 @@ namespace MainProject.ViewModel
         public void DeletePro()
         {
             if (Currentproduct == null) return;
-
-            using (var db = new mainEntities())
+            using (var transaction = Context.Database.BeginTransaction())
             {
-                using (var transaction = db.Database.BeginTransaction())
+                PRODUCT product = Context.PRODUCTs.Where(p => (p.ID == Currentproduct.ID) && p.IsProvided).FirstOrDefault();
+
+                if (product == null) return;
+
+                try
                 {
-                    PRODUCT product = db.PRODUCTs.Where(p => (p.ID == Currentproduct.ID) && p.IsProvided).FirstOrDefault();
-
-                    if (product == null) return;
-
-                    try
+                    var list = Context.DETAILREPORTSALES.Where(r => r.ID_Product == product.ID);
+                    if (list != null)
                     {
-                        var list = db.DETAILREPORTSALES.Where(r => r.ID_Product == product.ID);
-                        if (list != null)
-                        {
-                            db.DETAILREPORTSALES.RemoveRange(list);
-                        }
-
-                        product.IsProvided = false;
-
-                        db.SaveChanges();
-                        transaction.Commit();
-                    }
-                    catch (Exception exp)
-                    {
-                        transaction.Rollback();
-                        Console.WriteLine("Error occurred.");
+                        Context.DETAILREPORTSALES.RemoveRange(list);
                     }
 
+                    product.IsProvided = false;
+
+                    Context.SaveChanges();
+                    transaction.Commit();
+                }
+                catch (Exception exp)
+                {
+                    transaction.Rollback();
+                    Console.WriteLine("Error occurred.");
                 }
             }
 
@@ -324,11 +341,11 @@ namespace MainProject.ViewModel
                         break;
                     }
                 }
-            }    
-            
+            }
 
-            ListPoduct.Remove(Currentproduct);           
-        }  
+
+            ListPoduct.Remove(Currentproduct);
+        }
 
         public ICommand SearchByName_Command
         {
@@ -345,32 +362,28 @@ namespace MainProject.ViewModel
         public void SearchName()
         {
             if (SearchProduct == null) return;
-            using (var db = new mainEntities())
+
+            if (SearchProduct == "")
             {
-
-                if (SearchProduct == "")
-                {
-                    LoadProductByType(Type);               
-                    return;
-                }
-
-                string s = ConvertToUnSign(SearchProduct).ToLower();
-                var listpro = db.PRODUCTs.ToList();
-
-                if (listpro == null)
-                {
-                    ListPoduct = new ObservableCollection<PRODUCT>();
-                    return;
-                }
-
-                ListPoduct = new ObservableCollection<PRODUCT>();
-
-                foreach (var p in listpro)
-                {
-                    if (ConvertToUnSign(p.Name).ToLower().Contains(s)) ListPoduct.Add(p);
-                }
+                LoadProductByType(Type);
+                return;
             }
 
+            string s = ConvertToUnSign(SearchProduct).ToLower();
+            var listpro = Context.PRODUCTs.ToList();
+
+            if (listpro == null)
+            {
+                ListPoduct = new ObservableCollection<PRODUCT>();
+                return;
+            }
+
+            ListPoduct = new ObservableCollection<PRODUCT>();
+
+            foreach (var p in listpro)
+            {
+                if (ConvertToUnSign(p.Name).ToLower().Contains(s)) ListPoduct.Add(p);
+            }
         }
 
         public ICommand SearchByType_Command
@@ -386,12 +399,9 @@ namespace MainProject.ViewModel
         }
         public void SearchType()
         {
-            using (var db = new mainEntities())
-            {
-                var listpro = db.PRODUCTs.Where(p => (p.TYPE_PRODUCT.Type == Type.Type) && p.IsProvided);
-                if (listpro == null) return;
-                ListPoduct = new ObservableCollection<PRODUCT>(listpro.ToList());
-            }
+            var listpro = Context.PRODUCTs.Where(p => (p.TYPE_PRODUCT.Type == Type.Type) && p.IsProvided);
+            if (listpro == null) return;
+            ListPoduct = new ObservableCollection<PRODUCT>(listpro.ToList());
         }
 
         public ICommand LoadViewUpdateProduct_Command
@@ -432,36 +442,32 @@ namespace MainProject.ViewModel
         }
         public void Update()
         {
-            using (var db = new mainEntities())
+            var pro = Context.PRODUCTs.Where(p => (p.ID == Currentproduct.ID) && (p.IsProvided)).FirstOrDefault();
+
+            if ((Currentproduct.Name != pro.Name || Currentproduct.Price != pro.Price) && Context.DETAILBILLs.Where(d => d.ID_Product == Currentproduct.ID).FirstOrDefault() != null)
             {
-                var pro = db.PRODUCTs.Where(p => (p.ID == Currentproduct.ID) && (p.IsProvided)).FirstOrDefault();
+                WindowService.Instance.OpenMessageBox("Món đã từng được thanh toán, vui lòng không thay đổi tên,giá!", "Lỗi", MessageBoxImage.Error);
 
-                if ((Currentproduct.Name != pro.Name || Currentproduct.Price != pro.Price) && db.DETAILBILLs.Where(d => d.ID_Product == Currentproduct.ID ).FirstOrDefault() != null )
-                {
-                    WindowService.Instance.OpenMessageBox("Món đã từng được thanh toán, vui lòng không thay đổi tên,giá!", "Lỗi", MessageBoxImage.Error);
-                    
-                    Currentproduct.Image = pro.Image;
-                    Currentproduct.Name = pro.Name;
-                    Currentproduct.Price = pro.Price;
-                    Currentproduct.Decription = pro.Decription;
-                    Currentproduct.ID_Type = pro.ID_Type;
+                Currentproduct.Image = pro.Image;
+                Currentproduct.Name = pro.Name;
+                Currentproduct.Price = pro.Price;
+                Currentproduct.Decription = pro.Decription;
+                Currentproduct.ID_Type = pro.ID_Type;
 
-                    return;
-                }
-                
-
-                pro.Image = Currentproduct.Image;
-                pro.Name = Currentproduct.Name;
-                pro.Price = Currentproduct.Price;
-                pro.Decription = Currentproduct.Decription;
-               
-
-                if (IndexTypeInComboboxEditPro != 0) pro.ID_Type = listtype[IndexTypeInComboboxEditPro - 1];
-                else pro.ID_Type = null;
-
-                db.SaveChanges();
+                return;
             }
 
+
+            pro.Image = Currentproduct.Image;
+            pro.Name = Currentproduct.Name;
+            pro.Price = Currentproduct.Price;
+            pro.Decription = Currentproduct.Decription;
+
+
+            if (IndexTypeInComboboxEditPro != 0) pro.ID_Type = listtype[IndexTypeInComboboxEditPro - 1];
+            else pro.ID_Type = null;
+
+            Context.SaveChanges();
             ExitUpdate();
         }
 
@@ -496,16 +502,13 @@ namespace MainProject.ViewModel
 
         public void CancelUpdateProduct()
         {
-            using(var db  = new mainEntities())
-            {
-                var pro = db.PRODUCTs.Where(p => p.ID == Currentproduct.ID).FirstOrDefault();
+            var pro = Context.PRODUCTs.Where(p => p.ID == Currentproduct.ID).FirstOrDefault();
 
-                Currentproduct.Image = pro.Image;
-                Currentproduct.Name = pro.Name;
-                Currentproduct.Price =  pro.Price;
-                Currentproduct.Decription = pro.Decription;
-                Currentproduct.ID_Type = pro.ID_Type;
-            }
+            Currentproduct.Image = pro.Image;
+            Currentproduct.Name = pro.Name;
+            Currentproduct.Price = pro.Price;
+            Currentproduct.Decription = pro.Decription;
+            Currentproduct.ID_Type = pro.ID_Type;
             var window = WindowService.Instance.FindWindowbyTag("EditPro").First();
             window.Close();
 
@@ -521,7 +524,7 @@ namespace MainProject.ViewModel
                 return _OpenViewDetailProduct;
             }
         }
-        
+
         public void OpenViewDetail()
         {
             WindowService.Instance.OpenWindowWithoutBorderControl(this, new ProdDetail());
@@ -559,7 +562,7 @@ namespace MainProject.ViewModel
 
 
         public void Add_Update_ImageProduct()
-        {         
+        {
             string path = "";
 
             OpenFileDialog openFile = new OpenFileDialog();
@@ -625,23 +628,19 @@ namespace MainProject.ViewModel
 
         public void LoadProductByType(TYPE_PRODUCT Type)
         {
-            using (var db = new mainEntities())
+            if (Type == null || Type.Type.Contains("Tất cả"))
             {
-
-                if (Type == null || Type.Type.Contains("Tất cả"))
-                {
-                    ListPoduct = new ObservableCollection<PRODUCT>(db.PRODUCTs.Where(p => p.IsProvided).ToList());
-                }
-                else
-                {
-                    var p = db.PRODUCTs.Where(pro => (pro.TYPE_PRODUCT.Type == Type.Type && pro.IsProvided));
-                    if (p.ToList().Count == 0) ListPoduct = new ObservableCollection<PRODUCT>();
-                    else ListPoduct = new ObservableCollection<PRODUCT>(p.ToList());
-                }
+                ListPoduct = new ObservableCollection<PRODUCT>(Context.PRODUCTs.Where(p => p.IsProvided).ToList());
+            }
+            else
+            {
+                var p = Context.PRODUCTs.Where(pro => (pro.TYPE_PRODUCT.Type == Type.Type && pro.IsProvided));
+                if (p.ToList().Count == 0) ListPoduct = new ObservableCollection<PRODUCT>();
+                else ListPoduct = new ObservableCollection<PRODUCT>(p.ToList());
             }
         }
 
-       private string ConvertToUnSign(string input)
+        private string ConvertToUnSign(string input)
         {
             input = input.Trim();
             for (int i = 0x20; i < 0x30; i++)
