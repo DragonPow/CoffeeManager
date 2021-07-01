@@ -25,7 +25,7 @@ namespace NUnitTestProject
             [SetUp]
             public void Setup()
             {
-                viewmodel = new SettingViewModel();
+               
 
                 //setup data for PARAMETER 
 
@@ -49,10 +49,10 @@ namespace NUnitTestProject
                 mockContext.Setup(m => m.PARAMETERs).Returns(mockSetparameter.Object);
                 mockContext.Setup(m => m.SetUnchanged(It.IsAny<object>()));
 
-                viewmodel.context = mockContext.Object;
+                viewmodel = new SettingViewModel(mockContext.Object);
             }
 
-            [TestCase("", "031458715","tp Hồ Chí Minh" )]
+            [TestCase("", "031458715", "tp Hồ Chí Minh")]
             [TestCase("Ice Coffee", "", "tp Hồ Chí Minh")]
             [TestCase("Ice Coffee", "031458715", "")]
             [TestCase("Ice Coffee", "031458715", "tp Hồ Chí Minh")]
@@ -61,7 +61,15 @@ namespace NUnitTestProject
             {
                 viewmodel.Save_data_store();
 
-                mockSetparameter.Verify(m => m.Attach(It.IsAny<PARAMETER>()), Times.Once);
+                if (name == "" || phonenumber == "" || address == "")
+                {
+                    //Check if have emplty value, throw exception
+                    var rs = Assert.Throws<ArgumentException>(() => viewmodel.Save_data_store());
+                    Assert.That(rs.Message, Is.EqualTo("Empty data!"));
+                    return;
+                }
+
+                /*  mockSetparameter.Verify(m => m.Attach(It.IsAny<PARAMETER>()), Times.Once);*/
                 mockContext.Verify(m => m.SaveChanges(), Times.Once);
             }
 

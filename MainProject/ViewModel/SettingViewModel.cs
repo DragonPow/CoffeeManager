@@ -34,6 +34,11 @@ namespace MainProject.ViewModel
             SetData();
         }
 
+        public SettingViewModel(mainEntities dtcontext)
+        {
+            context = dtcontext;
+            SetData();
+        }
         public void SetData()
         {
             /*using (var context = new mainEntities())*/
@@ -46,6 +51,9 @@ namespace MainProject.ViewModel
                 Address = st.Value.ToString();
             }
         }
+
+
+
         #endregion
 
         #region fields
@@ -121,26 +129,36 @@ namespace MainProject.ViewModel
         {
             get
             {
-                if (NameStore != "" && NumberPhone != "" && Address != "")
+                if (_Save_Data_Store == null)
                 {
-                    if (_Save_Data_Store == null)
-                    {
-                        _Save_Data_Store = new RelayingCommand<object>(a => Save_data_store());
-                    }
-                    return _Save_Data_Store;
+                    _Save_Data_Store = new RelayingCommand<object>(a =>
+                       {
+                           try
+                           {
+                               Save_data_store();
+                           }
+                           catch(Exception e)
+                           {
+                               WindowService.Instance.OpenMessageBox("Vui lòng nhập đầy đủ thông tin!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                               return;
+                           }
+
+                       });
+                   
                 }
-                else
-                {
-                    WindowService.Instance.OpenMessageBox("Vui lòng nhập đầy đủ thông tin!", "Lỗi", System.Windows.MessageBoxImage.Error);
-                    return null;
-                }    
+                return _Save_Data_Store;
+
             }
         }
 
         public void Save_data_store()
         {
             Mode_btn = ModeButton.save;
-           /* using (var context = new mainEntities())*/
+            if (NameStore == "" || NumberPhone == "" || Address == "")
+            {
+                throw new InvalidOperationException("Empty data!");
+            }          
+            /* using (var context = new mainEntities())*/
             {
                 var st = context.PARAMETERs.Where(p => p.NAME == "StoreName").FirstOrDefault();
                 st.Value = NameStore;
