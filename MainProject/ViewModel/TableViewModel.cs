@@ -438,11 +438,16 @@ namespace MainProject.ViewModel
         private void Delete()
         {
 
+            if (ListTable.Count == 0)
+            {
+                WindowService.Instance.OpenMessageBox("Không còn bàn để xóa", "Lỗi", MessageBoxImage.Error);
+                return;
+            }    
             int number = ListTable.Count - 1;
 
-            if (ListTable[number] == CurrentTable && Currentlistdetailpro.Count != 0)
+            if (CurrentTable.table.CurrentStatus == "Already")
             {
-                WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn " + number + " trước khi xóa!", "Lỗi", MessageBoxImage.Error);
+                WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn " + (number + 1) + " trước khi xóa!", "Lỗi", MessageBoxImage.Error);
                 return;
             }
 

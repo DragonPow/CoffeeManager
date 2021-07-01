@@ -120,7 +120,7 @@ namespace MainProject.ViewModel
         {
             get
             {
-                if (NameStore != null && NumberPhone != null && Address != null)
+                if (NameStore != "" && NumberPhone != "" && Address != "")
                 {
                     if (_Save_Data_Store == null)
                     {
@@ -130,7 +130,7 @@ namespace MainProject.ViewModel
                 }
                 else
                 {
-                    WindowService.Instance.OpenMessageBox("Vui lòng nhập đầu đủ thông tin!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                    WindowService.Instance.OpenMessageBox("Vui lòng nhập đầy đủ thông tin!", "Lỗi", System.Windows.MessageBoxImage.Error);
                     return null;
                 }    
             }
