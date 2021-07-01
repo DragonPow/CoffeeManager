@@ -198,6 +198,7 @@ namespace MainProject.ViewModel
                 }
 
 
+
                 if (Newproduct.Price == 0)
                 {
                     throw new ArgumentException("Price is zero", "Price0");
@@ -305,7 +306,14 @@ namespace MainProject.ViewModel
         public void DeletePro()
         {
             if (Currentproduct == null) return;
-            using (var transaction = Context.Database.BeginTransaction())
+
+            if (Tableviewmodel.Currentlistdetailpro.Contains(new DetailPro(Currentproduct)))
+            {
+                WindowService.Instance.OpenMessageBox("Vui lòng thanh toán món trước khi xóa!", "Lỗi", MessageBoxImage.Error);
+                return;
+            }
+
+            using (var db = new mainEntities())
             {
                 PRODUCT product = Context.PRODUCTs.Where(p => (p.ID == Currentproduct.ID) && p.IsProvided).FirstOrDefault();
 
@@ -668,7 +676,7 @@ namespace MainProject.ViewModel
         }
 
 
-        public Image byteArrayToImage(byte[] byteArrayIn)
+        private Image byteArrayToImage(byte[] byteArrayIn)
         {
             using (MemoryStream ms = new MemoryStream(byteArrayIn))
             {
@@ -676,11 +684,21 @@ namespace MainProject.ViewModel
             }
         }
 
-        public byte[] imageToByteArray(Image imageIn)
+        private byte[] imageToByteArray(Image imageIn)
         {
             MemoryStream ms = new MemoryStream();
             imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
             return ms.ToArray();
+        }
+
+        private Boolean CheckExistingpro()
+        {
+            foreach (var p in Tableviewmodel.Currentlistdetailpro)
+            {
+                if (p.Pro == Currentproduct)
+                    return true;
+            }
+            return false;
         }
     }
 }
