@@ -73,6 +73,11 @@ namespace MainProject.ViewModel
 
             LoadTable();
         }
+
+        public TableViewModel(mainEntities Context)
+        {
+            this.Context = Context;
+        }
         #endregion
 
 
@@ -176,13 +181,13 @@ namespace MainProject.ViewModel
                 {
                     if (value != null)
                     {
-                        if (value.table.CurrentStatus == "Fix" || value.table.CurrentStatus == "Already")
-                        {
-                            WindowService.Instance.OpenMessageBox(value.table.CurrentStatus == "Fix" ? "Không thể chọn bàn đang sữa chữa" : "Không thể chọn bàn đang có khách", "Lỗi", MessageBoxImage.Error);
-                            return;
-                        }
-                        TableName = "Bàn: " + value.table.Name.ToString();
-                        value.table.CurrentStatus = "Already";
+                        //if (value.table.CurrentStatus == "Fix" || value.table.CurrentStatus == "Already")
+                        //{
+                        //    WindowService.Instance.OpenMessageBox(value.table.CurrentStatus == "Fix" ? "Không thể chọn bàn đang sữa chữa" : "Không thể chọn bàn đang có khách", "Lỗi", MessageBoxImage.Error);
+                        //    return;
+                        //}
+                        //TableName = "Bàn: " + value.table.Name.ToString();
+                        //value.table.CurrentStatus = "Already";
                         if (_CurrentTable != null) _CurrentTable.table.CurrentStatus = "Normal";
                         _CurrentTable = value;
                         Isbringtohome = false;
@@ -429,38 +434,48 @@ namespace MainProject.ViewModel
             {
                 if (_DeleteTableCommand == null)
                 {
-                    _DeleteTableCommand = new RelayingCommand<Object>(a => Delete());
+                    _DeleteTableCommand = new RelayingCommand<Object>(a =>
+                    {
+                        try
+                        {
+                            Delete();
+                        }
+                        catch (ArgumentException e)
+                        {
+                            switch (e.ParamName)
+                            {
+                                case "NotHaveTable":
+                                    WindowService.Instance.OpenMessageBox("Không còn bàn để xóa", "Lỗi", MessageBoxImage.Error);
+                                    break;
+                                case "NotPayment":
+                                    WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn " + (ListTable.Count - 1) + " trước khi xóa!", "Thông báo", MessageBoxImage.Information);
+                                    break;
+                            }
+                        }
+                    });
                 }
                 return _DeleteTableCommand;
             }
         }
 
-        private void Delete()
+        public void Delete()
         {
-
-            if (ListTable.Count == 0)
+            if (ListTable == null || ListTable.Count == 0)
             {
-                WindowService.Instance.OpenMessageBox("Không còn bàn để xóa", "Lỗi", MessageBoxImage.Error);
-                return;
-            }    
+                throw new ArgumentException("Not table to delete", "NotHaveTable");
+            }
             int number = ListTable.Count - 1;
 
             if (CurrentTable.table.CurrentStatus == "Already")
             {
-                WindowService.Instance.OpenMessageBox("Vui lòng thanh toán bàn " + (number + 1) + " trước khi xóa!", "Lỗi", MessageBoxImage.Error);
-                return;
+                throw new ArgumentException("The table is not payment","NotPayment");
             }
-
+            long id_remove = ListTable[number].table.ID;
             ListTable.RemoveAt(number);
 
-
-            {
-                long max = Context.TABLEs.Max(p => p.ID);
-
-                Context.TABLEs.Remove(Context.TABLEs.Where(t => t.ID == max).FirstOrDefault());
-
-                Context.SaveChanges();
-            }
+            //long max = Context.TABLEs.Max(p => p.ID);
+            Context.TABLEs.Remove(Context.TABLEs.Where(t => t.ID == id_remove).First());
+            Context.SaveChanges();
         }
 
         public ICommand InsertTableCommand
