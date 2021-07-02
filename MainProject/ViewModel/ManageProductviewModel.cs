@@ -100,20 +100,26 @@ namespace MainProject.ViewModel
             {
                 if (_AddEditCategory == null)
                 {
-                    _AddEditCategory = new RelayingCommand<Object>(a =>
+                    _AddEditCategory = new RelayingCommand<object>(a =>
                     { 
                         try
                         {
                             AddEditCategory();
-                        }
-                        catch (ArgumentNullException e)
-                        {
-                            WindowService.Instance.OpenMessageBox("Vui lòng nhập tên danh mục!", "Lỗi", MessageBoxImage.Error);
+                            CloseViewAddCategory();
                         }
                         catch (ArgumentException e)
                         {
-                            WindowService.Instance.OpenMessageBox("Danh mục đã tồn tại, vui lòng đặt tên khác!", "Lỗi", MessageBoxImage.Error);
-                        }
+                            switch (e.ParamName)
+                            {
+                                case "NameEmpty":
+                                    WindowService.Instance.OpenMessageBox("Vui lòng nhập tên danh mục!", "Lỗi", MessageBoxImage.Error);
+                                    break;
+                                case "NameExisting":
+                                    WindowService.Instance.OpenMessageBox("Danh mục đã tồn tại, vui lòng đặt tên khác!", "Lỗi", MessageBoxImage.Error);
+                                    break;
+                            }
+                           
+                        }                     
                     });
                 }
                 return _AddEditCategory;
@@ -125,7 +131,7 @@ namespace MainProject.ViewModel
         {
             if (NameNewTypeProduct == null || NameNewTypeProduct == "")
             {
-                throw new ArgumentNullException("Name category is empty");             
+                throw new ArgumentException("Name category is empty", "NameEmpty");             
             }
 
             /*using (var db = new mainEntities())*/
@@ -135,9 +141,11 @@ namespace MainProject.ViewModel
 
                 if (type != null)
                 {
-                    throw new ArgumentException("Category is existing");
+                    throw new ArgumentException("Category is existing", "NameExisting");
                 }
                 db.TYPE_PRODUCT.Add(new TYPE_PRODUCT() { Type = NameNewTypeProduct });
+
+                var l = db.TYPE_PRODUCT.ToList();
 
                 db.SaveChanges();
 
@@ -150,7 +158,7 @@ namespace MainProject.ViewModel
                 MainVM.CurrentTypeInHome = MainVM.ListType.Last();
 
             }
-            CloseViewAddCategory();
+           
 
         }
 

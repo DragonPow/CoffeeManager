@@ -40,7 +40,7 @@ namespace NUnitTestProject
 
                 listpro = new List<PRODUCT>()
                 {
-                    new PRODUCT(){Name ="Trà đào", Price =12000, IsProvided = true, ID = 1 ,ID_Type = 1}
+                    new PRODUCT(){Name ="Trà đào", Price =12000, IsProvided = true, ID = 1 , TYPE_PRODUCT = new TYPE_PRODUCT(){Type = "Giải khát", ID = 1} }
                 };
 
                 var DataProduct = listpro.AsQueryable();
@@ -68,36 +68,41 @@ namespace NUnitTestProject
                 MainViewModel mainvm = new MainViewModel();
                 mainvm.ListType = new System.Collections.ObjectModel.ObservableCollection<TYPE_PRODUCT>(listType);
                 mainvm.Productviewmodel = new ProductViewModel();
-                mainvm.CurrentTypeInHome =  mainvm.Productviewmodel.Type = new TYPE_PRODUCT() { Type = "Tất cả" };
+               
 
                 viewmodel = new ManageProductviewModel(mainvm);
                 viewmodel.db = mockcontext.Object;
                 viewmodel.MainVM.Productviewmodel.Context = mockcontext.Object;
             }
 
-           
+
+
             [TestCase("")]
-            [TestCase("Trà")]
             [TestCase("Giải khát")]
+            [TestCase("Trà")]
             public void TestAddCategory(string Name)
             {
+                viewmodel.MainVM.CurrentTypeInHome = viewmodel.MainVM.Productviewmodel.Type = new TYPE_PRODUCT() {  Type = "Tất cả" };
                 viewmodel.NameNewTypeProduct = Name;
-                viewmodel.AddEditCategory();
-                
-                if (Name == "")
-                {
-                    var rs = Assert.Throws<ArgumentNullException>(() => viewmodel.AddEditCategory());
-                    Assert.That(rs.Message, Is.EqualTo("Name category is empty"));
-                    return;
-                }
+
                 if (Name == "Giải khát")
                 {
-                    var rs = Assert.Throws<ArgumentException>(() => viewmodel.AddEditCategory());
-                    Assert.That(rs.Message, Is.EqualTo("Category is existing"));
+                    Assert.Throws<ArgumentException>(() => viewmodel.AddEditCategory(), "Category is existing", "NameExisting");
+                    return;
+                }
+                if (Name == "")
+                {
+                    Assert.Throws<ArgumentException>(() =>viewmodel.AddEditCategory(), "Name category is empty", "NameEmpty");
                     return;
                 }
 
-                Assert.Equals(Name, viewmodel.MainVM.ListType.Last().Type);
+                viewmodel.AddEditCategory();
+
+
+
+
+                mockcontext.Verify(m => m.TYPE_PRODUCT.Add(It.IsAny<TYPE_PRODUCT>()), Times.Once);
+                mockcontext.Verify(m => m.SaveChanges(), Times.Once);
             }
         }
     }

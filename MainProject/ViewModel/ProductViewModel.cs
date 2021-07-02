@@ -310,8 +310,7 @@ namespace MainProject.ViewModel
                 PRODUCT product = Context.PRODUCTs.Where(p => (p.ID == Currentproduct.ID) && p.IsProvided).FirstOrDefault();
 
                 if (product == null) return;
-                using (var transaction = db.Database.BeginTransaction())
-                {
+               
                     try
                     {
                         var list = Context.DETAILREPORTSALES.Where(r => r.ID_Product == product.ID);
@@ -330,7 +329,6 @@ namespace MainProject.ViewModel
                         transaction.Rollback();
                         Console.WriteLine("Error occurred.");
                     }
-                }
             }
 
             if (Tableviewmodel.Currentlistdetailpro != null)
@@ -637,7 +635,11 @@ namespace MainProject.ViewModel
             else
             {
                 var p = Context.PRODUCTs.Where(pro => (pro.TYPE_PRODUCT.Type == Type.Type && pro.IsProvided));
-                if (p.ToList().Count == 0) ListPoduct = new ObservableCollection<PRODUCT>();
+                if (p == null || p.ToList().Count == 0)
+                {
+                    int i = 1 + 1;
+                    ListPoduct = new ObservableCollection<PRODUCT>();
+                }
                 else ListPoduct = new ObservableCollection<PRODUCT>(p.ToList());
             }
         }
