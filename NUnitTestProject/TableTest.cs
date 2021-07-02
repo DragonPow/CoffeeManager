@@ -18,10 +18,18 @@ namespace NUnitTestProject
         static Mock<DbSet<TABLE>> mockSetTABLE;
         static Mock<DbSet<STATUS_TABLE>> mockSetSTATUSTABLE;
         static List<STATUS_TABLE> listStatus;
+        static List<TABLE> listTable;
 
         [SetUp]
         public void SetUp()
         {
+            //Setup data TABLE
+            listTable = new List<TABLE>()
+            {
+                new TABLE() {ID = 1, Name = 1, ID_Status = 2},
+                new TABLE() {ID = 2, Name = 2, ID_Status = 2},
+            };
+            var dataTABLE = listTable.AsQueryable();
 
             //Setup data STATUS_TABLE
             listStatus = new List<STATUS_TABLE>()
@@ -34,6 +42,10 @@ namespace NUnitTestProject
 
             //Config TABLE
             mockSetTABLE = new Mock<DbSet<TABLE>>();
+            mockSetTABLE.As<IQueryable<TABLE>>().Setup(m => m.Provider).Returns(dataTABLE.Provider);
+            mockSetTABLE.As<IQueryable<TABLE>>().Setup(m => m.Expression).Returns(dataTABLE.Expression);
+            mockSetTABLE.As<IQueryable<TABLE>>().Setup(m => m.ElementType).Returns(dataTABLE.ElementType);
+            mockSetTABLE.As<IQueryable<TABLE>>().Setup(m => m.GetEnumerator()).Returns(dataTABLE.GetEnumerator());
 
             //Config STATUS_TABLE
             mockSetSTATUSTABLE = new Mock<DbSet<STATUS_TABLE>>();
@@ -53,35 +65,26 @@ namespace NUnitTestProject
         [Test]
         public void TestDeleteTable([ValueSource("_testData")] TestData data)
         {
-            if (data.NumberTable == -1)
-            {
-                tableVM.ListTable = null;
-            }
-            else
-            {
-                tableVM.ListTable = new System.Collections.ObjectModel.ObservableCollection<TABLECUSTOM>();
-                for (int i = 0; i < data.NumberTable; i++)
-                {
-                    tableVM.ListTable.Add(new TABLECUSTOM()
-                    {
-                        table = new TABLE()
-                        {
-                            ID = i,
-                            CurrentStatus = data.Status
-                        }
-                    });
-                }
-            }
-
             if (data.NumberTable < 1)
             {
+                tableVM.ListTable = null;
                 Assert.Throws<ArgumentException>(() => tableVM.Delete(), "Not table to delete");
                 return;
             }
 
+            tableVM.ListTable = new System.Collections.ObjectModel.ObservableCollection<TABLECUSTOM>();
+            for (int i = 0; i < data.NumberTable; i++)
+            {
+                tableVM.ListTable.Add(new TABLECUSTOM()
+                {
+                    table = listTable[i]
+                });
+            }
+            tableVM.ListTable[data.NumberTable - 1].table.CurrentStatus = data.Status;
+
             //mockSetTABLE.Setup(m => m.Max(i => i.ID)).Returns(tableVM.ListTable[tableVM.ListTable.Count - 1].table.ID);
-            tableVM.CurrentTable = tableVM.ListTable[tableVM.ListTable.Count - 1];
-            tableVM.CurrentTable.table.CurrentStatus = data.Status;
+            //tableVM.CurrentTable = tableVM.ListTable[tableVM.ListTable.Count - 1];
+            //tableVM.CurrentTable.table.CurrentStatus = data.Status;
             if (data.Status == "Already")
             {
                 Assert.Throws<ArgumentException>(() => tableVM.Delete(), "The table is not payment");

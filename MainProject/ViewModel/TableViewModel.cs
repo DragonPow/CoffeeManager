@@ -181,13 +181,13 @@ namespace MainProject.ViewModel
                 {
                     if (value != null)
                     {
-                        //if (value.table.CurrentStatus == "Fix" || value.table.CurrentStatus == "Already")
-                        //{
-                        //    WindowService.Instance.OpenMessageBox(value.table.CurrentStatus == "Fix" ? "Không thể chọn bàn đang sữa chữa" : "Không thể chọn bàn đang có khách", "Lỗi", MessageBoxImage.Error);
-                        //    return;
-                        //}
-                        //TableName = "Bàn: " + value.table.Name.ToString();
-                        //value.table.CurrentStatus = "Already";
+                        if (value.table.CurrentStatus == "Fix" || value.table.CurrentStatus == "Already")
+                        {
+                            WindowService.Instance.OpenMessageBox(value.table.CurrentStatus == "Fix" ? "Không thể chọn bàn đang sữa chữa" : "Không thể chọn bàn đang có khách", "Lỗi", MessageBoxImage.Error);
+                            return;
+                        }
+                        TableName = "Bàn: " + value.table.Name.ToString();
+                        value.table.CurrentStatus = "Already";
                         if (_CurrentTable != null) _CurrentTable.table.CurrentStatus = "Normal";
                         _CurrentTable = value;
                         Isbringtohome = false;
@@ -466,7 +466,7 @@ namespace MainProject.ViewModel
             }
             int number = ListTable.Count - 1;
 
-            if (CurrentTable.table.CurrentStatus == "Already")
+            if (ListTable[number].table.CurrentStatus == "Already")
             {
                 throw new ArgumentException("The table is not payment","NotPayment");
             }
