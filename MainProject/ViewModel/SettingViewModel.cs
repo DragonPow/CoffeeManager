@@ -137,7 +137,7 @@ namespace MainProject.ViewModel
                            {
                                Save_data_store();
                            }
-                           catch(Exception e)
+                           catch(InvalidOperationException e)
                            {
                                WindowService.Instance.OpenMessageBox("Vui lòng nhập đầy đủ thông tin!", "Lỗi", System.Windows.MessageBoxImage.Error);
                                return;

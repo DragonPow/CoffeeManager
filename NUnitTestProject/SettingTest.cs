@@ -32,7 +32,7 @@ namespace NUnitTestProject
                 parameter = new List<PARAMETER>() {
                     new PARAMETER(){ NAME = "StoreName", Value = "10 Diem" },
                     new PARAMETER(){NAME = "StorePhone", Value ="0348771xxx"},
-                     new PARAMETER(){NAME = "StoreAddress", Value ="Dĩ An, Bình Dương"},
+                    new PARAMETER(){NAME = "StoreAddress", Value ="Dĩ An, Bình Dương"},
                 };
 
                 var DataParameter = parameter.AsQueryable();
@@ -59,12 +59,16 @@ namespace NUnitTestProject
 
             public void TestSaveDataStore(string name, string phonenumber, string address )
             {
+               
                 viewmodel.Save_data_store();
+                viewmodel.NameStore = name;
+                viewmodel.NumberPhone = phonenumber;
+                viewmodel.Address = address;
 
                 if (name == "" || phonenumber == "" || address == "")
                 {
                     //Check if have emplty value, throw exception
-                    var rs = Assert.Throws<ArgumentException>(() => viewmodel.Save_data_store());
+                    var rs = Assert.Throws<InvalidOperationException>(() => viewmodel.Save_data_store());
                     Assert.That(rs.Message, Is.EqualTo("Empty data!"));
                     return;
                 }

@@ -642,7 +642,7 @@ namespace MainProject.ViewModel
         public void LoadProductByType(TYPE_PRODUCT Type)
         {
             if (Type == null || Type.Type.Contains("Tất cả"))
-            {
+            { 
                 ListPoduct = new ObservableCollection<PRODUCT>(Context.PRODUCTs.Where(p => p.IsProvided).ToList());
             }
             else
