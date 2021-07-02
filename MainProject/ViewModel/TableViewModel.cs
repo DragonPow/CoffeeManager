@@ -385,10 +385,30 @@ namespace MainProject.ViewModel
             get
             {
                 if (_PayCommand == null)
-                    _PayCommand = new RelayingCommand<object>(a => Pay());
+                {
+                    _PayCommand = new RelayingCommand<Object>(a =>
+                    {
+                        try
+                        {
+                            Pay();
+                        }
+                        catch (ArgumentException e)
+                        {
+                            switch (e.ParamName)
+                            {
+                                case "TableNULL":
+                                    WindowService.Instance.OpenMessageBox("Chưa chọn bàn!", "Lỗi", MessageBoxImage.Error);
+                                    break;
+                                case "ListProNULL":
+                                    WindowService.Instance.OpenMessageBox("Chưa chọn món!", "Lỗi", MessageBoxImage.Information);
+                                    break;
+                            }
+                        }
+                    });
+                }
                 return _PayCommand;
             }
-
+           
         }
         public void Pay()
         {
@@ -396,21 +416,17 @@ namespace MainProject.ViewModel
             {
                 CurrentTable = new TABLECUSTOM() { table = new TABLE() };
             }
-
             if (CurrentTable == null && !Isbringtohome)
             {
-                WindowService.Instance.OpenMessageBox("Chưa chọn bàn", "Lỗi", MessageBoxImage.Error);
-                return;
+                throw new ArgumentException("Chưa chọn bàn!", "TableNULL");
             }
 
             if (Currentlistdetailpro == null || Currentlistdetailpro.Count == 0)
             {
-                WindowService.Instance.OpenMessageBox("Chưa có món được chọn!", "Lỗi", MessageBoxImage.Error);
-                return;
+                throw new ArgumentException("Chưa chọn món!", "ListProNULL");
             }
 
             CurrentTable.ListPro = Currentlistdetailpro;
-            //CurrentTable.Total = TotalCurrentTable;
 
             Billviewmodel = new BillViewModel(CurrentTable);
 
