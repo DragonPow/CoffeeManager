@@ -16,7 +16,7 @@ namespace MainProject.ViewModel
     {
         public string NameWorkSpace => "Lịch sử";
         private const PackIconKind _iconDisplay = PackIconKind.ClipboardTextSearchOutline;
-        public IContext db = new mainEntities();
+        public mainEntities db = new mainEntities();
         public PackIcon IconDisplay
         {
             get
@@ -29,7 +29,7 @@ namespace MainProject.ViewModel
         private ObservableCollection<BILL> _ListBill;
         private BILL _CurrentBill;
         private int _NumberPage;
-        public static int Number_Bill_in_Page;
+        public static int Number_Bill_in_Page = 13;
 
         private DateTime? _BeginTime;
         private DateTime? _EndTime;
@@ -215,7 +215,7 @@ namespace MainProject.ViewModel
                 throw new ArgumentException("BeginTime is greater than EndTime");
             }
             DateTime newEndTime = EndTime.AddDays(1);
-            //using (var db = myContext)
+            //using (var db = new mainEntities())
             {
                 int d = db.BILLs.Where(b => b.CheckoutDay >= BeginTime && b.CheckoutDay <= newEndTime).Count();
 
