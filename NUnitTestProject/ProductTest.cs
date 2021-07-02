@@ -37,7 +37,7 @@ namespace NUnitTestProject
             //Setup data PRODUCT
             listProduct = new List<PRODUCT>()
             {
-                new PRODUCT() {Name = "Trà sữa", Price = 2000, TYPE_PRODUCT = listType[0], ID_Type = 1, IsProvided = true}
+                new PRODUCT() {ID = 1, Name = "Trà sữa", Price = 2000, TYPE_PRODUCT = listType[0], ID_Type = 1, IsProvided = true}
             };
             var dataPRODUCT = listProduct.AsQueryable();
 
@@ -65,6 +65,34 @@ namespace NUnitTestProject
         public void TearDown()
         {
 
+        }
+
+        [Test]
+        public void TestAddDetailProToTable([ValueSource("_testData_AddProductToTable")] TestData data)
+        {
+            productVM.Tableviewmodel = new TableViewModel(mockContext.Object);
+            productVM.Tableviewmodel.Currentlistdetailpro = new System.Collections.ObjectModel.ObservableCollection<MainProject.DetailPro>();
+            productVM.Tableviewmodel.Currentlistdetailpro.Add(new MainProject.DetailPro(listProduct[0]));
+
+            var product = new PRODUCT() { ID = data.ID, Name = data.Name, Price = data.Price };
+            productVM.ListPoduct = new System.Collections.ObjectModel.ObservableCollection<PRODUCT>();
+            productVM.ListPoduct.Add(product);
+            productVM.Currentproduct = product;
+
+            //Run the method
+            productVM.AddDetailProToTable();
+
+            if (data.Name == "Trà sữa")
+            {
+                Assert.AreEqual(2, productVM.Tableviewmodel.Currentlistdetailpro[0].Quantity);
+                Assert.AreEqual(1, productVM.Tableviewmodel.Currentlistdetailpro.Count);
+            }
+            else
+            {
+                Assert.AreEqual(1, productVM.Tableviewmodel.Currentlistdetailpro[0].Quantity);
+                Assert.AreEqual(1, productVM.Tableviewmodel.Currentlistdetailpro[1].Quantity);
+                Assert.AreEqual(2, productVM.Tableviewmodel.Currentlistdetailpro.Count);
+            }
         }
 
         [Test]
@@ -110,6 +138,7 @@ namespace NUnitTestProject
 
         public class TestData
         {
+            public int ID;
             public string Name;
             public int Price;
             //public string Description;
@@ -123,6 +152,12 @@ namespace NUnitTestProject
             new TestData() { Name = "Trà đào", Price = 0},
             new TestData() { Name = "Trà sữa", Price = 1000},
             new TestData() { Name = "Trà đào", Price = 1000},
+        };
+
+        private static TestData[] _testData_AddProductToTable = new[]
+        {
+            new TestData() { ID = 1, Name = "Trà sữa", Price = 2000},
+            new TestData() { ID = 2, Name = "Trà đào", Price = 1000},
         };
     }
 }
