@@ -60,19 +60,22 @@ namespace NUnitTestProject
             billVM.Context = mockContext.Object;
         }
 
-        [TestCase(3, 2)]
-        [TestCase(1, 1)]
-        [TestCase(1, 1)]
-        [TestCase(1, 1)]
-        [TestCase(0, 1)]
-        [TestCase(1, 0)]
-        [TestCase(0, 0)]
-        public void TestTotalPrice_of_Bill(int quantity1, int quantity2)
-        {
-            table.ListPro.Add(createDetailProduct(listProduct[0], quantity1));
-            table.ListPro.Add(createDetailProduct(listProduct[1], quantity2));
+        [TestCase(0, 0, 0, 0, 0)]
+        [TestCase(0, 0, 1, 0, 1)]
+        [TestCase(0, 0, 1, 0, 0)]
+        [TestCase(0, 0, 0, 0, 1)]
+        [TestCase(0, 0, 1, 0, 1)]
+        [TestCase(10000, 10000, 1, 20000, 0)]
+        [TestCase(20000, 10000, 0, 20000, 1)]
+        [TestCase(30000, 10000, 1, 20000, 1)]
+        [TestCase(70000, 10000, 3, 20000, 2)]
 
-            Assert.AreEqual(listProduct[0].Price * quantity1 + listProduct[1].Price * quantity2, table.Total);
+        public void TestTotalPrice(int total, int price1, int quantity1, int price2, int quantity2)
+        {
+            table.ListPro.Add(createDetailProduct(price1, quantity1));
+            table.ListPro.Add(createDetailProduct(price2, quantity2));
+
+            Assert.AreEqual(total, table.Total);
         }
 
         private DetailPro createDetailProduct(PRODUCT pro, int quantity)
@@ -82,18 +85,13 @@ namespace NUnitTestProject
             product.Quantity = quantity;
             return product;
         }
-
-        [TestCase(0, 1)]
-        [TestCase(10000, 2)]
-        [TestCase(10000, 0)]
-        [TestCase(0, 1)]
-        public void TestTotalPrice_of_Product(int price, int quantity)
+        private DetailPro createDetailProduct(int price, int quantity)
         {
             DetailPro product = new DetailPro();
             product.Pro = new PRODUCT();
             product.Pro.Price = price;
             product.Quantity = quantity;
-            Assert.AreEqual(price * quantity, product.Total);
+            return product;
         }
 
         [TestCase(1, 0)]
