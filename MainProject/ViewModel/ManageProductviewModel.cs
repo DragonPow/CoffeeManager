@@ -3,17 +3,14 @@ using MainProject.MainWorkSpace.Product;
 using MainProject.Model;
 using MaterialDesignThemes.Wpf;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
 namespace MainProject.ViewModel
 {
-    class ManageProductviewModel : BaseViewModel, IMainWorkSpace
+    public class ManageProductviewModel : BaseViewModel, IMainWorkSpace
     {
         public string NameWorkSpace => "Quản lý thực đơn";
         private const PackIconKind _iconDisplay = PackIconKind.FoodForkDrink;
@@ -35,7 +32,10 @@ namespace MainProject.ViewModel
         private TYPE_PRODUCT _CurrentTypeInProManager;
         private string _EditTypeInEditCatefory;
 
-  
+        public mainEntities db = new mainEntities();
+
+
+
         private ICommand _OpenViewEditCategory;
         private ICommand _CloseEditCategory;
 
@@ -100,7 +100,21 @@ namespace MainProject.ViewModel
             {
                 if (_AddEditCategory == null)
                 {
-                    _AddEditCategory = new RelayingCommand<Object>(a => AddEditCategory());
+                    _AddEditCategory = new RelayingCommand<Object>(a =>
+                    { 
+                        try
+                        {
+                            AddEditCategory();
+                        }
+                        catch (ArgumentNullException e)
+                        {
+                            WindowService.Instance.OpenMessageBox("Vui lòng nhập tên danh mục!", "Lỗi", MessageBoxImage.Error);
+                        }
+                        catch (ArgumentException e)
+                        {
+                            WindowService.Instance.OpenMessageBox("Danh mục đã tồn tại, vui lòng đặt tên khác!", "Lỗi", MessageBoxImage.Error);
+                        }
+                    });
                 }
                 return _AddEditCategory;
             }
@@ -111,19 +125,17 @@ namespace MainProject.ViewModel
         {
             if (NameNewTypeProduct == null || NameNewTypeProduct == "")
             {
-                WindowService.Instance.OpenMessageBox("Vui lòng nhập tên danh mục!", "Lỗi", System.Windows.MessageBoxImage.Error);
-                return;
+                throw new ArgumentNullException("Name category is empty");             
             }
 
-            using (var db = new mainEntities())
+            /*using (var db = new mainEntities())*/
             {
 
                 TYPE_PRODUCT type = db.TYPE_PRODUCT.Where(t => t.Type == NameNewTypeProduct).FirstOrDefault();
 
                 if (type != null)
                 {
-                    WindowService.Instance.OpenMessageBox("Danh mục đã tồn tại, vui lòng đặt tên khác!", "Lỗi", System.Windows.MessageBoxImage.Error);
-                    return;
+                    throw new ArgumentException("Category is existing");
                 }
                 db.TYPE_PRODUCT.Add(new TYPE_PRODUCT() { Type = NameNewTypeProduct });
 
@@ -199,7 +211,7 @@ namespace MainProject.ViewModel
         {
             if (CurrentTypeInProManager == null || CurrentTypeInProManager.ID == 0) return;
 
-            using (var db = new mainEntities())
+          /*  using (var db = new mainEntities())*/
             {
                 var list = db.PRODUCTs.Where(p => (p.ID_Type == CurrentTypeInProManager.ID) && p.IsProvided ).ToList();
                 if (list.Count != 0)
@@ -263,7 +275,7 @@ namespace MainProject.ViewModel
 
             if (CurrentTypeInProManager == null) return;
 
-            using (var db = new mainEntities())
+          /*  using (var db = new mainEntities())*/
             {
                 /*for (int i = 1; i < ListType.Count; ++i)
                 {
@@ -384,7 +396,7 @@ namespace MainProject.ViewModel
                 return;
             }
 
-            using (var db = new mainEntities())
+          /*  using (var db = new mainEntities())*/
             {
                 TYPE_PRODUCT T = db.TYPE_PRODUCT.Where(t => t.Type == NameNewTypeProduct).FirstOrDefault();
 
@@ -476,7 +488,7 @@ namespace MainProject.ViewModel
 
         private void LoadProductBYType_EditType()
         {
-            using (var db = new mainEntities())
+           /* using (var db = new mainEntities())*/
             {
                 if (CurrentTypeInProManager == null) return;
                 if (CurrentTypeInProManager.Type == "Tất cả")
