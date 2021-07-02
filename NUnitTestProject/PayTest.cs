@@ -17,37 +17,32 @@ namespace NUnitTestProject
     {
         static TableViewModel tableVM;
 
-        static List<DetailPro> listProduct;
-        static TABLECUSTOM Currenttable;
+        static List<DetailPro> listProduct = new List<DetailPro>()
+            {
+                new DetailPro() { Quantity = 2, Pro = new PRODUCT() { Name = "Trà sữa", Price = 2000, TYPE_PRODUCT = new TYPE_PRODUCT() { ID = 1, Type = "Trà" }, IsProvided = true } }
+            };
+        static TABLECUSTOM Currenttable = new TABLECUSTOM() { table = new TABLE() { Name = 1, CurrentStatus = "Already" } };
 
         static Mock<mainEntities> mockContext;
-     
+
         static Mock<DbSet<DetailPro>> mockSetPRODUCT;
 
         [SetUp]
         public void SetUp()
         {
-            tableVM = new TableViewModel();
 
-            //Setup data TYPE_PRODUCT
-            var Type = new TYPE_PRODUCT() { ID = 1, Type = "Trà" };
-
-            listProduct = new List<DetailPro>()
+            /*listProduct = new List<DetailPro>()
             {
-                new DetailPro() {Quantity=2, Pro=new PRODUCT() {Name = "Trà sữa", Price = 2000, TYPE_PRODUCT = Type, ID_Type = 1, IsProvided = true} }
+                new DetailPro() { Quantity = 2, Pro = new PRODUCT() { Name = "Trà sữa", Price = 2000, TYPE_PRODUCT = new TYPE_PRODUCT() { ID = 1, Type = "Trà" }, IsProvided = true } }
             };
-           // var dataPRODUCT = listProduct.AsQueryable();
-
-            Currenttable = new TABLECUSTOM() { table = new TABLE() { Name = 1, CurrentStatus = "Already" } };
-
-
-
+            Currenttable = new TABLECUSTOM() { table = new TABLE() { Name = 1, CurrentStatus = "Already" } };*/
             //Config PRODUCT
-           // mockSetPRODUCT = new Mock<DbSet<DetailPro>>();
-           // mockSetPRODUCT.As<IQueryable<DetailPro>>().Setup(m => m.Provider).Returns(dataPRODUCT.Provider);
-           // mockSetPRODUCT.As<IQueryable<DetailPro>>().Setup(m => m.Expression).Returns(dataPRODUCT.Expression);
-           // mockSetPRODUCT.As<IQueryable<DetailPro>>().Setup(m => m.ElementType).Returns(dataPRODUCT.ElementType);
-           // mockSetPRODUCT.As<IQueryable<DetailPro>>().Setup(m => m.GetEnumerator()).Returns(dataPRODUCT.GetEnumerator());
+            // mockSetPRODUCT = new Mock<DbSet<DetailPro>>();
+            // mockSetPRODUCT.As<IQueryable<DetailPro>>().Setup(m => m.Provider).Returns(dataPRODUCT.Provider);
+            // mockSetPRODUCT.As<IQueryable<DetailPro>>().Setup(m => m.Expression).Returns(dataPRODUCT.Expression);
+            // mockSetPRODUCT.As<IQueryable<DetailPro>>().Setup(m => m.ElementType).Returns(dataPRODUCT.ElementType);
+            // mockSetPRODUCT.As<IQueryable<DetailPro>>().Setup(m => m.GetEnumerator()).Returns(dataPRODUCT.GetEnumerator());
+            tableVM = new TableViewModel(true);
 
 
         }
@@ -58,44 +53,45 @@ namespace NUnitTestProject
         }
 
         [Test]
-        public void TestPayTable([ValueSource("_testData")] TestData data)
-        {
-            tableVM.Isbringtohome = false;
-            tableVM.CurrentTable = data.table;
+        public void TestPayTable([ValueSource(typeof(TestData), nameof(TestData._testData))] TestData data)
+        {     
+            
+           /* tableVM.Isbringtohome = data.IsBringHome;*/
+            if (data.listPro != null) tableVM.Currentlistdetailpro = new ObservableCollection<DetailPro>(data.listPro);
+            else
+                tableVM.Currentlistdetailpro = new ObservableCollection<DetailPro>();
 
-            tableVM.Currentlistdetailpro = new System.Collections.ObjectModel.ObservableCollection<DetailPro>();
-            foreach (var i in data.listPro)
-            {
-                tableVM.Currentlistdetailpro.Add(i);
-            }
+           /* tableVM.CurrentTable = data.table;*/
 
-            if (data.table==null)
+            if (data.table == null && !data.IsBringHome)
             {
-                Assert.Throws<ArgumentException>(() => tableVM.Pay(), "Chưa chọn bàn!", "TableNULL");
+                Assert.Throws<ArgumentException>(() => tableVM.Pay(data.IsBringHome, data.table), "Chưa chọn bàn!", "TableNULL");
                 return;
             }
-            if (data.listPro==null)
+            if (data.listPro == null || data.listPro.Count == 0)
             {
-                Assert.Throws<ArgumentException>(() => tableVM.Pay(), "Chưa chọn món!", "ListProNULL");
+                Assert.Throws<ArgumentException>(() => tableVM.Pay(data.IsBringHome, data.table), "Chưa chọn món!", "ListProNULL");
                 return;
             }
-          
-            tableVM.Pay();
+
+            /*tableVM.Pay(data.IsBringHome, data.table);*/
+
 
         }
 
         public class TestData
         {
-            public List<DetailPro> listPro;
+            public List<DetailPro> listPro ;
             public TABLECUSTOM table;
+            public bool IsBringHome; 
+            public static TestData[] _testData = new[]
+            {
+                new TestData() { listPro = listProduct, table = null, IsBringHome = true },
+                new TestData() {listPro = null, table = Currenttable, IsBringHome = false  },
+                new TestData() {listPro = listProduct, table = Currenttable, IsBringHome = false},
+                new TestData() {listPro = listProduct, table = null, IsBringHome = false}
+            };
         }
-        private static TestData[] _testData = new[]
-        {
-            new TestData() { listPro = null, table=null},
-            new TestData() {listPro = null, table=Currenttable},
-            new TestData() {listPro = listProduct, table=Currenttable},
-            
-        };
     }
 }
-}
+
