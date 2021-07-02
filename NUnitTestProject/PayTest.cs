@@ -74,8 +74,7 @@ namespace NUnitTestProject
                 return;
             }
 
-            /*tableVM.Pay(data.IsBringHome, data.table);*/
-
+            tableVM.Pay(data.IsBringHome, data.table);
 
         }
 

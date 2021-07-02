@@ -399,6 +399,7 @@ namespace MainProject.ViewModel
                         try
                         {
                             Pay(Isbringtohome, CurrentTable);
+                            OpenBillView();
                         }
                         catch (ArgumentException e)
                         {
@@ -438,21 +439,26 @@ namespace MainProject.ViewModel
                
             }
 
-            this.CurrentTable.ListPro = Currentlistdetailpro;
+            
+        }
+
+        private void OpenBillView()
+        {
+            CurrentTable.ListPro = Currentlistdetailpro;
 
             Billviewmodel = new BillViewModel(CurrentTable);
 
-           BillView billView = new BillView();
-           billView.DataContext = Billviewmodel;
+            BillView billView = new BillView();
+            billView.DataContext = Billviewmodel;
 
-           billView.ShowDialog();
+            billView.ShowDialog();
 
-           if (Billviewmodel.IsClose)
-           {
-               this.CurrentTable = null;
-               Currentlistdetailpro = new ObservableCollection<DetailPro>();
-               TotalCurrentTable = 0;
-           }
+            if (Billviewmodel.IsClose)
+            {
+                this.CurrentTable = null;
+                Currentlistdetailpro = new ObservableCollection<DetailPro>();
+                TotalCurrentTable = 0;
+            }
         }
 
 
