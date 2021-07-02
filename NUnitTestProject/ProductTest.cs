@@ -16,7 +16,7 @@ namespace NUnitTestProject
         static ProductViewModel productVM;
 
         static List<PRODUCT> listProduct;
-        //static List<TYPE_PRODUCT> listType;
+        static List<TYPE_PRODUCT> listType;
         static Mock<mainEntities> mockContext;
         static Mock<DbSet<PRODUCT>> mockSetPRODUCT;
         static Mock<DbSet<TYPE_PRODUCT>> mockSetTYPEPRODUCT;
@@ -27,7 +27,7 @@ namespace NUnitTestProject
             productVM = new ProductViewModel();
 
             //Setup data TYPE_PRODUCT
-            var listType = new List<TYPE_PRODUCT>()
+            listType = new List<TYPE_PRODUCT>()
             {
                 new TYPE_PRODUCT() {ID = 1, Type = "Trà"},
                 new TYPE_PRODUCT() {ID = 2, Type = "Cà phê"}
@@ -73,7 +73,7 @@ namespace NUnitTestProject
             productVM.Newproduct = new PRODUCT();
             productVM.Newproduct.Name = data.Name;
             productVM.Newproduct.Price = data.Price;
-            //productVM.Newproduct.TYPE_PRODUCT = data.Type;
+            productVM.Newproduct.TYPE_PRODUCT = listType[0];
 
             productVM.ListPoduct = new System.Collections.ObjectModel.ObservableCollection<PRODUCT>();
             foreach (var i in listProduct)

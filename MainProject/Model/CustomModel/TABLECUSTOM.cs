@@ -14,7 +14,8 @@ namespace MainProject.Model
         private TABLE _table;
         public TABLE table
         {
-            get => _table; set
+            get => _table; 
+            set
             {
                 _table = value;
                 if (table != null)
@@ -73,6 +74,7 @@ namespace MainProject.Model
 
         public TABLECUSTOM()
         {
+            table = new TABLE();
         }
 
         private void Table_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
