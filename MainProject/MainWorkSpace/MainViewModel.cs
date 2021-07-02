@@ -14,7 +14,7 @@ using System.Windows.Markup;
 
 namespace MainProject.MainWorkSpace
 {
-    class MainViewModel : BaseViewModel, IMainWorkSpace
+    public class MainViewModel : BaseViewModel, IMainWorkSpace
     {
         #region Feld
         public string NameWorkSpace => "Trang chủ";
@@ -118,12 +118,12 @@ namespace MainProject.MainWorkSpace
         #region Init
         public MainViewModel()
         {
-            Tableviewmodel = new TableViewModel();
+           /* Tableviewmodel = new TableViewModel();
             Productviewmodel = new ProductViewModel() { Tableviewmodel = Tableviewmodel };
 
             Load_Type();
 
-            CurrentTypeInHome = ListType.ElementAt(0);
+            CurrentTypeInHome = ListType.ElementAt(0);*/
 
         }
 
