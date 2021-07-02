@@ -151,7 +151,7 @@ namespace MainProject.ViewModel
             {
                 if (_AddProduct == null)
                 {
-                    _AddProduct = new RelayingCommand<bool>(isValid => 
+                    _AddProduct = new RelayingCommand<bool>(isValid =>
                     {
                         if (!isValid) return;
                         try
@@ -175,9 +175,9 @@ namespace MainProject.ViewModel
                                 case "Price0":
                                     WindowService.Instance.OpenMessageBox("Vui lòng nhập giá sản phẩm!", "Thông báo", MessageBoxImage.Information);
                                     break;
-                                //case "TypeNull":
-                                //    WindowService.Instance.OpenMessageBox("Vui lòng chọn danh mục!", "Thông báo", MessageBoxImage.Information);
-                                //    break;
+                                    //case "TypeNull":
+                                    //    WindowService.Instance.OpenMessageBox("Vui lòng chọn danh mục!", "Thông báo", MessageBoxImage.Information);
+                                    //    break;
                             }
                         }
                     });
@@ -305,31 +305,33 @@ namespace MainProject.ViewModel
         public void DeletePro()
         {
             if (Currentproduct == null) return;
+            if (Tableviewmodel.Currentlistdetailpro.Contains(new DetailPro(Currentproduct)))
+            {
+                WindowService.Instance.OpenMessageBox("Vui lòng thanh toán món trước khi xóa!", "Lỗi", MessageBoxImage.Error);
+                return;
+            }
+            PRODUCT product = Context.PRODUCTs.Where(p => (p.ID == Currentproduct.ID) && p.IsProvided).FirstOrDefault();
+
+            if (product == null) return;
             using (var transaction = Context.Database.BeginTransaction())
             {
-                PRODUCT product = Context.PRODUCTs.Where(p => (p.ID == Currentproduct.ID) && p.IsProvided).FirstOrDefault();
-
-                if (product == null) return;
-                using (var transaction = db.Database.BeginTransaction())
+                try
                 {
-                    try
+                    var list = Context.DETAILREPORTSALES.Where(r => r.ID_Product == product.ID);
+                    if (list != null)
                     {
-                        var list = Context.DETAILREPORTSALES.Where(r => r.ID_Product == product.ID);
-                        if (list != null)
-                        {
-                            Context.DETAILREPORTSALES.RemoveRange(list);
-                        }
-
-                        product.IsProvided = false;
-
-                        Context.SaveChanges();
-                        transaction.Commit();
+                        Context.DETAILREPORTSALES.RemoveRange(list);
                     }
-                    catch (Exception exp)
-                    {
-                        transaction.Rollback();
-                        Console.WriteLine("Error occurred.");
-                    }
+
+                    product.IsProvided = false;
+
+                    Context.SaveChanges();
+                    transaction.Commit();
+                }
+                catch (Exception exp)
+                {
+                    transaction.Rollback();
+                    Console.WriteLine("Error occurred.");
                 }
             }
 
@@ -592,20 +594,29 @@ namespace MainProject.ViewModel
             {
                 if (_AddDetailProToTableCommand == null)
                 {
-                    _AddDetailProToTableCommand = new RelayingCommand<Object>(a => AddDetailProToTable());
+                    _AddDetailProToTableCommand = new RelayingCommand<Object>(a =>
+                    {
+                        if (isSelectTable())
+                        {
+                            AddDetailProToTable();
+                        }
+                        else
+                        {
+                            WindowService.Instance.OpenMessageBox("Vui lòng chọn bàn trước!", "Thông báo", MessageBoxImage.Information);
+                        }
+                    });
                 }
                 return _AddDetailProToTableCommand;
             }
         }
 
+        private bool isSelectTable()
+        {
+            return Tableviewmodel.CurrentTable != null || Tableviewmodel.Isbringtohome;
+        }
 
         public void AddDetailProToTable()
         {
-            if (Tableviewmodel.CurrentTable == null && !Tableviewmodel.Isbringtohome)
-            {
-                WindowService.Instance.OpenMessageBox("Vui lòng chọn bàn trước!", "Lỗi", MessageBoxImage.Error);
-                return;
-            }
             if (!ListPoduct.Contains(Currentproduct)) return;
 
             Tableviewmodel.TotalCurrentTable += (long)Currentproduct.Price;
