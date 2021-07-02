@@ -73,6 +73,11 @@ namespace MainProject.ViewModel
 
             LoadTable();
         }
+       //init for unittest
+        public TableViewModel( bool t)
+        {
+            TotalCurrentTable = 0;
+        }
 
         public TableViewModel(mainEntities Context)
         {
@@ -96,8 +101,11 @@ namespace MainProject.ViewModel
                     if (value == true)
                     {
                         TableName = "Mang về";
-                        if (CurrentTable != null) CurrentTable.table.CurrentStatus = "Normal";
-                        CurrentTable = null;
+                        if (CurrentTable != null)
+                        {
+                            CurrentTable.table.CurrentStatus = "Normal";
+                            CurrentTable = null;
+                        }
                     }
                     else
                          if (CurrentTable == null) TableName = "Chọn bàn";
@@ -390,7 +398,7 @@ namespace MainProject.ViewModel
                     {
                         try
                         {
-                            Pay();
+                            Pay(Isbringtohome, CurrentTable);
                         }
                         catch (ArgumentException e)
                         {
@@ -398,10 +406,12 @@ namespace MainProject.ViewModel
                             {
                                 case "TableNULL":
                                     WindowService.Instance.OpenMessageBox("Chưa chọn bàn!", "Lỗi", MessageBoxImage.Error);
-                                    break;
+                                    return;
+                                   
                                 case "ListProNULL":
                                     WindowService.Instance.OpenMessageBox("Chưa chọn món!", "Lỗi", MessageBoxImage.Information);
-                                    break;
+                                    return;
+                                  
                             }
                         }
                     });
@@ -410,7 +420,7 @@ namespace MainProject.ViewModel
             }
            
         }
-        public void Pay()
+        public void Pay( bool Isbringtohome, TABLECUSTOM CurrentTable)
         {
             if (Isbringtohome)
             {
@@ -419,28 +429,30 @@ namespace MainProject.ViewModel
             if (CurrentTable == null && !Isbringtohome)
             {
                 throw new ArgumentException("Chưa chọn bàn!", "TableNULL");
+             
             }
 
             if (Currentlistdetailpro == null || Currentlistdetailpro.Count == 0)
             {
                 throw new ArgumentException("Chưa chọn món!", "ListProNULL");
+               
             }
 
-            CurrentTable.ListPro = Currentlistdetailpro;
+            this.CurrentTable.ListPro = Currentlistdetailpro;
 
             Billviewmodel = new BillViewModel(CurrentTable);
 
-            BillView billView = new BillView();
-            billView.DataContext = Billviewmodel;
+           BillView billView = new BillView();
+           billView.DataContext = Billviewmodel;
 
-            billView.ShowDialog();
+           billView.ShowDialog();
 
-            if (Billviewmodel.IsClose)
-            {
-                CurrentTable = null;
-                Currentlistdetailpro = new ObservableCollection<DetailPro>();
-                TotalCurrentTable = 0;
-            }
+           if (Billviewmodel.IsClose)
+           {
+               this.CurrentTable = null;
+               Currentlistdetailpro = new ObservableCollection<DetailPro>();
+               TotalCurrentTable = 0;
+           }
         }
 
 
@@ -450,7 +462,7 @@ namespace MainProject.ViewModel
             {
                 if (_DeleteTableCommand == null)
                 {
-                    _DeleteTableCommand = new RelayingCommand<Object>(a =>
+                    _DeleteTableCommand = new RelayingCommand<object>(a =>
                     {
                         try
                         {
