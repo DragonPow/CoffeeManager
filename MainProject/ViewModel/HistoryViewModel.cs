@@ -29,7 +29,7 @@ namespace MainProject.ViewModel
         private ObservableCollection<BILL> _ListBill;
         private BILL _CurrentBill;
         private int _NumberPage;
-        public static int Number_Bill_in_Page = 13;
+        public static int Number_Bill_in_Page = -1;
 
         private DateTime? _BeginTime;
         private DateTime? _EndTime;
@@ -199,8 +199,9 @@ namespace MainProject.ViewModel
 
         public void Search_Bill()
         {
-            if (Number_Bill_in_Page == 0)
+            if (Number_Bill_in_Page <= 0)
             {
+                WindowService.Instance.OpenMessageBox("Số lượng bill mỗi trang phải lớn hơn 0!!", "Lỗi hệ thống", System.Windows.MessageBoxImage.Error);
                 NumberPage = 0;
                 return;
             }
