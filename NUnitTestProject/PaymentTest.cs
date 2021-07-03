@@ -8,6 +8,7 @@ using System.Linq;
 using Moq;
 using System.Data.Entity;
 using MainProject.MainWorkSpace.Bill;
+using System;
 
 namespace NUnitTestProject
 {
@@ -94,23 +95,40 @@ namespace NUnitTestProject
             return product;
         }
 
-        [TestCase(1, 0)]
-        [TestCase(2, 0)]
-        [TestCase(1, 1)]
-        [TestCase(2, 1)]
-        public void TestPayment(int numberProduct, int tableName)
+        [TestCase(1, 0, 10000)]
+        [TestCase(2, 0, 30000)]
+        [TestCase(1, 1, 5000)]
+        [TestCase(2, 1, 10000)]
+        [TestCase(2, 1, 10000)]
+        [TestCase(2, 1, 40000)]
+        public void TestPayment(int numberProduct, int tableName, long moneyCustomer)
         {
             billVM.CurrentTable.table = new TABLE();
             billVM.CurrentTable.table.Name = tableName;
+            billVM.GiveMoney = moneyCustomer;
+
+            long totalPrice = 0;
+
             for (int i = 0; i < numberProduct; i++)
             {
                 var product = listProduct[i];
                 billVM.CurrentTable.ListPro.Add(createDetailProduct(product, i));
+                totalPrice += (long)product.Price;
             }
+
+            billVM.Total = totalPrice;
+
+            if (moneyCustomer < totalPrice)
+            {
+                Assert.Throws<InvalidOperationException>(() => billVM.Payment());
+                return;
+            }
+
             billVM.Payment();
 
             mockSetBILL.Verify(m => m.Add(It.IsAny<BILL>()), Times.Once);
             mockContext.Verify(m => m.SaveChanges(), Times.Once);
+            Assert.AreEqual(moneyCustomer - totalPrice, billVM.Refund);
 
             //mockContext.Verify(m => m.DETAILBILLs.Add(It.IsAny<DETAILBILL>()), Times.Exactly(numberProduct));
             //mockSetDETAILBILL.Verify(m => m.Add(It.IsAny<DETAILBILL>()), Times.Exactly(numberProduct));
