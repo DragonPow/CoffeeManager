@@ -108,7 +108,17 @@ namespace MainProject.ViewModel
         }
         public string Type_in_Combobox_AddPro { get => _Type_in_Combobox_AddPro; set { if (_Type_in_Combobox_AddPro != value) { _Type_in_Combobox_AddPro = value; OnPropertyChanged(); } } }
         public int IndexTypeInComboboxEditPro { get => _IndexTypeInComboboxEditPro; set { if (_IndexTypeInComboboxEditPro != value) { _IndexTypeInComboboxEditPro = value; OnPropertyChanged(); } } }
-        public TYPE_PRODUCT Type_in_Combobox_AddProduct { get => _Type_in_Combobox_AddProduct; set { if (_Type_in_Combobox_AddProduct != value) { _Type_in_Combobox_AddProduct = value; OnPropertyChanged(); } } }
+        public TYPE_PRODUCT Type_in_Combobox_AddProduct
+        {
+            get => _Type_in_Combobox_AddProduct;
+            set
+            {
+                if (_Type_in_Combobox_AddProduct != value)
+                {
+                    _Type_in_Combobox_AddProduct = value; OnPropertyChanged();
+                }
+            }
+        }
         public TYPE_PRODUCT Type { get => _Type; set { if (_Type != value) { _Type = value; OnPropertyChanged(); LoadProductByType(value); } } }
         public TableViewModel Tableviewmodel { get => _Tableviewmodel; set { if (_Tableviewmodel != value) { _Tableviewmodel = value; OnPropertyChanged(); } } }
         #endregion
@@ -141,7 +151,7 @@ namespace MainProject.ViewModel
         {
 
             Newproduct = new PRODUCT() { Image = imageToByteArray(Properties.Resources.Empty_Image), TYPE_PRODUCT = new TYPE_PRODUCT(), IsProvided = true };
-
+            Type_in_Combobox_AddProduct = null;
             WindowService.Instance.OpenWindowWithoutBorderControl(this, new CreateProd());
         }
 
@@ -218,6 +228,7 @@ namespace MainProject.ViewModel
                 {
                     //throw new ArgumentException("Type of product is null", "TypeNull");
                     //return;
+
 
                     Newproduct.ID_Type = null;
                 }
@@ -643,7 +654,7 @@ namespace MainProject.ViewModel
         public void LoadProductByType(TYPE_PRODUCT Type)
         {
             if (Type == null || Type.Type.Contains("Tất cả"))
-            { 
+            {
                 ListPoduct = new ObservableCollection<PRODUCT>(Context.PRODUCTs.Where(p => p.IsProvided).ToList());
             }
             else

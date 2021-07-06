@@ -24,7 +24,7 @@ namespace MainProject.MainWorkSpace
         private TableViewModel _Tableviewmodel;
 
         private string _SearchProduct;
-        private ObservableCollection<TYPE_PRODUCT> _ListType;
+        private static ObservableCollection<TYPE_PRODUCT> _ListType;
         private TYPE_PRODUCT _CurrentTypeInHome;
 
         /*private ObservableCollection<PRODUCT> _Listpro;
