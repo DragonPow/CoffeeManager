@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root signature="{42D2222C-ACA2-405F-8E67-05D5C42EB839}" version="2">
+	<data key="{ADBFD563-4754-4862-AE6C-E9903DD50403}">
+		<item typeId="{87B03792-E854-4F5D-9F33-165F1F874209}" version="2" lineNo="0" kind="0" dateTime="44383.3093518519" objectName="Aliases.MainProject.HwndSource_ApplicationView.ApplicationView.TabControl.TextBox" objectLeft="299" objectTop="40" objectRight="662" objectBottom="64" clickPointX="-242" clickPointY="-155" imageFileName="tcvi6585054620923.png" storageFileName="" needUpdate="False" rectColor="255" />
+		<item typeId="{87B03792-E854-4F5D-9F33-165F1F874209}" version="2" lineNo="1" kind="0" dateTime="44383.3093865741" objectName="Aliases.MainProject.HwndSource_ApplicationView.ApplicationView.TabControl.Button" objectLeft="679" objectTop="36" objectRight="784" objectBottom="70" clickPointX="-242" clickPointY="-155" imageFileName="tcvi6585281220924.png" storageFileName="" needUpdate="False" rectColor="255" />
+	</data>
+</Root>

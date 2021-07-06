@@ -1,0 +1,1599 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root Signature="{5DCBAC3B-D39C-497C-9BE8-744CBADD37AA}" NameMappingVersion="7" SaveImages="0">
+	<Storages Current="0">
+		<Child Name="Default Configuration" />
+	</Storages>
+	<Nodes Name="NameMapping" Key="{BE401E45-B2D6-4FBA-931A-C2117D5C51AD}">
+		<Children>
+			<Child Name="Sys" Key="{D0E41ED1-DCA6-4AFF-A322-7D9AE11C19E9}">
+				<Properties>
+					<Property Name="Name">
+						<Value Value="Sys" />
+					</Property>
+				</Properties>
+				<Children>
+					<Child Name="explorer" Key="{B936AB93-EC22-4AB6-A174-DA339998ED32}">
+						<Properties>
+							<Property Name="ProcessName">
+								<Value Value="explorer" />
+							</Property>
+						</Properties>
+						<Children>
+							<Child Name="wndTestingTool" Key="{9570BB13-8179-4ED6-AA91-29AB4B172A62}">
+								<Image FileName="-268752756" Left="0" Top="0" Right="991" Bottom="678" />
+								<Properties>
+									<Property Name="WndClass">
+										<Value Value="CabinetWClass" />
+									</Property>
+								</Properties>
+								<Children>
+									<Child Name="WorkerW" Key="{DBFB32A0-1C10-466A-BF4D-78BC2883C51A}">
+										<Image FileName="-268752756" Left="8" Top="55" Right="983" Bottom="97" />
+										<Properties>
+											<Property Name="WndClass">
+												<Value Value="WorkerW" />
+											</Property>
+										</Properties>
+										<Children>
+											<Child Name="ReBarWindow32" Key="{C3498FF0-4AA4-46E3-BEDE-E455F4759FAE}">
+												<Image FileName="-268752756" Left="8" Top="55" Right="983" Bottom="97" />
+												<Properties>
+													<Property Name="WndClass">
+														<Value Value="ReBarWindow32" />
+													</Property>
+												</Properties>
+												<Children>
+													<Child Name="AddressBandRoot" Key="{DABF6015-A332-48B3-8D4A-6BD69B122B83}">
+														<Image FileName="-268752756" Left="113" Top="55" Right="532" Bottom="94" />
+														<Properties>
+															<Property Name="WndClass">
+																<Value Value="Address Band Root" />
+															</Property>
+														</Properties>
+														<Children>
+															<Child Name="progress" Key="{E30B5565-FBF8-42EE-A9E8-3F9FB98AA9D2}">
+																<Image FileName="-268752756" Left="115" Top="60" Right="530" Bottom="90" />
+																<Properties>
+																	<Property Name="WndClass">
+																		<Value Value="msctls_progress32" />
+																	</Property>
+																</Properties>
+																<Children>
+																	<Child Name="BreadcrumbParent" Key="{E4BE9F28-2C17-4FE1-8F92-F4D78B52BF65}">
+																		<Image FileName="-268752756" Left="115" Top="60" Right="470" Bottom="90" />
+																		<Properties>
+																			<Property Name="WndClass">
+																				<Value Value="Breadcrumb Parent" />
+																			</Property>
+																		</Properties>
+																		<Children>
+																			<Child Name="toolbar" Key="{7CC27B73-4426-4389-90CD-47D1DCEDCB81}">
+																				<Image FileName="-268752756" Left="115" Top="60" Right="470" Bottom="90" />
+																				<TypeInfo Item0="{E91145D4-DB4E-4C88-920B-72E30987AB08}" />
+																				<Properties>
+																					<Property Name="WndClass">
+																						<Value Value="ToolbarWindow32" />
+																					</Property>
+																				</Properties>
+																			</Child>
+																		</Children>
+																	</Child>
+																</Children>
+															</Child>
+														</Children>
+													</Child>
+												</Children>
+											</Child>
+										</Children>
+									</Child>
+									<Child Name="CoffeeManager" Key="{73983737-B009-441F-AE7A-F081772F05C1}">
+										<Image FileName="1052840463" Left="8" Top="97" Right="983" Bottom="670" />
+										<Properties>
+											<Property Name="WndClass">
+												<Value Value="ShellTabWindowClass" />
+											</Property>
+										</Properties>
+										<Children>
+											<Child Name="DUIViewWndClassName" Key="{EF62E4CC-3334-437B-83F4-9BA6040BC1D6}">
+												<Image FileName="1052840463" Left="8" Top="100" Right="983" Bottom="670" />
+												<Properties>
+													<Property Name="WndClass">
+														<Value Value="DUIViewWndClassName" />
+													</Property>
+												</Properties>
+												<Children>
+													<Child Name="Explorer_Pane" Key="{39F7DD54-ED51-4F3D-B3A1-405E568ECF05}">
+														<Image FileName="1052840463" Left="8" Top="100" Right="983" Bottom="670" />
+														<Properties>
+															<Property Name="FrameworkId">
+																<Value Value="DirectUI" />
+															</Property>
+															<Property Name="ClassName">
+																<Value Value="HWNDView" />
+															</Property>
+															<Property Name="LocalizedControlType">
+																<Value Value="pane" />
+															</Property>
+															<Property Name="ObjectIdentifier">
+																<Value Value="Explorer_Pane" />
+															</Property>
+															<Property Name="ObjectGroupIndex">
+																<Value Value="1" Type="0" />
+															</Property>
+														</Properties>
+														<Children>
+															<Child Name="CtrlNotifySink" Key="{12AFB980-89E4-4966-9B7C-71501EE06851}">
+																<Image FileName="1052840463" Left="188" Top="100" Right="983" Bottom="647" />
+																<Properties>
+																	<Property Name="WndClass">
+																		<Value Value="CtrlNotifySink" />
+																	</Property>
+																	<Property Name="WndCaption">
+																		<Value Value="" />
+																	</Property>
+																	<Property Name="Index">
+																		<Value Value="5" Type="0" />
+																	</Property>
+																</Properties>
+																<Children>
+																	<Child Name="ShellView" Key="{6A83EEC0-7638-4651-B3AB-2A27A79F85FB}">
+																		<Image FileName="1052840463" Left="188" Top="100" Right="983" Bottom="647" />
+																		<Properties>
+																			<Property Name="WndClass">
+																				<Value Value="SHELLDLL_DefView" />
+																			</Property>
+																			<Property Name="WndCaption">
+																				<Value Value="ShellView" />
+																			</Property>
+																		</Properties>
+																		<Children>
+																			<Child Name="Items_View" Key="{B91D1A40-5E22-43AF-AB36-869408F88B8F}">
+																				<Image FileName="1052840463" Left="188" Top="100" Right="983" Bottom="647" />
+																				<Properties>
+																					<Property Name="FrameworkId">
+																						<Value Value="DirectUI" />
+																					</Property>
+																					<Property Name="ClassName">
+																						<Value Value="UIItemsView" />
+																					</Property>
+																					<Property Name="LocalizedControlType">
+																						<Value Value="list" />
+																					</Property>
+																					<Property Name="ObjectIdentifier">
+																						<Value Value="Items_View" />
+																					</Property>
+																					<Property Name="ObjectGroupIndex">
+																						<Value Value="1" Type="0" />
+																					</Property>
+																				</Properties>
+																				<Children>
+																					<Child Name="MainProject" Key="{7B8AC8CF-E751-40F4-A1BB-FFF840FB0456}">
+																						<Image FileName="1052840463" Left="202" Top="152" Right="800" Bottom="174" />
+																						<Properties>
+																							<Property Name="FrameworkId">
+																								<Value Value="DirectUI" />
+																							</Property>
+																							<Property Name="ClassName">
+																								<Value Value="UIItem" />
+																							</Property>
+																							<Property Name="LocalizedControlType">
+																								<Value Value="list item" />
+																							</Property>
+																							<Property Name="ObjectIdentifier">
+																								<Value Value="MainProject" />
+																							</Property>
+																						</Properties>
+																						<Children>
+																							<Child Name="Name" Key="{122EE1E5-EFBC-4537-9D49-A8ADC0D44C8E}">
+																								<Image FileName="1052840463" Left="224" Top="152" Right="460" Bottom="174" />
+																								<TypeInfo Item0="{6089AAEA-E3BB-444F-A02B-9545B19F60CF}" />
+																								<Properties>
+																									<Property Name="FrameworkId">
+																										<Value Value="DirectUI" />
+																									</Property>
+																									<Property Name="ClassName">
+																										<Value Value="UIProperty" />
+																									</Property>
+																									<Property Name="LocalizedControlType">
+																										<Value Value="edit" />
+																									</Property>
+																									<Property Name="ObjectIdentifier">
+																										<Value Value="Name" />
+																									</Property>
+																								</Properties>
+																							</Child>
+																						</Children>
+																					</Child>
+																				</Children>
+																			</Child>
+																		</Children>
+																	</Child>
+																</Children>
+															</Child>
+														</Children>
+													</Child>
+												</Children>
+											</Child>
+										</Children>
+									</Child>
+								</Children>
+							</Child>
+							<Child Name="wndShell_TrayWnd" Key="{6EA4EFAF-AE11-4C74-8159-348436C8DB97}">
+								<Image FileName="-1028160163" Left="0" Top="0" Right="1920" Bottom="40" />
+								<Properties>
+									<Property Name="WndClass">
+										<Value Value="Shell_TrayWnd" />
+									</Property>
+								</Properties>
+								<Children>
+									<Child Name="ReBarWindow32" Key="{B58DAB60-737F-4B72-A9CE-41BF4E3711A8}">
+										<Image FileName="-1028160163" Left="46" Top="0" Right="1447" Bottom="40" />
+										<Properties>
+											<Property Name="WndClass">
+												<Value Value="ReBarWindow32" />
+											</Property>
+										</Properties>
+										<Children>
+											<Child Name="MSTaskSwWClass" Key="{DF57E427-3F45-462E-9B1E-103610015BBD}">
+												<Image FileName="-1028160163" Left="48" Top="0" Right="1447" Bottom="40" />
+												<Properties>
+													<Property Name="WndClass">
+														<Value Value="MSTaskSwWClass" />
+													</Property>
+													<Property Name="WndCaption">
+														<Value Value="Running applications" />
+													</Property>
+												</Properties>
+												<Children>
+													<Child Name="MSTaskListWClass" Key="{612E66E6-77E0-4689-9DF9-142FB981C5BF}">
+														<Image FileName="-1028160163" Left="48" Top="0" Right="1447" Bottom="40" />
+														<TypeInfo Item0="{ADA4367A-2ADA-4984-BBFD-05CB290905A3}" />
+														<Properties>
+															<Property Name="WndClass">
+																<Value Value="MSTaskListWClass" />
+															</Property>
+															<Property Name="WndCaption">
+																<Value Value="Running applications" />
+															</Property>
+														</Properties>
+													</Child>
+												</Children>
+											</Child>
+										</Children>
+									</Child>
+								</Children>
+							</Child>
+						</Children>
+					</Child>
+					<Child Name="MainProject" Key="{02E57005-3879-4912-9031-A8200CE2A1F3}">
+						<Properties>
+							<Property Name="ProcessName">
+								<Value Value="MainProject" />
+							</Property>
+						</Properties>
+						<Children>
+							<Child Name="HwndSource_ApplicationView" Key="{B85EDC93-410B-4D43-BBDA-486ADD963A2B}">
+								<Image FileName="-878132207" Left="0" Top="0" Right="1440" Bottom="759" />
+								<Properties>
+									<Property Name="RootVisual.ClrClassName">
+										<Value Value="ApplicationView" />
+									</Property>
+									<Property Name="WndCaption">
+										<Value Value="Coffee Manager" />
+									</Property>
+								</Properties>
+								<Children>
+									<Child Name="ApplicationView" Key="{5BC6EE52-83F1-440A-ACF6-30C21E238F94}">
+										<Image FileName="-878132207" Left="8" Top="31" Right="1449" Bottom="791" />
+										<Properties>
+											<Property Name="ClrFullClassName">
+												<Value Value="MainProject.ApplicationWorkSpace.ApplicationView" />
+											</Property>
+										</Properties>
+										<Children>
+											<Child Name="TabControl" Key="{9D806365-6175-4BFF-A905-ECFFA8683322}" ExtendedFind="True">
+												<Image FileName="-878132207" Left="8" Top="31" Right="1433" Bottom="752" />
+												<Properties>
+													<Property Name="ClrFullClassName">
+														<Value Value="System.Windows.Controls.TabControl" />
+													</Property>
+												</Properties>
+												<Children>
+													<Child Name="TextBox" Key="{CB9D3BA4-7189-488F-BFE9-411E69F87D1E}" ExtendedFind="True">
+														<Image FileName="-878132207" Left="299" Top="40" Right="662" Bottom="64" />
+														<TypeInfo Item0="{D4AB37B1-0606-49E3-9507-11960FCA68F5}" />
+														<Properties>
+															<Property Name="ClrFullClassName">
+																<Value Value="System.Windows.Controls.TextBox" />
+															</Property>
+														</Properties>
+													</Child>
+													<Child Name="DockPanel" Key="{4248D765-5DF4-47C0-BE69-37EB491E307E}" ExtendedFind="True">
+														<Image FileName="-878132207" Left="228" Top="31" Right="1111" Bottom="752" />
+														<Properties>
+															<Property Name="ClrFullClassName">
+																<Value Value="System.Windows.Controls.DockPanel" />
+															</Property>
+														</Properties>
+														<Children>
+															<Child Name="Button" Key="{A75E4EF6-115E-44B0-892B-F985BCC0D9FC}" ExtendedFind="True">
+																<Image FileName="1068439716" Left="679" Top="36" Right="784" Bottom="70" />
+																<Properties>
+																	<Property Name="ClrFullClassName">
+																		<Value Value="System.Windows.Controls.Button" />
+																	</Property>
+																	<Property Name="WPFControlText">
+																		<Value Value="" />
+																	</Property>
+																</Properties>
+															</Child>
+															<Child Name="popupTable" Key="{4457BA96-9D6F-4CCD-9C7A-F665AFDC826B}" ExtendedFind="True">
+																<Image FileName="744543921" Left="1336" Top="665" Right="1393" Bottom="722" />
+																<TypeInfo Item0="{6089AAEA-E3BB-444F-A02B-9545B19F60CF}" />
+																<Properties>
+																	<Property Name="WPFControlName">
+																		<Value Value="popupTable" />
+																	</Property>
+																</Properties>
+															</Child>
+															<Child Name="ColorZone" Key="{700B405A-8047-44F2-AD67-786C57765F84}" ExtendedFind="True">
+																<Image FileName="1560764801" Left="228" Top="31" Right="1111" Bottom="75" />
+																<Properties>
+																	<Property Name="ClrFullClassName">
+																		<Value Value="MaterialDesignThemes.Wpf.ColorZone" />
+																	</Property>
+																	<Property Name="WPFControlText">
+																		<Value Value="" />
+																	</Property>
+																</Properties>
+																<Children>
+																	<Child Name="ColorZone" Key="{6020DEBB-E7C6-4BE1-B200-643017C46384}" ExtendedFind="True">
+																		<Image FileName="1560764801" Left="283" Top="36" Right="670" Bottom="68" />
+																		<TypeInfo Item0="{6089AAEA-E3BB-444F-A02B-9545B19F60CF}" />
+																		<Properties>
+																			<Property Name="ClrFullClassName">
+																				<Value Value="MaterialDesignThemes.Wpf.ColorZone" />
+																			</Property>
+																			<Property Name="WPFControlText">
+																				<Value Value="" />
+																			</Property>
+																		</Properties>
+																	</Child>
+																</Children>
+															</Child>
+															<Child Name="ListProduct" Key="{AF8F10A6-8056-4C17-BA7B-AE40932D54E7}" ExtendedFind="True">
+																<Image FileName="-1179498347" Left="228" Top="74" Right="1111" Bottom="681" />
+																<Properties>
+																	<Property Name="WPFControlName">
+																		<Value Value="ListProduct" />
+																	</Property>
+																</Properties>
+															</Child>
+															<Child Name="ListView" Key="{4C3F50D4-DB50-456E-BC21-6E010611DAFD}" ExtendedFind="True">
+																<Image FileName="-1846085123" Left="250" Top="112" Right="1411" Bottom="740" />
+																<Properties>
+																	<Property Name="ClrFullClassName">
+																		<Value Value="System.Windows.Controls.ListView" />
+																	</Property>
+																</Properties>
+																<Children>
+																	<Child Name="ListViewItem" Key="{67F1594A-80EB-4AE3-AD2B-1B18A2F36091}" ExtendedFind="True">
+																		<Image FileName="-1846085123" Left="366" Top="228" Right="483" Bottom="345" />
+																		<Properties>
+																			<Property Name="ClrFullClassName">
+																				<Value Value="System.Windows.Controls.ListViewItem" />
+																			</Property>
+																			<Property Name="WPFControlText">
+																				<Value Value="" />
+																			</Property>
+																			<Property Name="WPFControlOrdinalNo">
+																				<Value Value="12" Type="0" />
+																			</Property>
+																		</Properties>
+																		<Children>
+																			<Child Name="ContentControl" Key="{6A666A74-1BB6-4AF7-B48F-8C16E56F044D}" ExtendedFind="True">
+																				<Image FileName="-1846085123" Left="384" Top="246" Right="465" Bottom="327" />
+																				<Properties>
+																					<Property Name="ClrFullClassName">
+																						<Value Value="System.Windows.Controls.ContentControl" />
+																					</Property>
+																					<Property Name="WPFControlText">
+																						<Value Value="" />
+																					</Property>
+																				</Properties>
+																			</Child>
+																		</Children>
+																	</Child>
+																	<Child Name="ListViewItem2" Key="{2FDC5935-A87B-4A9A-8BD5-D42F90F7EDD7}" ExtendedFind="True">
+																		<Properties>
+																			<Property Name="ClrFullClassName">
+																				<Value Value="System.Windows.Controls.ListViewItem" />
+																			</Property>
+																			<Property Name="WPFControlText">
+																				<Value Value="" />
+																			</Property>
+																			<Property Name="WPFControlOrdinalNo">
+																				<Value Value="7" Type="0" />
+																			</Property>
+																		</Properties>
+																		<Children>
+																			<Child Name="Image" Key="{F5FE30A5-A8DD-4D07-8870-D19E944BDE5D}" ExtendedFind="True">
+																				<TypeInfo Item0="{6089AAEA-E3BB-444F-A02B-9545B19F60CF}" />
+																				<Properties>
+																					<Property Name="ClrFullClassName">
+																						<Value Value="System.Windows.Controls.Image" />
+																					</Property>
+																				</Properties>
+																			</Child>
+																		</Children>
+																	</Child>
+																</Children>
+															</Child>
+														</Children>
+													</Child>
+													<Child Name="LabelChoNBaN" Key="{E808C6DF-6F01-4CE0-9D64-409683C6FA43}" ExtendedFind="True">
+														<Image FileName="2045411112" Left="1128" Top="47" Right="1208" Bottom="72" />
+														<TypeInfo Item0="{6089AAEA-E3BB-444F-A02B-9545B19F60CF}" />
+														<Properties>
+															<Property Name="ClrFullClassName">
+																<Value Value="System.Windows.Controls.Label" />
+															</Property>
+															<Property Name="WPFControlText">
+																<Value Value="Chọn bàn" />
+															</Property>
+														</Properties>
+													</Child>
+													<Child Name="btnPayment" Key="{A8D90515-35B8-4CEC-9DB1-D265A2CCBFEC}" ExtendedFind="True">
+														<Image FileName="1549962131" Left="1114" Top="698" Right="1429" Bottom="747" />
+														<TypeInfo Item0="{3096593C-8DD5-448C-96B5-0BD091EAFBD0}" />
+														<Properties>
+															<Property Name="WPFControlName">
+																<Value Value="btnPayment" />
+															</Property>
+														</Properties>
+													</Child>
+													<Child Name="LabelChNBN" Key="{C78CA440-C32E-49DA-A812-B8E661F2619C}" ExtendedFind="True">
+														<Image FileName="233586417" Left="1128" Top="47" Right="1208" Bottom="72" />
+														<TypeInfo Item0="{6089AAEA-E3BB-444F-A02B-9545B19F60CF}" />
+														<Properties>
+															<Property Name="ClrFullClassName">
+																<Value Value="System.Windows.Controls.Label" />
+															</Property>
+															<Property Name="WPFControlText">
+																<Value Value="Chọn bàn" />
+															</Property>
+														</Properties>
+													</Child>
+													<Child Name="TableName" Key="{1130EAAF-46AF-4E7E-83F2-FC9F279C5FAC}" ExtendedFind="True">
+														<Image FileName="818247836" Left="1112" Top="43" Right="1248" Bottom="76" />
+														<TypeInfo Item0="{3096593C-8DD5-448C-96B5-0BD091EAFBD0}" />
+														<Properties>
+															<Property Name="WPFControlName">
+																<Value Value="TableName" />
+															</Property>
+														</Properties>
+														<Children>
+															<Child Name="LabelBN1" Key="{05876C50-B54B-4536-AAC3-D90F84B48872}" ExtendedFind="True">
+																<Image FileName="1288348838" Left="1128" Top="47" Right="1177" Bottom="72" />
+																<TypeInfo Item0="{6089AAEA-E3BB-444F-A02B-9545B19F60CF}" />
+																<Properties>
+																	<Property Name="ClrFullClassName">
+																		<Value Value="System.Windows.Controls.Label" />
+																	</Property>
+																	<Property Name="WPFControlText">
+																		<Value Value="Bàn: 1" />
+																	</Property>
+																</Properties>
+															</Child>
+															<Child Name="LabelBN2" Key="{87A79C86-D8F4-4B6B-99F9-38F80B7603F3}" ExtendedFind="True">
+																<Image FileName="-1947752355" Left="1128" Top="47" Right="1179" Bottom="72" />
+																<TypeInfo Item0="{6089AAEA-E3BB-444F-A02B-9545B19F60CF}" />
+																<Properties>
+																	<Property Name="ClrFullClassName">
+																		<Value Value="System.Windows.Controls.Label" />
+																	</Property>
+																	<Property Name="WPFControlText">
+																		<Value Value="Bàn: 2" />
+																	</Property>
+																</Properties>
+															</Child>
+														</Children>
+													</Child>
+													<Child Name="Grid" Key="{A128E43B-E0F2-44A3-A3D2-B6572C3272DB}" ExtendedFind="True">
+														<Image FileName="-1963225030" Left="228" Top="31" Right="1433" Bottom="752" />
+														<Properties>
+															<Property Name="ClrFullClassName">
+																<Value Value="System.Windows.Controls.Grid" />
+															</Property>
+														</Properties>
+														<Children>
+															<Child Name="StackPanel" Key="{81A25A92-149C-4CAE-97AF-44A48C412AA3}">
+																<Image FileName="-1963225030" Left="316" Top="130" Right="542" Bottom="163" />
+																<Properties>
+																	<Property Name="ClrFullClassName">
+																		<Value Value="System.Windows.Controls.StackPanel" />
+																	</Property>
+																	<Property Name="WPFControlOrdinalNo">
+																		<Value Value="1" Type="0" />
+																	</Property>
+																</Properties>
+																<Children>
+																	<Child Name="DatepickerTNgY" Key="{9071289C-8DCF-4665-826F-6AF348600F85}" ExtendedFind="True">
+																		<Image FileName="-1963225030" Left="406" Top="131" Right="527" Bottom="163" />
+																		<TypeInfo Item0="{D0EC27D2-534E-442A-B6BF-C6A0609C6103}" />
+																		<Properties>
+																			<Property Name="ClrFullClassName">
+																				<Value Value="System.Windows.Controls.DatePicker" />
+																			</Property>
+																		</Properties>
+																	</Child>
+																</Children>
+															</Child>
+															<Child Name="StackPanel2" Key="{3451596D-B739-4D64-84B7-81127B173CBB}" ExtendedFind="True">
+																<Image FileName="1097881344" Left="710" Top="130" Right="950" Bottom="163" />
+																<Properties>
+																	<Property Name="ClrFullClassName">
+																		<Value Value="System.Windows.Controls.StackPanel" />
+																	</Property>
+																	<Property Name="WPFControlOrdinalNo">
+																		<Value Value="2" Type="0" />
+																	</Property>
+																</Properties>
+																<Children>
+																	<Child Name="DatepickerNNgY" Key="{624CDB1F-9EED-41A5-B114-CABCCCF64291}" ExtendedFind="True">
+																		<Image FileName="1097881344" Left="814" Top="131" Right="935" Bottom="163" />
+																		<TypeInfo Item0="{D0EC27D2-534E-442A-B6BF-C6A0609C6103}" />
+																		<Properties>
+																			<Property Name="ClrFullClassName">
+																				<Value Value="System.Windows.Controls.DatePicker" />
+																			</Property>
+																		</Properties>
+																	</Child>
+																</Children>
+															</Child>
+															<Child Name="btnFind" Key="{E9D8F342-20A6-4D60-B71A-3E485B43CBE3}" ExtendedFind="True">
+																<Image FileName="1335044300" Left="1156" Top="130" Right="1307" Bottom="163" />
+																<TypeInfo Item0="{3096593C-8DD5-448C-96B5-0BD091EAFBD0}" />
+																<Properties>
+																	<Property Name="WPFControlName">
+																		<Value Value="btnFind" />
+																	</Property>
+																</Properties>
+															</Child>
+															<Child Name="btnRight" Key="{32B53856-3818-443F-A164-7DC218C3219A}" ExtendedFind="True">
+																<Image FileName="46629950" Left="867" Top="704" Right="893" Bottom="730" />
+																<Properties>
+																	<Property Name="WPFControlName">
+																		<Value Value="btnRight" />
+																	</Property>
+																</Properties>
+																<Children>
+																	<Child Name="PackIcon" Key="{7D6F32E1-9C3E-4330-B131-97E7ABA3B217}" ExtendedFind="True">
+																		<Image FileName="46629950" Left="868" Top="705" Right="893" Bottom="730" />
+																		<TypeInfo Item0="{6089AAEA-E3BB-444F-A02B-9545B19F60CF}" />
+																		<Properties>
+																			<Property Name="ClrFullClassName">
+																				<Value Value="MaterialDesignThemes.Wpf.PackIcon" />
+																			</Property>
+																		</Properties>
+																	</Child>
+																</Children>
+															</Child>
+														</Children>
+													</Child>
+												</Children>
+											</Child>
+										</Children>
+									</Child>
+								</Children>
+							</Child>
+							<Child Name="HwndSource_PopupRoot" Key="{5C43EC38-FC41-41CE-B062-75AD2F288508}">
+								<Image FileName="2103010670" Left="0" Top="0" Right="50" Bottom="110" />
+								<Properties>
+									<Property Name="RootVisual.ClrClassName">
+										<Value Value="PopupRoot" />
+									</Property>
+									<Property Name="WndCaption">
+										<Value Value="" />
+									</Property>
+								</Properties>
+								<Children>
+									<Child Name="PopupRoot" Key="{CF9DD854-2AA6-49B3-9D32-D347D61B33F5}">
+										<Image FileName="2103010670" Left="0" Top="0" Right="51" Bottom="111" />
+										<Properties>
+											<Property Name="ClrFullClassName">
+												<Value Value="System.Windows.Controls.Primitives.PopupRoot" />
+											</Property>
+										</Properties>
+										<Children>
+											<Child Name="Button" Key="{F42A19EB-506E-4D81-BF3E-59137E657BA7}" ExtendedFind="True">
+												<Image FileName="2103010670" Left="5" Top="5" Right="46" Bottom="46" />
+												<TypeInfo Item0="{3096593C-8DD5-448C-96B5-0BD091EAFBD0}" />
+												<Properties>
+													<Property Name="ClrFullClassName">
+														<Value Value="System.Windows.Controls.Button" />
+													</Property>
+													<Property Name="WPFControlText">
+														<Value Value="" />
+													</Property>
+													<Property Name="WPFControlOrdinalNo">
+														<Value Value="1" Type="0" />
+													</Property>
+												</Properties>
+											</Child>
+										</Children>
+									</Child>
+								</Children>
+							</Child>
+							<Child Name="HwndSource_Window" Key="{086E9CC4-575F-47A0-8E26-5340801EC1F1}">
+								<Image FileName="1831393629" Left="0" Top="0" Right="1064" Bottom="664" />
+								<Properties>
+									<Property Name="RootVisual.ClrClassName">
+										<Value Value="Window" />
+									</Property>
+									<Property Name="WndCaption">
+										<Value Value="" />
+									</Property>
+								</Properties>
+								<Children>
+									<Child Name="Window" Key="{39DC5230-BC84-4FF9-A72E-F27AD794E682}">
+										<Image FileName="1831393629" Left="7" Top="7" Right="1072" Bottom="672" />
+										<Properties>
+											<Property Name="ClrFullClassName">
+												<Value Value="System.Windows.Window" />
+											</Property>
+										</Properties>
+										<Children>
+											<Child Name="ListView" Key="{B0DB5757-29F0-4DBE-97D4-DE0C8CC5962A}" ExtendedFind="True">
+												<Image FileName="1831393629" Left="7" Top="59" Right="1058" Bottom="658" />
+												<Properties>
+													<Property Name="ClrFullClassName">
+														<Value Value="System.Windows.Controls.ListView" />
+													</Property>
+												</Properties>
+												<Children>
+													<Child Name="ListViewItem" Key="{C90C7B3C-A5DF-4138-97A1-F2D358A495B3}" ExtendedFind="True">
+														<Image FileName="1831393629" Left="239" Top="175" Right="356" Bottom="292" />
+														<Properties>
+															<Property Name="ClrFullClassName">
+																<Value Value="System.Windows.Controls.ListViewItem" />
+															</Property>
+															<Property Name="WPFControlText">
+																<Value Value="" />
+															</Property>
+															<Property Name="WPFControlOrdinalNo">
+																<Value Value="12" Type="0" />
+															</Property>
+														</Properties>
+														<Children>
+															<Child Name="ContentControl" Key="{A5E7499D-81DC-437E-9291-F62C5DFFA7CE}" ExtendedFind="True">
+																<Image FileName="1831393629" Left="257" Top="193" Right="338" Bottom="274" />
+																<Properties>
+																	<Property Name="ClrFullClassName">
+																		<Value Value="System.Windows.Controls.ContentControl" />
+																	</Property>
+																	<Property Name="WPFControlText">
+																		<Value Value="" />
+																	</Property>
+																</Properties>
+																<Children>
+																	<Child Name="Image" Key="{6AD34AC7-B73B-470F-BAC1-7980D9F57D38}" ExtendedFind="True">
+																		<Image FileName="997995739" Left="257" Top="193" Right="338" Bottom="274" />
+																		<TypeInfo Item0="{6089AAEA-E3BB-444F-A02B-9545B19F60CF}" />
+																		<Properties>
+																			<Property Name="ClrFullClassName">
+																				<Value Value="System.Windows.Controls.Image" />
+																			</Property>
+																		</Properties>
+																	</Child>
+																</Children>
+															</Child>
+														</Children>
+													</Child>
+													<Child Name="ListViewItem2" Key="{48AB9B23-0928-45A5-9274-2210E790CB11}" ExtendedFind="True">
+														<Image FileName="-1711000321" Left="355" Top="175" Right="472" Bottom="292" />
+														<Properties>
+															<Property Name="ClrFullClassName">
+																<Value Value="System.Windows.Controls.ListViewItem" />
+															</Property>
+															<Property Name="WPFControlText">
+																<Value Value="" />
+															</Property>
+															<Property Name="WPFControlOrdinalNo">
+																<Value Value="13" Type="0" />
+															</Property>
+														</Properties>
+														<Children>
+															<Child Name="ContentControl" Key="{8F3E28CA-2E37-4F29-8809-81927FF9B4A7}" ExtendedFind="True">
+																<Image FileName="-1711000321" Left="373" Top="193" Right="454" Bottom="274" />
+																<Properties>
+																	<Property Name="ClrFullClassName">
+																		<Value Value="System.Windows.Controls.ContentControl" />
+																	</Property>
+																	<Property Name="WPFControlText">
+																		<Value Value="" />
+																	</Property>
+																</Properties>
+															</Child>
+														</Children>
+													</Child>
+													<Child Name="ListViewItem3" Key="{DAA73C2F-BAA8-4970-8475-3AF17B566234}" ExtendedFind="True">
+														<Image FileName="259841777" Left="239" Top="59" Right="356" Bottom="176" />
+														<Properties>
+															<Property Name="ClrFullClassName">
+																<Value Value="System.Windows.Controls.ListViewItem" />
+															</Property>
+															<Property Name="WPFControlText">
+																<Value Value="" />
+															</Property>
+															<Property Name="WPFControlOrdinalNo">
+																<Value Value="3" Type="0" />
+															</Property>
+														</Properties>
+														<Children>
+															<Child Name="ContentControl" Key="{F989D3FB-BEDF-4B05-8274-27219380973F}" ExtendedFind="True">
+																<Image FileName="259841777" Left="257" Top="77" Right="338" Bottom="158" />
+																<Properties>
+																	<Property Name="ClrFullClassName">
+																		<Value Value="System.Windows.Controls.ContentControl" />
+																	</Property>
+																	<Property Name="WPFControlText">
+																		<Value Value="" />
+																	</Property>
+																</Properties>
+															</Child>
+														</Children>
+													</Child>
+													<Child Name="ListViewItem4" Key="{7F5F4B3D-BFFB-460A-A445-8C40B35B643B}" ExtendedFind="True">
+														<Image FileName="1355474219" Left="471" Top="175" Right="588" Bottom="292" />
+														<Properties>
+															<Property Name="ClrFullClassName">
+																<Value Value="System.Windows.Controls.ListViewItem" />
+															</Property>
+															<Property Name="WPFControlText">
+																<Value Value="" />
+															</Property>
+															<Property Name="WPFControlOrdinalNo">
+																<Value Value="14" Type="0" />
+															</Property>
+														</Properties>
+														<Children>
+															<Child Name="ContentControl" Key="{920D561D-FB4D-463B-9EED-50915675DA19}" ExtendedFind="True">
+																<Image FileName="1355474219" Left="489" Top="193" Right="570" Bottom="274" />
+																<Properties>
+																	<Property Name="ClrFullClassName">
+																		<Value Value="System.Windows.Controls.ContentControl" />
+																	</Property>
+																	<Property Name="WPFControlText">
+																		<Value Value="" />
+																	</Property>
+																</Properties>
+															</Child>
+														</Children>
+													</Child>
+													<Child Name="ListViewItem5" Key="{C7F14931-97F8-45F3-864D-017391CE4BB5}" ExtendedFind="True">
+														<Image FileName="-910221654" Left="239" Top="291" Right="356" Bottom="408" />
+														<Properties>
+															<Property Name="ClrFullClassName">
+																<Value Value="System.Windows.Controls.ListViewItem" />
+															</Property>
+															<Property Name="WPFControlText">
+																<Value Value="" />
+															</Property>
+															<Property Name="WPFControlOrdinalNo">
+																<Value Value="21" Type="0" />
+															</Property>
+														</Properties>
+														<Children>
+															<Child Name="ContentControl" Key="{66064408-1E78-4603-AFD3-559BD07A404D}" ExtendedFind="True">
+																<Image FileName="-910221654" Left="257" Top="309" Right="338" Bottom="390" />
+																<Properties>
+																	<Property Name="ClrFullClassName">
+																		<Value Value="System.Windows.Controls.ContentControl" />
+																	</Property>
+																	<Property Name="WPFControlText">
+																		<Value Value="" />
+																	</Property>
+																</Properties>
+															</Child>
+														</Children>
+													</Child>
+													<Child Name="ListViewItem6" Key="{A5D9DA20-6CFD-4E12-81E2-E1A90C2D5024}" ExtendedFind="True">
+														<Image FileName="-2140868633" Left="355" Top="291" Right="472" Bottom="408" />
+														<Properties>
+															<Property Name="ClrFullClassName">
+																<Value Value="System.Windows.Controls.ListViewItem" />
+															</Property>
+															<Property Name="WPFControlText">
+																<Value Value="" />
+															</Property>
+															<Property Name="WPFControlOrdinalNo">
+																<Value Value="22" Type="0" />
+															</Property>
+														</Properties>
+														<Children>
+															<Child Name="ContentControl" Key="{ED2918B9-64D5-404E-A63A-B1562B850BF3}" ExtendedFind="True">
+																<Image FileName="-2140868633" Left="373" Top="309" Right="454" Bottom="390" />
+																<Properties>
+																	<Property Name="ClrFullClassName">
+																		<Value Value="System.Windows.Controls.ContentControl" />
+																	</Property>
+																	<Property Name="WPFControlText">
+																		<Value Value="" />
+																	</Property>
+																</Properties>
+															</Child>
+														</Children>
+													</Child>
+												</Children>
+											</Child>
+											<Child Name="PackIcon" Key="{FA9BAAFB-52ED-46DB-A362-22FBF3A7D5BD}" ExtendedFind="True">
+												<Image FileName="352909693" Left="1006" Top="21" Right="1032" Bottom="47" />
+												<TypeInfo Item0="{6089AAEA-E3BB-444F-A02B-9545B19F60CF}" />
+												<Properties>
+													<Property Name="ClrFullClassName">
+														<Value Value="MaterialDesignThemes.Wpf.PackIcon" />
+													</Property>
+												</Properties>
+											</Child>
+											<Child Name="Button" Key="{D081C944-7E4B-4C11-8519-28178DCDEB45}" ExtendedFind="True">
+												<Image FileName="-1977520185" Left="990" Top="17" Right="1048" Bottom="50" />
+												<TypeInfo Item0="{3096593C-8DD5-448C-96B5-0BD091EAFBD0}" />
+												<Properties>
+													<Property Name="ClrFullClassName">
+														<Value Value="System.Windows.Controls.Button" />
+													</Property>
+													<Property Name="WPFControlText">
+														<Value Value="" />
+													</Property>
+												</Properties>
+											</Child>
+										</Children>
+									</Child>
+								</Children>
+							</Child>
+							<Child Name="HwndSource_MainWindow" Key="{4902D30D-17F3-41A6-B852-2F5E08B9EDC4}">
+								<Image FileName="576131798" Left="0" Top="0" Right="619" Bottom="739" />
+								<Properties>
+									<Property Name="RootVisual.Name">
+										<Value Value="MainWindow" />
+									</Property>
+								</Properties>
+								<Children>
+									<Child Name="MainWindow" Key="{4A79343D-FA32-44FB-B383-F5B18CFD227A}">
+										<Image FileName="576131798" Left="8" Top="31" Right="627" Bottom="770" />
+										<Properties>
+											<Property Name="ClrFullClassName">
+												<Value Value="MainProject.MainWorkSpace.Bill.BillView" />
+											</Property>
+										</Properties>
+										<Children>
+											<Child Name="txtMoneyCustomer" Key="{351EBF8B-9ACD-48F5-B52B-BC9E7B6D919D}" ExtendedFind="True">
+												<Image FileName="576131798" Left="405" Top="554" Right="556" Bottom="581" />
+												<TypeInfo Item0="{D4AB37B1-0606-49E3-9507-11960FCA68F5}" />
+												<Properties>
+													<Property Name="WPFControlName">
+														<Value Value="txtMoneyCustomer" />
+													</Property>
+												</Properties>
+											</Child>
+											<Child Name="ButtonThanhToN" Key="{6411DC51-FF71-4FDA-84BA-9ECFCE41A0C0}" ExtendedFind="True">
+												<Image FileName="1948948986" Left="209" Top="660" Right="410" Bottom="701" />
+												<TypeInfo Item0="{3096593C-8DD5-448C-96B5-0BD091EAFBD0}" />
+												<Properties>
+													<Property Name="ClrFullClassName">
+														<Value Value="System.Windows.Controls.Button" />
+													</Property>
+													<Property Name="WPFControlText">
+														<Value Value="THANH TOÁN" />
+													</Property>
+												</Properties>
+											</Child>
+										</Children>
+									</Child>
+								</Children>
+							</Child>
+							<Child Name="dlgTh_ngB_o" Key="{A7CAC470-0787-4606-8C4E-E1689A6C1D5D}">
+								<Image FileName="489914406" Left="0" Top="0" Right="216" Bottom="159" />
+								<Properties>
+									<Property Name="WndClass">
+										<Value Value="#32770" />
+									</Property>
+									<Property Name="WndCaption">
+										<Value Value="Thông báo" />
+									</Property>
+								</Properties>
+								<Children>
+									<Child Name="btn_ng_" Key="{50B0F83D-F58B-436D-8EF7-A4079A4AF9A2}">
+										<Image FileName="489914406" Left="35" Top="119" Right="110" Bottom="142" />
+										<TypeInfo Item0="{2FD9B6DF-D29F-48D7-8DB5-38A9BAD41FC7}" />
+										<Properties>
+											<Property Name="WndClass">
+												<Value Value="Button" />
+											</Property>
+											<Property Name="WndCaption">
+												<Value Value="Đồng ý" />
+											</Property>
+										</Properties>
+									</Child>
+								</Children>
+							</Child>
+							<Child Name="dlgL_i" Key="{8BF78A06-AB9E-40FB-ABBC-2A9EB0DE1F6D}">
+								<Image FileName="527920855" Left="0" Top="0" Right="385" Bottom="159" />
+								<Properties>
+									<Property Name="WndClass">
+										<Value Value="#32770" />
+									</Property>
+									<Property Name="WndCaption">
+										<Value Value="Lỗi" />
+									</Property>
+								</Properties>
+								<Children>
+									<Child Name="btn_ng_" Key="{BD666090-19D0-4936-A09B-8588314E62B4}">
+										<Image FileName="527920855" Left="205" Top="119" Right="280" Bottom="142" />
+										<TypeInfo Item0="{2FD9B6DF-D29F-48D7-8DB5-38A9BAD41FC7}" />
+										<Properties>
+											<Property Name="WndClass">
+												<Value Value="Button" />
+											</Property>
+											<Property Name="WndCaption">
+												<Value Value="Đồng ý" />
+											</Property>
+										</Properties>
+									</Child>
+								</Children>
+							</Child>
+							<Child Name="dlgL_i2" Key="{AD090920-0F07-4EA0-98F8-EB4B4B6279FB}">
+								<Image FileName="-1816582816" Left="0" Top="0" Right="216" Bottom="159" />
+								<Properties>
+									<Property Name="WndClass">
+										<Value Value="#32770" />
+									</Property>
+									<Property Name="WndCaption">
+										<Value Value="Lỗi" />
+									</Property>
+								</Properties>
+								<Children>
+									<Child Name="btn_ng_" Key="{B577B59B-1081-4739-8635-C870A59C04DE}">
+										<Image FileName="-1816582816" Left="35" Top="119" Right="110" Bottom="142" />
+										<TypeInfo Item0="{2FD9B6DF-D29F-48D7-8DB5-38A9BAD41FC7}" />
+										<Properties>
+											<Property Name="WndClass">
+												<Value Value="Button" />
+											</Property>
+											<Property Name="WndCaption">
+												<Value Value="Đồng ý" />
+											</Property>
+										</Properties>
+									</Child>
+								</Children>
+							</Child>
+						</Children>
+					</Child>
+					<Child Name="wps" Key="{6ACACE8B-0F40-4AE1-A1B6-DB9D54739EFA}">
+						<Properties>
+							<Property Name="ProcessName">
+								<Value Value="wps" />
+							</Property>
+						</Properties>
+						<Children>
+							<Child Name="KPromeMainWindow" Key="{F636D167-18EA-4FC3-AEB8-9EBDC7BBD136}">
+								<Image FileName="-1279493704" Left="-7" Top="-7" Right="1913" Bottom="1033" />
+								<Properties>
+									<Property Name="QtClassName">
+										<Value Value="KPromeMainWindow" />
+									</Property>
+									<Property Name="QtText">
+										<Value Value="Bill.pdf - WPS Office" />
+									</Property>
+									<Property Name="Index">
+										<Value Value="2" Type="0" />
+									</Property>
+								</Properties>
+								<Children>
+									<Child Name="KPromeWpsPage" Key="{EAB833DA-38E5-4CFD-93BA-C647A5164253}">
+										<TypeInfo Item0="{ADA4367A-2ADA-4984-BBFD-05CB290905A3}" />
+										<Properties>
+											<Property Name="QtClassName">
+												<Value Value="KPromeWpsPage" />
+											</Property>
+											<Property Name="QtText">
+												<Value Value="" />
+											</Property>
+											<Property Name="Index">
+												<Value Value="1" Type="0" />
+											</Property>
+										</Properties>
+										<Children>
+											<Child Name="KPromeWindowContainerWidget" Key="{62454C19-B4D7-4E76-9324-496D52E698A1}">
+												<TypeInfo Item0="{ADA4367A-2ADA-4984-BBFD-05CB290905A3}" />
+												<Properties>
+													<Property Name="QtClassName">
+														<Value Value="KPromeWindowContainerWidget" />
+													</Property>
+													<Property Name="QtText">
+														<Value Value="" />
+													</Property>
+													<Property Name="Index">
+														<Value Value="1" Type="0" />
+													</Property>
+												</Properties>
+												<Children>
+													<Child Name="KxPdfMainWindow" Key="{6E836F11-6803-4ED8-8014-8DF14450E9F6}">
+														<Image FileName="-791666181" Left="-7" Top="23" Right="1913" Bottom="1033" />
+														<Properties>
+															<Property Name="QtClassName">
+																<Value Value="KxPdfMainWindow" />
+															</Property>
+															<Property Name="QtText">
+																<Value Value="Bill.pdf - WPS PDF" />
+															</Property>
+															<Property Name="Index">
+																<Value Value="1" Type="0" />
+															</Property>
+														</Properties>
+														<Children>
+															<Child Name="Widget" Key="{C085B31E-7C0A-4560-9623-0765F2297DB2}">
+																<Image FileName="-791666181" Left="-7" Top="122" Right="1853" Bottom="1004" />
+																<Properties>
+																	<Property Name="QtClassName">
+																		<Value Value="QWidget" />
+																	</Property>
+																	<Property Name="QtText">
+																		<Value Value="" />
+																	</Property>
+																	<Property Name="Index">
+																		<Value Value="12" Type="0" />
+																	</Property>
+																</Properties>
+																<Children>
+																	<Child Name="KMdiSubWindow" Key="{7E1254E1-E5B1-488D-BC79-B16CA5CA6F57}">
+																		<Image FileName="-791666181" Left="-7" Top="122" Right="1853" Bottom="1004" />
+																		<Properties>
+																			<Property Name="QtClassName">
+																				<Value Value="KMdiSubWindow" />
+																			</Property>
+																			<Property Name="QtText">
+																				<Value Value="Bill.pdf" />
+																			</Property>
+																			<Property Name="Index">
+																				<Value Value="1" Type="0" />
+																			</Property>
+																		</Properties>
+																		<Children>
+																			<Child Name="PdfView" Key="{0D09B52D-2E02-4B34-BA02-547CAF6290C4}">
+																				<Image FileName="-791666181" Left="308" Top="122" Right="1853" Bottom="1004" />
+																				<TypeInfo Item0="{ADA4367A-2ADA-4984-BBFD-05CB290905A3}" />
+																				<Properties>
+																					<Property Name="objectName">
+																						<Value Value="Error: get property objectName" />
+																					</Property>
+																				</Properties>
+																			</Child>
+																		</Children>
+																	</Child>
+																</Children>
+															</Child>
+														</Children>
+													</Child>
+												</Children>
+											</Child>
+										</Children>
+									</Child>
+									<Child Name="Widget" Key="{35DB595F-5979-421F-A0BE-A98402C3ED85}">
+										<Image FileName="637309084" Left="-7" Top="-7" Right="1913" Bottom="1033" />
+										<Properties>
+											<Property Name="QtClassName">
+												<Value Value="QWidget" />
+											</Property>
+											<Property Name="QtText">
+												<Value Value="" />
+											</Property>
+											<Property Name="QtIndex">
+												<Value Value="1" Type="0" />
+											</Property>
+										</Properties>
+										<Children>
+											<Child Name="Widget" Key="{2A0B4BBA-973A-4153-9A7C-E7C7DD77E471}">
+												<Image FileName="637309084" Left="-7" Top="-7" Right="1913" Bottom="1033" />
+												<Properties>
+													<Property Name="QtClassName">
+														<Value Value="QWidget" />
+													</Property>
+													<Property Name="QtText">
+														<Value Value="" />
+													</Property>
+													<Property Name="QtIndex">
+														<Value Value="1" Type="0" />
+													</Property>
+												</Properties>
+												<Children>
+													<Child Name="KPromeHeaderBar" Key="{69BAF1A4-3D2E-4FDE-B6A1-C1B71C7724FB}">
+														<Image FileName="637309084" Left="-7" Top="-7" Right="1913" Bottom="23" />
+														<Properties>
+															<Property Name="QtClassName">
+																<Value Value="KPromeHeaderBar" />
+															</Property>
+															<Property Name="QtText">
+																<Value Value="" />
+															</Property>
+															<Property Name="QtIndex">
+																<Value Value="1" Type="0" />
+															</Property>
+														</Properties>
+														<Children>
+															<Child Name="KWindowMultiTitleButtonGroup" Key="{89B2D27A-A1F7-4D9F-AE6B-5629B7B458B6}">
+																<Image FileName="637309084" Left="1823" Top="-7" Right="1913" Bottom="23" />
+																<Properties>
+																	<Property Name="QtClassName">
+																		<Value Value="KWindowMultiTitleButtonGroup" />
+																	</Property>
+																	<Property Name="QtText">
+																		<Value Value="" />
+																	</Property>
+																	<Property Name="QtIndex">
+																		<Value Value="1" Type="0" />
+																	</Property>
+																</Properties>
+																<Children>
+																	<Child Name="KPromeCloseButton" Key="{10D2B9A8-DB1F-4C3D-A59E-B412C8202896}">
+																		<Image FileName="637309084" Left="1883" Top="-7" Right="1913" Bottom="23" />
+																		<TypeInfo Item0="{6089AAEA-E3BB-444F-A02B-9545B19F60CF}" />
+																		<Properties>
+																			<Property Name="QtClassName">
+																				<Value Value="KPromeCloseButton" />
+																			</Property>
+																			<Property Name="QtText">
+																				<Value Value="" />
+																			</Property>
+																			<Property Name="QtIndex">
+																				<Value Value="1" Type="0" />
+																			</Property>
+																		</Properties>
+																	</Child>
+																</Children>
+															</Child>
+														</Children>
+													</Child>
+												</Children>
+											</Child>
+										</Children>
+									</Child>
+								</Children>
+							</Child>
+						</Children>
+					</Child>
+					<Child Name="browser" Key="{D4DFF370-8B72-4E25-9D46-2D2EEA8C835B}">
+						<Properties>
+							<Property Name="ObjectType">
+								<Value Value="Browser" />
+							</Property>
+						</Properties>
+						<Children>
+							<Child Name="pageTestCaseXlsxGoogleSheets" Key="{583FD8CE-C8ED-4157-AA9B-F3DB689A78FE}">
+								<Image FileName="2142682035" Left="0" Top="103" Right="1919" Bottom="1040" />
+								<Properties>
+									<Property Name="ObjectType">
+										<Value Value="Page" />
+									</Property>
+									<Property Name="URL">
+										<Value Value="https://docs.google.com/spreadsheets/d/1lxxBu1xzD3XMIWXeV6Wzd4Lx3Itiml3x/edit*" />
+									</Property>
+								</Properties>
+								<Children>
+									<Child Name="panelScrollable" Key="{DF4815EC-3986-468A-8388-C1C9A554F026}" ExtendedFind="True">
+										<Image FileName="2142682035" Left="0" Top="270" Right="1845" Bottom="983" />
+										<Properties>
+											<Property Name="ObjectType">
+												<Value Value="Panel" />
+											</Property>
+											<Property Name="idStr">
+												<Value Value="457919952-scrollable" />
+											</Property>
+										</Properties>
+										<Children>
+											<Child Name="panel" Key="{6A9887FD-593E-4108-BE33-1FCB28DEBDF5}" ExtendedFind="True">
+												<Image FileName="2142682035" Left="0" Top="270" Right="51" Bottom="983" />
+												<TypeInfo Item0="{F154CA7F-70E9-4E9A-9BB5-CB6C97808EEC}" />
+												<Properties>
+													<Property Name="ObjectType">
+														<Value Value="Panel" />
+													</Property>
+													<Property Name="ObjectIdentifier">
+														<Value Value="0" Type="0" />
+													</Property>
+												</Properties>
+											</Child>
+											<Child Name="panel2" Key="{C223FC6F-0B58-4B8B-8D44-AA39F3A5267F}" ExtendedFind="True">
+												<Image FileName="1375501712" Left="51" Top="270" Right="1845" Bottom="983" />
+												<TypeInfo Item0="{F154CA7F-70E9-4E9A-9BB5-CB6C97808EEC}" />
+												<Properties>
+													<Property Name="ObjectType">
+														<Value Value="Panel" />
+													</Property>
+													<Property Name="ObjectIdentifier">
+														<Value Value="1" Type="0" />
+													</Property>
+												</Properties>
+												<Children>
+													<Child Name="panelScrollableRight0" Key="{3E3AE9A2-9EE5-4F4F-9F67-C5ACD7AD546E}" ExtendedFind="True">
+														<Image FileName="-729505181" Left="51" Top="-315" Right="51" Bottom="-315" />
+														<Properties>
+															<Property Name="ObjectType">
+																<Value Value="Panel" />
+															</Property>
+															<Property Name="idStr">
+																<Value Value="scrollable_right_0" />
+															</Property>
+														</Properties>
+														<Children>
+															<Child Name="panel" Key="{C1AB51C3-D9D2-47F9-A30F-D2371E60CD1D}">
+																<Image FileName="-729505181" Left="51" Top="-315" Right="51" Bottom="-315" />
+																<Properties>
+																	<Property Name="ObjectType">
+																		<Value Value="Panel" />
+																	</Property>
+																	<Property Name="ObjectIdentifier">
+																		<Value Value="1" Type="0" />
+																	</Property>
+																</Properties>
+																<Children>
+																	<Child Name="panel" Key="{EB44CC46-5762-4E9A-A057-4E26B1D95158}" ExtendedFind="True">
+																		<Image FileName="-729505181" Left="51" Top="620" Right="1312" Bottom="815" />
+																		<TypeInfo Item0="{F154CA7F-70E9-4E9A-9BB5-CB6C97808EEC}" />
+																		<Properties>
+																			<Property Name="ObjectType">
+																				<Value Value="Panel" />
+																			</Property>
+																			<Property Name="ObjectIdentifier">
+																				<Value Value="1" Type="0" />
+																			</Property>
+																		</Properties>
+																	</Child>
+																</Children>
+															</Child>
+														</Children>
+													</Child>
+												</Children>
+											</Child>
+										</Children>
+									</Child>
+									<Child Name="panelWaffleRichTextEditor" Key="{13D10303-D109-467A-92C3-5D27F8610569}" ExtendedFind="True">
+										<Image FileName="1375501712" Left="4" Top="-10895" Right="4" Bottom="-10859" />
+										<TypeInfo Item0="{F154CA7F-70E9-4E9A-9BB5-CB6C97808EEC}" />
+										<Properties>
+											<Property Name="ObjectType">
+												<Value Value="Panel" />
+											</Property>
+											<Property Name="idStr">
+												<Value Value="waffle-rich-text-editor" />
+											</Property>
+										</Properties>
+									</Child>
+									<Child Name="panel" Key="{3DBEFA0E-2A1A-4B2A-82F9-5CA675F71224}" ExtendedFind="True">
+										<Image FileName="-1357625192" Left="0" Top="268" Right="1845" Bottom="983" />
+										<Properties>
+											<Property Name="ObjectType">
+												<Value Value="Panel" />
+											</Property>
+											<Property Name="contentText">
+												<Value Value="4100640064000A006D006F0072006500200072006F0077007300200061007400200062006F00740074006F006D002E00" Type="7" />
+											</Property>
+											<Property Name="ObjectIdentifier">
+												<Value Value="1" Type="0" />
+											</Property>
+										</Properties>
+										<Children>
+											<Child Name="panel" Key="{2896F4D5-318B-4C79-8336-5E608A938E76}" ExtendedFind="True">
+												<Image FileName="-1357625192" Left="46" Top="268" Right="1845" Bottom="983" />
+												<TypeInfo Item0="{F154CA7F-70E9-4E9A-9BB5-CB6C97808EEC}" />
+												<Properties>
+													<Property Name="ObjectType">
+														<Value Value="Panel" />
+													</Property>
+													<Property Name="ObjectIdentifier">
+														<Value Value="1" Type="0" />
+													</Property>
+												</Properties>
+												<Children>
+													<Child Name="panelScrollableRight0" Key="{F73956C0-7B25-4FCD-A3A7-7FFA6340387B}" ExtendedFind="True">
+														<Image FileName="-753526395" Left="46" Top="36" Right="46" Bottom="36" />
+														<Properties>
+															<Property Name="ObjectType">
+																<Value Value="Panel" />
+															</Property>
+															<Property Name="idStr">
+																<Value Value="scrollable_right_0" />
+															</Property>
+														</Properties>
+														<Children>
+															<Child Name="panel" Key="{A1B6031D-E881-4163-8B99-F3DB03111271}">
+																<Image FileName="-753526395" Left="46" Top="36" Right="46" Bottom="36" />
+																<Properties>
+																	<Property Name="ObjectType">
+																		<Value Value="Panel" />
+																	</Property>
+																	<Property Name="ObjectIdentifier">
+																		<Value Value="1" Type="0" />
+																	</Property>
+																</Properties>
+																<Children>
+																	<Child Name="panel" Key="{C2EE66FE-AA75-4723-868A-D5BE520B5AAA}" ExtendedFind="True">
+																		<Image FileName="-753526395" Left="46" Top="656" Right="1309" Bottom="788" />
+																		<TypeInfo Item0="{F154CA7F-70E9-4E9A-9BB5-CB6C97808EEC}" />
+																		<Properties>
+																			<Property Name="ObjectType">
+																				<Value Value="Panel" />
+																			</Property>
+																			<Property Name="ObjectIdentifier">
+																				<Value Value="1" Type="0" />
+																			</Property>
+																		</Properties>
+																	</Child>
+																</Children>
+															</Child>
+														</Children>
+													</Child>
+												</Children>
+											</Child>
+										</Children>
+									</Child>
+								</Children>
+							</Child>
+							<Child Name="BrowserWindow" Key="{2E7CA04A-A9F8-4B6D-933E-2CAD09C61E47}">
+								<Image FileName="2100512275" Left="-8" Top="-8" Right="1928" Bottom="1048" />
+								<TypeInfo Item0="{2236D27C-CADF-45A6-8EA6-8E6CB071D389}" />
+								<Properties>
+									<Property Name="ObjectType">
+										<Value Value="BrowserWindow" />
+									</Property>
+									<Property Name="ObjectIdentifier">
+										<Value Value="0" Type="0" />
+									</Property>
+								</Properties>
+							</Child>
+						</Children>
+					</Child>
+					<Child Name="Microsoft_XboxGamingOverlay" Key="{B00A35C0-B8B5-4F32-9A8A-D077B1AA791B}">
+						<Properties>
+							<Property Name="ProcessName">
+								<Value Value="Microsoft.XboxGamingOverlay" />
+							</Property>
+						</Properties>
+						<Children>
+							<Child Name="Xbox_Game_Bar" Key="{64BAD4E5-6CD5-4319-AF0D-1B63DA7AC3AE}">
+								<Image FileName="1595452635" Left="0" Top="0" Right="1920" Bottom="1080" />
+								<Properties>
+									<Property Name="FrameworkId">
+										<Value Value="XAML" />
+									</Property>
+									<Property Name="ClassName">
+										<Value Value="Windows.UI.Core.CoreWindow" />
+									</Property>
+									<Property Name="LocalizedControlType">
+										<Value Value="window" />
+									</Property>
+									<Property Name="ObjectIdentifier">
+										<Value Value="Xbox_Game_Bar" />
+									</Property>
+									<Property Name="ObjectGroupIndex">
+										<Value Value="1" Type="0" />
+									</Property>
+								</Properties>
+								<Children>
+									<Child Name="Capture" Key="{6950A607-5256-4102-8E35-3460F6627C27}">
+										<Image FileName="1595452635" Left="54" Top="54" Right="394" Bottom="260" />
+										<Properties>
+											<Property Name="FrameworkId">
+												<Value Value="XAML" />
+											</Property>
+											<Property Name="ClassName">
+												<Value Value="LandmarkTarget" />
+											</Property>
+											<Property Name="LocalizedControlType">
+												<Value Value="group" />
+											</Property>
+											<Property Name="ObjectIdentifier">
+												<Value Value="Capture" />
+											</Property>
+										</Properties>
+										<Children>
+											<Child Name="ScrollViewer" Key="{CD610E4E-31BA-4522-B90F-4E006CD85874}">
+												<Image FileName="1595452635" Left="64" Top="96" Right="384" Bottom="212" />
+												<Properties>
+													<Property Name="FrameworkId">
+														<Value Value="XAML" />
+													</Property>
+													<Property Name="ClassName">
+														<Value Value="ScrollViewer" />
+													</Property>
+													<Property Name="LocalizedControlType">
+														<Value Value="pane" />
+													</Property>
+													<Property Name="ObjectIdentifier">
+														<Value Value="ScrollViewer" />
+													</Property>
+													<Property Name="ObjectGroupIndex">
+														<Value Value="1" Type="0" />
+													</Property>
+												</Properties>
+												<Children>
+													<Child Name="Start_recording_Windows_logo_key_Alt_R_" Key="{0EE1B178-6333-4AD6-9181-EFF62BFACFB0}">
+														<Image FileName="1595452635" Left="234" Top="112" Right="290" Bottom="168" />
+														<Properties>
+															<Property Name="FrameworkId">
+																<Value Value="XAML" />
+															</Property>
+															<Property Name="ClassName">
+																<Value Value="Button" />
+															</Property>
+															<Property Name="LocalizedControlType">
+																<Value Value="button" />
+															</Property>
+															<Property Name="ObjectIdentifier">
+																<Value Value="Start_recording_Windows_logo_key_Alt_R_" />
+															</Property>
+														</Properties>
+													</Child>
+												</Children>
+											</Child>
+										</Children>
+									</Child>
+								</Children>
+							</Child>
+						</Children>
+					</Child>
+				</Children>
+			</Child>
+		</Children>
+	</Nodes>
+	<LogicalNodes Name="Aliases" Owner="{BE401E45-B2D6-4FBA-931A-C2117D5C51AD}">
+		<Child Name="explorer" Owner="{B936AB93-EC22-4AB6-A174-DA339998ED32}">
+			<Child Name="wndTestingTool" Owner="{9570BB13-8179-4ED6-AA91-29AB4B172A62}">
+				<Child Name="WorkerW" Owner="{DBFB32A0-1C10-466A-BF4D-78BC2883C51A}">
+					<Child Name="ReBarWindow32" Owner="{C3498FF0-4AA4-46E3-BEDE-E455F4759FAE}">
+						<Child Name="AddressBandRoot" Owner="{DABF6015-A332-48B3-8D4A-6BD69B122B83}">
+							<Child Name="progress" Owner="{E30B5565-FBF8-42EE-A9E8-3F9FB98AA9D2}">
+								<Child Name="BreadcrumbParent" Owner="{E4BE9F28-2C17-4FE1-8F92-F4D78B52BF65}">
+									<Child Name="toolbar" Owner="{7CC27B73-4426-4389-90CD-47D1DCEDCB81}" />
+								</Child>
+							</Child>
+						</Child>
+					</Child>
+				</Child>
+				<Child Name="CoffeeManager" Owner="{73983737-B009-441F-AE7A-F081772F05C1}">
+					<Child Name="DUIViewWndClassName" Owner="{EF62E4CC-3334-437B-83F4-9BA6040BC1D6}">
+						<Child Name="Explorer_Pane" Owner="{39F7DD54-ED51-4F3D-B3A1-405E568ECF05}">
+							<Child Name="CtrlNotifySink" Owner="{12AFB980-89E4-4966-9B7C-71501EE06851}">
+								<Child Name="ShellView" Owner="{6A83EEC0-7638-4651-B3AB-2A27A79F85FB}">
+									<Child Name="Items_View" Owner="{B91D1A40-5E22-43AF-AB36-869408F88B8F}">
+										<Child Name="MainProject" Owner="{7B8AC8CF-E751-40F4-A1BB-FFF840FB0456}">
+											<Child Name="Name" Owner="{122EE1E5-EFBC-4537-9D49-A8ADC0D44C8E}" />
+										</Child>
+									</Child>
+								</Child>
+							</Child>
+						</Child>
+					</Child>
+				</Child>
+			</Child>
+			<Child Name="wndShell_TrayWnd" Owner="{6EA4EFAF-AE11-4C74-8159-348436C8DB97}">
+				<Child Name="ReBarWindow32" Owner="{B58DAB60-737F-4B72-A9CE-41BF4E3711A8}">
+					<Child Name="MSTaskSwWClass" Owner="{DF57E427-3F45-462E-9B1E-103610015BBD}">
+						<Child Name="MSTaskListWClass" Owner="{612E66E6-77E0-4689-9DF9-142FB981C5BF}" />
+					</Child>
+				</Child>
+			</Child>
+		</Child>
+		<Child Name="MainProject" Owner="{02E57005-3879-4912-9031-A8200CE2A1F3}">
+			<Child Name="HwndSource_ApplicationView" Owner="{B85EDC93-410B-4D43-BBDA-486ADD963A2B}">
+				<Child Name="ApplicationView" Owner="{5BC6EE52-83F1-440A-ACF6-30C21E238F94}">
+					<Child Name="TabControl" Owner="{9D806365-6175-4BFF-A905-ECFFA8683322}">
+						<Child Name="TextBox" Owner="{CB9D3BA4-7189-488F-BFE9-411E69F87D1E}" />
+						<Child Name="Button" Owner="{A75E4EF6-115E-44B0-892B-F985BCC0D9FC}" />
+						<Child Name="popupTable" Owner="{4457BA96-9D6F-4CCD-9C7A-F665AFDC826B}" />
+						<Child Name="ColorZone" Owner="{6020DEBB-E7C6-4BE1-B200-643017C46384}" />
+						<Child Name="LabelChoNBaN" Owner="{E808C6DF-6F01-4CE0-9D64-409683C6FA43}" />
+						<Child Name="ListProduct" Owner="{AF8F10A6-8056-4C17-BA7B-AE40932D54E7}" />
+						<Child Name="btnPayment" Owner="{A8D90515-35B8-4CEC-9DB1-D265A2CCBFEC}" />
+						<Child Name="LabelChNBN" Owner="{C78CA440-C32E-49DA-A812-B8E661F2619C}" />
+						<Child Name="ListView" Owner="{4C3F50D4-DB50-456E-BC21-6E010611DAFD}">
+							<Child Name="ContentControl" Owner="{6A666A74-1BB6-4AF7-B48F-8C16E56F044D}" />
+							<Child Name="Image" Owner="{F5FE30A5-A8DD-4D07-8870-D19E944BDE5D}" />
+						</Child>
+						<Child Name="TableName" Owner="{1130EAAF-46AF-4E7E-83F2-FC9F279C5FAC}">
+							<Child Name="LabelBN1" Owner="{05876C50-B54B-4536-AAC3-D90F84B48872}" />
+							<Child Name="LabelBN2" Owner="{87A79C86-D8F4-4B6B-99F9-38F80B7603F3}" />
+						</Child>
+						<Child Name="DatepickerTNgY" Owner="{9071289C-8DCF-4665-826F-6AF348600F85}" />
+						<Child Name="DatepickerNNgY" Owner="{624CDB1F-9EED-41A5-B114-CABCCCF64291}" />
+						<Child Name="btnFind" Owner="{E9D8F342-20A6-4D60-B71A-3E485B43CBE3}" />
+						<Child Name="PackIcon" Owner="{7D6F32E1-9C3E-4330-B131-97E7ABA3B217}" />
+					</Child>
+				</Child>
+			</Child>
+			<Child Name="HwndSource_PopupRoot" Owner="{5C43EC38-FC41-41CE-B062-75AD2F288508}">
+				<Child Name="PopupRoot" Owner="{CF9DD854-2AA6-49B3-9D32-D347D61B33F5}">
+					<Child Name="Button" Owner="{F42A19EB-506E-4D81-BF3E-59137E657BA7}" />
+				</Child>
+			</Child>
+			<Child Name="HwndSource_Window" Owner="{086E9CC4-575F-47A0-8E26-5340801EC1F1}">
+				<Child Name="Window" Owner="{39DC5230-BC84-4FF9-A72E-F27AD794E682}">
+					<Child Name="ListView" Owner="{B0DB5757-29F0-4DBE-97D4-DE0C8CC5962A}">
+						<Child Name="ContentControl" Owner="{A5E7499D-81DC-437E-9291-F62C5DFFA7CE}">
+							<Child Name="Image" Owner="{6AD34AC7-B73B-470F-BAC1-7980D9F57D38}" />
+						</Child>
+						<Child Name="ContentControl2" Owner="{8F3E28CA-2E37-4F29-8809-81927FF9B4A7}" />
+						<Child Name="ContentControl3" Owner="{F989D3FB-BEDF-4B05-8274-27219380973F}" />
+						<Child Name="ContentControl4" Owner="{920D561D-FB4D-463B-9EED-50915675DA19}" />
+						<Child Name="ContentControl5" Owner="{66064408-1E78-4603-AFD3-559BD07A404D}" />
+						<Child Name="ContentControl6" Owner="{ED2918B9-64D5-404E-A63A-B1562B850BF3}" />
+					</Child>
+					<Child Name="PackIcon" Owner="{FA9BAAFB-52ED-46DB-A362-22FBF3A7D5BD}" />
+					<Child Name="Button" Owner="{D081C944-7E4B-4C11-8519-28178DCDEB45}" />
+				</Child>
+			</Child>
+			<Child Name="HwndSource_MainWindow" Owner="{4902D30D-17F3-41A6-B852-2F5E08B9EDC4}">
+				<Child Name="MainWindow" Owner="{4A79343D-FA32-44FB-B383-F5B18CFD227A}">
+					<Child Name="txtMoneyCustomer" Owner="{351EBF8B-9ACD-48F5-B52B-BC9E7B6D919D}" />
+					<Child Name="ButtonThanhToN" Owner="{6411DC51-FF71-4FDA-84BA-9ECFCE41A0C0}" />
+				</Child>
+			</Child>
+			<Child Name="dlgTh_ngB_o" Owner="{A7CAC470-0787-4606-8C4E-E1689A6C1D5D}">
+				<Child Name="btn_ng_" Owner="{50B0F83D-F58B-436D-8EF7-A4079A4AF9A2}" />
+			</Child>
+			<Child Name="dlgL_i" Owner="{8BF78A06-AB9E-40FB-ABBC-2A9EB0DE1F6D}">
+				<Child Name="btn_ng_" Owner="{BD666090-19D0-4936-A09B-8588314E62B4}" />
+			</Child>
+			<Child Name="dlgL_i2" Owner="{AD090920-0F07-4EA0-98F8-EB4B4B6279FB}">
+				<Child Name="btn_ng_" Owner="{B577B59B-1081-4739-8635-C870A59C04DE}" />
+			</Child>
+		</Child>
+		<Child Name="wps" Owner="{6ACACE8B-0F40-4AE1-A1B6-DB9D54739EFA}">
+			<Child Name="KPromeMainWindow" Owner="{F636D167-18EA-4FC3-AEB8-9EBDC7BBD136}">
+				<Child Name="KPromeWpsPage" Owner="{EAB833DA-38E5-4CFD-93BA-C647A5164253}">
+					<Child Name="KPromeWindowContainerWidget" Owner="{62454C19-B4D7-4E76-9324-496D52E698A1}">
+						<Child Name="KxPdfMainWindow" Owner="{6E836F11-6803-4ED8-8014-8DF14450E9F6}">
+							<Child Name="Widget" Owner="{C085B31E-7C0A-4560-9623-0765F2297DB2}">
+								<Child Name="KMdiSubWindow" Owner="{7E1254E1-E5B1-488D-BC79-B16CA5CA6F57}">
+									<Child Name="PdfView" Owner="{0D09B52D-2E02-4B34-BA02-547CAF6290C4}" />
+								</Child>
+							</Child>
+						</Child>
+					</Child>
+				</Child>
+				<Child Name="Widget" Owner="{35DB595F-5979-421F-A0BE-A98402C3ED85}">
+					<Child Name="Widget" Owner="{2A0B4BBA-973A-4153-9A7C-E7C7DD77E471}">
+						<Child Name="KPromeHeaderBar" Owner="{69BAF1A4-3D2E-4FDE-B6A1-C1B71C7724FB}">
+							<Child Name="KWindowMultiTitleButtonGroup" Owner="{89B2D27A-A1F7-4D9F-AE6B-5629B7B458B6}">
+								<Child Name="KPromeCloseButton" Owner="{10D2B9A8-DB1F-4C3D-A59E-B412C8202896}" />
+							</Child>
+						</Child>
+					</Child>
+				</Child>
+			</Child>
+		</Child>
+		<Child Name="browser" Owner="{D4DFF370-8B72-4E25-9D46-2D2EEA8C835B}">
+			<Child Name="pageTestCaseXlsxGoogleSheets" Owner="{583FD8CE-C8ED-4157-AA9B-F3DB689A78FE}">
+				<Child Name="panel" Owner="{6A9887FD-593E-4108-BE33-1FCB28DEBDF5}" />
+				<Child Name="panelWaffleRichTextEditor" Owner="{13D10303-D109-467A-92C3-5D27F8610569}" />
+				<Child Name="panel2" Owner="{C223FC6F-0B58-4B8B-8D44-AA39F3A5267F}">
+					<Child Name="panel" Owner="{EB44CC46-5762-4E9A-A057-4E26B1D95158}" />
+				</Child>
+				<Child Name="panel3" Owner="{2896F4D5-318B-4C79-8336-5E608A938E76}">
+					<Child Name="panel" Owner="{C2EE66FE-AA75-4723-868A-D5BE520B5AAA}" />
+				</Child>
+			</Child>
+			<Child Name="BrowserWindow" Owner="{2E7CA04A-A9F8-4B6D-933E-2CAD09C61E47}" />
+		</Child>
+		<Child Name="Microsoft_XboxGamingOverlay" Owner="{B00A35C0-B8B5-4F32-9A8A-D077B1AA791B}">
+			<Child Name="Xbox_Game_Bar" Owner="{64BAD4E5-6CD5-4319-AF0D-1B63DA7AC3AE}">
+				<Child Name="Capture" Owner="{6950A607-5256-4102-8E35-3460F6627C27}">
+					<Child Name="ScrollViewer" Owner="{CD610E4E-31BA-4522-B90F-4E006CD85874}">
+						<Child Name="Start_recording_Windows_logo_key_Alt_R_" Owner="{0EE1B178-6333-4AD6-9181-EFF62BFACFB0}" />
+					</Child>
+				</Child>
+			</Child>
+		</Child>
+	</LogicalNodes>
+</Root>
