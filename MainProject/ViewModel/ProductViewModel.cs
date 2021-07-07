@@ -1,4 +1,5 @@
-﻿using MainProject.MainWorkSpace.Product;
+﻿using MainProject.MainWorkSpace;
+using MainProject.MainWorkSpace.Product;
 using MainProject.Model;
 using System;
 using System.Collections.Generic;
@@ -151,7 +152,7 @@ namespace MainProject.ViewModel
         {
 
             Newproduct = new PRODUCT() { Image = imageToByteArray(Properties.Resources.Empty_Image), TYPE_PRODUCT = new TYPE_PRODUCT(), IsProvided = true };
-            Type_in_Combobox_AddProduct = null;
+            Type_in_Combobox_AddProduct = MainViewModel.getType(0);
             WindowService.Instance.OpenWindowWithoutBorderControl(this, new CreateProd());
         }
 
@@ -218,7 +219,7 @@ namespace MainProject.ViewModel
                 }
 
                 //Find if name is duplicate
-                PRODUCT pro = Context.PRODUCTs.Where(p => (p.Name == Newproduct.Name && p.IsProvided)).FirstOrDefault();
+                PRODUCT pro = Context.PRODUCTs.Where(p => (p.Name.Trim().ToLower() == Newproduct.Name.Trim().ToLower() && p.IsProvided)).FirstOrDefault();
                 if (pro != null)
                 {
                     throw new ArgumentException("Name of price is exsisted", "NameDuplicate");
@@ -228,8 +229,6 @@ namespace MainProject.ViewModel
                 {
                     //throw new ArgumentException("Type of product is null", "TypeNull");
                     //return;
-
-
                     Newproduct.ID_Type = null;
                 }
                 else
@@ -316,7 +315,7 @@ namespace MainProject.ViewModel
         public void DeletePro()
         {
             if (Currentproduct == null) return;
-            if (Tableviewmodel.Currentlistdetailpro.Contains(new DetailPro(Currentproduct)))
+            if (Tableviewmodel.Currentlistdetailpro != null && Tableviewmodel.Currentlistdetailpro.Contains(new DetailPro(Currentproduct)))
             {
                 WindowService.Instance.OpenMessageBox("Vui lòng thanh toán món trước khi xóa!", "Lỗi", MessageBoxImage.Error);
                 return;

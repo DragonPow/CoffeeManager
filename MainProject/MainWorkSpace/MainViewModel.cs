@@ -87,20 +87,24 @@ namespace MainProject.MainWorkSpace
                 }
             }
         }
-
-      /*  public ObservableCollection<PRODUCT> Listpro
+        public static TYPE_PRODUCT getType(int index)
         {
-            get => _Listpro;
-            set
-            {
-                if (_Listpro != value)
-                {
-                    _Listpro = value;
-                    OnPropertyChanged();
+            return _ListType[index];
+        }
 
-                }
-            }
-        }*/
+        /*  public ObservableCollection<PRODUCT> Listpro
+          {
+              get => _Listpro;
+              set
+              {
+                  if (_Listpro != value)
+                  {
+                      _Listpro = value;
+                      OnPropertyChanged();
+
+                  }
+              }
+          }*/
 
         public PackIcon IconDisplay
         {
