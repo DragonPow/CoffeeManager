@@ -115,7 +115,10 @@ namespace MainProject.ViewModel
                                     WindowService.Instance.OpenMessageBox("Vui lòng nhập tên danh mục!", "Lỗi", MessageBoxImage.Error);
                                     break;
                                 case "NameExisting":
-                                    WindowService.Instance.OpenMessageBox("Danh mục đã tồn tại, vui lòng đặt tên khác!", "Lỗi", MessageBoxImage.Error);
+                                    WindowService.Instance.OpenMessageBox("Danh mục đã tồn tại, vui lòng đặt tên khác!", "Thông báo", MessageBoxImage.Information);
+                                    break;
+                                default:
+                                    WindowService.Instance.OpenMessageBox("Lỗi cập nhật", "Lỗi", MessageBoxImage.Error);
                                     break;
                             }
                            
