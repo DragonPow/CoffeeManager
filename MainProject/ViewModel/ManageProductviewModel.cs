@@ -409,11 +409,11 @@ namespace MainProject.ViewModel
 
           /*  using (var db = new mainEntities())*/
             {
-                TYPE_PRODUCT T = db.TYPE_PRODUCT.Where(t => t.Type == NameNewTypeProduct).FirstOrDefault();
+                TYPE_PRODUCT T = db.TYPE_PRODUCT.Where(t => t.Type == NewNameEditType).FirstOrDefault();
 
                 if (T != null)
                 {
-                    WindowService.Instance.OpenMessageBox("Danh mục đã tồn tại, vui lòng đặt tên khác!", "Lỗi", System.Windows.MessageBoxImage.Error);
+                    WindowService.Instance.OpenMessageBox("Danh mục đã tồn tại, vui lòng đặt tên khác!", "Thông báo", System.Windows.MessageBoxImage.Information);
                     return;
                 }
                 var type = db.TYPE_PRODUCT.Where(t => t.ID == CurrentTypeInProManager.ID).FirstOrDefault();
