@@ -130,7 +130,7 @@ Framework:
 
 - Billing PDF
 
-<img src="UI%20image/PDF.png" alt='pdf' height="500"/>
+<img src="UI%20image/pdf.png" alt='pdf' height="500"/>
 
 - Messagebox
 
